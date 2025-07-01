@@ -1,7 +1,8 @@
 import { injectable } from 'tsyringe';
-import { screen, Image, imageResource, Region as NutRegion } from '@nut-tree-fork/nut-js';
-import { IScreenAdapter } from '../../../application/services/screen.service.js';
-import { MatchResult, Region } from '../../../domain/entities/screen-region.js';
+import { screen, imageResource, Region as NutRegion } from '@nut-tree-fork/nut-js';
+// Image type is complex in nut-js, using any for now
+import type { IScreenAdapter } from '../../../application/services/screen.service.js';
+import type { MatchResult, Region } from '../../../domain/entities/screen-region.js';
 import { environment } from '../../../config/environment.js';
 
 @injectable()
@@ -13,13 +14,13 @@ export class NutJSScreenAdapter implements IScreenAdapter {
   }
 
   async capture(region?: Region): Promise<Buffer> {
-    let image: Image;
+    let image: any; // Usando any temporariamente devido a incompatibilidade de tipos
 
     if (region) {
       const nutRegion = new NutRegion(region.x, region.y, region.width, region.height);
       image = await screen.grabRegion(nutRegion);
     } else {
-      image = await screen.capture();
+      image = await screen.grab();
     }
 
     const buffer = await image.toRGB();
@@ -73,7 +74,7 @@ export class NutJSScreenAdapter implements IScreenAdapter {
     };
   }
 
-  private async createImageFromBuffer(buffer: Buffer): Promise<Image> {
+  private async createImageFromBuffer(buffer: Buffer): Promise<any> {
     // Para imagens base64 decodificadas, precisamos detectar as dimensões reais
     // Este é um método temporário - idealmente, as dimensões deveriam vir junto com o buffer
     // ou o buffer deveria incluir um header com as dimensões
@@ -106,7 +107,16 @@ export class NutJSScreenAdapter implements IScreenAdapter {
       
       for (const dim of commonDimensions) {
         if (dim.width * dim.height * channels === buffer.length) {
-          return new Image(dim.width, dim.height, buffer, channels);
+          // Criando um objeto compatível com Image
+          return {
+            width: dim.width,
+            height: dim.height,
+            data: buffer,
+            channels,
+            toRGB: async () => buffer,
+            hasAlphaChannel: false,
+            pixelDensity: { scaleX: 1, scaleY: 1 },
+          };
         }
       }
       
@@ -117,6 +127,18 @@ export class NutJSScreenAdapter implements IScreenAdapter {
       );
     }
 
-    return new Image(width, height, buffer, channels);
+    // Criando um objeto compatível com Image do nut-js
+    // Nota: Esta é uma implementação temporária que precisa ser ajustada
+    // quando tivermos acesso aos construtores corretos do nut-js
+    const imageObj = {
+      width,
+      height,
+      data: buffer,
+      channels,
+      toRGB: async () => buffer,
+      hasAlphaChannel: false,
+      pixelDensity: { scaleX: 1, scaleY: 1 },
+    };
+    return imageObj;
   }
 }

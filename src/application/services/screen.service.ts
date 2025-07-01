@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
-import { ScreenFindRequest, ScreenCaptureRequest } from '../dto/automation-request.dto.js';
-import { MatchResult, Region } from '../../domain/entities/screen-region.js';
+import type { ScreenFindRequest, ScreenCaptureRequest } from '../dto/automation-request.dto.js';
+import type { MatchResult, Region } from '../../domain/entities/screen-region.js';
 import pino from 'pino';
 
 export interface IScreenAdapter {

@@ -1,5 +1,5 @@
 import { injectable, inject } from 'tsyringe';
-import { AutomationCommand, CommandResult } from '../entities/automation-command.js';
+import type { AutomationCommand, CommandResult } from '../entities/automation-command.js';
 
 export interface IAutomationExecutor {
   execute(command: AutomationCommand): Promise<CommandResult>;

@@ -1,5 +1,6 @@
 import 'reflect-metadata';
-import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
+import Fastify from 'fastify';
+import type { FastifyRequest, FastifyReply } from 'fastify';
 import { automationRoutes } from './routes/automation.routes.js';
 import { errorHandler } from './interface/middleware/error-handler.middleware.js';
 import { configureDependencies } from './config/dependency-injection.js';

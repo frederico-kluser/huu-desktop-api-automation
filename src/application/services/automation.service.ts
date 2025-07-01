@@ -1,14 +1,14 @@
 import { injectable, inject } from 'tsyringe';
-import {
+import type {
   AutomationCommand,
   CommandResult,
   MouseCommand,
   ScreenCommand,
 } from '../../domain/entities/automation-command.js';
-import { IAutomationExecutor } from '../../domain/use-cases/execute-automation.use-case.js';
+import type { IAutomationExecutor } from '../../domain/use-cases/execute-automation.use-case.js';
 import { MouseService } from './mouse.service.js';
 import { ScreenService } from './screen.service.js';
-import { MouseAction } from '../../domain/entities/mouse-action.js';
+import type { MouseAction } from '../../domain/entities/mouse-action.js';
 
 @injectable()
 export class AutomationService implements IAutomationExecutor {
@@ -98,6 +98,7 @@ export class AutomationService implements IAutomationExecutor {
       case 'capture':
         const imageData = await this.screenService.capture({
           region: command.region,
+          format: 'png',
         });
         return { success: true, data: { image: imageData } };
 
@@ -108,6 +109,7 @@ export class AutomationService implements IAutomationExecutor {
         const matches = await this.screenService.findTemplate({
           template: command.template,
           region: command.region,
+          confidence: 0.8,
         });
         return { success: true, data: { matches } };
 

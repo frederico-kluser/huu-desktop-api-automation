@@ -1,11 +1,12 @@
 import { injectable, inject } from 'tsyringe';
-import {
+import type {
   MouseMoveRequest,
   MouseClickRequest,
   MouseDragRequest,
   MouseScrollRequest,
 } from '../dto/automation-request.dto.js';
-import { Point, MouseButton } from '../../domain/entities/mouse-action.js';
+import type { Point } from '../../domain/entities/mouse-action.js';
+import { MouseButton } from '../../domain/entities/mouse-action.js';
 import { screen } from '@nut-tree-fork/nut-js';
 import pino from 'pino';
 

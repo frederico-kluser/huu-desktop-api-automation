@@ -1,5 +1,5 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { ZodSchema } from 'zod';
+import type { FastifyReply, FastifyRequest } from 'fastify';
+import type { ZodSchema } from 'zod';
 
 export function validateRequest(schema: ZodSchema) {
   return async (request: FastifyRequest, reply: FastifyReply) => {

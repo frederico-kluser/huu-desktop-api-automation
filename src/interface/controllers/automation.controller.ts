@@ -1,14 +1,16 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { container } from 'tsyringe';
 import { MouseService } from '../../application/services/mouse.service.js';
 import { ScreenService } from '../../application/services/screen.service.js';
 import {
-  mouseMoveSchema,
-  mouseClickSchema,
-  mouseDragSchema,
-  mouseScrollSchema,
-  screenFindSchema,
-  screenCaptureSchema,
+  mouseMoveJsonSchema,
+  mouseClickJsonSchema,
+  mouseDragJsonSchema,
+  mouseScrollJsonSchema,
+  screenFindJsonSchema,
+  screenCaptureJsonSchema,
+} from '../schemas/automation.schemas.js';
+import type {
   MouseMoveRequest,
   MouseClickRequest,
   MouseDragRequest,
@@ -31,7 +33,7 @@ export class AutomationController {
       '/mouse/move',
       {
         schema: {
-          body: mouseMoveSchema,
+          body: mouseMoveJsonSchema,
           response: {
             200: {
               type: 'object',
@@ -49,7 +51,7 @@ export class AutomationController {
       '/mouse/click',
       {
         schema: {
-          body: mouseClickSchema,
+          body: mouseClickJsonSchema,
           response: {
             200: {
               type: 'object',
@@ -67,7 +69,7 @@ export class AutomationController {
       '/mouse/drag',
       {
         schema: {
-          body: mouseDragSchema,
+          body: mouseDragJsonSchema,
           response: {
             200: {
               type: 'object',
@@ -85,7 +87,7 @@ export class AutomationController {
       '/mouse/scroll',
       {
         schema: {
-          body: mouseScrollSchema,
+          body: mouseScrollJsonSchema,
           response: {
             200: {
               type: 'object',
@@ -127,7 +129,7 @@ export class AutomationController {
       '/screen/find',
       {
         schema: {
-          body: screenFindSchema,
+          body: screenFindJsonSchema,
           response: {
             200: {
               type: 'object',
@@ -163,7 +165,7 @@ export class AutomationController {
       '/screen/capture',
       {
         schema: {
-          body: screenCaptureSchema,
+          body: screenCaptureJsonSchema,
           response: {
             200: {
               type: 'object',

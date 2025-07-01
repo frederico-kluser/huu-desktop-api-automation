@@ -1,7 +1,9 @@
 import { injectable } from 'tsyringe';
-import { mouse, straightTo, Button, Point as NutPoint } from '@nut-tree-fork/nut-js';
-import { IMouseAdapter } from '../../../application/services/mouse.service.js';
-import { Point, MouseButton } from '../../../domain/entities/mouse-action.js';
+import { mouse, straightTo, Button } from '@nut-tree-fork/nut-js';
+import { Point as NutPoint } from '@nut-tree-fork/nut-js';
+import type { IMouseAdapter } from '../../../application/services/mouse.service.js';
+import type { Point } from '../../../domain/entities/mouse-action.js';
+import { MouseButton } from '../../../domain/entities/mouse-action.js';
 import { environment } from '../../../config/environment.js';
 
 @injectable()
