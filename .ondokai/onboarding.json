@@ -1,17 +1,17 @@
 {
   "project_metadata": {
-    "name": "NutJS REST API for Desktop UI Automation via HTTP",
+    "name": "NutJS Desktop Automation API - RESTful service for programmatic mouse and screen control",
     "domain": [
       "Desktop Automation",
       "UI Automation",
-      "Backend API",
-      "REST API",
       "Visual Recognition",
-      "Input Device Control",
-      "RPA (Robotic Process Automation)",
-      "Automated Testing",
-      "Computer Vision",
-      "Configuration"
+      "REST API Backend",
+      "Node.js",
+      "TypeScript",
+      "End-to-End Testing",
+      "Robotic Process Automation (RPA)",
+      "Optical Character Recognition",
+      "Document Processing"
     ],
     "current_phase": [
       "Production",
@@ -19,105 +19,90 @@
       "MVP",
       "Version 1.0.0",
       "Stabilization",
-      "Initial Command Architecture Implementation",
-      "Development",
-      "Stable Error Handling",
-      "Local Testing"
+      "Active Development",
+      "Pre-production",
+      "Optimized Build"
     ],
     "critical_business_rules": [
       "Ensure code is free from common async/await errors",
       "Avoid explicit use of any",
       "Maintain style consistency with Prettier",
       "System permissions must be respected",
-      "Strict input validation to prevent invalid commands",
+      "Strict validation of inputs to prevent invalid commands",
       "Maintain integrity of automation operations",
       "Continuous service availability",
       "Automatic restart on excessive memory usage",
       "Error and output logs for auditing",
       "Safe execution of UI commands",
-      "Strict validation of inputs",
-      "Maintain system state integrity",
-      "Commands must be validated before execution",
-      "API must not allow unauthorized automation commands",
-      "Strict validation of non-negative coordinates",
+      "Strict validation of coordinates to prevent off-screen actions",
       "Duration limits between 100 and 5000 ms",
-      "Minimum template recognition confidence of 0.8",
-      "Mandatory parameter validation for commands",
-      "Robust error handling to prevent silent failures",
-      "Reliable execution of mouse actions",
-      "Respect duration and smoothing parameters",
-      "Correct adapter injection to prevent failures",
-      "Minimum recognition accuracy (confidence)",
-      "Timeouts for template waits",
-      "Image buffer integrity",
-      "Correct dependency registration",
-      "Decoupling between services and adapters",
-      "Environment variables must be correctly defined",
-      "Default values must ensure minimum functionality",
-      "Correct and sequential command execution",
+      "Minimum confidence for template recognition: 0.8",
       "Standardized result return for integration",
       "Extensibility for new command types",
-      "Execution accuracy",
-      "Consistency in option typing",
       "Immutability of actions after creation",
-      "Precision in region definitions",
-      "Coordinate data integrity",
-      "Consistency in MatchResult to ScreenRegion conversion",
-      "Interrupt execution on command failure",
-      "Return detailed results for each command",
-      "Centralized error handling",
-      "Service health monitoring",
-      "Dynamic configuration via environment variables",
-      "Configurable mouse speed",
-      "Correct button mapping",
-      "Reliable execution of click and drag events",
-      "Minimum screen recognition accuracy",
-      "Robust handling of no match scenarios",
-      "Safe and correct execution of mouse commands",
-      "Strict input data validation",
-      "Consistent response for integration with external systems",
-      "Consistent error response format",
-      "Proper HTTP status codes",
-      "No leakage of sensitive error details in production",
-      "Input data must be validated before processing",
-      "Validation failures must interrupt flow and return 400 error",
-      "Routes must be correctly registered to ensure API availability",
-      "Controller must validate and handle requests",
-      "Ensure mouse commands are executed accurately",
-      "Maintain API response integrity",
-      "Strict typing must be enforced",
-      "Exclude node_modules and dist from build",
-      "Support for experimental decorators"
+      "Stop execution on command failure",
+      "Detailed success/failure results",
+      "Configurable mouse speed within safe limits",
+      "Correct mapping of mouse buttons",
+      "Reliable execution of asynchronous commands",
+      "Minimum image recognition accuracy",
+      "Timeouts for visual element waits",
+      "Strict typing must be maintained",
+      "Exclusion of node_modules and dist from build",
+      "Support for experimental decorators",
+      "Sensitive configuration files must not be versioned",
+      "Strict data privacy compliance",
+      "Non-modification of original images",
+      "Exclude test files from build",
+      "Remove comments for clean code",
+      "No source maps in production"
     ]
   },
   "technical_stack": {
     "primary_language": [
       "TypeScript 5.x",
-      "Node.js 18+",
       "JavaScript (Node.js)",
-      "ECMAScript 2024"
+      "Node.js 18.x",
+      "ECMAScript 2024",
+      "Python 3.11"
     ],
     "frameworks": [
       "Fastify 4.x",
       "TSyringe 4.x",
       "Zod 3.x",
-      "PM2",
-      "Jest 29",
+      "PM2 5.x",
+      "Jest 29.x",
+      "ESLint 8.x",
       "NutJS 2.x",
-      "dotenv 16.x"
+      "dotenv 16.x",
+      "pino 8.x",
+      "Express 4.x",
+      "Tesseract OCR 5.0",
+      "OpenCV 4.7",
+      "Flask 2.3"
     ],
-    "databases": [],
+    "databases": [
+      "PostgreSQL 15"
+    ],
     "external_services": [
       "NutJS",
-      "dotenv",
+      "dotenv for environment configuration",
       "MouseService",
       "ScreenService",
-      "ScreenAdapter",
-      "AutomationService (IAutomationExecutor)",
-      "@nut-tree-fork/nut-js"
+      "@nut-tree-fork/nut-js (screen API)",
+      "pino (logging)",
+      "NutJS APIs for mouse and screen control",
+      "AutomationService (IAutomationExecutor interface)",
+      "Local REST API NutJS Mouse Control",
+      "Postman for API testing",
+      "Localhost HTTP server (http://localhost:3000)",
+      "Cloud Storage API",
+      "Authentication Service (OAuth2)"
     ],
     "package_manager": [
-      "npm"
+      "npm",
+      "yarn",
+      "pip"
     ]
   },
   "architecture_patterns": {
@@ -129,70 +114,97 @@
       "Dependency Injection",
       "Modular Architecture",
       "REST API",
+      "Layered Architecture",
       "Schema Validation",
       "Type-safe API Contracts",
       "Command Pattern",
       "Adapter Pattern",
+      "Service Layer",
       "Feature Flags",
       "Template Method",
       "Factory Method",
       "Middleware Pattern",
-      "Controller Pattern",
       "Centralized Error Handling",
-      "Functional Composition",
-      "Strict Typing Enforcement"
+      "Client-Server",
+      "Strict typing enforcement",
+      "Declarative Data Modeling",
+      "Pipeline",
+      "Configuration Inheritance"
     ],
     "folder_structure": [
-      "src/ - source code",
-      "dist/ - compiled build",
-      "tests/ - unit and integration tests",
+      "src/ - main source code",
       "domain/entities - domain entities",
-      "domain/use-cases - use cases",
-      "application/services - business logic",
-      "infrastructure/adapters - external library integration",
-      "dto/ - data transfer objects",
-      "config/ - environment and dependency injection",
-      "routes/ - API route definitions",
-      "controllers/ - request controllers",
-      "middlewares/ - validation and error handling",
-      "schemas/ - Zod validation schemas",
-      "types/ - type and interface definitions",
-      "logs/ - output and error logs",
-      "node_modules/ - external dependencies"
+      "application/services - business logic and services",
+      "infrastructure/adapters - integration adapters",
+      "interface/controllers - route controllers",
+      "src/controllers - API route handlers",
+      "src/services - business logic",
+      "src/utils - utility functions",
+      "src/schemas - Zod schema definitions",
+      "src/types - type definitions",
+      "src/config - centralized configuration",
+      "src/env - environment variable loading",
+      "src/commands - automation commands",
+      "src/models - domain interfaces and classes",
+      "tests/ - unit and integration tests",
+      "dist/ - build output",
+      "logs/ - log files",
+      "coverage/ - test coverage reports",
+      "node_modules/ - external dependencies",
+      ".vscode/, .idea/ - IDE configurations",
+      "Schemas organized in separate files for each interaction type",
+      "/preprocessing - image cleaning",
+      "/recognition - OCR logic",
+      "/postprocessing - text correction",
+      "/api - integration endpoints"
     ],
     "naming_conventions": [
       "camelCase for variables and functions",
       "PascalCase for classes and types",
-      "kebab-case for files and routes",
+      "kebab-case for files",
       "Suffix Service for services",
-      "Suffix Controller for controllers",
       "Suffix Adapter for adapters",
+      "Suffix Controller for controllers",
+      "Suffix Handler for middlewares",
+      "Suffix Middleware for middlewares",
       "Prefix I for interfaces",
-      "Descriptive names for middlewares and schemas",
-      "Enums in PascalCase",
-      "No snake_case"
+      "camelCase for properties",
+      "PascalCase for enums",
+      "camelCase for methods",
+      "Files with .ts extension",
+      "*.test.ts and *.spec.ts for tests",
+      "ecosystem.config.js for PM2 configuration",
+      "jest.config.js for Jest configuration",
+      ".eslintrc.js for ESLint configuration"
     ],
     "module_boundaries": [
       "Clear separation between domain, application, and infrastructure",
       "Unidirectional dependencies from domain to infrastructure",
-      "Dependency injection for decoupling modules",
-      "Separation between API, automation services, and infrastructure",
-      "Isolated configuration module",
-      "Use of interfaces for abstractions",
-      "Controllers depend on services via injection",
-      "DTOs for validation and typing",
-      "Isolated middleware for validation",
+      "Dependency injection to decouple modules",
+      "Separation between API, automation services, and utilities",
+      "Isolated modules for input device abstractions",
       "Separation between validation schemas and business logic",
-      "Separation between handlers, schemas, and routes",
-      "No circular dependencies",
-      "Exclusion of node_modules and test files from build"
+      "Controllers depend on services via injection",
+      "DTOs and schemas isolate data contracts",
+      "Services encapsulate automation logic",
+      "Separation between handlers, routes, and services",
+      "Middleware isolated in own module",
+      "Separation between configuration, routes, middleware, and server initialization",
+      "Use of plugins for modularization",
+      "Exclusion of node_modules and test files from build",
+      "Separation between mouse and screen operations",
+      "Schemas isolated for each interaction type",
+      "API layer isolated from core OCR logic",
+      "Clear separation between image processing and text extraction modules"
     ]
   },
   "code_standards": {
     "style_guide": [
       "ESLint Recommended",
       "Prettier",
-      "Airbnb JavaScript/TypeScript Style Guide"
+      "Airbnb JavaScript/TypeScript Style Guide",
+      "TypeScript ESLint Recommended",
+      "PEP8"
     ],
     "linting_rules": [
       "no-async-promise-executor: error",
@@ -201,8 +213,14 @@
       "@typescript-eslint/no-floating-promises: error",
       "@typescript-eslint/await-thenable: error",
       "@typescript-eslint/no-unused-vars: error with argsIgnorePattern ^_",
-      "eslint-config-prettier to disable conflicting rules",
-      "ESLint with @typescript-eslint plugin"
+      "eslint-config-prettier",
+      "eslint-plugin-prettier",
+      "typescript-eslint",
+      "eslint-config-standard-with-typescript",
+      "Prohibition of explicit any",
+      "Rules for async/await",
+      "No explicit any except in controlled cases",
+      "flake8 with max line length 88"
     ],
     "formatting": [
       "Prettier integration via plugin:prettier/recommended",
@@ -211,32 +229,51 @@
       "singleQuote: true",
       "printWidth: 100",
       "tabWidth: 2",
-      "2-space indentation"
+      "Prettier 3.x with default settings",
+      "Indentation 2 spaces",
+      "Prettier configured for TypeScript",
+      "Black"
     ],
     "documentation_style": [
       "JSDoc for functions and classes",
-      "JSDoc for public methods",
+      "JSDoc for public methods and interfaces",
       "JSDoc for exported functions and constants",
-      "Inline comments for context"
+      "Inline comments and JSDoc for public functions",
+      "Google Docstrings",
+      "Descriptions embedded in each endpoint in Postman"
     ],
     "type_checking": [
       "Strict TypeScript type checking via plugin:@typescript-eslint/recommended-requiring-type-checking",
+      "Strict TypeScript",
       "Strict TypeScript settings enabled",
-      "NoImplicitAny enabled",
-      "strictNullChecks"
+      "Explicit types for parameters and returns",
+      "Strict TypeScript with 'as const' for immutability",
+      "Strict TypeScript with tsconfig.json strict true",
+      "noImplicitAny",
+      "strictNullChecks",
+      "Strict TypeScript typings via JSON Schema",
+      "mypy strict"
     ]
   },
   "testing_strategy": {
     "test_framework": [
-      "Jest 29"
+      "Jest 29.x",
+      "Postman Collection Runner",
+      "Pytest 7.4"
     ],
     "test_structure": [
       "__tests__/**/*.test.ts",
       "tests directory parallel to src",
       "Unit tests for services",
       "Integration tests for API endpoints",
+      "tests/unit",
+      "tests/integration",
       "tests/unit for schema validation",
-      "tests/integration for API integration"
+      "tests/unit for MouseAction and types",
+      "tests/middleware for middleware unit tests",
+      "mocks for external dependencies",
+      "coverage/ - coverage reports",
+      "Test files excluded from build"
     ],
     "coverage_requirements": [
       "src/**/*.ts",
@@ -244,26 +281,35 @@
       "!src/**/*.test.ts",
       "!src/index.ts",
       "Minimum 80% coverage",
-      ">= 90% coverage for error handling modules"
+      "Cobertura mínima de 90%",
+      ">= 85% coverage"
     ],
     "test_patterns": [
       "Arrange-Act-Assert (AAA)",
       "Given-When-Then",
-      "Unit and integration tests focused on endpoints and validation"
+      "Linear sequence with delays to simulate real use",
+      "Sequence of GET and POST calls to validate state and effects"
     ],
     "mocking_approach": [
       "Use of Jest mocks and fixtures",
-      "Mocks for external dependencies and automation",
-      "Mock of MouseService and ScreenService",
-      "Mock of adapters for unit tests",
-      "Mock of process.env for environment variables",
-      "Fixtures for Zod schemas"
+      "Mocks and spies via Jest",
+      "Mocks for MouseService and ScreenService",
+      "Mocks for external adapters",
+      "Fixtures for request DTOs",
+      "Mocks for process.env to simulate environment variables",
+      "Mocks for external dependencies and timers",
+      "Mocks for input events",
+      "Mocks for MatchResult input data",
+      "Mocks for FastifyRequest and FastifyReply",
+      "Mocks for controllers",
+      "pytest-mock",
+      "Fixtures for image inputs"
     ]
   },
   "development_workflow": {
     "branch_strategy": [
       "GitHub Flow",
-      "Git Flow"
+      "git Flow"
     ],
     "commit_conventions": [
       "Conventional Commits"
@@ -271,71 +317,88 @@
     "pr_requirements": [
       "Code review mandatory",
       "Passing CI checks",
-      "Lint and test checks"
+      "Checks de lint e testes",
+      "Revisão obrigatória e testes automatizados",
+      "Revisão obrigatória por pelo menos um revisor",
+      "CI checks passing"
     ],
     "ci_cd_pipeline": [
-      "Lint",
-      "Test",
-      "Coverage collection",
       "Build",
+      "Linting",
+      "Testing",
+      "Coverage collection",
       "Deployment",
-      "Automated deploy to staging"
+      "Build, lint, test and deploy via GitHub Actions",
+      "Unit tests",
+      "Integration tests"
     ]
   },
   "commands": {
     "setup": [
-      "npm install && cp .env.example .env"
+      "npm install && cp .env.example .env",
+      "python -m venv venv && source venv/bin/activate && pip install -r requirements.txt"
     ],
     "install": [
-      "npm install"
+      "npm install",
+      "yarn install",
+      "pip install -r requirements.txt"
     ],
     "dev": [
-      "npm run dev"
+      "npm run dev",
+      "tsc --watch",
+      "flask run --reload"
     ],
     "test": [
-      "npm test"
+      "npm test",
+      "npm run test",
+      "Executar coleção Postman via Newman ou Postman Runner",
+      "pytest --cov=ocr_module tests/"
     ],
     "build": [
       "npm run build",
-      "tsc"
+      "npm run build:prod",
+      "tsc",
+      "docker build -t ocr-service ."
     ],
     "lint": [
+      "npx eslint . --ext .ts,.tsx",
       "npm run lint",
-      "npx eslint . --ext .ts,.tsx"
+      "npx eslint .",
+      "flake8 ocr_module/"
     ],
     "format": [
+      "npx prettier --write .",
       "npm run format",
-      "npx prettier --write ."
+      "black ocr_module/"
     ]
   },
   "security_constraints": {
     "authentication_method": [
-      "JWT",
-      "Not implemented in controller (requires external implementation)"
+      "OAuth2",
+      "Not implemented in current code"
     ],
     "authorization_rules": [
-      "Role-based access control (RBAC)",
-      "Presumed control via middleware"
+      "Role-based access control for API endpoints",
+      "Not implemented explicitly in current code"
     ],
     "sensitive_data": [
       "Environment variables for configuration",
       "Accessibility permissions on macOS",
-      "Base64 images must be handled carefully to avoid leaks",
-      "Environment variables must not be exposed in logs",
-      "Error messages sanitized in production",
-      "JWT tokens",
-      "User personal data"
+      "Base64 encoded images must be protected",
+      "API keys",
+      "Database credentials",
+      "Extracted personal data must be encrypted at rest and in transit",
+      ".env files"
     ],
     "security_headers": [
+      "Content-type: application/json",
       "Content-Security-Policy",
       "X-Content-Type-Options",
-      "Strict-Transport-Security",
-      "Content-Type: application/json",
-      "Recommendation to use helmet in production"
+      "Strict-Transport-Security"
     ],
     "encryption_requirements": [
-      "TLS for transport",
-      "AES encryption for sensitive data"
+      "TLS 1.3 for data in transit",
+      "AES-256 for data at rest"
     ]
   },
   "performance_requirements": {
@@ -343,47 +406,50 @@
       "Low latency expected for API calls",
       "Minimum action duration: 100ms",
       "Maximum action duration: 5000ms",
-      "Default timeout of 5000ms for template waits",
-      "Immediate response on validation error to avoid unnecessary processing",
-      "< 200ms for main endpoints",
-      "Error responses must be returned within 100ms"
+      "Asynchronous operations should be fast, ideally < 500ms for simple actions",
+      "Default template wait timeout: 5000ms",
+      "Mouse operations should be fast and responsive (milliseconds to seconds)",
+      "< 2 seconds per image for OCR processing"
     ],
     "optimization_priorities": [
       "Speed and responsiveness for automation commands",
       "Memory control to avoid crashes",
       "Execution in fork mode for isolation",
-      "Efficiency in UI manipulation",
+      "Efficiency in HTTP response and command execution",
       "Precision and robustness over raw speed",
-      "Low overhead in error handling",
-      "Responsiveness and extensibility"
+      "Low overhead in dependency resolution",
+      "Responsiveness and extensibility",
+      "Sequential execution to ensure integrity",
+      "Balance between speed and accuracy",
+      "Reduce bundle size",
+      "Avoid source map generation for production"
     ],
     "caching_strategy": [
       "Configuration loaded once and reused",
-      "In-memory cache for static data",
-      "TTL configurable"
+      "Cache processed images and extracted text for 24 hours"
     ],
     "scalability_considerations": [
-      "Current config limits to 1 instance, can scale via multiple PM2 instances",
+      "Current configuration limited to 1 instance, scalable via multiple PM2 instances",
       "Modular architecture enables horizontal scalability",
-      "Decoupling via interfaces allows horizontal scaling",
-      "Horizontal scalability via multiple Fastify instances",
-      "Lightweight middleware to support high request volume",
-      "Horizontal scalability via containers"
+      "Horizontal scaling of OCR workers",
+      "Load balancing API requests",
+      "Easy replacement of implementations for different platforms"
     ]
   },
   "error_handling": {
     "error_format": [
       "Standard JSON with message and HTTP code",
-      "CommandResult with success (boolean), error (string), and optional details",
-      "Centralized error handling middleware",
-      "JSON with fields: success, error, details, message"
+      "Object with success (boolean) and error (string)",
+      "Centralized error handler middleware format",
+      "JSON with fields: success, error, details (optional array)",
+      "JSON with error code, message and details"
     ],
     "logging_strategy": [
-      "Structured logging with Pino and pino-pretty",
+      "Structured logging with pino and pino-pretty",
       "Logs separated for errors (logs/error.log) and output (logs/out.log)",
-      "Log level configurable via LOG_LEVEL",
-      "Error logged via request.log.error with full stack",
-      "Structured logs with info, warn, error levels"
+      "Log level configurable via LOG_LEVEL variable",
+      "Logs stored in /logs, *.log files ignored in versioning",
+      "Structured logging with levels INFO, WARN, ERROR"
     ],
     "monitoring_tools": [
       "PM2 for monitoring and automatic restart",
@@ -391,11 +457,14 @@
       "Grafana"
     ],
     "error_recovery": [
-      "Automatic process restart on 1G memory limit",
+      "Automatic process restart on memory limit (1G)",
       "Error handling via Fastify middleware",
-      "Graceful fallback to 500 Internal Server Error for unknown errors",
-      "Immediate interruption and response on validation error",
-      "Exception handling with standardized error return"
+      "Standardized error return for failures, no automatic retry",
+      "Propagation of errors to upper layers for handling",
+      "Graceful shutdown to avoid request loss",
+      "Immediate response with status 400 for validation errors",
+      "Retry mechanism for transient failures",
+      "Fallback to manual review queue"
     ]
   },
   "dependencies_context": {
@@ -412,64 +481,94 @@
       "PM2",
       "@nut-tree-fork/nut-js",
       "pino",
-      "reflect-metadata",
       "dotenv",
+      "TypeScript 5.x",
+      "AutomationService",
+      "nut-js",
+      "AutomationController",
       "TypeScript compiler",
-      "Node.js runtime"
+      "Node.js runtime",
+      "Jest",
+      "Postman for testing",
+      "JSON Schema validation libraries (e.g., ajv)",
+      "Tesseract OCR",
+      "OpenCV",
+      "Base tsconfig.json"
     ],
-    "deprecated_packages": [],
+    "deprecated_packages": [
+      "None identified"
+    ],
     "version_constraints": [
       "ECMAScript 2024",
-      "TypeScript >=5.0",
+      "TypeScript 5.x",
       "@nut-tree-fork/nut-js ^4.2.0",
       "fastify ^4.24.0",
       "typescript ^5.3.2",
-      "zod >=3.0.0",
-      "tsyringe >=4.7.0",
-      "Node.js >=18",
-      "dotenv >=16.0.0"
+      "zod 3.x",
+      "tsyringe 4.x",
+      "pino 8.x",
+      "dotenv >=16.0.0",
+      "Nut.js compatible with Node.js 16+",
+      "Fastify >=4.x",
+      "Node.js compatible with ESNext",
+      "Tesseract >=5.0",
+      "OpenCV >=4.5"
     ],
     "internal_packages": [
       "domain/entities",
       "domain/use-cases",
       "application/services",
       "infrastructure/adapters",
-      "dto",
-      "config",
-      "routes",
-      "controllers",
-      "middlewares",
-      "schemas",
-      "types"
+      "application/dto",
+      "infrastructure/schemas",
+      "interface/controllers",
+      "config/environment.js",
+      "ocr_core",
+      "image_utils",
+      "api_handlers"
     ]
   },
   "current_challenges": {
     "technical_debt": [
-      "Lack of explicit error handling in async calls",
-      "Environment variable validation can be improved",
+      "Lack of explicit authentication and authorization",
+      "Command validation can be more robust",
+      "Error handling could be more granular",
+      "Input validation can be improved",
+      "Environment variable validation could be enhanced",
       "Base execute methods not implemented in subclasses",
-      "Use of 'as any' for drag and scroll options may compromise typing",
-      "Parameter validation not yet implemented",
-      "No formal automated tests",
-      "Expand error handling for async uncaught errors"
+      "Temporary use of any for images",
+      "Image dimension estimation imprecise",
+      "Lack of robust error handling",
+      "Lack of formal automated tests",
+      "Refactor legacy image preprocessing code",
+      "Improve test coverage on edge cases"
     ],
     "known_issues": [
+      "Risk of unauthorized command execution",
+      "Possible silent failure on unknown commands",
+      "Potential overhead in base64 decoding on frequent calls",
       "Risk of exceptions if execute is not overridden",
-      "Execution blocks on failure with no continuation",
-      "Possible unhandled exception in waitFor if timeout occurs",
-      "Potential verbose error messages in development",
-      "Direct controller dependency may hinder isolated testing"
+      "Possible failure in correct dimension detection for non-square buffers",
+      "Possible exposure of sensitive endpoints without protection",
+      "Possible error message leakage in production if NODE_ENV misconfigured",
+      "Dependency on local API availability",
+      "OCR accuracy drops on low-quality scans",
+      "High memory usage on large batch processing"
     ],
     "performance_bottlenecks": [
-      "Single instance limitation may impact performance under high load",
+      "Limitation to one instance may impact performance under high load",
       "Potential latency in UI automation depending on environment",
-      "Frequent decoding and manipulation of base64 images",
-      "Sequential execution may be slow for large volumes",
-      "High-confidence search in large regions may be slow",
-      "Delays can impact total execution time"
+      "Potential latency in synchronous desktop command execution",
+      "Dependency on external services may impact latency",
+      "Synchronous buffer operations may impact performance",
+      "Sequential execution may limit throughput",
+      "Fixed delays may impact total execution time",
+      "Image preprocessing step is CPU intensive"
     ],
     "migration_status": [
-      "Initial project, no migrations in progress"
+      "Initial project, no migrations in progress",
+      "Stable project, no migrations in progress",
+      "Migrating from Tesseract 4 to 5"
     ]
   },
   "team_preferences": {
@@ -480,100 +579,88 @@
       "Code quality",
       "Test coverage",
       "Security and validation",
-      "TypeScript code quality, test coverage, design patterns",
       "Type and schema validation",
       "Naming consistency",
-      "Error handling validation",
-      "Dependency injection consistency",
-      "Immutability maintenance",
-      "Correct container registration",
-      "Environment variable validation",
-      "Correct implementation of execute method",
-      "Consistent typing and error handling",
-      "Documentation clarity",
-      "No unjustified any usage",
-      "Interface clarity",
-      "Dependency injection correctness",
-      "Async flow clarity",
-      "Design pattern compliance",
-      "Adequate testing",
-      "Consistent error response format",
-      "Proper error logging",
-      "No sensitive data exposure",
-      "Schema validation, error handling, dependency injection",
-      "Middleware clarity and simplicity",
-      "Separation of responsibilities",
-      "Clarity and readability"
+      "Error handling",
+      "Correct dependency injection",
+      "Correctness of OCR logic",
+      "Performance optimizations",
+      "Security compliance"
     ],
     "documentation_requirements": [
       "Clear documentation via JSDoc and README",
-      "Clear documentation of schemas and types",
       "JSDoc for public methods",
-      "Document environment variables and default values",
-      "Clear documentation for each command and its parameters",
-      "Document interfaces and use cases",
-      "Clear documentation of endpoints and data contracts",
-      "Document all error handler behaviors and response formats",
-      "Clear documentation of routes and controllers"
+      "Clear documentation for schemas and types",
+      "Document environment variables and defaults",
+      "Clear documentation for each command and parameters",
+      "Clear documentation for endpoints and DTOs",
+      "Comprehensive docstrings",
+      "Architecture decision records"
     ],
     "communication_style": [
       "Clear and objective comments",
       "Use of _ prefix for ignored arguments",
-      "Objective and technical comments",
-      "Use of PRs for discussions",
-      "Use of English for technical terms",
-      "Objective comments and JSDoc",
-      "Clarity and conciseness in comments",
-      "Portuguese for context, English for technical terms"
+      "Objective and technical comments in Portuguese with technical terms in English",
+      "Clear, concise comments",
+      "Respectful and constructive PR discussions"
     ],
     "decision_log": [
-      "Strict rules for promises and unused variables",
+      "Adoption of strict rules for promises and unused variables",
       "Adoption of Fastify for performance",
       "Use of tsyringe for DI",
       "Validation with Zod",
-      "Separation between mouse and screen commands",
+      "Use of DI for flexibility and testability",
       "Use of NutJS for device control",
       "Use of dotenv for centralized configuration",
-      "Command pattern for modularity and extensibility",
-      "Factory Method for action creation",
-      "Interfaces for data contracts",
-      "Static method for type conversion",
-      "Dependency Injection for decoupling and testability",
-      "Centralized error handling via middleware",
-      "Use of Zod for validation errors",
-      "Controller pattern for modularization",
-      "Async/await for async control"
+      "Adoption of Command pattern for modularity and extensibility",
+      "Use of interfaces for data contracts",
+      "Immediate stop on failures for safety",
+      "Separation between domain and infrastructure",
+      "Fastify for high performance REST APIs",
+      "Centralized error handling for maintainability and monitoring",
+      "Use of Zod for centralized validation",
+      "Use of Controller pattern for modularization",
+      "Adoption of Fastify Plugin for routes",
+      "Use of async/await for async control",
+      "Use of ESLint and Jest for quality and testing",
+      "Clear separation of ignored files",
+      "Adopted pipeline pattern for modularity",
+      "Use OAuth2 for API security"
     ]
   },
   "api_specifications": {
     "api_style": [
-      "REST"
+      "REST",
+      "RESTful API"
     ],
     "versioning_strategy": [
-      "URL versioning (/api/v1/)",
-      "Semantic versioning via package.json"
+      "Versioning via URL (/api/v1/)",
+      "Semantic versioning via package.json",
+      "URI versioning (e.g., /api/v1/)"
     ],
     "response_formats": [
       "JSON",
-      "{ success: boolean, error?: string, data?: any }",
+      "Standardized JSON with success, error, and data fields",
       "Base64 encoded images",
-      "JSON objects for match results"
+      "Buffers for images"
     ],
     "rate_limiting": [
-      "Configurable per IP and route"
+      "1000 requests per minute per user"
     ]
   },
   "deployment_context": {
     "environments": [
       "development (http://localhost:3000)",
       "production (configurable via .env)",
-      "staging"
+      "staging",
+      "prod - ocr.example.com"
     ],
     "deployment_method": [
       "PM2 process manager",
-      "Docker",
+      "Docker container",
       "Node.js runtime",
-      "CI/CD pipelines"
+      "CI/CD pipelines",
+      "Docker containers orchestrated by Kubernetes"
     ],
     "environment_variables": [
       "NODE_ENV",
@@ -582,9 +669,11 @@
       "LOG_LEVEL",
       "MOUSE_SPEED",
       "SCREEN_CONFIDENCE",
+      "SCREEN_ADAPTER_IMPLEMENTATION",
       "API_URL",
-      "AUTOMATION_SERVICE_ENDPOINT",
-      "JWT_SECRET"
+      "OCR_API_KEY",
+      "DATABASE_URL",
+      "REDIS_URL"
     ],
     "infrastructure_constraints": [
       "Accessibility permissions on macOS",
@@ -592,9 +681,12 @@
       "Memory limit set to 1G for automatic restart",
       "Requires Node.js >=16",
       "Compatible with Linux, Windows, and macOS",
-      "Requires access to hardware for mouse and screen control",
-      "Resource limitation for parallel execution"
+      "Requires access to desktop for automation",
+      "Requires access to graphical resources for screen capture and mouse control",
+      "Requires local API running",
+      "Limited GPU availability",
+      "Max 4 CPU cores per pod"
     ]
   },
-  "lastCommitHash": "a863c336b500ae6fc664e27f1654c324739c2bb4"
+  "lastCommitHash": "db6d741b10ccd2b9f5fd8ccd1c9eeb877257f85d"
 }
