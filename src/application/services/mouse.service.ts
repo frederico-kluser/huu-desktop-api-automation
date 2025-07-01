@@ -46,23 +46,76 @@ export class MouseService {
   }
 
   async click(request: MouseClickRequest): Promise<void> {
-    const { x, y, button = MouseButton.LEFT, doubleClick = false } = request;
+    const { x, y, button = MouseButton.LEFT, doubleClick = false, smooth = true, duration = 1000 } = request;
 
     if (x !== undefined && y !== undefined) {
+      // Validar coordenadas antes de clicar
+      await this.validateCoordinates(x, y);
+      
+      // Se smooth é true, mover primeiro com a duração especificada
+      if (smooth) {
+        await this.mouseAdapter.move({ x, y }, smooth, duration);
+      }
+      
       await this.mouseAdapter.clickAt({ x, y }, button as MouseButton, doubleClick);
+      this.logger.info({ x, y, button, doubleClick }, 'Mouse clicked successfully');
     } else {
       await this.mouseAdapter.click(button as MouseButton, doubleClick);
+      this.logger.info({ button, doubleClick }, 'Mouse clicked at current position');
     }
   }
 
   async drag(request: MouseDragRequest): Promise<void> {
-    const { from, to, duration = 1000 } = request;
-    await this.mouseAdapter.drag(from, to, duration);
+    const { from, to, duration = 1000, smooth = true } = request;
+    
+    // Validar coordenadas de origem e destino
+    await this.validateCoordinates(from.x, from.y);
+    await this.validateCoordinates(to.x, to.y);
+    
+    this.logger.debug({ from, to, duration, smooth }, 'Dragging mouse');
+    
+    try {
+      // Se smooth é true, mover primeiro para a posição inicial com movimento suave
+      if (smooth) {
+        await this.mouseAdapter.move(from, smooth, duration / 3);
+      }
+      
+      await this.mouseAdapter.drag(from, to, duration);
+      this.logger.info({ from, to }, 'Mouse dragged successfully');
+    } catch (error) {
+      this.logger.error({ error, from, to }, 'Failed to drag mouse');
+      throw error;
+    }
   }
 
   async scroll(request: MouseScrollRequest): Promise<void> {
-    const { direction, amount = 3 } = request;
-    await this.mouseAdapter.scroll(direction, amount);
+    const { direction, amount = 3, smooth = true, duration = 1000 } = request;
+    
+    this.logger.debug({ direction, amount, smooth, duration }, 'Scrolling mouse');
+    
+    try {
+      if (smooth && duration > 0) {
+        // Dividir o scroll em múltiplos passos menores para criar efeito suave
+        const steps = Math.max(1, Math.floor(duration * 30 / 1000)); // 30 fps
+        const stepAmount = amount / steps;
+        const stepDuration = duration / steps;
+        
+        for (let i = 0; i < steps; i++) {
+          await this.mouseAdapter.scroll(direction, stepAmount);
+          if (i < steps - 1) {
+            await new Promise(resolve => setTimeout(resolve, stepDuration));
+          }
+        }
+      } else {
+        // Scroll instantâneo
+        await this.mouseAdapter.scroll(direction, amount);
+      }
+      
+      this.logger.info({ direction, amount }, 'Mouse scrolled successfully');
+    } catch (error) {
+      this.logger.error({ error, direction, amount }, 'Failed to scroll mouse');
+      throw error;
+    }
   }
 
   async getPosition(): Promise<Point> {

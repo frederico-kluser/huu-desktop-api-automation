@@ -17,6 +17,8 @@ export const mouseClickJsonSchema = {
     y: { type: 'integer', minimum: 0 },
     button: { type: 'string', enum: ['left', 'right', 'middle'], default: 'left' },
     doubleClick: { type: 'boolean', default: false },
+    smooth: { type: 'boolean', default: true },
+    duration: { type: 'integer', minimum: 100, maximum: 5000, default: 1000 },
   },
   additionalProperties: false,
 };
@@ -43,6 +45,7 @@ export const mouseDragJsonSchema = {
       additionalProperties: false,
     },
     duration: { type: 'integer', minimum: 100, maximum: 5000, default: 1000 },
+    smooth: { type: 'boolean', default: true },
   },
   required: ['from', 'to'],
   additionalProperties: false,
@@ -53,6 +56,8 @@ export const mouseScrollJsonSchema = {
   properties: {
     direction: { type: 'string', enum: ['up', 'down'] },
     amount: { type: 'integer', minimum: 1, maximum: 10, default: 3 },
+    smooth: { type: 'boolean', default: true },
+    duration: { type: 'integer', minimum: 100, maximum: 5000, default: 1000 },
   },
   required: ['direction'],
   additionalProperties: false,

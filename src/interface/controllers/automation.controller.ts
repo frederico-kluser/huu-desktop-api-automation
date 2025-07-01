@@ -18,10 +18,14 @@ import type {
   ScreenFindRequest,
   ScreenCaptureRequest,
 } from '../../application/dto/automation-request.dto.js';
+import { MouseDefaults } from '../../config/mouse.config.js';
+import { environment } from '../../config/environment.js';
+import pino from 'pino';
 
 export class AutomationController {
   private mouseService: MouseService;
   private screenService: ScreenService;
+  private readonly logger = pino({ name: 'AutomationController' });
 
   constructor() {
     this.mouseService = container.resolve<MouseService>('MouseService');
@@ -123,6 +127,21 @@ export class AutomationController {
         },
       },
       this.mousePosition.bind(this),
+    );
+
+    server.get(
+      '/mouse/position/stream',
+      {
+        schema: {
+          headers: {
+            type: 'object',
+            properties: {
+              'x-api-key': { type: 'string' },
+            },
+          },
+        },
+      },
+      this.mousePositionStream.bind(this),
     );
 
     server.post(
@@ -237,5 +256,79 @@ export class AutomationController {
   ): Promise<void> {
     const image = await this.screenService.capture(request.body);
     await reply.send({ success: true, data: { image } });
+  }
+
+  /**
+   * Endpoint de streaming para posição contínua do mouse usando Server-Sent Events
+   * @param request - Requisição Fastify
+   * @param reply - Resposta Fastify
+   */
+  private async mousePositionStream(
+    request: FastifyRequest<{ Headers: { 'x-api-key'?: string } }>,
+    reply: FastifyReply,
+  ): Promise<void> {
+    // Validação simples de API key (pode ser melhorada com um sistema real de autenticação)
+    const apiKey = request.headers['x-api-key'];
+    if (!apiKey || apiKey !== environment.apiKey) {
+      await reply.code(401).send({ success: false, error: 'Unauthorized' });
+      return;
+    }
+
+    // Configurar headers para Server-Sent Events
+    reply.raw.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+      'Content-Security-Policy': "default-src 'none'",
+      'X-Content-Type-Options': 'nosniff',
+    });
+
+    this.logger.info('Starting mouse position stream');
+
+    let intervalId: NodeJS.Timeout;
+    let messageCount = 0;
+
+    // Função para enviar posição do mouse
+    const sendMousePosition = async () => {
+      try {
+        const position = await this.mouseService.getPosition();
+        const data = {
+          x: position.x,
+          y: position.y,
+          timestamp: Date.now(),
+        };
+
+        // Enviar dados no formato SSE
+        reply.raw.write(`data: ${JSON.stringify(data)}\n\n`);
+
+        // Log apenas 1 em cada 10 mensagens para evitar spam
+        messageCount++;
+        if (messageCount % 10 === 0) {
+          this.logger.debug({ position, messageCount }, 'Sent mouse position');
+        }
+      } catch (error) {
+        this.logger.error({ error }, 'Error getting mouse position');
+        clearInterval(intervalId);
+        reply.raw.end();
+      }
+    };
+
+    // Iniciar streaming com intervalo configurável
+    intervalId = setInterval(sendMousePosition, MouseDefaults.streamInterval);
+
+    // Enviar primeira posição imediatamente
+    await sendMousePosition();
+
+    // Limpar recursos quando a conexão for fechada
+    request.raw.on('close', () => {
+      this.logger.info({ messageCount }, 'Mouse position stream closed');
+      clearInterval(intervalId);
+    });
+
+    // Tratar erros de conexão
+    request.raw.on('error', (error) => {
+      this.logger.error({ error }, 'Stream connection error');
+      clearInterval(intervalId);
+    });
   }
 }

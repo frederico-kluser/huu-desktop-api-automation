@@ -5,6 +5,7 @@ import type { IMouseAdapter } from '../../../application/services/mouse.service.
 import type { Point } from '../../../domain/entities/mouse-action.js';
 import { MouseButton } from '../../../domain/entities/mouse-action.js';
 import { environment } from '../../../config/environment.js';
+import { MouseDefaults } from '../../../config/mouse.config.js';
 
 @injectable()
 export class NutJSMouseAdapter implements IMouseAdapter {
@@ -19,14 +20,49 @@ export class NutJSMouseAdapter implements IMouseAdapter {
   }
 
   async move(point: Point, smooth: boolean, duration: number): Promise<void> {
-    if (smooth) {
-      mouse.config.mouseSpeed = Math.max(100, Math.min(1000, duration));
-    } else {
+    const targetPoint = new NutPoint(point.x, point.y);
+    
+    if (!smooth) {
+      // Movimento instantâneo
       mouse.config.mouseSpeed = 10000;
+      await mouse.move(straightTo(targetPoint));
+      return;
     }
 
-    const targetPoint = new NutPoint(point.x, point.y);
-    await mouse.move(straightTo(targetPoint));
+    // Movimento suave com interpolação linear
+    const currentPos = await mouse.getPosition();
+    const startX = currentPos.x;
+    const startY = currentPos.y;
+    const deltaX = point.x - startX;
+    const deltaY = point.y - startY;
+    
+    // Calcular número de passos baseado na taxa de amostragem
+    const steps = Math.max(1, Math.floor(duration * MouseDefaults.sampleRate / 1000));
+    const stepDuration = duration / steps;
+    
+    // Executar interpolação linear
+    for (let i = 1; i <= steps; i++) {
+      const progress = i / steps;
+      const intermediateX = Math.round(startX + deltaX * progress);
+      const intermediateY = Math.round(startY + deltaY * progress);
+      
+      const intermediatePoint = new NutPoint(intermediateX, intermediateY);
+      mouse.config.mouseSpeed = 10000; // Movimento instantâneo para cada step
+      await mouse.move(straightTo(intermediatePoint));
+      
+      // Aguardar antes do próximo passo (exceto no último)
+      if (i < steps) {
+        await this.delay(stepDuration);
+      }
+    }
+  }
+
+  /**
+   * Aguarda um período em milissegundos
+   * @param ms - Tempo de espera em milissegundos
+   */
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   async click(button: MouseButton, doubleClick: boolean): Promise<void> {

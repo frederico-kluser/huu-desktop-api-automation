@@ -17,17 +17,22 @@ export const mouseClickSchema = z.object({
   y: z.number().int().min(0).optional(),
   button: z.enum(['left', 'right', 'middle']).optional().default('left'),
   doubleClick: z.boolean().optional().default(false),
+  smooth: z.boolean().optional().default(true),
+  duration: z.number().int().min(100).max(5000).optional().default(1000),
 });
 
 export const mouseDragSchema = z.object({
   from: pointSchema,
   to: pointSchema,
   duration: z.number().int().min(100).max(5000).optional().default(1000),
+  smooth: z.boolean().optional().default(true),
 });
 
 export const mouseScrollSchema = z.object({
   direction: z.enum(['up', 'down']),
   amount: z.number().int().min(1).max(10).default(3),
+  smooth: z.boolean().optional().default(true),
+  duration: z.number().int().min(100).max(5000).optional().default(1000),
 });
 
 export const screenFindSchema = z.object({

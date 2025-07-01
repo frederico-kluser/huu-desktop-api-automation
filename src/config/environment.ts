@@ -9,6 +9,7 @@ export const environment = {
   logLevel: process.env.LOG_LEVEL || 'info',
   mouseSpeed: parseInt(process.env.MOUSE_SPEED || '500', 10),
   screenConfidence: parseFloat(process.env.SCREEN_CONFIDENCE || '0.8'),
+  apiKey: process.env.API_KEY || 'default-api-key',
 } as const;
 
 export const isDevelopment = environment.nodeEnv === 'development';
