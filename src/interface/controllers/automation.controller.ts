@@ -264,16 +264,9 @@ export class AutomationController {
    * @param reply - Resposta Fastify
    */
   private async mousePositionStream(
-    request: FastifyRequest<{ Headers: { 'x-api-key'?: string } }>,
+    request: FastifyRequest,
     reply: FastifyReply,
   ): Promise<void> {
-    // Validação simples de API key (pode ser melhorada com um sistema real de autenticação)
-    const apiKey = request.headers['x-api-key'];
-    if (!apiKey || apiKey !== environment.apiKey) {
-      await reply.code(401).send({ success: false, error: 'Unauthorized' });
-      return;
-    }
-
     // Configurar headers para Server-Sent Events
     reply.raw.writeHead(200, {
       'Content-Type': 'text/event-stream',
