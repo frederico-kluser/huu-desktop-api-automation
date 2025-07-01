@@ -1586,7 +1586,7 @@
     ]
   },
   "jest.config.js": {
-    "summary": "Este arquivo configura o ambiente de testes para um projeto TypeScript que utiliza Jest com suporte a módulos ECMAScript (ESM). Ele define presets específicos para integração com ts-jest, configura o ambiente de execução dos testes para Node.js, e mapeia extensões e módulos para garantir compatibilidade com importações ESM. Além disso, especifica padrões para localização dos testes e regras para coleta de cobertura de código, excluindo arquivos de definição e testes. O comportamento central é garantir que o ambiente de testes esteja corretamente configurado para projetos TypeScript modernos, facilitando a execução e análise de testes automatizados com cobertura precisa.",
+    "summary": "Este arquivo configura o ambiente de testes para um projeto TypeScript utilizando Jest com suporte a módulos ECMAScript (ESM). Ele define presets específicos para integração com ts-jest, configura o ambiente de execução dos testes como Node.js, e mapeia extensões e módulos para garantir compatibilidade com importações ESM. Além disso, especifica padrões para localização dos testes, coleta e relatório de cobertura de código, e estabelece limites mínimos de cobertura para garantir qualidade. O arquivo também define timeout para execução dos testes e scripts de setup para inicialização do ambiente de testes, promovendo uma integração contínua e confiável no pipeline de desenvolvimento.",
     "properties": [
       {
         "property": "technical_stack",
@@ -1614,25 +1614,40 @@
         "property": "testing_strategy",
         "subProperty": "test_structure",
         "value": [
-          "__tests__/**/*.test.ts"
+          "**/__tests__/**/*.test.ts",
+          "**/tests/**/*.test.ts",
+          "**/tests/**/*.spec.ts"
         ]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
         "value": [
-          "src/**/*.ts",
-          "!src/**/*.d.ts",
-          "!src/**/*.test.ts",
-          "!src/index.ts"
+          "branches >= 80%",
+          "functions >= 80%",
+          "lines >= 80%",
+          "statements >= 80%"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_timeout",
+        "value": [
+          "10000 ms"
         ]
       },
       {
         "property": "development_workflow",
-        "subProperty": "ci_cd_pipeline",
+        "subProperty": "setup_files_after_env",
         "value": [
-          "Test execution",
-          "Coverage collection"
+          "<rootDir>/tests/setup.ts"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": [
+          "strict TypeScript via ts-jest"
         ]
       }
     ]
@@ -2143,14 +2158,14 @@
     ]
   },
   "package.json": {
-    "summary": "O projeto nutjs-rest-api é uma API REST desenvolvida em TypeScript que serve como um wrapper para a automação desktop utilizando a biblioteca NutJS. Seu comportamento central consiste em expor funcionalidades de automação de interface gráfica via endpoints HTTP, permitindo que clientes controlem ações no desktop de forma programática. A aplicação integra Fastify para gerenciamento eficiente de rotas e requisições, utiliza Zod para validação de dados, e emprega Pino para logging estruturado, garantindo robustez e observabilidade. O sistema suporta desenvolvimento, testes unitários e integração, além de processos de linting e formatação, evidenciando um pipeline de qualidade e manutenção contínua. A arquitetura modular e o uso de injeção de dependências via tsyringe promovem escalabilidade e fácil manutenção, enquanto o uso de dotenv permite configuração flexível por ambiente. Em suma, o projeto habilita automação desktop controlada remotamente, facilitando integrações e automações customizadas em ambientes variados.",
+    "summary": "O projeto nutjs-rest-api é uma API RESTful que serve como um wrapper para a automação desktop utilizando a biblioteca NutJS. Seu comportamento central consiste em expor funcionalidades de automação de interface gráfica via endpoints HTTP, permitindo que clientes controlem operações de desktop remotamente. A aplicação gerencia o ciclo de vida das requisições, valida dados de entrada com schemas, e integra-se com serviços de logging e injeção de dependências para garantir modularidade e rastreabilidade. A arquitetura modular e o uso de Fastify como framework web proporcionam alta performance e escalabilidade, enquanto o uso de TypeScript e ferramentas de linting e testes asseguram qualidade e manutenção do código. O projeto está estruturado para suportar desenvolvimento ágil, testes unitários e integração contínua, facilitando a entrega de automações confiáveis e seguras para usuários finais.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
         "value": [
           "nutjs-rest-api",
-          "API REST para automação desktop com NutJS"
+          "REST API wrapper para automação desktop NutJS"
         ]
       },
       {
@@ -2158,8 +2173,8 @@
         "subProperty": "domain",
         "value": [
           "Automação Desktop",
-          "Automação de Interface Gráfica",
-          "APIs REST"
+          "API REST",
+          "Automação de Interface Gráfica"
         ]
       },
       {
@@ -2167,8 +2182,7 @@
         "subProperty": "current_phase",
         "value": [
           "Produção",
-          "Estável",
-          "Versão 1.0.0"
+          "Estável"
         ]
       },
       {
@@ -2177,23 +2191,21 @@
         "value": [
           "Execução segura de comandos de automação",
           "Validação rigorosa de inputs",
-          "Manutenção da integridade do ambiente desktop"
+          "Logs completos para auditoria"
         ]
       },
       {
         "property": "technical_stack",
         "subProperty": "primary_language",
         "value": [
-          "TypeScript 5.3.2",
-          "Node.js 20.x"
+          "TypeScript 5.3"
         ]
       },
       {
         "property": "technical_stack",
         "subProperty": "frameworks",
         "value": [
-          "Fastify 4.24.0",
-          "tsyringe 4.8.0"
+          "Fastify 4.24.0"
         ]
       },
       {
@@ -2205,7 +2217,8 @@
         "property": "technical_stack",
         "subProperty": "external_services",
         "value": [
-          "NutJS desktop automation library"
+          "NutJS",
+          "dotenv (configuração ambiente)"
         ]
       },
       {
@@ -2220,8 +2233,8 @@
         "subProperty": "design_pattern",
         "value": [
           "Dependency Injection",
-          "Modular Architecture",
-          "Layered Architecture"
+          "REST API",
+          "Modular"
         ]
       },
       {
@@ -2239,39 +2252,39 @@
         "value": [
           "camelCase para variáveis e funções",
           "PascalCase para classes",
-          "kebab-case para arquivos"
+          "kebab-case para scripts npm"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre API, serviços de automação e utilitários",
-          "Dependências injetadas via tsyringe"
+          "Separação clara entre API, serviços de automação e infraestrutura",
+          "Uso de injeção de dependências para desacoplamento"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
         "value": [
-          "ESLint com regras baseadas em Airbnb e Prettier"
+          "Prettier",
+          "ESLint com regras TypeScript"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
         "value": [
+          "@typescript-eslint",
           "eslint-config-prettier",
-          "eslint-plugin-prettier",
-          "typescript-eslint"
+          "eslint-plugin-prettier"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
         "value": [
-          "Prettier 3.1.0",
-          "Configuração padrão para TypeScript"
+          "Prettier com configuração padrão para TypeScript"
         ]
       },
       {
@@ -2292,7 +2305,7 @@
         "property": "testing_strategy",
         "subProperty": "test_framework",
         "value": [
-          "Jest 29.7.0"
+          "Jest 29"
         ]
       },
       {
@@ -2321,7 +2334,7 @@
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
         "value": [
-          "Mocks e spies via Jest"
+          "Mocks e stubs via Jest"
         ]
       },
       {
@@ -2357,8 +2370,7 @@
         "property": "commands",
         "subProperty": "setup",
         "value": [
-          "npm install",
-          "cp .env.example .env"
+          "npm install"
         ]
       },
       {
@@ -2407,28 +2419,28 @@
         "property": "security_constraints",
         "subProperty": "authentication_method",
         "value": [
-          "Não especificado (potencial risco)"
+          "Não especificado (possível autenticação futura)"
         ]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
         "value": [
-          "Não implementado explicitamente no código fornecido"
+          "Validação rigorosa de inputs para evitar execução indevida"
         ]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
         "value": [
-          "Variáveis de ambiente via dotenv, sem exposição direta"
+          "Variáveis de ambiente via dotenv, sem exposição em código"
         ]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
         "value": [
-          "Não especificado"
+          "Não especificado no código fornecido"
         ]
       },
       {
@@ -2442,14 +2454,14 @@
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
         "value": [
-          "Não especificado"
+          "Baixa latência para comandos de automação"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
         "value": [
-          "Eficiência na resposta HTTP e execução de comandos"
+          "Velocidade e escalabilidade do servidor HTTP"
         ]
       },
       {
@@ -2463,21 +2475,21 @@
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
         "value": [
-          "Arquitetura modular e uso de DI facilitam escalabilidade"
+          "Arquitetura modular para fácil escalabilidade"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
         "value": [
-          "Padrão JSON para respostas de erro via Fastify"
+          "JSON padrão com mensagens e códigos HTTP"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
         "value": [
-          "Logging estruturado com Pino e pino-pretty"
+          "Logging estruturado com Pino"
         ]
       },
       {
@@ -2491,7 +2503,7 @@
         "property": "error_handling",
         "subProperty": "error_recovery",
         "value": [
-          "Tratamento de erros via middleware Fastify"
+          "Tratamento de erros via middleware HTTP"
         ]
       },
       {
@@ -2514,33 +2526,35 @@
         "property": "dependencies_context",
         "subProperty": "version_constraints",
         "value": [
-          "Versões fixas e compatíveis definidas no package.json"
+          "Versões fixas e compatíveis no package.json"
         ]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": []
+        "value": [
+          "src/ módulos internos organizados por responsabilidade"
+        ]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
         "value": [
-          "Falta de autenticação e autorização explícita"
+          "TODO para script de auditoria de roadmap"
         ]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
         "value": [
-          "Risco de execução de comandos não autorizados"
+          "Nenhum conhecido explicitamente"
         ]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
         "value": [
-          "Potencial latência em execução síncrona de comandos desktop"
+          "Nenhum identificado no código base"
         ]
       },
       {
@@ -2554,7 +2568,7 @@
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Segurança, qualidade de código, cobertura de testes"
+          "Qualidade do código, cobertura de testes, segurança"
         ]
       },
       {
@@ -2568,14 +2582,14 @@
         "property": "team_preferences",
         "subProperty": "communication_style",
         "value": [
-          "Comentários objetivos e PRs detalhados"
+          "Comentários objetivos e claros, uso de PRs"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
         "value": [
-          "Adoção de DI, uso de Fastify e NutJS para automação"
+          "Adoção de Fastify, DI com tsyringe, uso de Zod para validação"
         ]
       },
       {
@@ -2589,7 +2603,7 @@
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
         "value": [
-          "Sem versionamento explícito na API"
+          "Sem versionamento explícito no código fornecido"
         ]
       },
       {
@@ -2603,29 +2617,29 @@
         "property": "api_specifications",
         "subProperty": "rate_limiting",
         "value": [
-          "Não implementado"
+          "Não especificado"
         ]
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
         "value": [
-          "development",
-          "production"
+          "dev",
+          "prod"
         ]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
         "value": [
-          "Node.js runtime, potencial para Docker"
+          "Node.js runtime, possível containerização"
         ]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
         "value": [
-          ".env para configuração de variáveis"
+          "Variáveis gerenciadas via dotenv"
         ]
       },
       {
@@ -2638,7 +2652,7 @@
     ]
   },
   "src/application/dto/automation-request.dto.ts": {
-    "summary": "Este arquivo define schemas de validação para operações relacionadas ao controle e interação do mouse e captura de tela, utilizando a biblioteca zod para garantir a integridade dos dados. Ele especifica formatos rigorosos para coordenadas, botões do mouse, durações, direções de scroll, e parâmetros para busca e captura de regiões da tela, permitindo a construção de comandos robustos para automação de interface gráfica. Através desses schemas, o código habilita a validação e tipagem segura de requisições que envolvem movimentos, cliques, arrastes, scrolls e manipulação visual, facilitando a integração com sistemas de automação e testes end-to-end, garantindo consistência e previsibilidade no comportamento das interações com a interface do usuário.",
+    "summary": "Este arquivo define schemas de validação para operações relacionadas ao controle e interação do mouse e captura de tela, utilizando a biblioteca Zod para garantir a integridade dos dados. Ele especifica formatos rigorosos para coordenadas, botões do mouse, durações e comportamentos opcionais como suavização (smooth) e confiança em reconhecimento de imagens, permitindo a construção de comandos robustos para automação de interface gráfica. Através desses schemas, o código habilita a validação e tipagem segura de requisições para movimentos, cliques, arrastes, scrolls e buscas visuais na tela, facilitando a integração com sistemas de automação e testes automatizados, garantindo consistência e previsibilidade no comportamento das interações simuladas.",
     "properties": [
       {
         "property": "project_metadata",
@@ -2651,9 +2665,9 @@
         "property": "project_metadata",
         "subProperty": "domain",
         "value": [
-          "Automação de Interface",
+          "Automação de Interface Gráfica",
           "UI Automation",
-          "Testes End-to-End"
+          "Testes Automatizados"
         ]
       },
       {
@@ -2669,7 +2683,7 @@
         "value": [
           "Validação rigorosa de coordenadas não negativas",
           "Limites de duração entre 100 e 5000 ms",
-          "Confiança mínima para reconhecimento de template em 0.8"
+          "Confiança mínima para reconhecimento de imagens"
         ]
       },
       {
@@ -2683,7 +2697,7 @@
         "property": "technical_stack",
         "subProperty": "frameworks",
         "value": [
-          "zod 3.x"
+          "Zod 3.x"
         ]
       },
       {
@@ -2707,7 +2721,7 @@
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
         "value": [
-          "Schema Validation",
+          "Schema Validation Pattern",
           "Type-safe API Contracts"
         ]
       },
@@ -2715,8 +2729,8 @@
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "src/schemas - definição de validações e tipos",
-          "src/types - inferência e exportação de tipos"
+          "src/schemas - validações de dados",
+          "src/types - definições de tipos inferidos"
         ]
       },
       {
@@ -2731,7 +2745,8 @@
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre schemas de validação e lógica de negócio"
+          "Separação clara entre schemas de input e tipos inferidos",
+          "Isolamento de validação de dados"
         ]
       },
       {
@@ -2787,7 +2802,7 @@
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
         "value": [
-          "Cobertura mínima de 90%"
+          ">= 90%"
         ]
       },
       {
@@ -2801,7 +2816,7 @@
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
         "value": [
-          "Mock de dados de entrada para validação de schemas"
+          "Mocks para inputs inválidos e limites de valores"
         ]
       },
       {
@@ -2822,14 +2837,17 @@
         "property": "development_workflow",
         "subProperty": "pr_requirements",
         "value": [
-          "Revisão obrigatória e testes aprovados"
+          "Code review obrigatório",
+          "Checks de lint e testes"
         ]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
         "value": [
-          "Lint, Test, Build"
+          "Lint",
+          "Testes unitários",
+          "Build"
         ]
       },
       {
@@ -2884,72 +2902,93 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
         "value": [
-          "Duração mínima de ações: 100ms",
-          "Duração máxima de ações: 5000ms"
+          "Duração mínima 100ms, máxima 5000ms para ações"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
         "value": [
-          "Precisão e robustez sobre velocidade bruta"
+          "Precisão e confiabilidade sobre velocidade extrema"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": []
+        "value": [
+          "Validação via Zod com mensagens padronizadas"
+        ]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "dependencies_context",
@@ -2967,7 +3006,7 @@
         "property": "dependencies_context",
         "subProperty": "version_constraints",
         "value": [
-          "zod 3.x"
+          "zod >=3.0.0"
         ]
       },
       {
@@ -2978,29 +3017,37 @@
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Validação de tipos e schemas",
-          "Consistência de nomenclatura"
+          "Validação de tipos e limites",
+          "Consistência de naming"
         ]
       },
       {
@@ -3021,38 +3068,51 @@
         "property": "team_preferences",
         "subProperty": "decision_log",
         "value": [
-          "Uso de zod para validação e tipagem"
+          "Uso de Zod para validação e tipagem"
         ]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": []
+        "value": [
+          "REST-like JSON payloads"
+        ]
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": []
+        "value": [
+          "JSON"
+        ]
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": []
+        "value": [
+          ""
+        ]
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": []
+        "value": [
+          "development",
+          "production"
+        ]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": []
+        "value": [
+          "Docker"
+        ]
       },
       {
         "property": "deployment_context",
@@ -3062,7 +3122,9 @@
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": []
+        "value": [
+          ""
+        ]
       }
     ]
   },
@@ -3568,7 +3630,7 @@
     ]
   },
   "src/application/services/mouse.service.ts": {
-    "summary": "Este arquivo implementa um serviço de controle de mouse que abstrai operações comuns como mover, clicar, arrastar e rolar o cursor na tela, garantindo validação de coordenadas e tratamento de erros. Utiliza injeção de dependência para desacoplar a implementação do adaptador de mouse, promovendo flexibilidade e testabilidade. O serviço registra eventos e erros via logger, integrando-se com uma camada de abstração para manipulação de ações do mouse, facilitando automação e interação programática com a interface gráfica do sistema operacional.",
+    "summary": "O código implementa um serviço de controle de mouse que abstrai operações comuns como mover, clicar, arrastar e rolar o cursor na tela, garantindo validação de coordenadas e tratamento de erros. Utiliza injeção de dependência para desacoplar a implementação do adaptador de mouse, permitindo flexibilidade e testabilidade. O serviço também incorpora logging detalhado para monitoramento das ações, além de suportar movimentos suaves e parametrizados, proporcionando uma interface robusta para automação de interações com o mouse em aplicações que demandam controle programático preciso.",
     "properties": [
       {
         "property": "project_metadata",
@@ -3583,24 +3645,23 @@
         "subProperty": "domain",
         "value": [
           "Automação de UI",
-          "Interação com sistema operacional",
-          "Mouse control"
+          "Testes automatizados",
+          "Interação com hardware de entrada"
         ]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
         "value": [
-          "Produção",
-          "Estabilização"
+          "Produção"
         ]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Validação rigorosa de coordenadas para evitar ações fora da tela",
-          "Execução confiável das ações de mouse sem perda de eventos"
+          "Validação rigorosa das coordenadas para evitar ações fora da tela",
+          "Execução confiável das ações de mouse com tratamento de erros"
         ]
       },
       {
@@ -3626,8 +3687,7 @@
         "property": "technical_stack",
         "subProperty": "external_services",
         "value": [
-          "@nut-tree-fork/nut-js (screen API)",
-          "pino (logging)"
+          "@nut-tree-fork/nut-js (screen API)"
         ]
       },
       {
@@ -3642,6 +3702,7 @@
         "subProperty": "design_pattern",
         "value": [
           "Dependency Injection",
+          "Adapter Pattern",
           "Clean Architecture"
         ]
       },
@@ -3652,16 +3713,16 @@
           "domain/entities - entidades de domínio",
           "dto - objetos de transferência de dados",
           "services - lógica de negócio",
-          "infrastructure - adaptadores e integrações externas"
+          "adapters - interfaces para hardware"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "CamelCase para classes e interfaces",
+          "CamelCase para classes",
           "camelCase para funções e variáveis",
-          "sufixo 'Request' para DTOs"
+          "sufixo Service para classes de serviço"
         ]
       },
       {
@@ -3669,46 +3730,42 @@
         "subProperty": "module_boundaries",
         "value": [
           "Separação clara entre domínio, DTOs e serviços",
-          "Dependência unidirecional do serviço para adaptadores"
+          "Dependência invertida via interfaces para adaptadores"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
         "value": [
-          "Airbnb TypeScript Style Guide"
+          "Airbnb JavaScript Style Guide adaptado para TypeScript"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
         "value": [
-          "ESLint com regras para TypeScript",
-          "Proibição de any explícito",
-          "Regras para async/await"
+          "ESLint com regras para TypeScript, incluindo regras de segurança e estilo"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
         "value": [
-          "Prettier com configuração padrão",
-          "Indentação 2 espaços"
+          "Prettier com configuração padrão para TypeScript"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
         "value": [
-          "JSDoc para funções públicas e interfaces"
+          "JSDoc para documentação inline"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "type_checking",
         "value": [
-          "Strict TypeScript",
-          "Uso de tipos explícitos para parâmetros e retornos"
+          "Strict TypeScript (strict mode habilitado)"
         ]
       },
       {
@@ -3722,8 +3779,7 @@
         "property": "testing_strategy",
         "subProperty": "test_structure",
         "value": [
-          "Testes localizados em __tests__ próximos aos serviços",
-          "Testes unitários para MouseService e mocks para IMouseAdapter"
+          "Testes localizados em pasta __tests__ ao lado dos arquivos de código"
         ]
       },
       {
@@ -3744,8 +3800,7 @@
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
         "value": [
-          "Mocks para adaptadores externos",
-          "Fixtures para requests DTO"
+          "Mock de adaptadores via tsyringe e jest.mock"
         ]
       },
       {
@@ -3766,18 +3821,14 @@
         "property": "development_workflow",
         "subProperty": "pr_requirements",
         "value": [
-          "Revisão obrigatória",
-          "Checks de lint e testes"
+          "Revisão obrigatória e testes automatizados aprovados"
         ]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
         "value": [
-          "Build",
-          "Lint",
-          "Test",
-          "Deploy automático para staging"
+          "Build, lint, test e deploy automatizados"
         ]
       },
       {
@@ -3832,70 +3883,87 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": []
+        "value": [
+          "Não aplicável (serviço local)"
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": []
+        "value": [
+          "Não aplicável"
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": []
+        "value": [
+          "Nenhum dado sensível manipulado"
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": []
+        "value": [
+          "Não aplicável"
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": []
+        "value": [
+          "Não aplicável"
+        ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
         "value": [
-          "Movements e drags com duração configurável, padrão 1000ms"
+          "Movimentos suaves configuráveis entre 0 e 1000ms",
+          "Scroll dividido em passos para suavidade"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
         "value": [
-          "Confiabilidade e precisão sobre velocidade extrema"
+          "Equilíbrio entre suavidade do movimento e responsividade"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": []
+        "value": [
+          "Não aplicável"
+        ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": []
+        "value": [
+          "Projeto focado em execução local, sem escalabilidade distribuída"
+        ]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
         "value": [
-          "Erros lançados com mensagens claras sobre coordenadas inválidas"
+          "Erros lançados como exceções padrão com mensagens claras"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
         "value": [
-          "Uso de pino com níveis debug, info e error para rastreamento"
+          "Logging estruturado com níveis debug, info e error via pino"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": []
+        "value": [
+          "Não especificado no código"
+        ]
       },
       {
         "property": "error_handling",
@@ -3908,9 +3976,10 @@
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
         "value": [
-          "tsyringe",
+          "IMouseAdapter",
           "@nut-tree-fork/nut-js",
-          "pino"
+          "pino",
+          "tsyringe"
         ]
       },
       {
@@ -3921,105 +3990,133 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": []
+        "value": [
+          "TypeScript >=5.0",
+          "tsyringe 4.x",
+          "pino 8.x"
+        ]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
         "value": [
-          "../dto/automation-request.dto.js",
-          "../../domain/entities/mouse-action.js"
+          "domain/entities",
+          "dto",
+          "services"
         ]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": []
+        "value": [
+          "Nenhum identificado explicitamente"
+        ]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": []
+        "value": [
+          "Possível latência em scrolls suaves com alta duração"
+        ]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": []
+        "value": [
+          "Loops assíncronos em scroll podem impactar performance"
+        ]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": []
+        "value": [
+          "Nenhuma migração em andamento"
+        ]
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Validação de tipos",
-          "Tratamento de erros",
-          "Cobertura de testes"
+          "Validação de tratamento de erros, cobertura de testes, aderência a padrões de injeção"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
         "value": [
-          "Documentação clara para interfaces públicas e DTOs"
+          "Documentação clara via JSDoc para métodos públicos"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
         "value": [
-          "Comentários objetivos e técnicos"
+          "Comentários objetivos e técnicos, sem excesso de verbosidade"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
         "value": [
-          "Adoção de Dependency Injection para flexibilidade e testabilidade"
+          "Uso de Dependency Injection para facilitar testes e modularidade"
         ]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": []
+        "value": [
+          "Não aplicável (serviço interno)"
+        ]
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": []
+        "value": [
+          "Não aplicável"
+        ]
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": []
+        "value": [
+          "Não aplicável"
+        ]
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": []
+        "value": [
+          "Não aplicável"
+        ]
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": []
+        "value": [
+          "Desenvolvimento local",
+          "Produção local"
+        ]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": []
+        "value": [
+          "Execução local via Node.js"
+        ]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": []
+        "value": [
+          "Não especificadas"
+        ]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": []
+        "value": [
+          "Dependência de ambiente gráfico para controle do mouse"
+        ]
       }
     ]
   },
@@ -4976,23 +5073,23 @@
     ]
   },
   "src/config/environment.ts": {
-    "summary": "Este arquivo configura o ambiente de execução da aplicação Node.js utilizando variáveis de ambiente carregadas via dotenv. Ele centraliza parâmetros essenciais como NODE_ENV, porta, host, nível de log, velocidade do mouse e confiança da tela, garantindo valores padrão caso as variáveis não estejam definidas. Além disso, expõe flags booleanas para identificar se o ambiente é de desenvolvimento ou produção, facilitando decisões condicionais em outras partes do sistema. O comportamento principal é fornecer uma configuração imutável e tipada para uso consistente em toda a aplicação, promovendo flexibilidade e controle centralizado das configurações de runtime.",
+    "summary": "Este arquivo de configuração em TypeScript tem como objetivo principal centralizar e padronizar a leitura das variáveis de ambiente essenciais para a aplicação, garantindo que parâmetros críticos como NODE_ENV, PORT, HOST, LOG_LEVEL, entre outros, estejam disponíveis de forma tipada e segura. Ele utiliza a biblioteca dotenv para carregar variáveis do ambiente, aplicando valores padrão quando não definidos, o que assegura robustez e previsibilidade no comportamento da aplicação em diferentes ambientes (desenvolvimento, produção). Além disso, expõe flags booleanas para facilitar a identificação do ambiente atual, suportando decisões condicionais em runtime. Essa abordagem modular e declarativa contribui para a manutenção, escalabilidade e integração com outros módulos do sistema, promovendo um padrão consistente para configuração e controle de comportamento da aplicação.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
         "value": [
-          "Configuração de Ambiente Node.js"
+          "Configuração Centralizada de Ambiente",
+          "Gerenciamento de variáveis de ambiente para controle de execução"
         ]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
         "value": [
-          "Backend",
-          "Configuração",
-          "Node.js",
-          "Environment Variables"
+          "Backend Node.js",
+          "Configuração e ambiente de execução",
+          "DevOps"
         ]
       },
       {
@@ -5007,8 +5104,9 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Variáveis de ambiente devem estar definidas corretamente",
-          "Valores padrão devem garantir funcionamento mínimo"
+          "Variáveis de ambiente devem estar definidas corretamente para evitar falhas",
+          "Não expor chaves sensíveis em logs ou código",
+          "Ambiente de produção deve ser identificado corretamente para aplicar regras específicas"
         ]
       },
       {
@@ -5034,7 +5132,9 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": []
+        "value": [
+          "APIs externas via API_KEY"
+        ]
       },
       {
         "property": "technical_stack",
@@ -5047,52 +5147,58 @@
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
         "value": [
-          "Configuration Object",
-          "Feature Flags"
+          "Configuration Centralization",
+          "Immutable Object Pattern"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "src/config - arquivos de configuração centralizada",
-          "src/env - variáveis de ambiente e carregamento"
+          "src/config - arquivos de configuração e variáveis de ambiente",
+          "src/modules - lógica de negócio",
+          "src/utils - utilitários gerais"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "camelCase para variáveis e propriedades",
-          "PascalCase para tipos e constantes exportadas"
+          "camelCase para variáveis e funções",
+          "PascalCase para tipos e interfaces",
+          "const assertions para objetos imutáveis"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Configuração isolada em módulo próprio para evitar dependências circulares"
+          "Configuração isolada em módulo próprio",
+          "Exportação explícita de constantes para uso global"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
         "value": [
-          "Airbnb TypeScript Style Guide"
+          "Airbnb JavaScript Style Guide adaptado para TypeScript"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
         "value": [
-          ".eslintrc.json com regras para TypeScript e Node.js"
+          "ESLint com regras para TypeScript",
+          "Sem uso de any",
+          "Regras para evitar variáveis não utilizadas"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
         "value": [
-          "Prettier com configuração padrão"
+          "Prettier com configuração padrão",
+          "Quebra de linha em 80 caracteres"
         ]
       },
       {
@@ -5106,7 +5212,8 @@
         "property": "code_standards",
         "subProperty": "type_checking",
         "value": [
-          "Strict TypeScript com 'as const' para imutabilidade"
+          "Strict TypeScript",
+          "Uso de as const para imutabilidade"
         ]
       },
       {
@@ -5120,21 +5227,21 @@
         "property": "testing_strategy",
         "subProperty": "test_structure",
         "value": [
-          "tests/config - testes unitários de configuração"
+          "Testes localizados em __tests__ próximos aos módulos"
         ]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
         "value": [
-          "Cobertura mínima de 90% para arquivos de configuração"
+          "Cobertura mínima de 80%"
         ]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_patterns",
         "value": [
-          "Given-When-Then"
+          "AAA (Arrange, Act, Assert)"
         ]
       },
       {
@@ -5148,7 +5255,7 @@
         "property": "development_workflow",
         "subProperty": "branch_strategy",
         "value": [
-          "GitHub Flow"
+          "Git Flow"
         ]
       },
       {
@@ -5162,17 +5269,15 @@
         "property": "development_workflow",
         "subProperty": "pr_requirements",
         "value": [
-          "Revisão obrigatória e testes automatizados"
+          "Revisão obrigatória por pelo menos um membro",
+          "Checks de lint e testes automatizados"
         ]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
         "value": [
-          "Lint",
-          "Testes",
-          "Build",
-          "Deploy automático"
+          "Build, lint, test e deploy automatizados"
         ]
       },
       {
@@ -5227,18 +5332,22 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": []
+        "value": [
+          "API Key via environment variable"
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": []
+        "value": [
+          "Controle externo baseado em API Key"
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
         "value": [
-          "Variáveis de ambiente não devem ser expostas em logs"
+          "API_KEY deve ser mantida secreta e não exposta"
         ]
       },
       {
@@ -5260,14 +5369,15 @@
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
         "value": [
-          "Baixa latência na leitura de configuração"
+          "Baixa latência na leitura de configuração",
+          "Minimizar overhead no startup"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
         "value": [
-          "Configuração carregada uma vez e reutilizada"
+          "Configuração carregada uma vez e imutável"
         ]
       },
       {
@@ -5284,7 +5394,7 @@
         "property": "error_handling",
         "subProperty": "logging_strategy",
         "value": [
-          "Nível de log configurável via variável LOG_LEVEL"
+          "LogLevel configurável via variável de ambiente"
         ]
       },
       {
@@ -5325,13 +5435,15 @@
         "property": "current_challenges",
         "subProperty": "technical_debt",
         "value": [
-          "Validação de variáveis de ambiente pode ser melhorada"
+          "Validação de variáveis de ambiente ainda não implementada"
         ]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": []
+        "value": [
+          "Valores padrão podem mascarar configurações incorretas"
+        ]
       },
       {
         "property": "current_challenges",
@@ -5347,7 +5459,8 @@
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Validação de tipos e uso correto de variáveis de ambiente"
+          "Validação de tipos e imutabilidade",
+          "Uso correto de variáveis de ambiente"
         ]
       },
       {
@@ -5361,15 +5474,15 @@
         "property": "team_preferences",
         "subProperty": "communication_style",
         "value": [
-          "Comentários claros e objetivos, uso de inglês técnico para termos específicos"
+          "Comentários claros e objetivos"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
         "value": [
-          "Uso de dotenv para configuração centralizada",
-          "Flags booleanas para ambiente"
+          "Uso de dotenv para configuração",
+          "Valores padrão para evitar falhas em ambiente de desenvolvimento"
         ]
       },
       {
@@ -5417,7 +5530,8 @@
           "HOST",
           "LOG_LEVEL",
           "MOUSE_SPEED",
-          "SCREEN_CONFIDENCE"
+          "SCREEN_CONFIDENCE",
+          "API_KEY"
         ]
       },
       {
@@ -7684,7 +7798,7 @@
     ]
   },
   "src/infrastructure/adapters/nutjs/nutjs-mouse.adapter.ts": {
-    "summary": "Este arquivo implementa um adaptador de mouse utilizando a biblioteca Nut.js para abstrair operações de controle do mouse em um ambiente TypeScript. Ele oferece funcionalidades para mover o cursor de forma suave ou instantânea, realizar cliques simples e duplos em diferentes botões, executar arrastes com duração controlada, rolar a tela em direções específicas e obter a posição atual do cursor. O componente é configurado para ajustar a velocidade do mouse dinamicamente conforme parâmetros recebidos, integrando-se a um sistema maior que gerencia ações de mouse de forma programática e testável, garantindo flexibilidade e precisão no controle de dispositivos de entrada. A classe segue princípios de injeção de dependência para facilitar testes e manutenção, além de mapear botões do domínio para a biblioteca externa, promovendo desacoplamento e clareza na manipulação dos eventos do mouse.",
+    "summary": "Este arquivo implementa um adaptador de mouse utilizando a biblioteca Nut.js para abstrair operações de controle do mouse em um ambiente TypeScript. Ele oferece funcionalidades para movimentação do cursor com suporte a movimentos instantâneos e suaves via interpolação linear, cliques simples e duplos, arrasto de elementos, rolagem vertical e obtenção da posição atual do cursor. O componente integra-se ao sistema por meio da injeção de dependência, respeitando configurações globais de velocidade do mouse e mapeando botões de mouse do domínio para a biblioteca externa. Seu comportamento é orientado a garantir precisão e fluidez nas interações de mouse, habilitando automações e testes que dependem de manipulação programática do cursor e eventos de mouse em interfaces gráficas.",
     "properties": [
       {
         "property": "project_metadata",
@@ -7698,26 +7812,25 @@
         "property": "project_metadata",
         "subProperty": "domain",
         "value": [
-          "Automação de dispositivos de entrada",
-          "Controle programático de mouse",
-          "Testes automatizados de UI"
+          "Automação de Interface",
+          "Controle de Mouse",
+          "Testes Automatizados"
         ]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
         "value": [
-          "Produção",
-          "Estabilização"
+          "Produção"
         ]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Velocidade do mouse configurável dentro de limites seguros",
+          "Movimentação precisa do cursor",
           "Mapeamento correto dos botões do mouse",
-          "Execução confiável de comandos assíncronos"
+          "Execução confiável de cliques e arrastos"
         ]
       },
       {
@@ -7731,7 +7844,8 @@
         "property": "technical_stack",
         "subProperty": "frameworks",
         "value": [
-          "tsyringe 4.x"
+          "tsyringe 4.x",
+          "Nut.js 2.x"
         ]
       },
       {
@@ -7743,7 +7857,7 @@
         "property": "technical_stack",
         "subProperty": "external_services",
         "value": [
-          "Nut.js (mouse control library)"
+          "Nut.js API"
         ]
       },
       {
@@ -7757,19 +7871,19 @@
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
         "value": [
+          "Clean Architecture",
           "Dependency Injection",
-          "Adapter Pattern",
-          "Clean Architecture"
+          "Adapter Pattern"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "application/services - serviços de aplicação",
-          "domain/entities - entidades do domínio",
-          "config - configurações do ambiente",
-          "infrastructure/adapters - adaptadores de integração"
+          "application/services - Serviços de aplicação",
+          "domain/entities - Entidades do domínio",
+          "config - Configurações globais",
+          "adapters - Implementações concretas de interfaces"
         ]
       },
       {
@@ -7778,15 +7892,15 @@
         "value": [
           "PascalCase para classes",
           "camelCase para métodos e variáveis",
-          "Enums em PascalCase"
+          "Enums em MAIÚSCULAS"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre domínio, aplicação e infraestrutura",
-          "Interfaces definidas para abstração de serviços"
+          "Domínio desacoplado da infraestrutura via interfaces",
+          "Dependências unidirecionais do domínio para aplicação e infraestrutura"
         ]
       },
       {
@@ -7801,21 +7915,23 @@
         "subProperty": "linting_rules",
         "value": [
           "ESLint com regras para TypeScript",
-          "Sem uso de any explícito"
+          "Proibição de any implícito",
+          "Uso obrigatório de async/await para operações assíncronas"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
         "value": [
-          "Prettier com configuração padrão"
+          "Prettier com configuração padrão",
+          "Quebra de linha em 80 caracteres"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
         "value": [
-          "JSDoc para métodos públicos"
+          "JSDoc para métodos públicos e privados"
         ]
       },
       {
@@ -7836,7 +7952,7 @@
         "property": "testing_strategy",
         "subProperty": "test_structure",
         "value": [
-          "Testes localizados em __tests__ próximos aos arquivos de implementação"
+          "Testes localizados em __tests__ próximos aos módulos"
         ]
       },
       {
@@ -7857,7 +7973,7 @@
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
         "value": [
-          "Mock de dependências externas com jest.mock"
+          "Mock de dependências externas via jest.mock"
         ]
       },
       {
@@ -7887,9 +8003,9 @@
         "subProperty": "ci_cd_pipeline",
         "value": [
           "Build",
-          "Testes",
           "Lint",
-          "Deploy automático"
+          "Testes",
+          "Deploy automático em staging"
         ]
       },
       {
@@ -7970,14 +8086,14 @@
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
         "value": [
-          "Movimentação e clique com latência mínima aceitável para automação"
+          "Movimentos de mouse devem ocorrer dentro do tempo configurado pelo parâmetro duration"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
         "value": [
-          "Velocidade de execução e precisão do movimento"
+          "Equilíbrio entre suavidade do movimento e tempo de execução"
         ]
       },
       {
@@ -8014,7 +8130,7 @@
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
         "value": [
-          "@nut-tree-fork/nut-js",
+          "Nut.js",
           "tsyringe"
         ]
       },
@@ -8026,24 +8142,22 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": [
-          "Nut.js compatível com Node.js 16+",
-          "TypeScript 5.0"
-        ]
+        "value": []
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
         "value": [
-          "application/services/mouse.service.js",
-          "domain/entities/mouse-action.js",
-          "config/environment.js"
+          "../../../application/services/mouse.service.js",
+          "../../../domain/entities/mouse-action.js"
         ]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": []
+        "value": [
+          "Correção do tipo incorreto 'promise' para 'Promise'"
+        ]
       },
       {
         "property": "current_challenges",
@@ -8053,7 +8167,9 @@
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": []
+        "value": [
+          "Uso de delays em loops pode impactar performance em movimentos longos"
+        ]
       },
       {
         "property": "current_challenges",
@@ -8064,32 +8180,30 @@
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Conformidade com padrões de injeção de dependência",
-          "Tratamento correto de operações assíncronas",
-          "Mapeamento correto de botões"
+          "Consistência de tipagem",
+          "Tratamento de erros assíncronos",
+          "Clareza na interpolação de movimentos"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
         "value": [
-          "Documentação clara para métodos públicos e parâmetros"
+          "Documentação JSDoc para métodos públicos e privados"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
         "value": [
-          "Comentários objetivos e técnicos em português com termos técnicos em inglês"
+          "Comentários objetivos e técnicos"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
         "value": [
-          "Escolha do Nut.js para controle do mouse",
-          "Uso de tsyringe para DI",
-          "Separação clara entre domínio e infraestrutura"
+          "Escolha do Nut.js para controle de mouse por sua robustez e suporte multiplataforma"
         ]
       },
       {
@@ -8115,19 +8229,12 @@
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": [
-          "development",
-          "staging",
-          "production"
-        ]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": [
-          "Docker",
-          "CI/CD pipelines"
-        ]
+        "value": []
       },
       {
         "property": "deployment_context",
@@ -8605,39 +8712,41 @@
     ]
   },
   "src/interface/controllers/automation.controller.ts": {
-    "summary": "O arquivo define a classe AutomationController, responsável por expor uma API REST para automação de interações com mouse e captura/análise de tela, utilizando o framework Fastify. Ele integra serviços especializados (MouseService e ScreenService) para executar operações como mover, clicar, arrastar e rolar o mouse, além de capturar imagens da tela e localizar padrões visuais. Através de rotas bem definidas e esquemas JSON para validação, o controlador transforma requisições HTTP em comandos assíncronos que alteram o estado do sistema ou retornam dados, garantindo respostas padronizadas e sucesso operacional. Essa estrutura modular e orientada a serviços facilita a extensão, manutenção e integração com sistemas maiores de automação e testes automatizados.",
+    "summary": "O arquivo define a classe AutomationController, responsável por expor uma API RESTful para controle e automação de interações com o mouse e a tela do sistema operacional. Ele implementa endpoints para movimentação, clique, arrasto e scroll do mouse, além de captura e busca de imagens na tela, utilizando serviços especializados para abstrair a lógica de automação. Um destaque funcional é o endpoint de streaming via Server-Sent Events que transmite continuamente a posição do mouse, com autenticação simples por API key. O controlador integra validações de schemas JSON para garantir a conformidade dos dados recebidos e produz respostas padronizadas, facilitando a integração com clientes externos. A arquitetura segue princípios de injeção de dependência e separação clara entre controller e serviços, promovendo manutenibilidade e escalabilidade do sistema.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
         "value": [
           "Automation API",
-          "Controle e automação de mouse e tela via HTTP"
+          "Controle e automação de mouse e tela"
         ]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
         "value": [
-          "Automação de interface gráfica",
-          "Testes automatizados",
-          "Robotic Process Automation (RPA)"
+          "Automação de interface",
+          "Controle remoto",
+          "Automação de testes",
+          "Computer Vision"
         ]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
         "value": [
-          "Produção"
+          "Produção",
+          "Estável com funcionalidades completas"
         ]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Execução correta e segura dos comandos de mouse",
           "Validação rigorosa dos dados de entrada",
-          "Resposta consistente para integração com sistemas externos"
+          "Autenticação para streaming de dados",
+          "Respostas padronizadas para integração"
         ]
       },
       {
@@ -8652,7 +8761,8 @@
         "subProperty": "frameworks",
         "value": [
           "Fastify 4.x",
-          "tsyringe 4.x"
+          "tsyringe 4.x",
+          "pino 8.x"
         ]
       },
       {
@@ -8664,8 +8774,7 @@
         "property": "technical_stack",
         "subProperty": "external_services",
         "value": [
-          "MouseService",
-          "ScreenService"
+          "Nenhum serviço externo explícito, mas integração via API key para streaming"
         ]
       },
       {
@@ -8680,37 +8789,38 @@
         "subProperty": "design_pattern",
         "value": [
           "Clean Architecture",
-          "Dependency Injection",
-          "Controller Pattern"
+          "Controller Pattern",
+          "Dependency Injection"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "application/services - lógica de negócio e serviços",
+          "application/services - lógica de negócio",
           "application/dto - objetos de transferência de dados",
-          "infrastructure/controllers - controladores REST",
-          "infrastructure/schemas - validação JSON"
+          "config - configurações do sistema",
+          "controllers - definição das rotas e controle de fluxo",
+          "schemas - validação de dados via JSON Schema"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "CamelCase para classes",
-          "camelCase para métodos e variáveis",
-          "suffix Service para serviços",
-          "suffix Controller para controladores"
+          "Classes em PascalCase",
+          "Métodos em camelCase",
+          "Arquivos com extensão .js ou .ts seguindo o nome da classe ou funcionalidade",
+          "Constantes em PascalCase"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Controllers dependem de serviços via injeção",
-          "DTOs e schemas isolam contratos de dados",
-          "Serviços encapsulam lógica de automação"
+          "Separação clara entre controller e serviços",
+          "DTOs para entrada e saída de dados",
+          "Configurações isoladas em pasta config"
         ]
       },
       {
@@ -8724,14 +8834,14 @@
         "property": "code_standards",
         "subProperty": "linting_rules",
         "value": [
-          "ESLint com regras padrão Airbnb"
+          "ESLint com regras padrão Airbnb e regras específicas para TypeScript"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
         "value": [
-          "Prettier com configuração padrão"
+          "Prettier com configuração padrão para TypeScript"
         ]
       },
       {
@@ -8745,7 +8855,7 @@
         "property": "code_standards",
         "subProperty": "type_checking",
         "value": [
-          "Strict TypeScript"
+          "Strict TypeScript com tipagem explícita em DTOs e métodos"
         ]
       },
       {
@@ -8759,8 +8869,7 @@
         "property": "testing_strategy",
         "subProperty": "test_structure",
         "value": [
-          "tests/unit para testes unitários",
-          "tests/integration para testes de integração"
+          "Testes localizados em pasta __tests__ paralela aos módulos"
         ]
       },
       {
@@ -8781,7 +8890,7 @@
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
         "value": [
-          "Mock de serviços via Jest mocks"
+          "Mocks para serviços externos e injeção de dependência"
         ]
       },
       {
@@ -8802,18 +8911,14 @@
         "property": "development_workflow",
         "subProperty": "pr_requirements",
         "value": [
-          "Revisão obrigatória",
-          "Checks de lint e testes"
+          "Revisão obrigatória e testes aprovados"
         ]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
         "value": [
-          "Build",
-          "Test",
-          "Lint",
-          "Deploy automático em staging"
+          "Build, Test, Lint, Deploy automatizados"
         ]
       },
       {
@@ -8841,7 +8946,7 @@
         "property": "commands",
         "subProperty": "test",
         "value": [
-          "npm run test"
+          "npm test"
         ]
       },
       {
@@ -8869,99 +8974,104 @@
         "property": "security_constraints",
         "subProperty": "authentication_method",
         "value": [
-          "Não implementado no código atual"
+          "API Key simples para streaming SSE"
         ]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
         "value": [
-          "Não implementado no código atual"
+          "Validação de API Key para acesso ao endpoint de streaming"
         ]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
         "value": [
-          "Nenhum dado sensível manipulado diretamente"
+          "Chave API armazenada em variáveis de ambiente, não exposta em código"
         ]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
         "value": [
-          "Não especificado"
+          "Content-Security-Policy: default-src 'none'",
+          "X-Content-type-Options: nosniff",
+          "Cache-Control: no-cache",
+          "Connection: keep-alive"
         ]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
         "value": [
-          "Não aplicável"
+          "Recomenda-se uso de HTTPS para proteger dados em trânsito"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
         "value": [
-          "Operações assíncronas rápidas, idealmente < 200ms"
+          "Respostas síncronas rápidas para comandos de mouse e tela"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
         "value": [
-          "Velocidade de resposta e baixa latência"
+          "Baixa latência para comandos de automação",
+          "Uso eficiente de recursos no streaming SSE"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
         "value": [
-          "Não implementado"
+          "Nenhuma estratégia explícita de cache implementada"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
         "value": [
-          "Escalabilidade horizontal via múltiplas instâncias Fastify"
+          "Streaming SSE pode exigir balanceamento para múltiplos clientes"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
         "value": [
-          "Não explícito no código, padrão Fastify"
+          "Resposta JSON com campo success booleano e mensagem de erro opcional"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
         "value": [
-          "Não especificado"
+          "Uso do pino para logs estruturados com níveis info, debug e error"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
         "value": [
-          "Não especificado"
+          "Não especificado, mas logs estruturados facilitam integração com sistemas externos"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
         "value": [
-          "Não implementado explicitamente"
+          "Interrupção do streaming em caso de erro, resposta 401 para autenticação falha"
         ]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
         "value": [
-          "Fastify",
+          "fastify",
           "tsyringe",
+          "pino",
           "MouseService",
           "ScreenService"
         ]
@@ -8975,8 +9085,7 @@
         "property": "dependencies_context",
         "subProperty": "version_constraints",
         "value": [
-          "Fastify >=4.x",
-          "tsyringe >=4.x"
+          "Compatibilidade com Fastify 4.x e TypeScript 5.0"
         ]
       },
       {
@@ -8985,29 +9094,29 @@
         "value": [
           "application/services",
           "application/dto",
-          "infrastructure/schemas"
+          "config",
+          "schemas"
         ]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
         "value": [
-          "Falta de tratamento de erros robusto",
-          "Ausência de autenticação e autorização"
+          "Autenticação simples pode ser insuficiente para produção segura"
         ]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
         "value": [
-          "Possível exposição de endpoints sensíveis sem proteção"
+          "Possível overhead no streaming contínuo sem controle de conexões"
         ]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
         "value": [
-          "Dependência de serviços externos pode impactar latência"
+          "Streaming SSE pode impactar CPU e memória em alta escala"
         ]
       },
       {
@@ -9021,59 +9130,56 @@
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Validação de schemas",
-          "Manutenção da injeção de dependências",
-          "Consistência de respostas"
+          "Validação de tipos, tratamento de erros, segurança da API"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
         "value": [
-          "Documentação clara dos endpoints e DTOs"
+          "Documentação clara via JSDoc para novos métodos e endpoints"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
         "value": [
-          "Comentários objetivos e técnicos"
+          "Comentários objetivos e explicativos, uso de logs para rastreabilidade"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
         "value": [
-          "Uso de tsyringe para DI",
-          "Fastify para alta performance em APIs REST"
+          "Uso de Clean Architecture e injeção de dependência para modularidade"
         ]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
         "value": [
-          "REST"
+          "RESTful com endpoints HTTP POST e GET"
         ]
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
         "value": [
-          "Não implementado explicitamente"
+          "Não explícito no código, presumivelmente versão única"
         ]
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
         "value": [
-          "JSON com propriedades success e data"
+          "JSON padronizado com campos success e data"
         ]
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
         "value": [
-          "Não implementado"
+          "Não implementado explicitamente"
         ]
       },
       {
@@ -9082,30 +9188,30 @@
         "value": [
           "dev",
           "staging",
-          "prod"
+          "production"
         ]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
         "value": [
-          "Docker",
-          "Kubernetes"
+          "Docker e orquestração via Kubernetes recomendados"
         ]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
         "value": [
-          "PORT",
-          "NODE_ENV"
+          "API_KEY para autenticação do streaming",
+          "Configurações de mouse e ambiente"
         ]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
         "value": [
-          "Necessidade de acesso a hardware para captura e controle do mouse"
+          "Necessidade de conexões persistentes para SSE",
+          "Requisitos de baixa latência"
         ]
       }
     ]
@@ -13001,371 +13107,202 @@
     ]
   },
   "src/interface/schemas/automation.schemas.ts": {
-    "summary": "Este arquivo define múltiplos JSON Schemas para validação de objetos relacionados a interações de mouse e operações de captura e busca na tela, como mouse move, click, drag, scroll, screen find e screen capture. Cada schema especifica propriedades obrigatórias e opcionais, tipos de dados, restrições de valores e padrões esperados para garantir a integridade e consistência dos dados usados em automações ou testes de interface gráfica. O comportamento central é validar e estruturar comandos de input do usuário ou scripts automatizados, assegurando que coordenadas, durações, botões e regiões estejam dentro dos limites esperados, facilitando a integração com sistemas de automação de UI e testes visuais. A abordagem modular e declarativa permite fácil extensão e manutenção, além de garantir que as operações de mouse e captura de tela sejam executadas com parâmetros corretos e seguros.",
+    "summary": "Este arquivo define múltiplos JSON Schemas para validação de objetos relacionados a interações de mouse e operações de captura e busca na tela, focando em ações como movimento, clique, arrasto e scroll do mouse, além de funcionalidades de reconhecimento e captura de regiões específicas da tela. Cada schema especifica propriedades detalhadas, tipos e restrições para garantir a integridade dos dados de entrada, como coordenadas, duração, suavidade e botões do mouse, além de parâmetros para reconhecimento visual com níveis de confiança e formatos de imagem. O comportamento central do código é fornecer uma estrutura rigorosa para validar comandos de automação de interface gráfica, assegurando que as operações sejam executadas com parâmetros corretos e dentro de limites definidos, facilitando a integração com sistemas de automação e testes visuais. A ausência de propriedades adicionais e a definição de valores padrão indicam um controle estrito sobre os dados, promovendo segurança e previsibilidade no uso das ações descritas. Este conjunto de schemas habilita a construção de fluxos automatizados confiáveis e parametrizáveis para manipulação de interfaces gráficas e análise visual, sendo essencial para sistemas que dependem de automação de UI e reconhecimento de padrões visuais.",
     "properties": [
       {
-        "property": "project_metadata",
-        "subProperty": "name",
+        "property": "mouseMoveJsonSchema",
+        "subProperty": "x",
         "value": [
-          "Mouse and Screen Interaction Automation Schemas"
+          "integer",
+          "minimum: 0"
         ]
       },
       {
-        "property": "project_metadata",
-        "subProperty": "domain",
+        "property": "mouseMoveJsonSchema",
+        "subProperty": "y",
         "value": [
-          "Automação de UI",
-          "Testes de Interface Gráfica",
-          "Automação de Mouse e Tela"
+          "integer",
+          "minimum: 0"
         ]
       },
       {
-        "property": "project_metadata",
-        "subProperty": "current_phase",
+        "property": "mouseMoveJsonSchema",
+        "subProperty": "smooth",
         "value": [
-          "Produção"
+          "boolean",
+          "default: true"
         ]
       },
       {
-        "property": "project_metadata",
-        "subProperty": "critical_business_rules",
+        "property": "mouseMoveJsonSchema",
+        "subProperty": "duration",
         "value": [
-          "Validação rigorosa dos parâmetros de input para evitar comandos inválidos ou fora de alcance",
-          "Proibição de propriedades adicionais para garantir segurança e previsibilidade"
+          "integer",
+          "minimum: 100",
+          "maximum: 5000",
+          "default: 1000"
         ]
       },
       {
-        "property": "technical_stack",
-        "subProperty": "primary_language",
+        "property": "mouseClickJsonSchema",
+        "subProperty": "x",
         "value": [
-          "TypeScript 5.0"
+          "integer",
+          "minimum: 0"
         ]
       },
       {
-        "property": "technical_stack",
-        "subProperty": "frameworks",
-        "value": []
-      },
-      {
-        "property": "technical_stack",
-        "subProperty": "databases",
-        "value": []
-      },
-      {
-        "property": "technical_stack",
-        "subProperty": "external_services",
-        "value": []
-      },
-      {
-        "property": "technical_stack",
-        "subProperty": "package_manager",
+        "property": "mouseClickJsonSchema",
+        "subProperty": "y",
         "value": [
-          "npm"
+          "integer",
+          "minimum: 0"
         ]
       },
       {
-        "property": "architecture_patterns",
-        "subProperty": "design_pattern",
+        "property": "mouseClickJsonSchema",
+        "subProperty": "button",
         "value": [
-          "Schema Validation",
-          "Declarative Data Modeling"
+          "left",
+          "right",
+          "middle",
+          "default: left"
         ]
       },
       {
-        "property": "architecture_patterns",
-        "subProperty": "folder_structure",
+        "property": "mouseClickJsonSchema",
+        "subProperty": "doubleClick",
         "value": [
-          "Schemas organizados em arquivos separados para cada tipo de interação, facilitando manutenção e extensão"
+          "boolean",
+          "default: false"
         ]
       },
       {
-        "property": "architecture_patterns",
-        "subProperty": "naming_conventions",
+        "property": "mouseClickJsonSchema",
+        "subProperty": "smooth",
         "value": [
-          "CamelCase para constantes e schemas",
-          "prefixo mouse ou screen para agrupamento semântico"
+          "boolean",
+          "default: true"
         ]
       },
       {
-        "property": "architecture_patterns",
-        "subProperty": "module_boundaries",
+        "property": "mouseClickJsonSchema",
+        "subProperty": "duration",
         "value": [
-          "Schemas isolados para cada tipo de interação, sem dependências cruzadas"
+          "integer",
+          "minimum: 100",
+          "maximum: 5000",
+          "default: 1000"
         ]
       },
       {
-        "property": "code_standards",
-        "subProperty": "style_guide",
-        "value": []
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "linting_rules",
-        "value": []
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "formatting",
-        "value": []
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "documentation_style",
-        "value": []
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "type_checking",
+        "property": "mouseDragJsonSchema",
+        "subProperty": "from",
         "value": [
-          "Strict TypeScript typings implícitos via JSON Schema"
+          "object with x and y integers >= 0"
         ]
       },
       {
-        "property": "testing_strategy",
-        "subProperty": "test_framework",
-        "value": []
+        "property": "mouseDragJsonSchema",
+        "subProperty": "to",
+        "value": [
+          "object with x and y integers >= 0"
+        ]
       },
       {
-        "property": "testing_strategy",
-        "subProperty": "test_structure",
-        "value": []
+        "property": "mouseDragJsonSchema",
+        "subProperty": "duration",
+        "value": [
+          "integer",
+          "minimum: 100",
+          "maximum: 5000",
+          "default: 1000"
+        ]
       },
       {
-        "property": "testing_strategy",
-        "subProperty": "coverage_requirements",
-        "value": []
+        "property": "mouseDragJsonSchema",
+        "subProperty": "smooth",
+        "value": [
+          "boolean",
+          "default: true"
+        ]
       },
       {
-        "property": "testing_strategy",
-        "subProperty": "test_patterns",
-        "value": []
+        "property": "mouseScrollJsonSchema",
+        "subProperty": "direction",
+        "value": [
+          "up",
+          "down"
+        ]
       },
       {
-        "property": "testing_strategy",
-        "subProperty": "mocking_approach",
-        "value": []
+        "property": "mouseScrollJsonSchema",
+        "subProperty": "amount",
+        "value": [
+          "integer",
+          "minimum: 1",
+          "maximum: 10",
+          "default: 3"
+        ]
       },
       {
-        "property": "development_workflow",
-        "subProperty": "branch_strategy",
-        "value": []
+        "property": "mouseScrollJsonSchema",
+        "subProperty": "smooth",
+        "value": [
+          "boolean",
+          "default: true"
+        ]
       },
       {
-        "property": "development_workflow",
-        "subProperty": "commit_conventions",
-        "value": []
+        "property": "mouseScrollJsonSchema",
+        "subProperty": "duration",
+        "value": [
+          "integer",
+          "minimum: 100",
+          "maximum: 5000",
+          "default: 1000"
+        ]
       },
       {
-        "property": "development_workflow",
-        "subProperty": "pr_requirements",
-        "value": []
+        "property": "screenFindJsonSchema",
+        "subProperty": "template",
+        "value": [
+          "string",
+          "minLength: 1"
+        ]
       },
       {
-        "property": "development_workflow",
-        "subProperty": "ci_cd_pipeline",
-        "value": []
+        "property": "screenFindJsonSchema",
+        "subProperty": "confidence",
+        "value": [
+          "number",
+          "minimum: 0",
+          "maximum: 1",
+          "default: 0.8"
+        ]
       },
       {
-        "property": "commands",
-        "subProperty": "setup",
-        "value": []
+        "property": "screenFindJsonSchema",
+        "subProperty": "region",
+        "value": [
+          "object with x, y integers >= 0 and width, height integers >= 1"
+        ]
       },
       {
-        "property": "commands",
-        "subProperty": "install",
-        "value": []
+        "property": "screenCaptureJsonSchema",
+        "subProperty": "region",
+        "value": [
+          "object with x, y integers >= 0 and width, height integers >= 1"
+        ]
       },
       {
-        "property": "commands",
-        "subProperty": "dev",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "test",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "build",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "lint",
-        "value": []
-      },
-      {
-        "property": "commands",
+        "property": "screenCaptureJsonSchema",
         "subProperty": "format",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "authentication_method",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "authorization_rules",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "sensitive_data",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "security_headers",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "encryption_requirements",
-        "value": []
-      },
-      {
-        "property": "performance_requirements",
-        "subProperty": "response_time_limits",
-        "value": []
-      },
-      {
-        "property": "performance_requirements",
-        "subProperty": "optimization_priorities",
-        "value": []
-      },
-      {
-        "property": "performance_requirements",
-        "subProperty": "caching_strategy",
-        "value": []
-      },
-      {
-        "property": "performance_requirements",
-        "subProperty": "scalability_considerations",
-        "value": []
-      },
-      {
-        "property": "error_handling",
-        "subProperty": "error_format",
-        "value": []
-      },
-      {
-        "property": "error_handling",
-        "subProperty": "logging_strategy",
-        "value": []
-      },
-      {
-        "property": "error_handling",
-        "subProperty": "monitoring_tools",
-        "value": []
-      },
-      {
-        "property": "error_handling",
-        "subProperty": "error_recovery",
-        "value": []
-      },
-      {
-        "property": "dependencies_context",
-        "subProperty": "critical_dependencies",
         "value": [
-          "JSON Schema validation libraries (ex: ajv)"
+          "png",
+          "jpg",
+          "default: png"
         ]
-      },
-      {
-        "property": "dependencies_context",
-        "subProperty": "deprecated_packages",
-        "value": []
-      },
-      {
-        "property": "dependencies_context",
-        "subProperty": "version_constraints",
-        "value": []
-      },
-      {
-        "property": "dependencies_context",
-        "subProperty": "internal_packages",
-        "value": []
-      },
-      {
-        "property": "current_challenges",
-        "subProperty": "technical_debt",
-        "value": []
-      },
-      {
-        "property": "current_challenges",
-        "subProperty": "known_issues",
-        "value": []
-      },
-      {
-        "property": "current_challenges",
-        "subProperty": "performance_bottlenecks",
-        "value": []
-      },
-      {
-        "property": "current_challenges",
-        "subProperty": "migration_status",
-        "value": []
-      },
-      {
-        "property": "team_preferences",
-        "subProperty": "code_review_focus",
-        "value": []
-      },
-      {
-        "property": "team_preferences",
-        "subProperty": "documentation_requirements",
-        "value": []
-      },
-      {
-        "property": "team_preferences",
-        "subProperty": "communication_style",
-        "value": []
-      },
-      {
-        "property": "team_preferences",
-        "subProperty": "decision_log",
-        "value": []
-      },
-      {
-        "property": "api_specifications",
-        "subProperty": "api_style",
-        "value": []
-      },
-      {
-        "property": "api_specifications",
-        "subProperty": "versioning_strategy",
-        "value": []
-      },
-      {
-        "property": "api_specifications",
-        "subProperty": "response_formats",
-        "value": []
-      },
-      {
-        "property": "api_specifications",
-        "subProperty": "rate_limiting",
-        "value": []
-      },
-      {
-        "property": "deployment_context",
-        "subProperty": "environments",
-        "value": []
-      },
-      {
-        "property": "deployment_context",
-        "subProperty": "deployment_method",
-        "value": []
-      },
-      {
-        "property": "deployment_context",
-        "subProperty": "environment_variables",
-        "value": []
-      },
-      {
-        "property": "deployment_context",
-        "subProperty": "infrastructure_constraints",
-        "value": []
       }
     ]
   },
@@ -14267,6 +14204,2457 @@
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
         "value": []
+      }
+    ]
+  },
+  "src/config/mouse.config.ts": {
+    "summary": "Este arquivo define uma configuração padrão para operações relacionadas ao mouse, centralizando parâmetros essenciais para controlar o comportamento de interações como duração, suavização e taxa de amostragem. Ele extrai valores de variáveis de ambiente para permitir flexibilidade e customização dinâmica, garantindo que as ações do mouse respeitem limites mínimos e máximos de duração, além de configurar parâmetros para streaming e interpolação suave. Essa configuração é fundamental para garantir uma experiência consistente e controlada em sistemas que dependem de manipulação precisa do mouse, facilitando a integração com outros módulos que realizam operações de input e automação.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "Mouse Interaction Controller",
+          "Configuração e controle de operações do mouse"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": [
+          "Input Devices",
+          "User Interaction",
+          "Automation"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": [
+          "Production",
+          "Stable Configuration"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "minDuration must be <= maxDuration",
+          "Smooth movement flag must be boolean",
+          "Sample rate must be positive integer"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": [
+          "TypeScript 5.0"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": [
+          "npm"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": [
+          "Configuration Object",
+          "Immutable Constants"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "/config - configurações globais e constantes",
+          "/src - código fonte principal"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para constantes e tipos",
+          "snake_case para variáveis de ambiente"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Configurações isoladas em módulo próprio para fácil reutilização e manutenção"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": [
+          "Airbnb JavaScript Style Guide adaptado para TypeScript"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [
+          "ESLint com regras para TypeScript"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": [
+          "Prettier com configuração padrão"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": [
+          "JSDoc para comentários de código"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": [
+          "Strict TypeScript"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": [
+          "Jest 29"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": [
+          "/tests/unit para testes unitários"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [
+          "Cobertura mínima de 80%"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": [
+          "AAA (Arrange, Act, Assert)"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": [
+          "Mocks para variáveis de ambiente e funções dependentes"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": [
+          "GitHub Flow"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": [
+          "Conventional Commits"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": [
+          "Revisão obrigatória e testes aprovados"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": [
+          "Build, Test, Lint, Deploy"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": [
+          "npm run dev"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": [
+          "npm test"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": [
+          "npm run build"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": [
+          "npm run lint"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": [
+          "npm run format"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": [
+          "Configurações devem permitir resposta em tempo real para input de mouse"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": [
+          "Baixa latência e suavidade no movimento"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": [
+          "process.env"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Validação de valores padrão e parsing correto",
+          "Consistência de tipos"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": [
+          "Documentação clara das variáveis de ambiente e seus efeitos"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": [
+          "Comentários objetivos e técnicos"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso de constantes imutáveis para configuração",
+          "Dependência de variáveis de ambiente para flexibilidade"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": [
+          "Development",
+          "Staging",
+          "Production"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": [
+          "Docker",
+          "Kubernetes"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": [
+          "MOUSE_MIN_DUR",
+          "MOUSE_MAX_DUR",
+          "MOUSE_DEFAULT_SMOOTH",
+          "MOUSE_SAMPLE_RATE",
+          "MOUSE_STREAM_INTERVAL",
+          "MOUSE_DEFAULT_DURATION"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": [
+          ""
+        ]
+      }
+    ]
+  },
+  "tests/integration/mouse-stream.test.ts": {
+    "summary": "Este arquivo contém testes de integração para o endpoint de streaming da posição do mouse, implementado em um servidor Fastify com injeção de dependências via tsyringe. O foco principal é validar o comportamento do endpoint /mouse/position/stream, garantindo autenticação via API key, transmissão contínua e ordenada de eventos de posição do mouse, além de assegurar que o streaming pare corretamente ao fechar a conexão. Os testes simulam um adapter de mouse mockado para controlar as posições retornadas, verificam respostas HTTP para cenários de autenticação e monitoram a performance do streaming, assegurando que múltiplos eventos são enviados em tempo real. A abordagem garante robustez na integração do serviço de mouse com o controlador de automação, validando tanto regras de negócio quanto aspectos de performance e segurança.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "Mouse Position Streaming Service",
+          "Serviço de streaming de posição do mouse para automação"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": [
+          "Automação",
+          "Controle remoto",
+          "Mouse position tracking",
+          "API streaming"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": [
+          "Produção",
+          "Testes de integração"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Autenticação obrigatória via API key",
+          "Envio contínuo e ordenado de eventos de posição",
+          "Encerramento correto do streaming ao fechar conexão"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": [
+          "TypeScript 5.0"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": [
+          "Fastify 4.x",
+          "tsyringe",
+          "Jest 29"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": [
+          "EventSource (SSE client)",
+          "Environment configuration service"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": [
+          "npm"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": [
+          "Dependency Injection",
+          "Clean Architecture",
+          "Controller-Service pattern"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/interface/controllers - Controllers expõem rotas HTTP",
+          "src/application/services - Lógica de negócio e serviços",
+          "src/config - Configurações e variáveis de ambiente",
+          "tests/integration - Testes de integração"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para classes e interfaces",
+          "camelCase para funções e variáveis",
+          "suffix .controller.js para controllers",
+          "suffix .service.js para serviços"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Controllers dependem de serviços via DI",
+          "Serviços isolam lógica de negócio",
+          "Configuração centralizada em environment.js"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": [
+          "Airbnb JavaScript Style Guide adaptado para TypeScript"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [
+          "ESLint com regras para TypeScript",
+          "Proibição de any implícito",
+          "Regras para imports e organização de código"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": [
+          "Prettier com configuração padrão para TypeScript"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": [
+          "JSDoc para funções e classes"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": [
+          "Strict TypeScript",
+          "Uso de tipos explícitos e interfaces"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": [
+          "Jest 29"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": [
+          "Testes localizados em pasta tests/integration",
+          "Testes organizados por endpoint e funcionalidade"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [
+          "Cobertura mínima de 80% para integração"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": [
+          "AAA (Arrange-Act-Assert)",
+          "Uso de mocks para dependências externas",
+          "Testes assíncronos com done callbacks"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": [
+          "Mock de interfaces via jest.Mocked",
+          "Injeção de dependências mockadas via tsyringe"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": [
+          "Git Flow"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": [
+          "Conventional Commits"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": [
+          "Revisão obrigatória",
+          "Checks automáticos de lint e testes"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": [
+          "Build",
+          "Testes automatizados",
+          "Lint",
+          "Deploy automático em staging"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": [
+          "npm run dev"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": [
+          "npm test"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": [
+          "npm run build"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": [
+          "npm run lint"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": [
+          "npm run format"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": [
+          "API Key via header x-api-key"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": [
+          "Rejeição de requisições sem ou com API key inválida"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": [
+          "API key armazenada em environment variables, não exposta em logs"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": [
+          "Validação obrigatória do header x-api-key"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": [
+          "Recomendação de uso HTTPS para transmissão segura"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": [
+          "Envio de pelo menos 5 eventos por segundo no streaming"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": [
+          "Baixa latência na transmissão de eventos",
+          "Uso eficiente de recursos do servidor"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": [
+          "Não aplicável para streaming em tempo real"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": [
+          "Capacidade de suportar múltiplas conexões SSE simultâneas"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": [
+          "JSON com propriedades success: false e error: string"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": [
+          "Logs desabilitados em testes (logger: false)"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": [
+          "Fechamento correto da conexão em caso de erro"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": [
+          "Fastify",
+          "tsyringe",
+          "Jest",
+          "EventSource"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": [
+          "Fastify 4.x",
+          "Jest 29",
+          "TypeScript 5.0"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": [
+          "src/interface/controllers",
+          "src/application/services",
+          "src/config"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Cobertura de testes",
+          "Validação de autenticação",
+          "Performance do streaming"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": [
+          "Documentação clara de endpoints e contratos de dados"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": [
+          "Comentários objetivos e técnicos",
+          "Uso de inglês para termos técnicos"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso de API key para autenticação",
+          "Streaming via Server-Sent Events (SSE)"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": [
+          "REST com endpoint SSE para streaming"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": [
+          "Sem versionamento explícito no endpoint"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": [
+          "JSON para eventos de posição",
+          "JSON para erros"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": [
+          "Development (localhost:3001)",
+          "Production (configurável via environment)"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": [
+          "Servidor Node.js com Fastify, possível containerização Docker"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": [
+          "API_KEY para autenticação",
+          "PORT para configuração do servidor"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": [
+          "Necessidade de suporte a conexões SSE persistentes"
+        ]
+      }
+    ]
+  },
+  "tests/setup.ts": {
+    "summary": "Este arquivo configura o ambiente global para execução de testes automatizados em um projeto Node.js utilizando Jest. Ele define variáveis de ambiente específicas para o contexto de testes, como chaves de API e parâmetros relacionados à captura de eventos de mouse, garantindo que o ambiente de teste seja isolado e controlado. Além disso, implementa um mock global para o logger pino, evitando a emissão de logs durante os testes e configurando um timeout padrão para testes assíncronos, o que assegura estabilidade e previsibilidade na execução dos testes. O arquivo também prepara hooks globais para setup e teardown, facilitando a manutenção e extensão das configurações de teste. Essa configuração é essencial para garantir a confiabilidade, performance e isolamento dos testes automatizados no ciclo de desenvolvimento do software.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "Projeto Node.js para testes automatizados com Jest"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": [
+          "Desenvolvimento de software",
+          "Test Automation",
+          "Node.js"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": [
+          "Testes automatizados",
+          "Configuração de ambiente"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Isolamento do ambiente de teste",
+          "Supressão de logs em testes",
+          "Timeout adequado para testes assíncronos"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": [
+          "TypeScript 5.x",
+          "JavaScript ES6+"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": [
+          "Jest 29.x"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": [
+          "pino logger"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": [
+          "npm",
+          "yarn"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": [
+          "Test Setup Pattern",
+          "Mocking Pattern"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "config/ - configurações globais",
+          "tests/ - arquivos de teste",
+          "src/ - código fonte principal"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "camelCase para variáveis e funções",
+          "PascalCase para classes",
+          "kebab-case para arquivos"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre código de produção e testes",
+          "Mocks isolados em configuração de testes"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": [
+          "Airbnb JavaScript Style Guide"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [
+          "ESLint com regras padrão Airbnb"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": [
+          "Prettier com configuração padrão"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": [
+          "JSDoc"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": [
+          "Strict TypeScript"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": [
+          "Jest 29"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": [
+          "tests/ directory with unit and integration tests"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [
+          "Minimum 80% coverage"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": [
+          "AAA (Arrange-Act-Assert)"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": [
+          "Global mocks for external dependencies",
+          "jest.mock for modules"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": [
+          "GitHub Flow"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": [
+          "Conventional Commits"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": [
+          "Code review mandatory",
+          "Passing CI checks"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": [
+          "Lint",
+          "Test",
+          "Build",
+          "Deploy"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": [
+          "npm run dev"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": [
+          "npm test"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": [
+          "npm run build"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": [
+          "npm run lint"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": [
+          "npm run format"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": [
+          "API keys in environment variables must be masked"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": [
+          "Test timeout set to 10000ms"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": [
+          "Test execution speed and reliability"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": [
+          "Logger pino mockado para suprimir logs durante testes"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": [
+          "reflect-metadata",
+          "jest",
+          "pino"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": [
+          "Jest >=29.x",
+          "TypeScript >=5.x"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Cobertura de testes",
+          "Isolamento de mocks",
+          "Conformidade com padrões de código"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": [
+          "Documentação clara em JSDoc para funções e módulos"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": [
+          "Comentários objetivos e claros",
+          "Uso de PRs para discussões"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso de Jest para testes",
+          "Mock global do logger para evitar poluição de logs"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": [
+          "dev",
+          "test",
+          "prod"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": [
+          "Docker",
+          "CI/CD pipelines"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": [
+          "NODE_ENV",
+          "API_KEY",
+          "MOUSE_MIN_DUR",
+          "MOUSE_MAX_DUR",
+          "MOUSE_SAMPLE_RATE",
+          "MOUSE_STREAM_INTERVAL"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "tests/unit/adapters/nutjs-mouse.adapter.test.ts": {
+    "summary": "Este arquivo contém testes unitários para a classe NutJSMouseAdapter, que atua como um adaptador para controle de mouse utilizando a biblioteca nut-js. O foco principal está na implementação de movimentos suaves do cursor com interpolação linear, além de operações comuns como clique simples, duplo clique, arrastar e scroll. Os testes verificam comportamentos como movimento instantâneo versus interpolado, manipulação de movimentos unidimensionais, execução correta da sequência de ações para drag-and-drop, mapeamento correto dos botões do mouse e a inversão de valores para scroll up/down. A abordagem de testes utiliza mocks para isolar dependências externas e timers falsos para simular o tempo, garantindo que o comportamento assíncrono e progressivo do movimento seja validado. O arquivo assegura que o adaptador respeite configurações de velocidade, realize interpolação progressiva e mantenha a integridade das ações do mouse, integrando-se de forma confiável com a biblioteca nut-js e abstraindo detalhes técnicos para o domínio da aplicação.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "NutJSMouseAdapter",
+          "Mouse control adapter for UI automation"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": [
+          "UI Automation",
+          "Input device control",
+          "Mouse actions"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": [
+          "Testing",
+          "MVP"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Smooth movement interpolation must be accurate",
+          "Button mapping must be consistent",
+          "Drag sequence must follow press-move-release order"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": [
+          "TypeScript 5.0"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": [
+          "Jest 29"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": [
+          "@nut-tree-fork/nut-js"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": [
+          "npm"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": [
+          "Adapter Pattern",
+          "Dependency Injection"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/infrastructure/adapters/nutjs - adaptadores de hardware",
+          "src/domain/entities - entidades de domínio",
+          "src/config - configurações globais"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para classes",
+          "camelCase para funções e variáveis",
+          "kebab-case para arquivos"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre domínio e infraestrutura",
+          "Dependências unidirecionais do domínio para infraestrutura"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": [
+          "Airbnb JavaScript Style Guide adaptado para TypeScript"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [
+          "ESLint com regras para TypeScript",
+          "Proibição de any explícito",
+          "Regras para async/await"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": [
+          "Prettier com configuração padrão",
+          "Quebra de linha em 80 caracteres"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": [
+          "JSDoc para funções e classes públicas"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": [
+          "Strict TypeScript",
+          "NoImplicitAny enabled"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": [
+          "Jest 29"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": [
+          "Testes localizados em __tests__ ou pastas paralelas a src",
+          "Testes unitários focados em métodos públicos"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [
+          "Cobertura mínima de 80% para métodos críticos"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": [
+          "Arrange-Act-Assert (AAA)",
+          "Uso de mocks para dependências externas",
+          "Testes assíncronos com timers falsos"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": [
+          "Mock de módulos externos (@nut-tree-fork/nut-js)",
+          "Mock de funções assíncronas",
+          "Uso de jest.useFakeTimers para controle temporal"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": [
+          "Git Flow"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": [
+          "Conventional Commits"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": [
+          "Code review obrigatório",
+          "Testes automatizados passando"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": [
+          "Build",
+          "Test",
+          "Lint",
+          "Deploy automático em staging"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": [
+          "npm run dev"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": [
+          "npm test"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": [
+          "npm run build"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": [
+          "npm run lint"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": [
+          "npm run format"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": [
+          "Movimentos interpolados devem respeitar duração configurada",
+          "Operações instantâneas devem ser executadas imediatamente"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": [
+          "Precisão do movimento sobre velocidade bruta"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": [
+          "Promises rejeitadas em caso de falha",
+          "Erros propagados para camadas superiores"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": [
+          "@nut-tree-fork/nut-js"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": [
+          "nut-js versão compatível com mocks"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": [
+          "src/domain/entities/mouse-action.js",
+          "src/config/mouse.config.js"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": [
+          "Necessidade de testes mais integrados com hardware real"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": [
+          "Limitações do mock para simular comportamento real do mouse"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": [
+          "Movimentos interpolados podem ser custosos em alta frequência"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Cobertura de testes",
+          "Clareza na interpolação de movimento",
+          "Consistência no mapeamento de botões"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": [
+          "Documentação clara para métodos públicos do adaptador"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": [
+          "Comentários objetivos e em português",
+          "Uso de termos técnicos em inglês para precisão"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Escolha do nut-js para abstração de mouse",
+          "Uso de interpolação linear para smooth movement"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": [
+          ""
+        ]
+      }
+    ]
+  },
+  "tests/unit/services/mouse.service.test.ts": {
+    "summary": "Este arquivo contém testes unitários para o MouseService, focando em validar funcionalidades relacionadas ao controle do mouse, como movimentos suaves (smooth), duração (duration), cliques, arrastos (drag), scroll e obtenção da posição atual. O código assegura que as operações respeitam limites de coordenadas da tela, que os métodos do adapter são chamados corretamente com parâmetros esperados e que comportamentos condicionais, como movimentação prévia antes do clique ou divisão do scroll em múltiplos passos, funcionam conforme especificado. Através de mocks e simulações de tempo, o teste garante robustez e confiabilidade das interações do serviço com o hardware virtualizado, promovendo uma interface consistente para manipulação do mouse em um ambiente controlado e testável.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "Mouse Control Automation Service",
+          "Serviço para automação e controle programático do mouse"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": [
+          "Automação de interface",
+          "Controle de dispositivos de entrada",
+          "Mouse actions"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": [
+          "MVP",
+          "Testes unitários implementados para funcionalidades principais"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Validação rigorosa das coordenadas dentro dos limites da tela",
+          "Execução sequencial correta de movimentos e cliques",
+          "Divisão correta do scroll para smooth scrolling"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": [
+          "TypeScript 5.0"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": [
+          "Jest 29",
+          "@nut-tree-fork/nut-js"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": [
+          "@nut-tree-fork/nut-js (screen API)"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": [
+          "npm"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": [
+          "Clean Architecture",
+          "Dependency Injection via adapter pattern"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/application/services - lógica de aplicação",
+          "src/domain/entities - entidades de domínio",
+          "tests - testes unitários"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para classes e interfaces",
+          "camelCase para funções e variáveis",
+          "suffix Service para serviços"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre domínio e aplicação",
+          "Uso de interfaces para abstração do adapter"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": [
+          "Airbnb JavaScript Style Guide adaptado para TypeScript"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [
+          "ESLint com regras para TypeScript",
+          "Proibição de any exceto em mocks específicos"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": [
+          "Prettier com configuração padrão para TypeScript"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": [
+          "JSDoc para documentação de funções e classes"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": [
+          "Strict TypeScript",
+          "Uso de tipos explícitos e interfaces"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": [
+          "Jest 29"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": [
+          "Testes localizados em pastas paralelas ao código fonte",
+          "Uso de describe e it para organização"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [
+          "Cobertura completa das funções públicas do MouseService"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": [
+          "Arrange-Act-Assert (AAA)",
+          "Uso de mocks para dependências externas"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": [
+          "Mock do adapter IMouseAdapter",
+          "Mock do módulo screen do nut-js"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": [
+          "GitHub Flow"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": [
+          "Conventional Commits"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": [
+          "Code review obrigatório",
+          "Testes passando"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": [
+          "Execução de testes unitários",
+          "Linting",
+          "Build"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": [
+          "npm install"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": [
+          "npm run dev"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": [
+          "npm test"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": [
+          "npm run build"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": [
+          "npm run lint"
+        ]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": [
+          "npm run format"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": [
+          "Movimentos e cliques devem ser executados dentro da duração especificada",
+          "Scroll smooth dividido em múltiplos passos para fluidez"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": [
+          "Equilíbrio entre fluidez do movimento e uso eficiente de recursos"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": [
+          "Erros lançados com mensagens claras e específicas sobre coordenadas inválidas"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": [
+          "Rejeição de operações com coordenadas inválidas para evitar efeitos colaterais"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": [
+          "@nut-tree-fork/nut-js",
+          "Jest"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": [
+          "TypeScript 5.0",
+          "Jest 29"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": [
+          "application/services",
+          "domain/entities"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": [
+          "Cobertura de testes pode ser expandida para casos extremos e integração"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": [
+          "Nenhum problema crítico identificado nos testes atuais"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": [
+          "Scroll smooth pode gerar múltiplas chamadas, impactando performance em dispositivos limitados"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Validação de mocks",
+          "Cobertura de testes",
+          "Clareza nas mensagens de erro"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": [
+          "Documentação clara para métodos públicos e regras de negócio"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": [
+          "Comentários objetivos e em português para contexto"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso do adapter pattern para abstração do hardware",
+          "Validação rigorosa de coordenadas"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": [
+          "Métodos síncronos e assíncronos para controle do mouse"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": [
+          "Promises resolvidas ou rejeitadas com erros específicos"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": [
+          "development",
+          "production"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": [
+          "Node.js environment"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": [
+          ""
+        ]
       }
     ]
   }
