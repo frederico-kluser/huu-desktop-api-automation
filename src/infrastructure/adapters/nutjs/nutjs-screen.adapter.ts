@@ -74,9 +74,48 @@ export class NutJSScreenAdapter implements IScreenAdapter {
   }
 
   private async createImageFromBuffer(buffer: Buffer): Promise<Image> {
-    const width = 100;
-    const height = Math.floor(buffer.length / (width * 3));
-    const channels = 3;
+    // Para imagens base64 decodificadas, precisamos detectar as dimensões reais
+    // Este é um método temporário - idealmente, as dimensões deveriam vir junto com o buffer
+    // ou o buffer deveria incluir um header com as dimensões
+    
+    // Assumindo formato PNG/JPEG padrão, tentamos detectar dimensões
+    // Para PNG: width está nos bytes 16-19, height nos bytes 20-23
+    // Para JPEG: mais complexo, precisa procurar por markers SOF0/SOF2
+    
+    // Por enquanto, vamos usar uma abordagem que funciona para imagens quadradas
+    // ou permitir que o caller especifique as dimensões
+    const channels = 3; // RGB
+    
+    // Calcula dimensões assumindo imagem quadrada
+    const pixelCount = buffer.length / channels;
+    const dimension = Math.floor(Math.sqrt(pixelCount));
+    
+    // Se não for quadrada perfeita, ajusta para o próximo tamanho válido
+    const width = dimension;
+    const height = Math.floor(pixelCount / width);
+    
+    // Valida se as dimensões fazem sentido
+    if (width * height * channels !== buffer.length) {
+      // Tenta dimensões comuns de screenshot
+      const commonDimensions = [
+        { width: 1920, height: 1080 },
+        { width: 1366, height: 768 },
+        { width: 1280, height: 720 },
+        { width: 800, height: 600 },
+      ];
+      
+      for (const dim of commonDimensions) {
+        if (dim.width * dim.height * channels === buffer.length) {
+          return new Image(dim.width, dim.height, buffer, channels);
+        }
+      }
+      
+      // Se nenhuma dimensão comum funcionar, usa a estimativa quadrada
+      throw new Error(
+        `Cannot determine image dimensions for buffer of length ${buffer.length}. ` +
+        `Expected dimensions that multiply to ${pixelCount} pixels.`
+      );
+    }
 
     return new Image(width, height, buffer, channels);
   }

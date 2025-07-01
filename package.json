@@ -7,12 +7,20 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc -p tsconfig.json",
+    "build:prod": "tsc -p tsconfig.prod.json",
     "start": "node dist/index.js",
     "test": "jest",
+    "test:unit": "jest tests/unit",
+    "test:integration": "jest tests/integration",
+    "test:coverage": "jest --coverage",
     "test:api": "tsx src/test-endpoint.ts",
     "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write src/**/*.ts",
-    "typecheck": "tsc --noEmit"
+    "format:check": "prettier --check src/**/*.ts",
+    "typecheck": "tsc --noEmit",
+    "audit:roadmap": "echo 'TODO: Implement roadmap audit script'",
+    "clean": "rm -rf dist coverage .nyc_output"
   },
   "dependencies": {
     "@nut-tree-fork/nut-js": "^4.2.0",

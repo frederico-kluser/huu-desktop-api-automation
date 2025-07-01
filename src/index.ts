@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import Fastify from 'fastify';
+import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import { automationRoutes } from './routes/automation.routes.js';
 import { errorHandler } from './interface/middleware/error-handler.middleware.js';
 import { configureDependencies } from './config/dependency-injection.js';
@@ -28,18 +28,33 @@ server.register(automationRoutes, { prefix: '/api/v1' });
 
 server.setErrorHandler(errorHandler);
 
-server.get('/health', async (_request, reply) => {
-  await reply.send({ status: 'ok', timestamp: new Date().toISOString() });
+server.get('/health', async (_request: FastifyRequest, reply: FastifyReply) => {
+  await reply.send({ 
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: environment.nodeEnv
+  });
 });
 
 const start = async () => {
   try {
     await server.listen({ port: environment.port, host: environment.host });
-    console.log(`Server listening on http://${environment.host}:${environment.port}`);
+    server.log.info(`Server listening on http://${environment.host}:${environment.port}`);
   } catch (err) {
     server.log.error(err);
     process.exit(1);
   }
 };
 
-start();
+// Graceful shutdown
+const gracefulShutdown = async (signal: string) => {
+  server.log.info(`${signal} received, closing server gracefully`);
+  await server.close();
+  process.exit(0);
+};
+
+process.on('SIGTERM', () => void gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => void gracefulShutdown('SIGINT'));
+
+void start();

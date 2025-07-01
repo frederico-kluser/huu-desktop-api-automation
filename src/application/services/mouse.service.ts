@@ -6,6 +6,8 @@ import {
   MouseScrollRequest,
 } from '../dto/automation-request.dto.js';
 import { Point, MouseButton } from '../../domain/entities/mouse-action.js';
+import { screen } from '@nut-tree-fork/nut-js';
+import pino from 'pino';
 
 export interface IMouseAdapter {
   move(point: Point, smooth: boolean, duration: number): Promise<void>;
@@ -18,6 +20,8 @@ export interface IMouseAdapter {
 
 @injectable()
 export class MouseService {
+  private readonly logger = pino({ name: 'MouseService' });
+
   constructor(
     @inject('MouseAdapter')
     private readonly mouseAdapter: IMouseAdapter,
@@ -25,7 +29,19 @@ export class MouseService {
 
   async move(request: MouseMoveRequest): Promise<void> {
     const { x, y, smooth = true, duration = 1000 } = request;
-    await this.mouseAdapter.move({ x, y }, smooth, duration);
+    
+    // Validar coordenadas
+    await this.validateCoordinates(x, y);
+    
+    this.logger.debug({ x, y, smooth, duration }, 'Moving mouse');
+    
+    try {
+      await this.mouseAdapter.move({ x, y }, smooth, duration);
+      this.logger.info({ x, y }, 'Mouse moved successfully');
+    } catch (error) {
+      this.logger.error({ error, x, y }, 'Failed to move mouse');
+      throw error;
+    }
   }
 
   async click(request: MouseClickRequest): Promise<void> {
@@ -50,5 +66,19 @@ export class MouseService {
 
   async getPosition(): Promise<Point> {
     return this.mouseAdapter.getPosition();
+  }
+
+  private async validateCoordinates(x: number, y: number): Promise<void> {
+    // Obter dimensões da tela
+    const screenWidth = await screen.width();
+    const screenHeight = await screen.height();
+
+    if (x < 0 || x >= screenWidth) {
+      throw new Error(`Invalid X coordinate: ${x}. Must be between 0 and ${screenWidth - 1}`);
+    }
+
+    if (y < 0 || y >= screenHeight) {
+      throw new Error(`Invalid Y coordinate: ${y}. Must be between 0 and ${screenHeight - 1}`);
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import { ScreenFindRequest, ScreenCaptureRequest } from '../dto/automation-request.dto.js';
 import { MatchResult, Region } from '../../domain/entities/screen-region.js';
+import pino from 'pino';
 
 export interface IScreenAdapter {
   capture(region?: Region): Promise<Buffer>;
@@ -10,6 +11,8 @@ export interface IScreenAdapter {
 
 @injectable()
 export class ScreenService {
+  private readonly logger = pino({ name: 'ScreenService' });
+
   constructor(
     @inject('ScreenAdapter')
     private readonly screenAdapter: IScreenAdapter,
@@ -18,10 +21,18 @@ export class ScreenService {
   async findTemplate(request: ScreenFindRequest): Promise<MatchResult[]> {
     const { template, confidence = 0.8, region } = request;
 
-    const imageBuffer = this.decodeBase64Image(template);
-    const matches = await this.screenAdapter.find(imageBuffer, confidence, region);
+    this.logger.debug({ confidence, region }, 'Finding template on screen');
 
-    return matches;
+    try {
+      const imageBuffer = this.decodeBase64Image(template);
+      const matches = await this.screenAdapter.find(imageBuffer, confidence, region);
+
+      this.logger.info({ matchCount: matches.length }, 'Template search completed');
+      return matches;
+    } catch (error) {
+      this.logger.error({ error }, 'Failed to find template');
+      throw error;
+    }
   }
 
   async capture(request: ScreenCaptureRequest): Promise<string> {
