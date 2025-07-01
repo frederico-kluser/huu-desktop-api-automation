@@ -1,0 +1,950 @@
+{
+  "info": {
+    "_postman_id": "nutjs-desktop-automation-api",
+    "name": "NutJS Desktop Automation API",
+    "description": "Complete REST API for desktop automation using NutJS. Supports mouse control, keyboard input, clipboard operations, and screen capture/recognition.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "2.0.0"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Set default headers",
+          "pm.request.headers.add({",
+          "    key: 'Content-Type',",
+          "    value: 'application/json'",
+          "});"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Common test for all requests",
+          "pm.test('Response has success field', function () {",
+          "    const jsonData = pm.response.json();",
+          "    pm.expect(jsonData).to.have.property('success');",
+          "});",
+          "",
+          "pm.test('Response time is less than 5000ms', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "your-api-key-here",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Mouse Operations",
+      "item": [
+        {
+          "name": "Move Mouse",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Mouse move successful', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": 500,\n  \"y\": 300,\n  \"smooth\": true,\n  \"duration\": 1000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mouse/move",
+              "host": ["{{baseUrl}}"],
+              "path": ["mouse", "move"]
+            },
+            "description": "Move the mouse cursor to specified coordinates.\n\n**Parameters:**\n- `x` (required): X coordinate (minimum: 0)\n- `y` (required): Y coordinate (minimum: 0)\n- `smooth` (optional): Enable smooth movement (default: true)\n- `duration` (optional): Movement duration in ms (100-5000, default: 1000)"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"x\": 500,\n  \"y\": 300,\n  \"smooth\": true,\n  \"duration\": 1000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/mouse/move",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["mouse", "move"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Click Mouse",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": 500,\n  \"y\": 300,\n  \"button\": \"left\",\n  \"doubleClick\": false,\n  \"smooth\": true,\n  \"duration\": 500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mouse/click",
+              "host": ["{{baseUrl}}"],
+              "path": ["mouse", "click"]
+            },
+            "description": "Click at specified coordinates.\n\n**Parameters:**\n- `x` (required): X coordinate\n- `y` (required): Y coordinate\n- `button` (optional): Mouse button - \"left\", \"right\", \"middle\" (default: \"left\")\n- `doubleClick` (optional): Perform double click (default: false)\n- `smooth` (optional): Move smoothly before clicking (default: true)\n- `duration` (optional): Movement duration in ms (100-5000, default: 1000)"
+          },
+          "response": []
+        },
+        {
+          "name": "Drag Mouse",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"x\": 100,\n    \"y\": 100\n  },\n  \"to\": {\n    \"x\": 500,\n    \"y\": 500\n  },\n  \"duration\": 2000,\n  \"smooth\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mouse/drag",
+              "host": ["{{baseUrl}}"],
+              "path": ["mouse", "drag"]
+            },
+            "description": "Drag from one point to another.\n\n**Parameters:**\n- `from` (required): Starting point {x, y}\n- `to` (required): Ending point {x, y}\n- `duration` (optional): Drag duration in ms (100-5000, default: 1000)\n- `smooth` (optional): Enable smooth dragging (default: true)"
+          },
+          "response": []
+        },
+        {
+          "name": "Scroll Mouse",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"direction\": \"down\",\n  \"amount\": 3,\n  \"smooth\": true,\n  \"duration\": 500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mouse/scroll",
+              "host": ["{{baseUrl}}"],
+              "path": ["mouse", "scroll"]
+            },
+            "description": "Scroll the mouse wheel.\n\n**Parameters:**\n- `direction` (required): \"up\" or \"down\"\n- `amount` (optional): Number of scroll units (1-10, default: 3)\n- `smooth` (optional): Enable smooth scrolling (default: true)\n- `duration` (optional): Scroll duration in ms (100-5000, default: 1000)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Mouse Position",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/mouse/position",
+              "host": ["{{baseUrl}}"],
+              "path": ["mouse", "position"]
+            },
+            "description": "Get the current mouse cursor position."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/mouse/position",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["mouse", "position"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"x\": 734,\n    \"y\": 456\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Stream Mouse Position (SSE)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/event-stream",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mouse/stream",
+              "host": ["{{baseUrl}}"],
+              "path": ["mouse", "stream"]
+            },
+            "description": "Stream mouse position in real-time using Server-Sent Events.\n\n**Note:** This endpoint requires API key authentication and returns a continuous stream of position data."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Keyboard Operations",
+      "item": [
+        {
+          "name": "Type Text",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Typing successful', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data).to.have.property('textLength');",
+                  "    pm.expect(jsonData.data).to.have.property('mode');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Hello, World!\",\n  \"mode\": \"instant\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/type",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "type"]
+            },
+            "description": "Type text with configurable timing.\n\n**Parameters:**\n- `text` (required): Text to type (max 10000 characters)\n- `mode` (optional): Typing mode - \"instant\", \"perChar\", \"total\" (default: \"instant\")\n- `value` (optional): Time value in ms:\n  - For \"perChar\": delay between each character\n  - For \"total\": total duration for typing all text\n  - Max: 300000ms (5 minutes)"
+          },
+          "response": [
+            {
+              "name": "Instant Typing",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"Hello, World!\",\n  \"mode\": \"instant\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/keyboard/type",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "keyboard", "type"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"textLength\": 13,\n    \"mode\": \"instant\"\n  }\n}"
+            },
+            {
+              "name": "Per Character Delay",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"Typing slowly...\",\n  \"mode\": \"perChar\",\n  \"value\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/keyboard/type",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "keyboard", "type"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"textLength\": 16,\n    \"mode\": \"perChar\",\n    \"timing\": 100\n  }\n}"
+            },
+            {
+              "name": "Total Duration",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"This will take exactly 3 seconds to type\",\n  \"mode\": \"total\",\n  \"value\": 3000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/keyboard/type",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "keyboard", "type"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"textLength\": 40,\n    \"mode\": \"total\",\n    \"timing\": 3000\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Press Key",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"enter\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/press",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "press"]
+            },
+            "description": "Press a specific key.\n\n**Supported keys:**\n- Navigation: enter, tab, escape, space, backspace, delete\n- Arrows: up, down, left, right\n- Navigation: home, end, pageup, pagedown\n- Function: f1-f12"
+          },
+          "response": []
+        },
+        {
+          "name": "Key Combination",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keys\": [\"ctrl\", \"c\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/combination",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "combination"]
+            },
+            "description": "Execute a key combination (e.g., Ctrl+C, Cmd+V).\n\n**Parameters:**\n- `keys` (required): Array of keys to press together (max 5 keys)\n\n**Supported modifier keys:**\n- ctrl/control, alt, shift, cmd/command/meta/win\n\n**Supported letter keys:**\n- a, c, v, x, z, y"
+          },
+          "response": [
+            {
+              "name": "Copy (Ctrl+C)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keys\": [\"ctrl\", \"c\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/keyboard/combination",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "keyboard", "combination"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"combination\": \"ctrl+c\"\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Clipboard Operations",
+      "item": [
+        {
+          "name": "Copy to Clipboard",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Copy successful', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data).to.have.property('contentLength');",
+                  "    pm.expect(jsonData.data).to.have.property('sizeBytes');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"This text will be copied to clipboard\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "copy"]
+            },
+            "description": "Copy content to system clipboard.\n\n**Parameters:**\n- `content` (required): Text to copy (max 1 MB)"
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"This text will be copied to clipboard\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "clipboard", "copy"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"contentLength\": 37,\n    \"sizeBytes\": 37\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Paste from Clipboard",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Paste successful', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.expect(jsonData.data).to.have.property('content');",
+                  "    pm.expect(jsonData.data).to.have.property('isEmpty');",
+                  "    pm.expect(jsonData.data).to.have.property('contentLength');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/paste",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "paste"]
+            },
+            "description": "Get current clipboard content."
+          },
+          "response": [
+            {
+              "name": "Success with Content",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clipboard/paste",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "clipboard", "paste"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": \"This is the clipboard content\",\n    \"isEmpty\": false,\n    \"contentLength\": 29\n  }\n}"
+            },
+            {
+              "name": "Empty Clipboard",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clipboard/paste",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "clipboard", "paste"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": \"\",\n    \"isEmpty\": true,\n    \"contentLength\": 0\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Clear Clipboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/clear",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "clear"]
+            },
+            "description": "Clear clipboard content."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/clipboard/clear",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "clipboard", "clear"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"cleared\": true\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Screen Operations",
+      "item": [
+        {
+          "name": "Capture Screen",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"format\": \"png\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/screen/capture",
+              "host": ["{{baseUrl}}"],
+              "path": ["screen", "capture"]
+            },
+            "description": "Capture a screenshot of the entire screen or a specific region.\n\n**Parameters:**\n- `region` (optional): Object with x, y, width, height for specific area\n- `format` (optional): \"png\" or \"jpg\" (default: \"png\")"
+          },
+          "response": [
+            {
+              "name": "Full Screen Capture",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"format\": \"png\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/screen/capture",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["screen", "capture"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n    \"width\": 1920,\n    \"height\": 1080,\n    \"format\": \"png\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Find on Screen",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n  \"confidence\": 0.8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/screen/find",
+              "host": ["{{baseUrl}}"],
+              "path": ["screen", "find"]
+            },
+            "description": "Find an image template on the screen.\n\n**Parameters:**\n- `template` (required): Base64 encoded image to search for\n- `confidence` (optional): Match confidence threshold 0-1 (default: 0.8)\n- `region` (optional): Limit search to specific region {x, y, width, height}"
+          },
+          "response": [
+            {
+              "name": "Found Match",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n  \"confidence\": 0.8\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/screen/find",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["screen", "find"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"x\": 100,\n      \"y\": 200,\n      \"width\": 50,\n      \"height\": 50,\n      \"confidence\": 0.95\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Wait for Image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n  \"timeout\": 5000,\n  \"confidence\": 0.8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/screen/waitFor",
+              "host": ["{{baseUrl}}"],
+              "path": ["screen", "waitFor"]
+            },
+            "description": "Wait for an image to appear on screen.\n\n**Parameters:**\n- `template` (required): Base64 encoded image to wait for\n- `timeout` (optional): Max wait time in ms (default: 5000)\n- `confidence` (optional): Match confidence threshold 0-1 (default: 0.8)\n- `region` (optional): Limit search to specific region"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Automation Workflows",
+      "item": [
+        {
+          "name": "Execute Command",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"mouse\",\n  \"action\": {\n    \"type\": \"click\",\n    \"x\": 500,\n    \"y\": 300,\n    \"button\": \"left\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/automation/execute",
+              "host": ["{{baseUrl}}"],
+              "path": ["automation", "execute"]
+            },
+            "description": "Execute a single automation command.\n\n**Command Types:**\n- `mouse`: Mouse operations\n- `keyboard`: Keyboard operations\n- `screen`: Screen operations\n- `wait`: Wait/delay operations"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Examples",
+      "item": [
+        {
+          "name": "Validation Error",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": -100,\n  \"y\": \"not a number\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/mouse/move",
+              "host": ["{{baseUrl}}"],
+              "path": ["mouse", "move"]
+            },
+            "description": "Example of validation error response"
+          },
+          "response": [
+            {
+              "name": "Validation Error",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"x\": -100,\n  \"y\": \"not a number\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/mouse/move",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["mouse", "move"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": \"Validation error\",\n  \"code\": \"VALIDATION_ERROR\",\n  \"details\": [\n    {\n      \"path\": \"x\",\n      \"message\": \"Number must be greater than or equal to 0\",\n      \"type\": \"too_small\"\n    },\n    {\n      \"path\": \"y\",\n      \"message\": \"Expected number, received string\",\n      \"type\": \"invalid_type\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Text Too Long",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"{{$randomLoremParagraphs(100)}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/type",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "type"]
+            },
+            "description": "Example of text exceeding maximum length"
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid API Key",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/event-stream",
+                "type": "text"
+              },
+              {
+                "key": "x-api-key",
+                "value": "invalid-key",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mouse/stream",
+              "host": ["{{baseUrl}}"],
+              "path": ["mouse", "stream"]
+            },
+            "description": "Example of unauthorized access"
+          },
+          "response": [
+            {
+              "name": "Unauthorized",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/event-stream",
+                    "type": "text"
+                  },
+                  {
+                    "key": "x-api-key",
+                    "value": "invalid-key",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/mouse/stream",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["mouse", "stream"]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": \"Invalid API key\",\n  \"code\": \"UNAUTHORIZED\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

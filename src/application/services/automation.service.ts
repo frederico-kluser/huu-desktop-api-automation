@@ -73,7 +73,8 @@ export class AutomationService implements IAutomationExecutor {
         await this.mouseService.drag({
           from: action.position,
           to: dragOptions.to,
-          duration: dragOptions.duration,
+          duration: dragOptions.duration || 1000,
+          smooth: dragOptions.smooth !== undefined ? dragOptions.smooth : true,
         });
         return { success: true };
 
@@ -85,6 +86,8 @@ export class AutomationService implements IAutomationExecutor {
         await this.mouseService.scroll({
           direction: scrollOptions.direction,
           amount: scrollOptions.amount,
+          duration: scrollOptions.duration || 1000,
+          smooth: scrollOptions.smooth !== undefined ? scrollOptions.smooth : true,
         });
         return { success: true };
 

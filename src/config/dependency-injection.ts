@@ -3,8 +3,11 @@ import { container } from 'tsyringe';
 import { MouseService } from '../application/services/mouse.service.js';
 import { ScreenService } from '../application/services/screen.service.js';
 import { AutomationService } from '../application/services/automation.service.js';
+import { KeyboardService } from '../application/services/keyboard.service.js';
+import { ClipboardService } from '../application/services/clipboard.service.js';
 import { NutJSMouseAdapter } from '../infrastructure/adapters/nutjs/nutjs-mouse.adapter.js';
 import { NutJSScreenAdapter } from '../infrastructure/adapters/nutjs/nutjs-screen.adapter.js';
+import { NutJSKeyboardAdapter } from '../infrastructure/adapters/nutjs/nutjs-keyboard.adapter.js';
 import { ExecuteAutomationUseCase } from '../domain/use-cases/execute-automation.use-case.js';
 
 export function configureDependencies(): void {
@@ -30,6 +33,18 @@ export function configureDependencies(): void {
 
   container.register('ExecuteAutomationUseCase', {
     useClass: ExecuteAutomationUseCase,
+  });
+
+  container.register('IKeyboardAdapter', {
+    useClass: NutJSKeyboardAdapter,
+  });
+
+  container.register('KeyboardService', {
+    useClass: KeyboardService,
+  });
+
+  container.register('ClipboardService', {
+    useClass: ClipboardService,
   });
 }
 
