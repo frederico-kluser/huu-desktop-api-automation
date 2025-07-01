@@ -103,9 +103,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/mouse/move",
+              "raw": "{{baseUrl}}/api/v1/mouse/move",
               "host": ["{{baseUrl}}"],
-              "path": ["mouse", "move"]
+              "path": ["api", "v1", "mouse", "move"]
             },
             "description": "Move the mouse cursor to specified coordinates.\n\n**Parameters:**\n- `x` (required): X coordinate (minimum: 0)\n- `y` (required): Y coordinate (minimum: 0)\n- `smooth` (optional): Enable smooth movement (default: true)\n- `duration` (optional): Movement duration in ms (100-5000, default: 1000)"
           },
@@ -125,9 +125,9 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/mouse/move",
+                  "raw": "{{baseUrl}}/api/v1/mouse/move",
                   "host": ["{{baseUrl}}"],
-                  "path": ["mouse", "move"]
+                  "path": ["api", "v1", "mouse", "move"]
                 }
               },
               "status": "OK",
@@ -154,9 +154,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/mouse/click",
+              "raw": "{{baseUrl}}/api/v1/mouse/click",
               "host": ["{{baseUrl}}"],
-              "path": ["mouse", "click"]
+              "path": ["api", "v1", "mouse", "click"]
             },
             "description": "Click at specified coordinates.\n\n**Parameters:**\n- `x` (required): X coordinate\n- `y` (required): Y coordinate\n- `button` (optional): Mouse button - \"left\", \"right\", \"middle\" (default: \"left\")\n- `doubleClick` (optional): Perform double click (default: false)\n- `smooth` (optional): Move smoothly before clicking (default: true)\n- `duration` (optional): Movement duration in ms (100-5000, default: 1000)"
           },
@@ -177,9 +177,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/mouse/drag",
+              "raw": "{{baseUrl}}/api/v1/mouse/drag",
               "host": ["{{baseUrl}}"],
-              "path": ["mouse", "drag"]
+              "path": ["api", "v1", "mouse", "drag"]
             },
             "description": "Drag from one point to another.\n\n**Parameters:**\n- `from` (required): Starting point {x, y}\n- `to` (required): Ending point {x, y}\n- `duration` (optional): Drag duration in ms (100-5000, default: 1000)\n- `smooth` (optional): Enable smooth dragging (default: true)"
           },
@@ -200,9 +200,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/mouse/scroll",
+              "raw": "{{baseUrl}}/api/v1/mouse/scroll",
               "host": ["{{baseUrl}}"],
-              "path": ["mouse", "scroll"]
+              "path": ["api", "v1", "mouse", "scroll"]
             },
             "description": "Scroll the mouse wheel.\n\n**Parameters:**\n- `direction` (required): \"up\" or \"down\"\n- `amount` (optional): Number of scroll units (1-10, default: 3)\n- `smooth` (optional): Enable smooth scrolling (default: true)\n- `duration` (optional): Scroll duration in ms (100-5000, default: 1000)"
           },
@@ -214,9 +214,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/mouse/position",
+              "raw": "{{baseUrl}}/api/v1/mouse/position",
               "host": ["{{baseUrl}}"],
-              "path": ["mouse", "position"]
+              "path": ["api", "v1", "mouse", "position"]
             },
             "description": "Get the current mouse cursor position."
           },
@@ -227,9 +227,9 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{baseUrl}}/mouse/position",
+                  "raw": "{{baseUrl}}/api/v1/mouse/position",
                   "host": ["{{baseUrl}}"],
-                  "path": ["mouse", "position"]
+                  "path": ["api", "v1", "mouse", "position"]
                 }
               },
               "status": "OK",
@@ -253,9 +253,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/mouse/stream",
+              "raw": "{{baseUrl}}/api/v1/mouse/position/stream",
               "host": ["{{baseUrl}}"],
-              "path": ["mouse", "stream"]
+              "path": ["api", "v1", "mouse", "position", "stream"]
             },
             "description": "Stream mouse position in real-time using Server-Sent Events.\n\n**Note:** This endpoint requires API key authentication and returns a continuous stream of position data."
           },
@@ -672,9 +672,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/screen/capture",
+              "raw": "{{baseUrl}}/api/v1/screen/capture",
               "host": ["{{baseUrl}}"],
-              "path": ["screen", "capture"]
+              "path": ["api", "v1", "screen", "capture"]
             },
             "description": "Capture a screenshot of the entire screen or a specific region.\n\n**Parameters:**\n- `region` (optional): Object with x, y, width, height for specific area\n- `format` (optional): \"png\" or \"jpg\" (default: \"png\")"
           },
@@ -694,9 +694,9 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/screen/capture",
+                  "raw": "{{baseUrl}}/api/v1/screen/capture",
                   "host": ["{{baseUrl}}"],
-                  "path": ["screen", "capture"]
+                  "path": ["api", "v1", "screen", "capture"]
                 }
               },
               "status": "OK",
@@ -723,9 +723,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/screen/find",
+              "raw": "{{baseUrl}}/api/v1/screen/find",
               "host": ["{{baseUrl}}"],
-              "path": ["screen", "find"]
+              "path": ["api", "v1", "screen", "find"]
             },
             "description": "Find an image template on the screen.\n\n**Parameters:**\n- `template` (required): Base64 encoded image to search for\n- `confidence` (optional): Match confidence threshold 0-1 (default: 0.8)\n- `region` (optional): Limit search to specific region {x, y, width, height}"
           },
@@ -745,9 +745,9 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/screen/find",
+                  "raw": "{{baseUrl}}/api/v1/screen/find",
                   "host": ["{{baseUrl}}"],
-                  "path": ["screen", "find"]
+                  "path": ["api", "v1", "screen", "find"]
                 }
               },
               "status": "OK",
@@ -774,9 +774,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/screen/waitFor",
+              "raw": "{{baseUrl}}/api/v1/screen/waitFor",
               "host": ["{{baseUrl}}"],
-              "path": ["screen", "waitFor"]
+              "path": ["api", "v1", "screen", "waitFor"]
             },
             "description": "Wait for an image to appear on screen.\n\n**Parameters:**\n- `template` (required): Base64 encoded image to wait for\n- `timeout` (optional): Max wait time in ms (default: 5000)\n- `confidence` (optional): Match confidence threshold 0-1 (default: 0.8)\n- `region` (optional): Limit search to specific region"
           },
@@ -802,9 +802,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/automation/execute",
+              "raw": "{{baseUrl}}/api/v1/automation/execute",
               "host": ["{{baseUrl}}"],
-              "path": ["automation", "execute"]
+              "path": ["api", "v1", "automation", "execute"]
             },
             "description": "Execute a single automation command.\n\n**Command Types:**\n- `mouse`: Mouse operations\n- `keyboard`: Keyboard operations\n- `screen`: Screen operations\n- `wait`: Wait/delay operations"
           },
@@ -830,9 +830,9 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/mouse/move",
+              "raw": "{{baseUrl}}/api/v1/mouse/move",
               "host": ["{{baseUrl}}"],
-              "path": ["mouse", "move"]
+              "path": ["api", "v1", "mouse", "move"]
             },
             "description": "Example of validation error response"
           },
@@ -852,9 +852,9 @@
                   }
                 },
                 "url": {
-                  "raw": "{{baseUrl}}/mouse/move",
+                  "raw": "{{baseUrl}}/api/v1/mouse/move",
                   "host": ["{{baseUrl}}"],
-                  "path": ["mouse", "move"]
+                  "path": ["api", "v1", "mouse", "move"]
                 }
               },
               "status": "Bad Request",
@@ -906,9 +906,9 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/mouse/stream",
+              "raw": "{{baseUrl}}/api/v1/mouse/position/stream",
               "host": ["{{baseUrl}}"],
-              "path": ["mouse", "stream"]
+              "path": ["api", "v1", "mouse", "position", "stream"]
             },
             "description": "Example of unauthorized access"
           },
@@ -930,9 +930,9 @@
                   }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/mouse/stream",
+                  "raw": "{{baseUrl}}/api/v1/mouse/position/stream",
                   "host": ["{{baseUrl}}"],
-                  "path": ["mouse", "stream"]
+                  "path": ["api", "v1", "mouse", "position", "stream"]
                 }
               },
               "status": "Unauthorized",

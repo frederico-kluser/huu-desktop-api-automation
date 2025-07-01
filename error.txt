@@ -1,0 +1,146 @@
+Now using node v24.0.1 (npm v11.3.0)
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+macmini:huu-desktop-api-automation fredericoguilhermekluserdeoliveira$ npm run dev
+
+> nutjs-rest-api@1.0.0 dev
+> tsx watch src/index.ts
+
+[20:29:32 UTC] INFO: Server listening at http://0.0.0.0:3000
+[20:29:32 UTC] INFO: Server listening on http://0.0.0.0:3000
+^C5:29:34 PM [tsx] Previous process hasn't exited yet. Force killing...
+macmini:huu-desktop-api-automation fredericoguilhermekluserdeoliveira$ 
+macmini:huu-desktop-api-automation fredericoguilhermekluserdeoliveira$ 
+macmini:huu-desktop-api-automation fredericoguilhermekluserdeoliveira$ npm run build
+
+> nutjs-rest-api@1.0.0 build
+> tsc -p tsconfig.json
+
+macmini:huu-desktop-api-automation fredericoguilhermekluserdeoliveira$ npm run start
+
+> nutjs-rest-api@1.0.0 start
+> node dist/index.js
+
+[20:29:45 UTC] INFO: Server listening at http://0.0.0.0:3000
+[20:29:45 UTC] INFO: Server listening on http://0.0.0.0:3000
+[20:30:00 UTC] INFO: incoming request
+    reqId: "req-1"
+    req: {
+      "method": "POST",
+      "url": "/mouse/move",
+      "hostname": "localhost:3000",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 63203
+    }
+[20:30:00 UTC] INFO: Route POST:/mouse/move not found
+    reqId: "req-1"
+[20:30:00 UTC] INFO: request completed
+    reqId: "req-1"
+    res: {
+      "statusCode": 404
+    }
+    responseTime: 5.519875004887581
+[20:30:39 UTC] INFO: incoming request
+    reqId: "req-2"
+    req: {
+      "method": "POST",
+      "url": "/mouse/move",
+      "hostname": "localhost:3000",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 63203
+    }
+[20:30:39 UTC] INFO: Route POST:/mouse/move not found
+    reqId: "req-2"
+[20:30:39 UTC] INFO: request completed
+    reqId: "req-2"
+    res: {
+      "statusCode": 404
+    }
+    responseTime: 2.209083005785942
+[20:30:49 UTC] INFO: incoming request
+    reqId: "req-3"
+    req: {
+      "method": "POST",
+      "url": "/mouse/click",
+      "hostname": "localhost:3000",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 63203
+    }
+[20:30:49 UTC] INFO: Route POST:/mouse/click not found
+    reqId: "req-3"
+[20:30:49 UTC] INFO: request completed
+    reqId: "req-3"
+    res: {
+      "statusCode": 404
+    }
+    responseTime: 1.2319590002298355
+[20:31:59 UTC] INFO: incoming request
+    reqId: "req-4"
+    req: {
+      "method": "GET",
+      "url": "/",
+      "hostname": "0.0.0.0:3000",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 63363
+    }
+[20:31:59 UTC] INFO: Route GET:/ not found
+    reqId: "req-4"
+[20:31:59 UTC] INFO: request completed
+    reqId: "req-4"
+    res: {
+      "statusCode": 404
+    }
+    responseTime: 23.139750003814697
+[20:31:59 UTC] INFO: incoming request
+    reqId: "req-5"
+    req: {
+      "method": "GET",
+      "url": "/favicon.ico",
+      "hostname": "0.0.0.0:3000",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 63363
+    }
+[20:31:59 UTC] INFO: Route GET:/favicon.ico not found
+    reqId: "req-5"
+[20:31:59 UTC] INFO: request completed
+    reqId: "req-5"
+    res: {
+      "statusCode": 404
+    }
+    responseTime: 1.4740830063819885
+[20:32:09 UTC] INFO: incoming request
+    reqId: "req-6"
+    req: {
+      "method": "POST",
+      "url": "/mouse/scroll",
+      "hostname": "localhost:3000",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 63399
+    }
+[20:32:09 UTC] INFO: Route POST:/mouse/scroll not found
+    reqId: "req-6"
+[20:32:09 UTC] INFO: request completed
+    reqId: "req-6"
+    res: {
+      "statusCode": 404
+    }
+    responseTime: 0.676499992609024
+[20:32:14 UTC] INFO: incoming request
+    reqId: "req-7"
+    req: {
+      "method": "GET",
+      "url": "/mouse/position",
+      "hostname": "localhost:3000",
+      "remoteAddress": "127.0.0.1",
+      "remotePort": 63399
+    }
+[20:32:14 UTC] INFO: Route GET:/mouse/position not found
+    reqId: "req-7"
+[20:32:14 UTC] INFO: request completed
+    reqId: "req-7"
+    res: {
+      "statusCode": 404
+    }
+    
