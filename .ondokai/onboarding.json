@@ -1,0 +1,600 @@
+{
+  "project_metadata": {
+    "name": "NutJS REST API for Desktop UI Automation via HTTP",
+    "domain": [
+      "Desktop Automation",
+      "UI Automation",
+      "Backend API",
+      "REST API",
+      "Visual Recognition",
+      "Input Device Control",
+      "RPA (Robotic Process Automation)",
+      "Automated Testing",
+      "Computer Vision",
+      "Configuration"
+    ],
+    "current_phase": [
+      "Production",
+      "Maintenance",
+      "MVP",
+      "Version 1.0.0",
+      "Stabilization",
+      "Initial Command Architecture Implementation",
+      "Development",
+      "Stable Error Handling",
+      "Local Testing"
+    ],
+    "critical_business_rules": [
+      "Ensure code is free from common async/await errors",
+      "Avoid explicit use of any",
+      "Maintain style consistency with Prettier",
+      "System permissions must be respected",
+      "Strict input validation to prevent invalid commands",
+      "Maintain integrity of automation operations",
+      "Continuous service availability",
+      "Automatic restart on excessive memory usage",
+      "Error and output logs for auditing",
+      "Safe execution of UI commands",
+      "Strict validation of inputs",
+      "Maintain system state integrity",
+      "Commands must be validated before execution",
+      "API must not allow unauthorized automation commands",
+      "Strict validation of non-negative coordinates",
+      "Duration limits between 100 and 5000 ms",
+      "Minimum template recognition confidence of 0.8",
+      "Mandatory parameter validation for commands",
+      "Robust error handling to prevent silent failures",
+      "Reliable execution of mouse actions",
+      "Respect duration and smoothing parameters",
+      "Correct adapter injection to prevent failures",
+      "Minimum recognition accuracy (confidence)",
+      "Timeouts for template waits",
+      "Image buffer integrity",
+      "Correct dependency registration",
+      "Decoupling between services and adapters",
+      "Environment variables must be correctly defined",
+      "Default values must ensure minimum functionality",
+      "Correct and sequential command execution",
+      "Standardized result return for integration",
+      "Extensibility for new command types",
+      "Execution accuracy",
+      "Consistency in option typing",
+      "Immutability of actions after creation",
+      "Precision in region definitions",
+      "Coordinate data integrity",
+      "Consistency in MatchResult to ScreenRegion conversion",
+      "Interrupt execution on command failure",
+      "Return detailed results for each command",
+      "Centralized error handling",
+      "Service health monitoring",
+      "Dynamic configuration via environment variables",
+      "Configurable mouse speed",
+      "Correct button mapping",
+      "Reliable execution of click and drag events",
+      "Minimum screen recognition accuracy",
+      "Robust handling of no match scenarios",
+      "Safe and correct execution of mouse commands",
+      "Strict input data validation",
+      "Consistent response for integration with external systems",
+      "Consistent error response format",
+      "Proper HTTP status codes",
+      "No leakage of sensitive error details in production",
+      "Input data must be validated before processing",
+      "Validation failures must interrupt flow and return 400 error",
+      "Routes must be correctly registered to ensure API availability",
+      "Controller must validate and handle requests",
+      "Ensure mouse commands are executed accurately",
+      "Maintain API response integrity",
+      "Strict typing must be enforced",
+      "Exclude node_modules and dist from build",
+      "Support for experimental decorators"
+    ]
+  },
+  "technical_stack": {
+    "primary_language": [
+      "TypeScript 5.x",
+      "Node.js 18+",
+      "JavaScript (Node.js)",
+      "ECMAScript 2024"
+    ],
+    "frameworks": [
+      "Fastify 4.x",
+      "TSyringe 4.x",
+      "Zod 3.x",
+      "PM2",
+      "Jest 29",
+      "NutJS 2.x",
+      "dotenv 16.x"
+    ],
+    "databases": [],
+    "external_services": [
+      "NutJS",
+      "dotenv",
+      "MouseService",
+      "ScreenService",
+      "ScreenAdapter",
+      "AutomationService (IAutomationExecutor)",
+      "@nut-tree-fork/nut-js"
+    ],
+    "package_manager": [
+      "npm"
+    ]
+  },
+  "architecture_patterns": {
+    "design_pattern": [
+      "Plugin-based Architecture",
+      "Declarative Configuration",
+      "Clean Architecture",
+      "Process Manager Pattern",
+      "Dependency Injection",
+      "Modular Architecture",
+      "REST API",
+      "Schema Validation",
+      "Type-safe API Contracts",
+      "Command Pattern",
+      "Adapter Pattern",
+      "Feature Flags",
+      "Template Method",
+      "Factory Method",
+      "Middleware Pattern",
+      "Controller Pattern",
+      "Centralized Error Handling",
+      "Functional Composition",
+      "Strict Typing Enforcement"
+    ],
+    "folder_structure": [
+      "src/ - source code",
+      "dist/ - compiled build",
+      "tests/ - unit and integration tests",
+      "domain/entities - domain entities",
+      "domain/use-cases - use cases",
+      "application/services - business logic",
+      "infrastructure/adapters - external library integration",
+      "dto/ - data transfer objects",
+      "config/ - environment and dependency injection",
+      "routes/ - API route definitions",
+      "controllers/ - request controllers",
+      "middlewares/ - validation and error handling",
+      "schemas/ - Zod validation schemas",
+      "types/ - type and interface definitions",
+      "logs/ - output and error logs",
+      "node_modules/ - external dependencies"
+    ],
+    "naming_conventions": [
+      "camelCase for variables and functions",
+      "PascalCase for classes and types",
+      "kebab-case for files and routes",
+      "Suffix Service for services",
+      "Suffix Controller for controllers",
+      "Suffix Adapter for adapters",
+      "Prefix I for interfaces",
+      "Descriptive names for middlewares and schemas",
+      "Enums in PascalCase",
+      "No snake_case"
+    ],
+    "module_boundaries": [
+      "Clear separation between domain, application, and infrastructure",
+      "Unidirectional dependencies from domain to infrastructure",
+      "Dependency injection for decoupling modules",
+      "Separation between API, automation services, and infrastructure",
+      "Isolated configuration module",
+      "Use of interfaces for abstractions",
+      "Controllers depend on services via injection",
+      "DTOs for validation and typing",
+      "Isolated middleware for validation",
+      "Separation between validation schemas and business logic",
+      "Separation between handlers, schemas, and routes",
+      "No circular dependencies",
+      "Exclusion of node_modules and test files from build"
+    ]
+  },
+  "code_standards": {
+    "style_guide": [
+      "ESLint Recommended",
+      "Prettier",
+      "Airbnb JavaScript/TypeScript Style Guide"
+    ],
+    "linting_rules": [
+      "no-async-promise-executor: error",
+      "no-await-in-loop: warn",
+      "@typescript-eslint/no-explicit-any: error",
+      "@typescript-eslint/no-floating-promises: error",
+      "@typescript-eslint/await-thenable: error",
+      "@typescript-eslint/no-unused-vars: error with argsIgnorePattern ^_",
+      "eslint-config-prettier to disable conflicting rules",
+      "ESLint with @typescript-eslint plugin"
+    ],
+    "formatting": [
+      "Prettier integration via plugin:prettier/recommended",
+      "semi: true",
+      "trailingComma: all",
+      "singleQuote: true",
+      "printWidth: 100",
+      "tabWidth: 2",
+      "2-space indentation"
+    ],
+    "documentation_style": [
+      "JSDoc for functions and classes",
+      "JSDoc for public methods",
+      "JSDoc for exported functions and constants",
+      "Inline comments for context"
+    ],
+    "type_checking": [
+      "Strict TypeScript type checking via plugin:@typescript-eslint/recommended-requiring-type-checking",
+      "Strict TypeScript settings enabled",
+      "NoImplicitAny enabled",
+      "strictNullChecks"
+    ]
+  },
+  "testing_strategy": {
+    "test_framework": [
+      "Jest 29"
+    ],
+    "test_structure": [
+      "__tests__/**/*.test.ts",
+      "tests directory parallel to src",
+      "Unit tests for services",
+      "Integration tests for API endpoints",
+      "tests/unit for schema validation",
+      "tests/integration for API integration"
+    ],
+    "coverage_requirements": [
+      "src/**/*.ts",
+      "!src/**/*.d.ts",
+      "!src/**/*.test.ts",
+      "!src/index.ts",
+      "Minimum 80% coverage",
+      ">= 90% coverage for error handling modules"
+    ],
+    "test_patterns": [
+      "Arrange-Act-Assert (AAA)",
+      "Given-When-Then",
+      "Unit and integration tests focused on endpoints and validation"
+    ],
+    "mocking_approach": [
+      "Use of Jest mocks and fixtures",
+      "Mocks for external dependencies and automation",
+      "Mock of MouseService and ScreenService",
+      "Mock of adapters for unit tests",
+      "Mock of process.env for environment variables",
+      "Fixtures for Zod schemas"
+    ]
+  },
+  "development_workflow": {
+    "branch_strategy": [
+      "GitHub Flow",
+      "Git Flow"
+    ],
+    "commit_conventions": [
+      "Conventional Commits"
+    ],
+    "pr_requirements": [
+      "Code review mandatory",
+      "Passing CI checks",
+      "Lint and test checks"
+    ],
+    "ci_cd_pipeline": [
+      "Lint",
+      "Test",
+      "Coverage collection",
+      "Build",
+      "Deployment",
+      "Automated deploy to staging"
+    ]
+  },
+  "commands": {
+    "setup": [
+      "npm install && cp .env.example .env"
+    ],
+    "install": [
+      "npm install"
+    ],
+    "dev": [
+      "npm run dev"
+    ],
+    "test": [
+      "npm test"
+    ],
+    "build": [
+      "npm run build",
+      "tsc"
+    ],
+    "lint": [
+      "npm run lint",
+      "npx eslint . --ext .ts,.tsx"
+    ],
+    "format": [
+      "npm run format",
+      "npx prettier --write ."
+    ]
+  },
+  "security_constraints": {
+    "authentication_method": [
+      "JWT",
+      "Not implemented in controller (requires external implementation)"
+    ],
+    "authorization_rules": [
+      "Role-based access control (RBAC)",
+      "Presumed control via middleware"
+    ],
+    "sensitive_data": [
+      "Environment variables for configuration",
+      "Accessibility permissions on macOS",
+      "Base64 images must be handled carefully to avoid leaks",
+      "Environment variables must not be exposed in logs",
+      "Error messages sanitized in production",
+      "JWT tokens",
+      "User personal data"
+    ],
+    "security_headers": [
+      "Content-Security-Policy",
+      "X-Content-Type-Options",
+      "Strict-Transport-Security",
+      "Content-Type: application/json",
+      "Recommendation to use helmet in production"
+    ],
+    "encryption_requirements": [
+      "TLS for transport",
+      "AES encryption for sensitive data"
+    ]
+  },
+  "performance_requirements": {
+    "response_time_limits": [
+      "Low latency expected for API calls",
+      "Minimum action duration: 100ms",
+      "Maximum action duration: 5000ms",
+      "Default timeout of 5000ms for template waits",
+      "Immediate response on validation error to avoid unnecessary processing",
+      "< 200ms for main endpoints",
+      "Error responses must be returned within 100ms"
+    ],
+    "optimization_priorities": [
+      "Speed and responsiveness for automation commands",
+      "Memory control to avoid crashes",
+      "Execution in fork mode for isolation",
+      "Efficiency in UI manipulation",
+      "Precision and robustness over raw speed",
+      "Low overhead in error handling",
+      "Responsiveness and extensibility"
+    ],
+    "caching_strategy": [
+      "Configuration loaded once and reused",
+      "In-memory cache for static data",
+      "TTL configurable"
+    ],
+    "scalability_considerations": [
+      "Current config limits to 1 instance, can scale via multiple PM2 instances",
+      "Modular architecture enables horizontal scalability",
+      "Decoupling via interfaces allows horizontal scaling",
+      "Horizontal scalability via multiple Fastify instances",
+      "Lightweight middleware to support high request volume",
+      "Horizontal scalability via containers"
+    ]
+  },
+  "error_handling": {
+    "error_format": [
+      "Standard JSON with message and HTTP code",
+      "CommandResult with success (boolean), error (string), and optional details",
+      "Centralized error handling middleware",
+      "JSON with fields: success, error, details, message"
+    ],
+    "logging_strategy": [
+      "Structured logging with Pino and pino-pretty",
+      "Logs separated for errors (logs/error.log) and output (logs/out.log)",
+      "Log level configurable via LOG_LEVEL",
+      "Error logged via request.log.error with full stack",
+      "Structured logs with info, warn, error levels"
+    ],
+    "monitoring_tools": [
+      "PM2 for monitoring and automatic restart",
+      "Prometheus",
+      "Grafana"
+    ],
+    "error_recovery": [
+      "Automatic process restart on 1G memory limit",
+      "Error handling via Fastify middleware",
+      "Graceful fallback to 500 Internal Server Error for unknown errors",
+      "Immediate interruption and response on validation error",
+      "Exception handling with standardized error return"
+    ]
+  },
+  "dependencies_context": {
+    "critical_dependencies": [
+      "@typescript-eslint/parser",
+      "@typescript-eslint/eslint-plugin",
+      "eslint",
+      "prettier",
+      "NutJS",
+      "Fastify",
+      "TSyringe",
+      "Zod",
+      "Node.js",
+      "PM2",
+      "@nut-tree-fork/nut-js",
+      "pino",
+      "reflect-metadata",
+      "dotenv",
+      "TypeScript compiler",
+      "Node.js runtime"
+    ],
+    "deprecated_packages": [],
+    "version_constraints": [
+      "ECMAScript 2024",
+      "TypeScript >=5.0",
+      "@nut-tree-fork/nut-js ^4.2.0",
+      "fastify ^4.24.0",
+      "typescript ^5.3.2",
+      "zod >=3.0.0",
+      "tsyringe >=4.7.0",
+      "Node.js >=18",
+      "dotenv >=16.0.0"
+    ],
+    "internal_packages": [
+      "domain/entities",
+      "domain/use-cases",
+      "application/services",
+      "infrastructure/adapters",
+      "dto",
+      "config",
+      "routes",
+      "controllers",
+      "middlewares",
+      "schemas",
+      "types"
+    ]
+  },
+  "current_challenges": {
+    "technical_debt": [
+      "Lack of explicit error handling in async calls",
+      "Environment variable validation can be improved",
+      "Base execute methods not implemented in subclasses",
+      "Use of 'as any' for drag and scroll options may compromise typing",
+      "Parameter validation not yet implemented",
+      "No formal automated tests",
+      "Expand error handling for async uncaught errors"
+    ],
+    "known_issues": [
+      "Risk of exceptions if execute is not overridden",
+      "Execution blocks on failure with no continuation",
+      "Possible unhandled exception in waitFor if timeout occurs",
+      "Potential verbose error messages in development",
+      "Direct controller dependency may hinder isolated testing"
+    ],
+    "performance_bottlenecks": [
+      "Single instance limitation may impact performance under high load",
+      "Potential latency in UI automation depending on environment",
+      "Frequent decoding and manipulation of base64 images",
+      "Sequential execution may be slow for large volumes",
+      "High-confidence search in large regions may be slow",
+      "Delays can impact total execution time"
+    ],
+    "migration_status": [
+      "Initial project, no migrations in progress"
+    ]
+  },
+  "team_preferences": {
+    "code_review_focus": [
+      "ESLint compliance",
+      "Avoid explicit any",
+      "Correct use of async/await",
+      "Code quality",
+      "Test coverage",
+      "Security and validation",
+      "TypeScript code quality, test coverage, design patterns",
+      "Type and schema validation",
+      "Naming consistency",
+      "Error handling validation",
+      "Dependency injection consistency",
+      "Immutability maintenance",
+      "Correct container registration",
+      "Environment variable validation",
+      "Correct implementation of execute method",
+      "Consistent typing and error handling",
+      "Documentation clarity",
+      "No unjustified any usage",
+      "Interface clarity",
+      "Dependency injection correctness",
+      "Async flow clarity",
+      "Design pattern compliance",
+      "Adequate testing",
+      "Consistent error response format",
+      "Proper error logging",
+      "No sensitive data exposure",
+      "Schema validation, error handling, dependency injection",
+      "Middleware clarity and simplicity",
+      "Separation of responsibilities",
+      "Clarity and readability"
+    ],
+    "documentation_requirements": [
+      "Clear documentation via JSDoc and README",
+      "Clear documentation of schemas and types",
+      "JSDoc for public methods",
+      "Document environment variables and default values",
+      "Clear documentation for each command and its parameters",
+      "Document interfaces and use cases",
+      "Clear documentation of endpoints and data contracts",
+      "Document all error handler behaviors and response formats",
+      "Clear documentation of routes and controllers"
+    ],
+    "communication_style": [
+      "Clear and objective comments",
+      "Use of _ prefix for ignored arguments",
+      "Objective and technical comments",
+      "Use of PRs for discussions",
+      "Use of English for technical terms",
+      "Objective comments and JSDoc",
+      "Clarity and conciseness in comments",
+      "Portuguese for context, English for technical terms"
+    ],
+    "decision_log": [
+      "Strict rules for promises and unused variables",
+      "Adoption of Fastify for performance",
+      "Use of tsyringe for DI",
+      "Validation with Zod",
+      "Separation between mouse and screen commands",
+      "Use of NutJS for device control",
+      "Use of dotenv for centralized configuration",
+      "Command pattern for modularity and extensibility",
+      "Factory Method for action creation",
+      "Interfaces for data contracts",
+      "Static method for type conversion",
+      "Dependency Injection for decoupling and testability",
+      "Centralized error handling via middleware",
+      "Use of Zod for validation errors",
+      "Controller pattern for modularization",
+      "Async/await for async control"
+    ]
+  },
+  "api_specifications": {
+    "api_style": [
+      "REST"
+    ],
+    "versioning_strategy": [
+      "URL versioning (/api/v1/)",
+      "Semantic versioning via package.json"
+    ],
+    "response_formats": [
+      "JSON",
+      "{ success: boolean, error?: string, data?: any }",
+      "Base64 encoded images",
+      "JSON objects for match results"
+    ],
+    "rate_limiting": [
+      "Configurable per IP and route"
+    ]
+  },
+  "deployment_context": {
+    "environments": [
+      "development (http://localhost:3000)",
+      "production (configurable via .env)",
+      "staging"
+    ],
+    "deployment_method": [
+      "PM2 process manager",
+      "Docker",
+      "Node.js runtime",
+      "CI/CD pipelines"
+    ],
+    "environment_variables": [
+      "NODE_ENV",
+      "PORT",
+      "HOST",
+      "LOG_LEVEL",
+      "MOUSE_SPEED",
+      "SCREEN_CONFIDENCE",
+      "API_URL",
+      "AUTOMATION_SERVICE_ENDPOINT",
+      "JWT_SECRET"
+    ],
+    "infrastructure_constraints": [
+      "Accessibility permissions on macOS",
+      "DISPLAY variable on Linux",
+      "Memory limit set to 1G for automatic restart",
+      "Requires Node.js >=16",
+      "Compatible with Linux, Windows, and macOS",
+      "Requires access to hardware for mouse and screen control",
+      "Resource limitation for parallel execution"
+    ]
+  },
+  "lastCommitHash": "a863c336b500ae6fc664e27f1654c324739c2bb4"
+}
