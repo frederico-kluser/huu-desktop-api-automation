@@ -195,7 +195,34 @@ export class KeyboardService implements IAutomationService {
    */
   async pressKey(key: string): Promise<CommandResult> {
     try {
+      // Emitir evento de key down
+      this.eventDispatcher.dispatch({
+        id: '',
+        type: 'keyboard',
+        timestamp: Date.now(),
+        cursorX: 0,
+        cursorY: 0,
+        data: {
+          key,
+          action: 'down'
+        }
+      });
+      
       await this.keyboardAdapter.pressKey(key);
+      
+      // Emitir evento de key up
+      this.eventDispatcher.dispatch({
+        id: '',
+        type: 'keyboard',
+        timestamp: Date.now(),
+        cursorX: 0,
+        cursorY: 0,
+        data: {
+          key,
+          action: 'up'
+        }
+      });
+      
       return {
         success: true,
         data: { key }

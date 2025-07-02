@@ -2,6 +2,7 @@ import type { FastifyPluginAsync } from 'fastify';
 import { AutomationController } from '../interface/controllers/automation.controller.js';
 import { KeyboardController } from '../interface/controllers/keyboard.controller.js';
 import { inputEventsRoutes } from './input-events.routes.js';
+import { recorderRoutes } from './recorder.routes.js';
 
 export const automationRoutes: FastifyPluginAsync = async (server) => {
   const controller = new AutomationController();
@@ -14,4 +15,7 @@ export const automationRoutes: FastifyPluginAsync = async (server) => {
 
   // Registra rotas de streaming de eventos de input
   await server.register(inputEventsRoutes, { prefix: '/stream' });
+  
+  // Registra rotas do recorder
+  await server.register(recorderRoutes);
 };

@@ -61,20 +61,74 @@ export class MouseService {
         await this.mouseAdapter.move({ x, y }, smooth, duration);
       }
       
+      // Emitir evento de mouse down
+      this.eventDispatcher.dispatch({
+        id: '',
+        type: 'mouse',
+        timestamp: Date.now(),
+        cursorX: x,
+        cursorY: y,
+        data: {
+          action: 'click',
+          x,
+          y,
+          button: button as EventMouseButton
+        }
+      });
+      
       await this.mouseAdapter.clickAt({ x, y }, button as MouseButton, doubleClick);
       this.logger.info({ x, y, button, doubleClick }, 'Mouse clicked successfully');
       
-      // Emitir evento de clique
-      this.eventDispatcher.dispatchMouseClick(button as EventMouseButton, x, y);
+      // Emitir evento de mouse up
+      this.eventDispatcher.dispatch({
+        id: '',
+        type: 'mouse',
+        timestamp: Date.now(),
+        cursorX: x,
+        cursorY: y,
+        data: {
+          action: 'release',
+          x,
+          y,
+          button: button as EventMouseButton
+        }
+      });
     } else {
       // Obter posição atual para incluir no evento
       const currentPos = await this.getPosition();
       
+      // Emitir evento de mouse down
+      this.eventDispatcher.dispatch({
+        id: '',
+        type: 'mouse',
+        timestamp: Date.now(),
+        cursorX: currentPos.x,
+        cursorY: currentPos.y,
+        data: {
+          action: 'click',
+          x: currentPos.x,
+          y: currentPos.y,
+          button: button as EventMouseButton
+        }
+      });
+      
       await this.mouseAdapter.click(button as MouseButton, doubleClick);
       this.logger.info({ button, doubleClick }, 'Mouse clicked at current position');
       
-      // Emitir evento de clique na posição atual
-      this.eventDispatcher.dispatchMouseClick(button as EventMouseButton, currentPos.x, currentPos.y);
+      // Emitir evento de mouse up
+      this.eventDispatcher.dispatch({
+        id: '',
+        type: 'mouse',
+        timestamp: Date.now(),
+        cursorX: currentPos.x,
+        cursorY: currentPos.y,
+        data: {
+          action: 'release',
+          x: currentPos.x,
+          y: currentPos.y,
+          button: button as EventMouseButton
+        }
+      });
     }
   }
 

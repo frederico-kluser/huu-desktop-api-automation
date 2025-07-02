@@ -148,10 +148,38 @@ export class EventDispatcher implements IEventPublisher {
   }
   
   /**
+   * Método genérico para despachar eventos
+   * @param event Evento a ser despachado
+   */
+  dispatch(event: any): void {
+    if (!this.checkRateLimit()) {
+      logger.warn('Rate limit excedido para evento');
+      return;
+    }
+    
+    // Adicionar ID se não existir
+    if (!event.id) {
+      event.id = nanoid();
+    }
+    
+    // Converter para formato compatível se necessário
+    if (event.type === 'mouse' && event.data) {
+      // Evento estendido de mouse
+      this.enqueueEvent(event);
+    } else if (event.type === 'keyboard' && event.data) {
+      // Evento estendido de teclado
+      this.enqueueEvent(event);
+    } else {
+      // Tentar processar como evento padrão
+      this.enqueueEvent(event as InputEvent);
+    }
+  }
+  
+  /**
    * Adiciona um evento à fila para processamento
    * @param event Evento a ser enfileirado
    */
-  private enqueueEvent(event: InputEvent): void {
+  private enqueueEvent(event: any): void {
     this.eventQueue.push(event);
     
     if (!this.isProcessing) {
