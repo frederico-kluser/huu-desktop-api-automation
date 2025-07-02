@@ -18,10 +18,10 @@ export type MouseButton = 'left' | 'right' | 'middle';
 export interface BaseInputEvent {
   /** Identificador único do evento */
   id: string;
-  
+
   /** Origem do evento */
   source: EventSource;
-  
+
   /** Timestamp do evento em millisegundos */
   ts: number;
 }
@@ -31,13 +31,13 @@ export interface BaseInputEvent {
  */
 export interface MouseClickEvent extends BaseInputEvent {
   source: 'mouse';
-  
+
   /** Botão do mouse que foi clicado */
   button: MouseButton;
-  
+
   /** Coordenada X do cursor */
   x: number;
-  
+
   /** Coordenada Y do cursor */
   y: number;
 }
@@ -47,13 +47,13 @@ export interface MouseClickEvent extends BaseInputEvent {
  */
 export interface KeyboardEvent extends BaseInputEvent {
   source: 'keyboard';
-  
+
   /** Tecla digitada */
   key: string;
-  
+
   /** Coordenada X do cursor (para contexto) */
   x: number;
-  
+
   /** Coordenada Y do cursor (para contexto) */
   y: number;
 }
@@ -75,7 +75,7 @@ export interface IEventPublisher {
    * @param ts Timestamp (opcional, usa Date.now() se não fornecido)
    */
   dispatchMouseClick(button: MouseButton, x: number, y: number, ts?: number): void;
-  
+
   /**
    * Despacha um evento de tecla digitada
    * @param key Tecla digitada
@@ -103,7 +103,7 @@ export interface IEventListener {
 export interface SSEEventPayload {
   /** ID do último evento */
   id: string;
-  
+
   /** Dados do evento */
   data: InputEvent;
 }
