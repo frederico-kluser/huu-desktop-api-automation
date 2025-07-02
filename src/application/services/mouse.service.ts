@@ -9,6 +9,8 @@ import type { Point } from '../../domain/entities/mouse-action.js';
 import { MouseButton } from '../../domain/entities/mouse-action.js';
 import { screen } from '@nut-tree-fork/nut-js';
 import pino from 'pino';
+import { EventDispatcher } from './event-dispatcher.service.js';
+import type { MouseButton as EventMouseButton } from '../../types/input-event.types.js';
 
 export interface IMouseAdapter {
   move(point: Point, smooth: boolean, duration: number): Promise<void>;
@@ -26,6 +28,8 @@ export class MouseService {
   constructor(
     @inject('MouseAdapter')
     private readonly mouseAdapter: IMouseAdapter,
+    @inject(EventDispatcher)
+    private readonly eventDispatcher: EventDispatcher,
   ) {}
 
   async move(request: MouseMoveRequest): Promise<void> {
@@ -59,9 +63,18 @@ export class MouseService {
       
       await this.mouseAdapter.clickAt({ x, y }, button as MouseButton, doubleClick);
       this.logger.info({ x, y, button, doubleClick }, 'Mouse clicked successfully');
+      
+      // Emitir evento de clique
+      this.eventDispatcher.dispatchMouseClick(button as EventMouseButton, x, y);
     } else {
+      // Obter posição atual para incluir no evento
+      const currentPos = await this.getPosition();
+      
       await this.mouseAdapter.click(button as MouseButton, doubleClick);
       this.logger.info({ button, doubleClick }, 'Mouse clicked at current position');
+      
+      // Emitir evento de clique na posição atual
+      this.eventDispatcher.dispatchMouseClick(button as EventMouseButton, currentPos.x, currentPos.y);
     }
   }
 

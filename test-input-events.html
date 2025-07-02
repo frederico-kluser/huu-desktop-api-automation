@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Eventos de Input SSE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .connected {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .disconnected {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .event-log {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .event-item {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mouse-event {
+            background-color: #e3f2fd;
+        }
+        
+        .keyboard-event {
+            background-color: #f3e5f5;
+        }
+        
+        .controls {
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        button:hover {
+            background-color: #1976D2;
+        }
+        
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .stats {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+        
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste de Streaming de Eventos de Input</h1>
+    
+    <div class="status disconnected" id="status">
+        Desconectado
+    </div>
+    
+    <div class="container">
+        <div class="section">
+            <h2>Eventos Recebidos</h2>
+            <div class="event-log" id="eventLog"></div>
+            <div class="controls">
+                <button id="clearLog">Limpar Log</button>
+                <button id="pauseLog">Pausar</button>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Estatísticas</h2>
+            <div class="stats" id="stats">
+                <div class="stats-item">
+                    <span>Total de Eventos:</span>
+                    <span id="totalEvents">0</span>
+                </div>
+                <div class="stats-item">
+                    <span>Eventos de Mouse:</span>
+                    <span id="mouseEvents">0</span>
+                </div>
+                <div class="stats-item">
+                    <span>Eventos de Teclado:</span>
+                    <span id="keyboardEvents">0</span>
+                </div>
+                <div class="stats-item">
+                    <span>Taxa (eventos/s):</span>
+                    <span id="eventRate">0</span>
+                </div>
+                <div class="stats-item">
+                    <span>Última Atualização:</span>
+                    <span id="lastUpdate">-</span>
+                </div>
+            </div>
+            
+            <h3>Controles da API</h3>
+            <div class="controls">
+                <button id="getStats">Obter Estatísticas</button>
+                <button id="clearBuffer">Limpar Buffer</button>
+                <button id="connect">Conectar</button>
+                <button id="disconnect">Desconectar</button>
+            </div>
+            
+            <h3>Configuração</h3>
+            <div>
+                <label for="apiKey">API Key:</label>
+                <input type="text" id="apiKey" placeholder="Digite sua API key" style="width: 100%; margin-top: 5px;">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let eventSource = null;
+        let isPaused = false;
+        let stats = {
+            total: 0,
+            mouse: 0,
+            keyboard: 0,
+            startTime: Date.now(),
+            events: []
+        };
+        
+        const statusEl = document.getElementById('status');
+        const eventLogEl = document.getElementById('eventLog');
+        const totalEventsEl = document.getElementById('totalEvents');
+        const mouseEventsEl = document.getElementById('mouseEvents');
+        const keyboardEventsEl = document.getElementById('keyboardEvents');
+        const eventRateEl = document.getElementById('eventRate');
+        const lastUpdateEl = document.getElementById('lastUpdate');
+        const apiKeyInput = document.getElementById('apiKey');
+        
+        // Recuperar API key salva
+        const savedApiKey = localStorage.getItem('apiKey');
+        if (savedApiKey) {
+            apiKeyInput.value = savedApiKey;
+        }
+        
+        function connect() {
+            if (eventSource) {
+                eventSource.close();
+            }
+            
+            const apiKey = apiKeyInput.value.trim();
+            if (!apiKey) {
+                alert('Por favor, insira uma API key');
+                return;
+            }
+            
+            // Salvar API key
+            localStorage.setItem('apiKey', apiKey);
+            
+            const url = 'http://localhost:3000/api/v1/stream/input-events';
+            eventSource = new EventSource(url, {
+                headers: {
+                    'x-api-key': apiKey
+                }
+            });
+            
+            eventSource.onopen = () => {
+                statusEl.textContent = 'Conectado';
+                statusEl.className = 'status connected';
+                updateButtons();
+            };
+            
+            eventSource.onerror = (error) => {
+                statusEl.textContent = 'Erro de Conexão';
+                statusEl.className = 'status disconnected';
+                updateButtons();
+                console.error('Erro SSE:', error);
+            };
+            
+            eventSource.addEventListener('input-event', (event) => {
+                if (!isPaused) {
+                    handleInputEvent(JSON.parse(event.data));
+                }
+            });
+            
+            eventSource.onmessage = (event) => {
+                console.log('Mensagem genérica:', event.data);
+            };
+        }
+        
+        function disconnect() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+                statusEl.textContent = 'Desconectado';
+                statusEl.className = 'status disconnected';
+                updateButtons();
+            }
+        }
+        
+        function handleInputEvent(data) {
+            stats.total++;
+            stats.events.push(Date.now());
+            
+            if (data.source === 'mouse') {
+                stats.mouse++;
+            } else if (data.source === 'keyboard') {
+                stats.keyboard++;
+            }
+            
+            // Remover eventos antigos (mais de 1 segundo)
+            const now = Date.now();
+            stats.events = stats.events.filter(t => now - t < 1000);
+            
+            updateStats();
+            addEventToLog(data);
+        }
+        
+        function addEventToLog(event) {
+            const eventEl = document.createElement('div');
+            eventEl.className = `event-item ${event.source}-event`;
+            
+            const time = new Date(event.ts).toLocaleTimeString('pt-BR', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                fractionalSecondDigits: 3 
+            });
+            
+            let content = `[${time}] `;
+            
+            if (event.source === 'mouse') {
+                content += `🖱️ MOUSE: ${event.button} em (${event.x}, ${event.y})`;
+            } else if (event.source === 'keyboard') {
+                content += `⌨️ TECLADO: "${event.key}" em (${event.x}, ${event.y})`;
+            }
+            
+            eventEl.textContent = content;
+            eventLogEl.insertBefore(eventEl, eventLogEl.firstChild);
+            
+            // Limitar o número de eventos no log
+            while (eventLogEl.children.length > 100) {
+                eventLogEl.removeChild(eventLogEl.lastChild);
+            }
+        }
+        
+        function updateStats() {
+            totalEventsEl.textContent = stats.total;
+            mouseEventsEl.textContent = stats.mouse;
+            keyboardEventsEl.textContent = stats.keyboard;
+            eventRateEl.textContent = stats.events.length.toFixed(1);
+            lastUpdateEl.textContent = new Date().toLocaleTimeString('pt-BR');
+        }
+        
+        function updateButtons() {
+            const isConnected = eventSource && eventSource.readyState === EventSource.OPEN;
+            document.getElementById('connect').disabled = isConnected;
+            document.getElementById('disconnect').disabled = !isConnected;
+        }
+        
+        async function fetchStats() {
+            const apiKey = apiKeyInput.value.trim();
+            if (!apiKey) {
+                alert('Por favor, insira uma API key');
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/v1/stream/input-events/stats', {
+                    headers: {
+                        'x-api-key': apiKey
+                    }
+                });
+                
+                const data = await response.json();
+                console.log('Estatísticas da API:', data);
+                alert(JSON.stringify(data, null, 2));
+            } catch (error) {
+                alert('Erro ao buscar estatísticas: ' + error.message);
+            }
+        }
+        
+        async function clearApiBuffer() {
+            const apiKey = apiKeyInput.value.trim();
+            if (!apiKey) {
+                alert('Por favor, insira uma API key');
+                return;
+            }
+            
+            if (!confirm('Tem certeza que deseja limpar o buffer de eventos?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/v1/stream/input-events/clear', {
+                    method: 'POST',
+                    headers: {
+                        'x-api-key': apiKey
+                    }
+                });
+                
+                const data = await response.json();
+                alert(data.message || 'Buffer limpo com sucesso');
+            } catch (error) {
+                alert('Erro ao limpar buffer: ' + error.message);
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('connect').addEventListener('click', connect);
+        document.getElementById('disconnect').addEventListener('click', disconnect);
+        document.getElementById('clearLog').addEventListener('click', () => {
+            eventLogEl.innerHTML = '';
+            stats = {
+                total: 0,
+                mouse: 0,
+                keyboard: 0,
+                startTime: Date.now(),
+                events: []
+            };
+            updateStats();
+        });
+        
+        document.getElementById('pauseLog').addEventListener('click', (e) => {
+            isPaused = !isPaused;
+            e.target.textContent = isPaused ? 'Retomar' : 'Pausar';
+        });
+        
+        document.getElementById('getStats').addEventListener('click', fetchStats);
+        document.getElementById('clearBuffer').addEventListener('click', clearApiBuffer);
+        
+        // Atualizar botões inicialmente
+        updateButtons();
+    </script>
+</body>
+</html>

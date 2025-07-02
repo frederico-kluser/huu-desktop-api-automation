@@ -6,6 +6,8 @@
 import { inject, injectable } from 'tsyringe';
 import type { IAutomationService } from '../../domain/interfaces/automation-service.interface.js';
 import type { CommandResult } from '../../domain/entities/command-result.js';
+import { EventDispatcher } from './event-dispatcher.service.js';
+import { mouse } from '@nut-tree-fork/nut-js';
 
 /**
  * Interface para o adaptador de teclado
@@ -29,8 +31,20 @@ interface ITypeStrategy {
  * Estratégia de digitação instantânea
  */
 class InstantTypeStrategy implements ITypeStrategy {
+  constructor(private eventDispatcher?: EventDispatcher) {}
+  
   async type(text: string, adapter: IKeyboardAdapter): Promise<void> {
     await adapter.type(text);
+    
+    // Emitir eventos para cada caractere se dispatcher disponível
+    if (this.eventDispatcher) {
+      const pos = await mouse.getPosition();
+      const chars = Array.from(text);
+      
+      for (const char of chars) {
+        this.eventDispatcher.dispatchKeyPress(char, pos.x, pos.y);
+      }
+    }
   }
 }
 
@@ -38,7 +52,10 @@ class InstantTypeStrategy implements ITypeStrategy {
  * Estratégia de digitação com delay por caractere
  */
 class PerCharTypeStrategy implements ITypeStrategy {
-  constructor(private delayPerChar: number) {}
+  constructor(
+    private delayPerChar: number,
+    private eventDispatcher?: EventDispatcher
+  ) {}
 
   async type(text: string, adapter: IKeyboardAdapter): Promise<void> {
     const chars = Array.from(text); // Suporta Unicode corretamente
@@ -49,6 +66,13 @@ class PerCharTypeStrategy implements ITypeStrategy {
       
       for (const char of batch) {
         await adapter.type(char);
+        
+        // Emitir evento de tecla digitada se dispatcher disponível
+        if (this.eventDispatcher) {
+          const pos = await mouse.getPosition();
+          this.eventDispatcher.dispatchKeyPress(char, pos.x, pos.y);
+        }
+        
         if (this.delayPerChar > 0) {
           await adapter.delay(this.delayPerChar);
         }
@@ -61,7 +85,10 @@ class PerCharTypeStrategy implements ITypeStrategy {
  * Estratégia de digitação com tempo total
  */
 class TotalTimeTypeStrategy implements ITypeStrategy {
-  constructor(private totalTime: number) {}
+  constructor(
+    private totalTime: number,
+    private eventDispatcher?: EventDispatcher
+  ) {}
 
   async type(text: string, adapter: IKeyboardAdapter): Promise<void> {
     const chars = Array.from(text);
@@ -72,6 +99,12 @@ class TotalTimeTypeStrategy implements ITypeStrategy {
 
     if (chars.length === 1) {
       await adapter.type(text);
+      
+      // Emitir evento para caractere único
+      if (this.eventDispatcher) {
+        const pos = await mouse.getPosition();
+        this.eventDispatcher.dispatchKeyPress(text, pos.x, pos.y);
+      }
       return;
     }
 
@@ -80,6 +113,13 @@ class TotalTimeTypeStrategy implements ITypeStrategy {
 
     for (const char of chars) {
       await adapter.type(char);
+      
+      // Emitir evento de tecla digitada se dispatcher disponível
+      if (this.eventDispatcher) {
+        const pos = await mouse.getPosition();
+        this.eventDispatcher.dispatchKeyPress(char, pos.x, pos.y);
+      }
+      
       if (delayPerChar > 0) {
         await adapter.delay(delayPerChar);
       }
@@ -102,7 +142,8 @@ export interface TypeOptions {
 @injectable()
 export class KeyboardService implements IAutomationService {
   constructor(
-    @inject('IKeyboardAdapter') private keyboardAdapter: IKeyboardAdapter
+    @inject('IKeyboardAdapter') private keyboardAdapter: IKeyboardAdapter,
+    @inject(EventDispatcher) private eventDispatcher: EventDispatcher
   ) {}
 
   /**
@@ -214,17 +255,17 @@ export class KeyboardService implements IAutomationService {
         if (value < 0) {
           throw new Error('Per-character delay must be non-negative');
         }
-        return new PerCharTypeStrategy(value);
+        return new PerCharTypeStrategy(value, this.eventDispatcher);
       
       case 'total':
         if (value < 0) {
           throw new Error('Total time must be non-negative');
         }
-        return new TotalTimeTypeStrategy(value);
+        return new TotalTimeTypeStrategy(value, this.eventDispatcher);
       
       case 'instant':
       default:
-        return new InstantTypeStrategy();
+        return new InstantTypeStrategy(this.eventDispatcher);
     }
   }
 
