@@ -35,11 +35,7 @@ const StatsResponseSchema = {
 /**
  * Registra rotas do recorder
  */
-export function recorderRoutes(
-  fastify: FastifyInstance,
-  _opts: FastifyPluginOptions,
-  done: (err?: Error) => void,
-): void {
+export function recorderRoutes(fastify: FastifyInstance, _opts: FastifyPluginOptions): void {
   const controller = container.resolve(RecorderController);
 
   /**
@@ -75,6 +71,4 @@ export function recorderRoutes(
     },
     handler: controller.getStats.bind(controller),
   });
-
-  done();
 }

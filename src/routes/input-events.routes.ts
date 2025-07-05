@@ -40,13 +40,8 @@ const StandardResponseSchema = {
  * Registra as rotas de eventos de input
  * @param fastify Instância do Fastify
  * @param _opts Opções do plugin
- * @param done Callback de conclusão
  */
-export function inputEventsRoutes(
-  fastify: FastifyInstance,
-  _opts: FastifyPluginOptions,
-  done: (err?: Error) => void,
-): void {
+export function inputEventsRoutes(fastify: FastifyInstance, _opts: FastifyPluginOptions): void {
   const controller = container.resolve(InputEventsController);
 
   /**
@@ -208,6 +203,4 @@ export function inputEventsRoutes(
       );
     },
   );
-
-  done();
 }
