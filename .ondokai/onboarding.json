@@ -1,160 +1,162 @@
 {
   "project_metadata": {
-    "name": "NutJS REST API for Desktop Automation and Real-Time Input Event Streaming",
+    "name": "NutJS Automation API – Modular Node.js Backend for Desktop, Input, and LLM Integration",
     "domain": [
       "Desktop Automation",
-      "Input Device Management",
-      "Screen Capture",
-      "Clipboard Management",
-      "Keyboard Automation",
-      "Mouse Automation",
-      "User Interaction Tracking",
-      "Event Streaming (SSE)",
-      "Backend API",
-      "Software Testing",
-      "Validation",
-      "Robotic Process Automation (RPA)",
       "UI Automation",
-      "Command Execution",
-      "Computer Vision",
-      "Image Processing"
+      "Input Simulation",
+      "Screen Recognition",
+      "Clipboard Management",
+      "User Interaction Tracking",
+      "Robotic Process Automation (RPA)",
+      "API Management",
+      "Backend",
+      "Software Testing",
+      "AI Integration",
+      "Natural Language Processing",
+      "Event Streaming",
+      "Command Execution"
     ],
     "current_phase": [
+      "Development",
       "Production",
       "Maintenance",
       "MVP",
       "Stable",
-      "Version 1.0.1",
-      "Development",
-      "Testing Automation",
-      "Quality Assurance",
-      "Testing and Validation"
+      "Testing Automation"
     ],
     "critical_business_rules": [
-      "Maintain a clean environment by avoiding temporary and sensitive files in version control",
-      "Enforce code quality via linting and strict type checking",
-      "Automated tests must be executed and pass before deployment",
-      "Explicit 'any' usage is not allowed",
-      "Promises must be handled correctly to avoid unhandled rejections",
-      "No unused variables allowed",
-      "Mandatory API key authentication for all sensitive operations and streaming endpoints",
-      "Strict validation of input parameters and JSON schemas to prevent invalid commands",
-      "Clipboard content must not exceed 1 MB and must be a non-empty string",
-      "Key presses and combinations must use only allowed keys and modifiers",
-      "Timing values must be non-negative integers and within defined limits",
-      "Maintain data integrity and security for all transmitted events and clipboard operations",
-      "Ensure correct execution and order of automation commands and mouse actions",
-      "Continuous API availability and graceful shutdown to prevent data loss",
-      "Rate limiting to prevent overload (maxRate between 1 and 50000 events/s)",
-      "Buffer size, heartbeat, and event age must be within specified limits",
-      "Consistent error response format with proper HTTP status codes",
+      "API key authentication mandatory for all endpoints",
+      "Clipboard content size limit (max 1MB) must be respected",
+      "Mouse and keyboard operations must validate input parameters (e.g., coordinates >= 0)",
+      "SSE connections require proper Accept header 'text/event-stream'",
+      "Response time for requests should be below 5000ms",
+      "Strict input validation using Zod schemas",
       "No leakage of sensitive error details in production",
-      "Environment variables must be defined and valid to avoid startup failures",
-      "API key must be protected and never exposed in source code",
-      "Logs must record failures for audit and be configurable by environment",
-      "Test coverage must be at least 80% for critical modules",
-      "No additional properties allowed in validated requests",
-      "Clipboard data must conform to JSON Schema Draft-07",
-      "Singleton pattern for shared state management",
-      "Strict separation between source and build/test output",
-      "Consistent and ordered event delivery for all listeners",
-      "Proper error handling and logging for all endpoints",
-      "Strict typing to avoid runtime errors",
-      "Content size for clipboard operations must not exceed 1 MB",
+      "Content must be a non-empty string",
+      "Key combinations must have between 1 and 5 keys and only use allowed modifiers and letters",
+      "Timing values must be non-negative integers and not exceed 300000ms",
+      "Buffer size must be between 1 and 100000",
+      "Heartbeat interval must be between 1000 and 300000 ms",
+      "Max event rate must be between 1 and 50000 events/s",
+      "Max event age must be between 1000 and 3600000 ms",
+      "Max text length must be between 1 and 100000",
+      "Default mode must be one of: instant, perChar, total",
+      "Production logs must be performant and minimal",
+      "Development logs must be human-readable",
       "Shutdown must be graceful to avoid data loss",
-      "Production logs must be performant and minimal; development logs must be human-readable"
+      "Singletons for global event management",
+      "No additional properties allowed in requests",
+      "Input data must conform to JSON Schema Draft 7",
+      "Consistent error response format",
+      "Proper HTTP status codes",
+      "Strict type checking and linting enforced",
+      "Coverage minimum 80% for all services and configuration",
+      "No source maps generated in production",
+      "API must return valid base64 image data",
+      "Saved file must be a valid PNG",
+      "Strict separation between src and dist",
+      "No emission of test files during build",
+      "Environment variables must be defined and valid",
+      "API keys must not be exposed in code",
+      "Consistent logging for success and failure",
+      "Graceful error handling and resource cleanup"
     ]
   },
   "technical_stack": {
-    "primary_language": ["TypeScript", "JavaScript (Node.js 18+)", "ECMAScript 2022"],
-    "frameworks": ["Fastify", "Jest", "ESLint", "TSyringe", "Zod", "PM2"],
+    "primary_language": ["TypeScript 5.x", "Node.js 18.x", "JavaScript (ESM)"],
+    "frameworks": [
+      "Fastify 4.x",
+      "Jest 29.x",
+      "ESLint",
+      "Prettier",
+      "TSyringe 4.x",
+      "Zod 3.x",
+      "NutJS",
+      "LangChain"
+    ],
     "databases": ["None"],
     "external_services": [
-      "Server-Sent Events (SSE) for streaming",
-      "NutJS desktop automation library",
-      "clipboardy (clipboard management)",
-      "sharp (image processing)",
-      "dotenv (environment variable management)",
-      "nanoid (ID generation)",
-      "pino (logging)"
+      "OpenAI API",
+      "NutJS",
+      "Server-Sent Events (SSE) endpoint",
+      "clipboardy",
+      "sharp",
+      "dotenv",
+      "nanoid",
+      "pino",
+      "LangChain LLM API"
     ],
     "package_manager": ["npm", "yarn"]
   },
   "architecture_patterns": {
     "design_pattern": [
+      "Clean Architecture",
       "Modular Architecture",
-      "Event-driven Architecture",
       "Dependency Injection",
-      "REST API",
-      "Schema Validation",
-      "DTO Pattern",
-      "Service Layer",
-      "Singleton",
-      "Adapter Pattern",
+      "RESTful API",
+      "Event-driven Architecture",
       "Observer Pattern",
-      "Controller-Service Pattern",
-      "Centralized Error Handling",
-      "Configuration Validation",
-      "Domain-Driven Design (DDD)",
-      "Command Pattern"
+      "Singleton",
+      "Service Layer",
+      "DTO Pattern",
+      "Schema Validation",
+      "Adapter Pattern",
+      "Plugin-based Architecture",
+      "Configuration Management",
+      "Layered Architecture",
+      "Factory Method",
+      "Strategy Pattern",
+      "Fail-fast"
     ],
     "folder_structure": [
-      "src/ - main source code",
-      "dist/ - compiled output",
-      "tests/ - unit and integration tests",
-      "config/ - environment and logger configuration",
-      "services/ - automation and event logic",
-      "controllers/ - HTTP endpoints",
-      "schemas/ - JSON Schema and validation",
-      "types/ - shared TypeScript types",
-      "infrastructure/adapters - hardware and external integrations",
-      "application/dto - Data Transfer Objects and validation schemas",
-      "logs/ - log files",
-      "coverage/ - test coverage reports"
+      "src/",
+      "dist/",
+      "tests/",
+      "config/",
+      "domain/entities",
+      "application/services",
+      "infrastructure/adapters",
+      "interface/controllers",
+      "middleware/",
+      "schemas/",
+      "types/",
+      "logs/",
+      "coverage/"
     ],
     "naming_conventions": [
-      "CamelCase for classes and interfaces",
       "camelCase for variables and functions",
-      "PascalCase for types and schemas",
-      "kebab-case for REST routes and files",
+      "PascalCase for classes and types",
+      "kebab-case for endpoints and files",
       "UPPER_SNAKE_CASE for environment variables",
-      "DTOs with 'request' suffix",
-      "Schemas with 'Schema' or 'JsonSchema' suffix",
-      "Controllers with 'Controller' suffix",
-      "Services with 'Service' suffix",
-      "Mocks prefixed with 'mock'",
-      "Test files with .test.ts or .spec.ts suffix"
+      "DTO suffix for data transfer objects",
+      "Service/Adapter/Controller suffix for classes",
+      "Interfaces prefixed with 'I'",
+      "JSON keys use camelCase",
+      "Files with .ts extension"
     ],
     "module_boundaries": [
-      "Clear separation between source code, tests, logs, and build output",
+      "Clear separation between domain, application, infrastructure, and interface",
       "Controllers depend on services via dependency injection",
-      "Services encapsulate business logic and hardware/system interactions",
-      "DTOs and schemas isolate validation and typing",
-      "Infrastructure adapters abstract external libraries",
-      "Domain entities and interfaces are isolated from application and infrastructure",
-      "Configuration is isolated in dedicated modules",
-      "Unidirectional dependencies to avoid circular coupling",
-      "Mocks are injected for testing",
-      "Middleware is isolated for authentication and validation"
+      "Services encapsulate business logic and interact with adapters",
+      "DTOs and schemas isolated for validation and typing",
+      "Types and interfaces separated from implementation",
+      "Configuration isolated in dedicated modules",
+      "Middleware isolated for authentication and validation",
+      "Tests isolated from production code",
+      "No circular dependencies",
+      "Unidirectional dependencies for maintainability"
     ]
   },
   "code_standards": {
-    "style_guide": [
-      "Airbnb JavaScript/TypeScript Style Guide",
-      "ESLint Recommended",
-      "Prettier",
-      "TypeScript ESLint Recommended"
-    ],
+    "style_guide": ["Airbnb JavaScript/TypeScript Style Guide", "ESLint Recommended", "Prettier"],
     "linting_rules": [
-      "Configured via .eslintrc.js",
+      "ESLint with @typescript-eslint plugin",
       "@typescript-eslint/no-explicit-any: error",
       "@typescript-eslint/no-unused-vars: error with argsIgnorePattern '^_'",
-      "@typescript-eslint/no-floating-promises: error",
-      "@typescript-eslint/await-thenable: error",
-      "ESLint with @typescript-eslint plugin",
-      "No unused vars",
-      "Consistent return types",
-      "Strict typing enforced"
+      "@typescript-eslint/strict-boolean-expressions",
+      "no-async-promise-executor: error",
+      "no-await-in-loop: warn"
     ],
     "formatting": [
       "Prettier integration via plugin:prettier/recommended",
@@ -162,81 +164,64 @@
       "singleQuote: true",
       "trailingComma: all",
       "printWidth: 100",
-      "tabWidth: 2",
-      "Indentation of 2 spaces",
-      "Integrated with lint-staged"
+      "tabWidth: 2"
     ],
     "documentation_style": [
-      "JSDoc for public methods, functions, and endpoints",
-      "JSDoc for interfaces and types",
-      "Inline comments in Portuguese for context",
-      "JSDoc for schemas and DTOs"
+      "JSDoc for public methods, classes, and interfaces",
+      "Inline JSON descriptions",
+      "Comments in Portuguese for context"
     ],
     "type_checking": [
       "Strict TypeScript (strict mode enabled)",
-      "StrictNullChecks",
-      "NoImplicitAny",
-      "TypeScript strict mode via tsconfig.json",
-      "TypeScript strict mode via parserOptions.project",
-      "TypeScript with explicit types for parameters and returns",
-      "TypeScript with Zod for runtime validation"
+      "TypeScript strict mode via tsconfig",
+      "Runtime validation with Zod"
     ]
   },
   "testing_strategy": {
-    "test_framework": ["Jest", "ts-jest for TypeScript integration"],
+    "test_framework": ["Jest 29.x", "ts-jest"],
     "test_structure": [
       "tests/unit for unit tests",
       "tests/integration for integration tests",
-      "Test files co-located with feature folders",
+      "tests/schemas for schema validation",
       "Coverage stored in coverage/",
-      "Setup via jest.config.js",
-      "Mocks for external dependencies"
+      "Setup via jest.config.js"
     ],
     "coverage_requirements": [
-      "Minimum 80% coverage on critical modules",
-      "branches >= 80%",
-      "functions >= 80%",
-      "lines >= 80%",
-      "statements >= 80%",
-      "High coverage for DTOs and schemas"
+      "Coverage minimum 80% for statements, branches, functions, and lines",
+      ">= 90% for schemas and DTOs"
     ],
     "test_patterns": [
+      "**/__tests__/**/*.test.ts",
+      "**/tests/**/*.test.ts",
+      "**/tests/**/*.spec.ts",
       "Arrange-Act-Assert (AAA)",
-      "Mocks for external dependencies",
-      "Edge case and boundary value tests",
-      "Validation and rejection of invalid inputs",
-      "describe() and test() blocks for organization",
-      "Assertions for success, error, and response properties"
+      "Mocks for external dependencies"
     ],
     "mocking_approach": [
-      "Jest mocks and fixtures for isolation",
-      "Mocks for clipboardy, NutJS, and environment variables",
-      "Mocks for Fastify request and reply",
-      "Mocks for services and adapters",
-      "Mocks for event listeners and dispatchers",
-      "Mocks for external modules via jest.mock",
-      "Reset modules between tests to avoid side effects"
+      "Jest mocks and spies for isolation",
+      "Mocks for clipboardy, NutJS, and logger",
+      "Mock environment variables",
+      "Mock FastifyRequest and FastifyReply",
+      "Fixtures for input events"
     ]
   },
   "development_workflow": {
-    "branch_strategy": ["GitHub Flow", "git Flow"],
+    "branch_strategy": ["GitHub Flow with feature, main, and hotfix branches"],
     "commit_conventions": ["Conventional Commits"],
     "pr_requirements": [
       "Code review mandatory",
-      "Automated tests must pass",
-      "Lint and test checks required",
-      "Passing CI checks"
+      "Passing CI checks",
+      "Lint and test checks required"
     ],
     "ci_cd_pipeline": [
       "Build, lint, test, and deploy automated via GitHub Actions",
-      "Unit and integration tests",
+      "Unit tests",
       "Linting",
-      "Build",
-      "Deploy"
+      "Deploy automatic to staging and production"
     ]
   },
   "commands": {
-    "setup": ["npm install && cp .env.example .env", "npm run prepare"],
+    "setup": ["npm install && cp .env.example .env"],
     "install": ["npm install"],
     "dev": ["npm run dev", "tsc --watch"],
     "test": ["npm test", "npm test -- --coverage"],
@@ -245,28 +230,23 @@
     "format": ["npm run format", "prettier --write ."]
   },
   "security_constraints": {
-    "authentication_method": [
-      "API Key via HTTP header 'x-api-key'",
-      "JWT (externally managed for some endpoints)"
-    ],
+    "authentication_method": ["API key via header 'x-api-key'"],
     "authorization_rules": [
-      "Access restricted to users with valid API key for all sensitive endpoints",
-      "API key validation on server (not visible to client)",
-      "Role-based access control (where applicable)",
-      "Requests without or with invalid API key are rejected with HTTP 401"
+      "All endpoints require valid API key",
+      "Unauthorized requests return 401",
+      "Access to streaming endpoints restricted by API key"
     ],
     "sensitive_data": [
-      ".env files",
-      "API keys must be protected and never exposed",
-      "Clipboard data and screenshots (base64) must be handled securely",
-      "Environment variables for configuration",
-      "No sensitive error details exposed in production",
-      "User interaction events (mouse, keyboard) streamed securely"
+      "API_KEY",
+      "OPENAI_API_KEY",
+      "Clipboard content",
+      "Environment variables",
+      "Base64 image data"
     ],
     "security_headers": [
       "Content-Type: application/json",
       "Accept: text/event-stream for SSE",
-      "Header 'x-api-key' required for authentication",
+      "Header 'x-api-key' required",
       "Content-Security-Policy",
       "X-Content-Type-Options",
       "Cache-Control: no-cache",
@@ -274,143 +254,125 @@
       "X-Accel-Buffering: no"
     ],
     "encryption_requirements": [
-      "HTTPS required for secure transport",
-      "TLS for all communications",
-      "AES-256 recommended for sensitive data at rest",
-      "No sensitive data stored unencrypted",
-      "Clipboard and event data must be transmitted securely"
+      "HTTPS required for all external communication",
+      "TLS for external API connections"
     ]
   },
   "performance_requirements": {
     "response_time_limits": [
-      "Low latency for real-time SSE events (<100ms ideal)",
-      "Standard API operations should respond in <500ms",
-      "Clipboard and keyboard operations must be fast and non-blocking",
-      "Mouse and screen actions should respond in <200ms",
-      "Heartbeat interval for SSE connections configurable (default 30s)",
-      "Timeout for template search and screen capture: 5000ms",
-      "Rate limiting and buffer size must prevent overload"
+      "< 5000ms for all requests",
+      "Low latency for SSE real-time events",
+      "Mouse and screen operations should respond in < 200ms",
+      "Timeout for LLM requests: 30000ms"
     ],
     "optimization_priorities": [
-      "Low latency for real-time streaming and automation commands",
-      "Efficient memory usage for event buffers",
+      "Efficient resource usage",
+      "Low latency for event streaming and automation",
       "Validation efficiency to minimize request overhead",
-      "Performance optimized for production, legibility for development",
-      "Graceful shutdown to avoid data loss",
-      "Logging configurable for performance",
-      "Efficient image processing and event dispatch"
+      "Performance optimized in production, legibility in development",
+      "Graceful shutdown to avoid request loss"
     ],
     "caching_strategy": [
       "Circular buffer acts as cache for recent events",
-      "No persistent cache implemented",
-      "Configuration loaded once and immutable",
-      "Cache-Control: no-cache for SSE endpoints"
+      "No persistent cache implemented"
     ],
     "scalability_considerations": [
-      "Support for multiple simultaneous SSE connections",
-      "Configurable buffer size and rate limiting for high event throughput",
-      "Modular architecture for horizontal scalability",
-      "Singleton pattern for shared state, with care for horizontal scaling",
-      "Batch processing for long text input to avoid blocking",
-      "Environment-based configuration for flexible deployment",
-      "Efficient listener management to avoid memory leaks"
+      "SSE connections managed with throttling (moveIntervalMs)",
+      "Horizontal scalability via Fastify and Node.js cluster",
+      "Singletons for global event management",
+      "Support for multiple concurrent SSE clients",
+      "Modular architecture for horizontal scaling"
     ]
   },
   "error_handling": {
     "error_format": [
-      "JSON with fields: success (boolean), error (string), code (number), details (optional)",
-      "Zod validation error format for schema validation",
-      "CommandResult object: { success: boolean, data?: any, error?: string }",
-      "Centralized error handling middleware for consistent responses"
+      "Standard JSON error response with fields: success (false), error message, code, details array",
+      "Zod validation error format",
+      "Logs structured via pino"
     ],
     "logging_strategy": [
+      "Log level configurable via LOG_LEVEL",
       "Structured logging with pino and pino-pretty",
-      "Log level configurable via environment variable",
       "Logs stored in logs/ directory",
-      "Debug, info, warn, and error levels",
-      "Production logs are minimal; development logs are human-readable",
-      "Errors are logged and handled gracefully"
+      "Development logs are human-readable, production logs are minimal"
     ],
     "monitoring_tools": [
       "PM2 internal monitoring",
-      "Integrable with external systems (ELK, Datadog, Sentry, Prometheus, Grafana)",
-      "Structured logs for external monitoring"
+      "Integrable with external systems (e.g., ELK, Sentry, Datadog)"
     ],
     "error_recovery": [
-      "Preventive validation and clear error responses for invalid input",
       "Graceful shutdown to avoid data loss",
-      "Fallback to default values for missing or invalid environment variables",
-      "Automatic restart on memory limit exceeded (via PM2)",
-      "Removal of listeners and cleanup on SSE disconnect",
-      "No sensitive error details in production responses"
+      "Fail-fast on invalid configuration",
+      "Centralized error handling middleware",
+      "Fallback to default values for environment parsing",
+      "Reject invalid requests with HTTP 400 and descriptive message"
     ]
   },
   "dependencies_context": {
     "critical_dependencies": [
+      "OpenAI API",
+      "NutJS",
       "Fastify",
-      "Jest",
-      "ESLint",
       "TSyringe",
       "Zod",
+      "Jest",
+      "ESLint",
+      "Prettier",
       "clipboardy",
-      "@nut-tree-fork/nut-js",
-      "pino",
+      "sharp",
       "dotenv",
       "nanoid",
-      "sharp",
-      "typescript"
+      "pino",
+      "LangChain"
     ],
     "deprecated_packages": ["None"],
     "version_constraints": [
+      "TypeScript 5.x",
       "Node.js 18+",
-      "TypeScript >=5.0",
       "Fastify 4.x",
-      "Zod >=3.x",
+      "Zod >=3.0.0 <4.0.0",
       "clipboardy >=3.0.0",
-      "tsyringe >=4.0.0",
-      "jest >=29",
-      "JSON Schema Draft-07 compatible"
+      "tsyringe 4.x",
+      "Jest >=29",
+      "Compatible with JSON Schema Draft 7"
     ],
     "internal_packages": [
-      "@nut-tree-fork/* (nut-js ecosystem)",
-      "src/application/services",
-      "src/config",
-      "src/domain/entities",
-      "src/interface/controllers",
-      "src/types",
-      "src/interface/schemas",
-      "src/application/dto",
-      "src/infrastructure/adapters"
+      "src/",
+      "domain/entities",
+      "application/services",
+      "infrastructure/adapters",
+      "interface/controllers",
+      "middleware",
+      "schemas",
+      "types",
+      "config"
     ]
   },
   "current_challenges": {
     "technical_debt": [
-      "Lack of strict type checking may lead to runtime errors",
-      "Need for more comprehensive tests for edge cases (clipboard, SSE, error handling)",
-      "Error handling and reconnection logic for SSE could be improved",
-      "Validation of environment variables could be more robust",
-      "Replay of events not fully implemented",
-      "Authentication and authorization not enforced on all endpoints",
-      "Partial documentation in know-how.txt",
-      "Mocks may not always reflect real environment"
+      "Lack of advanced error handling and automatic reconnection",
+      "Need for more comprehensive tests for edge cases",
+      "Singleton global state management can complicate testing",
+      "Validation of environment variables can be improved",
+      "Replay of events not implemented",
+      "Authentication and authorization not fully implemented",
+      "Partial documentation in know-how.txt"
     ],
     "known_issues": [
-      "Need to ensure correct headers for SSE and handle authentication errors",
-      "Dependency on local endpoint and lack of fallback",
-      "Possible loss of events if buffer is full or connection is lost",
-      "Clipboard access may fail on some operating systems",
-      "Possible silent failure if environment variables are misconfigured",
-      "No automatic reconnection for lost SSE connections",
-      "Possible excessive logs in development environment",
-      "Values for environment variables may cause NaN if not properly formatted"
+      "Validation errors for invalid input parameters",
+      "Unauthorized access handling",
+      "Possible loss of events if buffer is full",
+      "Possible resource leak if SSE connection is not closed properly",
+      "Dependency on local API availability",
+      "Latency dependent on external LLM service",
+      "Possible silent failure if environment variables are misconfigured"
     ],
     "performance_bottlenecks": [
-      "Potential overload with many simultaneous SSE connections without proper throttling",
-      "Image processing (sharp) and screen capture can be resource-intensive",
-      "Sequential await in typing may cause slowdowns for long texts",
-      "Buffer may grow if listeners are slow or numerous",
-      "Delays in mouse/keyboard actions can impact total execution time",
-      "Mocks in tests may not reflect real performance"
+      "Image capture and search operations can be costly",
+      "Sequential await in typing per character can cause slowness",
+      "Buffer management and number of concurrent SSE listeners",
+      "Latency dependent on external LLM API",
+      "Potential contention in singletons under high concurrency"
     ],
     "migration_status": [
       "Stable, no migrations in progress",
@@ -419,75 +381,61 @@
   },
   "team_preferences": {
     "code_review_focus": [
-      "Conformance to lint rules",
-      "Strict type safety and avoidance of 'any'",
-      "Correct handling of promises and async/await",
-      "Separation of concerns and clear module boundaries",
-      "Security and input validation",
-      "Comprehensive test coverage",
-      "Consistent error handling and logging",
-      "Clarity in documentation and code comments",
-      "Proper dependency injection usage",
-      "Consistent naming conventions"
+      "Conformity with lint rules",
+      "Strict type safety",
+      "Validation of input parameters",
+      "Security of API key usage",
+      "Separation of layers",
+      "Correct use of dependency injection",
+      "Clarity in logging and error handling",
+      "Test coverage",
+      "Consistent error handling",
+      "Performance and security"
     ],
     "documentation_requirements": [
-      "Clear documentation of endpoints and parameters via JSDoc and README",
-      "JSDoc for all public methods, interfaces, and schemas",
-      "Document environment variables and their default values",
-      "Inline comments in Portuguese for context",
-      "Documentation for business rules and validation limits"
+      "Clear documentation of endpoints and usage examples",
+      "JSDoc for all public methods and interfaces",
+      "Document environment variables and their usage",
+      "Comments in Portuguese for context"
     ],
     "communication_style": [
       "Clear and objective comments",
-      "Use of English for technical terms",
-      "Portuguese for context and explanations",
-      "Objective and technical comments in PRs",
-      "Small, focused PRs with detailed descriptions"
+      "Technical and concise comments",
+      "Use of Portuguese for context and English for technical terms",
+      "Objective PR descriptions"
     ],
     "decision_log": [
-      "Adoption of strict async/await and explicit types",
-      "Use of API key for authentication and SSE for real-time streaming",
-      "Clean Architecture for maintainability",
-      "Fastify for high performance and modularity",
-      "TSyringe for dependency injection",
-      "Zod for declarative validation and typing",
-      "clipboardy for cross-platform clipboard support",
-      "Circular buffer for efficient event memory usage",
-      "Singleton for shared state management",
-      "Rate limiting configurable via environment variable",
-      "Adapter Pattern to abstract NutJS and hardware dependencies",
-      "Centralized configuration via dotenv",
-      "Fail-fast validation to avoid invalid runtime states",
-      "Separation of DTOs, schemas, and business logic",
-      "Mocks for isolation in unit tests",
-      "Production logs are minimal, development logs are human-readable"
+      "Adoption of Clean Architecture for maintainability",
+      "Use of Fastify for high performance",
+      "Use of TSyringe for dependency injection",
+      "Use of Zod for declarative validation",
+      "API key authentication chosen for simplicity",
+      "Use of SSE for real-time event streaming",
+      "Singletons for global event management",
+      "Immutability of configuration for safety",
+      "Logging with pino for performance and structure"
     ]
   },
   "api_specifications": {
-    "api_style": [
-      "RESTful API with versioned endpoints (api/v1)",
-      "REST with Server-Sent Events (SSE) for real-time streaming"
-    ],
-    "versioning_strategy": ["Versioning via URL (/api/v1)"],
+    "api_style": ["REST", "REST with Server-Sent Events (SSE)"],
+    "versioning_strategy": ["URI versioning (e.g., /api/v1/)"],
     "response_formats": [
-      "JSON for standard responses",
+      "JSON for most endpoints",
       "text/event-stream for SSE",
-      "CommandResult with success, data, and error fields",
-      "Base64 encoded images for screen capture"
+      "Base64 encoded images"
     ],
     "rate_limiting": [
       "Configurable via environment variable INPUT_EVENT_RATE",
-      "maxRate applied per second for event streaming",
-      "Throttling for mouse and keyboard events"
+      "Max event rate enforced per endpoint"
     ]
   },
   "deployment_context": {
-    "environments": ["development (localhost:3000)", "production", "staging", "test"],
+    "environments": ["development", "staging", "production", "test"],
     "deployment_method": [
       "PM2 process manager",
       "Docker container",
-      "CI/CD pipeline via GitHub Actions",
-      "Node.js runtime"
+      "CI/CD pipeline",
+      "Kubernetes"
     ],
     "environment_variables": [
       "NODE_ENV",
@@ -495,30 +443,32 @@
       "HOST",
       "LOG_LEVEL",
       "API_KEY",
-      "INPUT_EVENT_BUFFER",
-      "INPUT_EVENT_RATE",
-      "INPUT_EVENT_HEARTBEAT",
-      "INPUT_EVENT_MAX_AGE",
+      "OPENAI_API_KEY",
       "RECORDER_INCLUDE_SCREENSHOT",
       "RECORDER_MOVE_INTERVAL_MS",
       "RECORDER_MAX_SCREENSHOT_SIZE",
+      "INPUT_EVENT_RATE",
+      "INPUT_EVENT_BUFFER",
+      "INPUT_EVENT_HEARTBEAT",
+      "INPUT_EVENT_MAX_AGE",
       "KEYBOARD_DEFAULT_MODE",
       "KEYBOARD_MAX_TEXT_LENGTH",
       "KEYBOARD_DEFAULT_DELAY_PER_CHAR",
       "KEYBOARD_MAX_DELAY",
       "KEYBOARD_BATCH_SIZE",
-      "MOUSE_SPEED",
-      "SCREEN_CONFIDENCE"
+      "LLM_API_KEY"
     ],
     "infrastructure_constraints": [
-      "Support for persistent SSE connections",
-      "Cross-platform compatibility (Windows, Linux, macOS)",
-      "Clipboard and screen automation require OS-level permissions",
-      "Memory limits for buffers and event streaming",
-      "Environment variables must be configured correctly",
-      "Access to hardware for mouse and screen automation",
-      "Docker/Kubernetes support for containerized deployment"
+      "Accessibility permissions required on macOS",
+      "DISPLAY variable required on Linux",
+      "Memory limit of 1GB for automatic restart",
+      "Stable SSE server required",
+      "Cross-platform support (Windows, Linux, macOS)",
+      "Hardware access required for automation",
+      "Environment variables must be correctly configured",
+      "Persistent SSE connections may limit scalability",
+      "Network stability required for external LLM API"
     ]
   },
-  "lastCommitHash": "2ad1c4ce3c1fcadce473e83ac5c5ca948b302da6"
+  "lastCommitHash": "d5076eeb0aeaba62817b90511338958b2fceec51"
 }
