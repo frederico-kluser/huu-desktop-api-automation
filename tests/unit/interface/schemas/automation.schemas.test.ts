@@ -10,10 +10,10 @@ describe('automation.schemas coverage', () => {
       'mouseDragJsonSchema',
       'mouseScrollJsonSchema',
       'screenFindJsonSchema',
-      'screenCaptureJsonSchema'
+      'screenCaptureJsonSchema',
     ];
 
-    schemaNames.forEach(schemaName => {
+    schemaNames.forEach((schemaName) => {
       expect(schemas[schemaName]).toBeDefined();
       expect(typeof schemas[schemaName]).toBe('object');
       expect(schemas[schemaName].type).toBe('object');
@@ -64,7 +64,7 @@ describe('automation.schemas coverage', () => {
     const schema = schemas.mouseDragJsonSchema;
     expect(schema.required).toEqual(['from', 'to']);
     expect(schema.additionalProperties).toBe(false);
-    
+
     // Testar propriedade 'from'
     expect(schema.properties.from.type).toBe('object');
     expect(schema.properties.from.required).toEqual(['x', 'y']);
@@ -73,7 +73,7 @@ describe('automation.schemas coverage', () => {
     expect(schema.properties.from.properties.x.minimum).toBe(0);
     expect(schema.properties.from.properties.y.type).toBe('integer');
     expect(schema.properties.from.properties.y.minimum).toBe(0);
-    
+
     // Testar propriedade 'to'
     expect(schema.properties.to.type).toBe('object');
     expect(schema.properties.to.required).toEqual(['x', 'y']);
@@ -82,7 +82,7 @@ describe('automation.schemas coverage', () => {
     expect(schema.properties.to.properties.x.minimum).toBe(0);
     expect(schema.properties.to.properties.y.type).toBe('integer');
     expect(schema.properties.to.properties.y.minimum).toBe(0);
-    
+
     expect(schema.properties.duration.type).toBe('integer');
     expect(schema.properties.duration.minimum).toBe(100);
     expect(schema.properties.duration.maximum).toBe(5000);
@@ -121,7 +121,7 @@ describe('automation.schemas coverage', () => {
     expect(schema.properties.confidence.minimum).toBe(0);
     expect(schema.properties.confidence.maximum).toBe(1);
     expect(schema.properties.confidence.default).toBe(0.8);
-    
+
     // Testar propriedade 'region'
     expect(schema.properties.region.type).toBe('object');
     expect(schema.properties.region.required).toEqual(['x', 'y', 'width', 'height']);
@@ -140,7 +140,7 @@ describe('automation.schemas coverage', () => {
   test('screenCaptureJsonSchema has correct structure', () => {
     const schema = schemas.screenCaptureJsonSchema;
     expect(schema.additionalProperties).toBe(false);
-    
+
     // Testar propriedade 'region'
     expect(schema.properties.region.type).toBe('object');
     expect(schema.properties.region.required).toEqual(['x', 'y', 'width', 'height']);
@@ -153,7 +153,7 @@ describe('automation.schemas coverage', () => {
     expect(schema.properties.region.properties.width.minimum).toBe(1);
     expect(schema.properties.region.properties.height.type).toBe('integer');
     expect(schema.properties.region.properties.height.minimum).toBe(1);
-    
+
     expect(schema.properties.format.type).toBe('string');
     expect(schema.properties.format.enum).toEqual(['png', 'jpg']);
     expect(schema.properties.format.default).toBe('png');
@@ -161,7 +161,7 @@ describe('automation.schemas coverage', () => {
 
   // Test para garantir que todos os schemas são objetos JSON válidos
   test('all schemas are valid JSON serializable', () => {
-    Object.values(schemas).forEach(schema => {
+    Object.values(schemas).forEach((schema) => {
       // Testar que pode ser serializado e deserializado
       const jsonString = JSON.stringify(schema);
       const parsed = JSON.parse(jsonString);
@@ -177,7 +177,7 @@ describe('automation.schemas coverage', () => {
       { name: 'mouseDragJsonSchema', schema: schemas.mouseDragJsonSchema },
       { name: 'mouseScrollJsonSchema', schema: schemas.mouseScrollJsonSchema },
       { name: 'screenFindJsonSchema', schema: schemas.screenFindJsonSchema },
-      { name: 'screenCaptureJsonSchema', schema: schemas.screenCaptureJsonSchema }
+      { name: 'screenCaptureJsonSchema', schema: schemas.screenCaptureJsonSchema },
     ];
 
     schemasToCheck.forEach(({ name, schema }) => {

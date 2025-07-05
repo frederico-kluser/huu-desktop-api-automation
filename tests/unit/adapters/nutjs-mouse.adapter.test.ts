@@ -7,8 +7,8 @@ import 'reflect-metadata';
 // Mock do environment.js para evitar problemas com valores undefined
 jest.mock('../../../src/config/environment.js', () => ({
   environment: {
-    mouseSpeed: 500
-  }
+    mouseSpeed: 500,
+  },
 }));
 
 // Mock do nut-js
@@ -70,9 +70,9 @@ describe('NutJSMouseAdapter', () => {
 
       const targetPoint = { x: 400, y: 400 };
       const duration = 1000; // 1 segundo
-      
+
       // Calcular número esperado de passos
-      const expectedSteps = Math.floor(duration * MouseDefaults.sampleRate / 1000);
+      const expectedSteps = Math.floor((duration * MouseDefaults.sampleRate) / 1000);
 
       // Executar movimento
       await adapter.move(targetPoint, true, duration);
@@ -96,7 +96,7 @@ describe('NutJSMouseAdapter', () => {
       for (let i = 1; i < expectedSteps; i++) {
         const prevCall = (mouse.move as jest.Mock).mock.calls[i - 1][0];
         const currCall = (mouse.move as jest.Mock).mock.calls[i][0];
-        
+
         // X e Y devem aumentar progressivamente
         expect(currCall.x).toBeGreaterThanOrEqual(prevCall.x);
         expect(currCall.y).toBeGreaterThanOrEqual(prevCall.y);
@@ -110,9 +110,9 @@ describe('NutJSMouseAdapter', () => {
       await adapter.move({ x: 500, y: 200 }, true, 500);
 
       const calls = (mouse.move as jest.Mock).mock.calls;
-      
+
       // Y deve permanecer constante
-      calls.forEach(call => {
+      calls.forEach((call) => {
         expect(call[0].y).toBe(200);
       });
 
@@ -140,21 +140,21 @@ describe('NutJSMouseAdapter', () => {
 
       // Verificar sequência de chamadas
       const moveCalls = (mouse.move as jest.Mock).mock.calls;
-      
+
       // Deve ter movido para posição inicial
       // O primeiro movimento é feito com interpolação, então vamos verificar se alguma chamada tem a posição inicial
-      const hasInitialPosition = moveCalls.some(call => 
-        call[0].x === from.x && call[0].y === from.y
+      const hasInitialPosition = moveCalls.some(
+        (call) => call[0].x === from.x && call[0].y === from.y,
       );
       expect(hasInitialPosition).toBe(true);
-      
+
       // Deve ter pressionado o botão
       expect(mouse.pressButton).toHaveBeenCalledWith(Button.LEFT);
-      
+
       // Deve ter movido para posição final
       const lastMoveCall = moveCalls[moveCalls.length - 1][0];
       expect(lastMoveCall).toMatchObject(to);
-      
+
       // Deve ter soltado o botão
       expect(mouse.releaseButton).toHaveBeenCalledWith(Button.LEFT);
     });
@@ -182,7 +182,7 @@ describe('NutJSMouseAdapter', () => {
   describe('clickAt', () => {
     it('deve mover antes de clicar', async () => {
       const point = { x: 250, y: 250 };
-      
+
       await adapter.clickAt(point, MouseButton.RIGHT, false);
 
       // Verificar que moveu primeiro
@@ -213,9 +213,9 @@ describe('NutJSMouseAdapter', () => {
   describe('getPosition', () => {
     it('deve retornar a posição atual do mouse', async () => {
       (mouse.getPosition as jest.Mock).mockResolvedValueOnce({ x: 123, y: 456 });
-      
+
       const position = await adapter.getPosition();
-      
+
       expect(position).toEqual({ x: 123, y: 456 });
     });
   });

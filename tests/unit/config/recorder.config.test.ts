@@ -1,6 +1,6 @@
 // Mock dotenv antes de qualquer require
 jest.mock('dotenv', () => ({
-  config: jest.fn()
+  config: jest.fn(),
 }));
 
 describe('recorder.config', () => {
@@ -30,7 +30,7 @@ describe('recorder.config', () => {
       expect(recorderConfig).toEqual({
         includeScreenshot: true,
         moveIntervalMs: 50,
-        maxScreenshotSize: 2097152
+        maxScreenshotSize: 2097152,
       });
     });
 
@@ -69,7 +69,7 @@ describe('recorder.config', () => {
     test('handles valid RECORDER_MOVE_INTERVAL_MS values', () => {
       const validValues = ['20', '50', '100', '200'];
 
-      validValues.forEach(value => {
+      validValues.forEach((value) => {
         jest.resetModules();
         process.env.RECORDER_MOVE_INTERVAL_MS = value;
 
@@ -106,7 +106,7 @@ describe('recorder.config', () => {
     test('handles valid RECORDER_MAX_SCREENSHOT_SIZE values', () => {
       const validValues = ['10240', '2097152', '10485760'];
 
-      validValues.forEach(value => {
+      validValues.forEach((value) => {
         jest.resetModules();
         process.env.RECORDER_MAX_SCREENSHOT_SIZE = value;
 
@@ -178,14 +178,14 @@ describe('recorder.config', () => {
       expect(recorderConfig).toEqual({
         includeScreenshot: true,
         moveIntervalMs: 75,
-        maxScreenshotSize: 1048576
+        maxScreenshotSize: 1048576,
       });
     });
 
     test('handles RECORDER_INCLUDE_SCREENSHOT with various truthy values', () => {
       const truthyValues = ['true', 'yes', '1', 'TRUE', 'any-value'];
 
-      truthyValues.forEach(value => {
+      truthyValues.forEach((value) => {
         jest.resetModules();
         process.env.RECORDER_INCLUDE_SCREENSHOT = value;
 

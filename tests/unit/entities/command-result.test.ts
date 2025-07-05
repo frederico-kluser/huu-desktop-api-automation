@@ -11,25 +11,25 @@ describe('CommandResult interface', () => {
     // Testar objetos que seguem a estrutura da interface
     const successResult = {
       success: true,
-      data: { test: 'data' }
+      data: { test: 'data' },
     };
-    
+
     const errorResult = {
       success: false,
-      error: 'Test error'
+      error: 'Test error',
     };
-    
+
     const minimalResult: any = {
-      success: true
+      success: true,
     };
-    
+
     // Verificar estrutura
     expect(successResult.success).toBe(true);
     expect(successResult.data).toEqual({ test: 'data' });
-    
+
     expect(errorResult.success).toBe(false);
     expect(errorResult.error).toBe('Test error');
-    
+
     expect(minimalResult.success).toBe(true);
     expect(minimalResult.data).toBeUndefined();
     expect(minimalResult.error).toBeUndefined();
@@ -42,10 +42,10 @@ describe('CommandResult interface', () => {
       { success: true, data: [1, 2, 3] },
       { success: true, data: { nested: true } },
       { success: true, data: null },
-      { success: false, error: 'error', data: undefined }
+      { success: false, error: 'error', data: undefined },
     ];
-    
-    results.forEach(result => {
+
+    results.forEach((result) => {
       expect(result).toHaveProperty('success');
       expect(typeof result.success).toBe('boolean');
     });
@@ -56,18 +56,18 @@ describe('CommandResult interface', () => {
       success = true;
       data = { status: 'ok' };
     }
-    
+
     class ErrorResult {
       success = false;
       error = 'Operation failed';
     }
-    
+
     const success = new SuccessResult();
     const error = new ErrorResult();
-    
+
     expect(success.success).toBe(true);
     expect(success.data).toEqual({ status: 'ok' });
-    
+
     expect(error.success).toBe(false);
     expect((error as any).error).toBe('Operation failed');
   });

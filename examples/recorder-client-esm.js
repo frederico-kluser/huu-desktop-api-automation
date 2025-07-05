@@ -11,8 +11,8 @@ const API_KEY = process.env.API_KEY || 'test-key';
 // Criar conexão SSE
 const eventSource = new EventSource(`${API_URL}/api/v1/recorder/stream`, {
   headers: {
-    'x-api-key': API_KEY
-  }
+    'x-api-key': API_KEY,
+  },
 });
 
 // Eventos de conexão
@@ -25,7 +25,7 @@ eventSource.addEventListener('connected', (event) => {
 // Eventos gravados
 eventSource.addEventListener('recorded', (event) => {
   const data = JSON.parse(event.data);
-  
+
   if (data.type === 'mouse') {
     if (data.action === 'down') {
       console.log(`🖱️  Mouse ${data.button} pressionado em (${data.x}, ${data.y})`);
@@ -44,7 +44,7 @@ eventSource.addEventListener('recorded', (event) => {
       console.log(`⌨️  Tecla '${data.key}' solta`);
     }
   }
-  
+
   // Mostrar timestamp
   const time = new Date(data.timestamp).toISOString();
   console.log(`   ⏰ ${time}`);

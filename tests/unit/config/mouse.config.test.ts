@@ -1,6 +1,6 @@
 // Mock environment antes de qualquer import
 jest.doMock('dotenv', () => ({
-  config: jest.fn()
+  config: jest.fn(),
 }));
 
 describe('MouseDefaults', () => {
@@ -112,11 +112,11 @@ describe('MouseDefaults', () => {
 
   test('exports MouseConfig type', () => {
     const module = require('../../../src/config/mouse.config');
-    
+
     // Verifica que o módulo exporta MouseDefaults
     expect(module.MouseDefaults).toBeDefined();
     expect(typeof module.MouseDefaults).toBe('object');
-    
+
     // Verifica propriedades do objeto
     expect(module.MouseDefaults).toHaveProperty('minDuration');
     expect(module.MouseDefaults).toHaveProperty('maxDuration');
@@ -130,9 +130,9 @@ describe('MouseDefaults', () => {
     // parseInt com base 10 explícita
     process.env.MOUSE_MIN_DUR = '0123'; // não deve ser interpretado como octal
     process.env.MOUSE_MAX_DUR = '0x10'; // hexadecimal ainda funciona com radix 10
-    
+
     const { MouseDefaults } = require('../../../src/config/mouse.config');
-    
+
     expect(MouseDefaults.minDuration).toBe(123); // decimal, não octal
     expect(MouseDefaults.maxDuration).toBe(0); // parseInt com radix 10 para 0x10
   });

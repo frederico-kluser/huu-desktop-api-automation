@@ -3,23 +3,23 @@ const mockScreen = {
   config: {
     confidence: 0.95,
     autoHighlight: false,
-    highlightDurationMs: 500
+    highlightDurationMs: 500,
   },
   grab: jest.fn(),
-  grabRegion: jest.fn()
+  grabRegion: jest.fn(),
 };
 
 const mockRegion = jest.fn();
 
 jest.mock('@nut-tree-fork/nut-js', () => ({
   screen: mockScreen,
-  Region: mockRegion
+  Region: mockRegion,
 }));
 
 // Mock do sharp
 const mockSharp = {
   png: jest.fn().mockReturnThis(),
-  toBuffer: jest.fn()
+  toBuffer: jest.fn(),
 };
 
 const sharp = jest.fn(() => mockSharp);
@@ -29,18 +29,20 @@ jest.mock('sharp', () => sharp);
 jest.mock('pino', () => () => ({
   info: jest.fn(),
   debug: jest.fn(),
-  error: jest.fn()
+  error: jest.fn(),
 }));
 
 // Mock do environment
 jest.mock('../../../../../src/config/environment.js', () => ({
   environment: {
-    screenConfidence: 0.9
-  }
+    screenConfidence: 0.9,
+  },
 }));
 
 // Usar require para evitar problemas com verbatimModuleSyntax
-const { NutJSScreenAdapter } = require('../../../../../src/infrastructure/adapters/nutjs/nutjs-screen.adapter');
+const {
+  NutJSScreenAdapter,
+} = require('../../../../../src/infrastructure/adapters/nutjs/nutjs-screen.adapter');
 
 describe('NutJSScreenAdapter', () => {
   let adapter: any;
@@ -70,7 +72,7 @@ describe('NutJSScreenAdapter', () => {
       data: Buffer.from('mock-image-data'),
       pixelDensity: { scaleX: 1, scaleY: 1 },
       toRGB: jest.fn(),
-      toBGR: jest.fn()
+      toBGR: jest.fn(),
     };
 
     const mockPngBuffer = Buffer.from('mock-png-data');
@@ -90,8 +92,8 @@ describe('NutJSScreenAdapter', () => {
         raw: {
           width: mockImageData.width,
           height: mockImageData.height,
-          channels: mockImageData.channels
-        }
+          channels: mockImageData.channels,
+        },
       });
       expect(mockSharp.png).toHaveBeenCalledWith({ compressionLevel: 6, palette: false });
       expect(mockSharp.toBuffer).toHaveBeenCalled();
@@ -125,8 +127,8 @@ describe('NutJSScreenAdapter', () => {
           raw: {
             width: mockImageData.width,
             height: mockImageData.height,
-            channels
-          }
+            channels,
+          },
         });
       }
     });
@@ -160,7 +162,7 @@ describe('NutJSScreenAdapter', () => {
       const confidence = 0.95;
 
       await expect(adapter.waitFor(template, timeout, confidence)).rejects.toThrow(
-        'waitFor functionality not yet implemented for this nut-js version'
+        'waitFor functionality not yet implemented for this nut-js version',
       );
     });
   });

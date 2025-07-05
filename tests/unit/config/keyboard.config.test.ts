@@ -1,6 +1,6 @@
 // Mock dotenv antes de qualquer import
 jest.mock('dotenv', () => ({
-  config: jest.fn()
+  config: jest.fn(),
 }));
 
 describe('keyboard.config', () => {
@@ -85,7 +85,7 @@ describe('keyboard.config', () => {
     test('handles debugMode variations', () => {
       // Test false cases
       const falseCases = ['false', 'FALSE', 'True', 'TRUE', '1', '0', '', undefined];
-      falseCases.forEach(value => {
+      falseCases.forEach((value) => {
         jest.resetModules();
         if (value === undefined) {
           delete process.env.KEYBOARD_DEBUG;
@@ -113,74 +113,90 @@ describe('keyboard.config', () => {
       delete process.env.KEYBOARD_BATCH_SIZE;
 
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
+
       expect(() => validateKeyboardConfig()).not.toThrow();
     });
 
     test('throws for invalid maxTextLength - too low', () => {
       process.env.KEYBOARD_MAX_TEXT_LENGTH = '0';
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
-      expect(() => validateKeyboardConfig()).toThrow('KEYBOARD_MAX_TEXT_LENGTH must be between 1 and 100000');
+
+      expect(() => validateKeyboardConfig()).toThrow(
+        'KEYBOARD_MAX_TEXT_LENGTH must be between 1 and 100000',
+      );
     });
 
     test('throws for invalid maxTextLength - too high', () => {
       process.env.KEYBOARD_MAX_TEXT_LENGTH = '100001';
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
-      expect(() => validateKeyboardConfig()).toThrow('KEYBOARD_MAX_TEXT_LENGTH must be between 1 and 100000');
+
+      expect(() => validateKeyboardConfig()).toThrow(
+        'KEYBOARD_MAX_TEXT_LENGTH must be between 1 and 100000',
+      );
     });
 
     test('throws for negative defaultDelayPerChar', () => {
       process.env.KEYBOARD_DEFAULT_DELAY_PER_CHAR = '-1';
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
-      expect(() => validateKeyboardConfig()).toThrow('KEYBOARD_DEFAULT_DELAY_PER_CHAR must be non-negative');
+
+      expect(() => validateKeyboardConfig()).toThrow(
+        'KEYBOARD_DEFAULT_DELAY_PER_CHAR must be non-negative',
+      );
     });
 
     test('throws for invalid maxDelay - negative', () => {
       process.env.KEYBOARD_MAX_DELAY = '-1';
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
-      expect(() => validateKeyboardConfig()).toThrow('KEYBOARD_MAX_DELAY must be between 0 and 3600000 (1 hour)');
+
+      expect(() => validateKeyboardConfig()).toThrow(
+        'KEYBOARD_MAX_DELAY must be between 0 and 3600000 (1 hour)',
+      );
     });
 
     test('throws for invalid maxDelay - too high', () => {
       process.env.KEYBOARD_MAX_DELAY = '3600001';
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
-      expect(() => validateKeyboardConfig()).toThrow('KEYBOARD_MAX_DELAY must be between 0 and 3600000 (1 hour)');
+
+      expect(() => validateKeyboardConfig()).toThrow(
+        'KEYBOARD_MAX_DELAY must be between 0 and 3600000 (1 hour)',
+      );
     });
 
     test('throws for invalid batchSize - too low', () => {
       process.env.KEYBOARD_BATCH_SIZE = '0';
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
-      expect(() => validateKeyboardConfig()).toThrow('KEYBOARD_BATCH_SIZE must be between 1 and 1000');
+
+      expect(() => validateKeyboardConfig()).toThrow(
+        'KEYBOARD_BATCH_SIZE must be between 1 and 1000',
+      );
     });
 
     test('throws for invalid batchSize - too high', () => {
       process.env.KEYBOARD_BATCH_SIZE = '1001';
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
-      expect(() => validateKeyboardConfig()).toThrow('KEYBOARD_BATCH_SIZE must be between 1 and 1000');
+
+      expect(() => validateKeyboardConfig()).toThrow(
+        'KEYBOARD_BATCH_SIZE must be between 1 and 1000',
+      );
     });
 
     test('throws for invalid defaultMode', () => {
       process.env.KEYBOARD_DEFAULT_MODE = 'invalid';
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
-      expect(() => validateKeyboardConfig()).toThrow('KEYBOARD_DEFAULT_MODE must be one of: instant, perChar, total');
+
+      expect(() => validateKeyboardConfig()).toThrow(
+        'KEYBOARD_DEFAULT_MODE must be one of: instant, perChar, total',
+      );
     });
 
     test('accepts all valid modes', () => {
       const validModes = ['instant', 'perChar', 'total'];
-      
-      validModes.forEach(mode => {
+
+      validModes.forEach((mode) => {
         jest.resetModules();
         process.env.KEYBOARD_DEFAULT_MODE = mode;
         const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-        
+
         expect(() => validateKeyboardConfig()).not.toThrow();
       });
     });
@@ -193,7 +209,7 @@ describe('keyboard.config', () => {
       process.env.KEYBOARD_BATCH_SIZE = '!@#';
 
       const { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
-      
+
       // NaN doesn't satisfy any error conditions (NaN < 1 = false, NaN > 100000 = false)
       expect(() => validateKeyboardConfig()).not.toThrow();
     });
@@ -204,7 +220,7 @@ describe('keyboard.config', () => {
       process.env.KEYBOARD_DEFAULT_DELAY_PER_CHAR = '0';
       process.env.KEYBOARD_MAX_DELAY = '0';
       process.env.KEYBOARD_BATCH_SIZE = '1';
-      
+
       let { validateKeyboardConfig } = require('../../../src/config/keyboard.config');
       expect(() => validateKeyboardConfig()).not.toThrow();
 
@@ -213,7 +229,7 @@ describe('keyboard.config', () => {
       process.env.KEYBOARD_MAX_TEXT_LENGTH = '100000';
       process.env.KEYBOARD_MAX_DELAY = '3600000';
       process.env.KEYBOARD_BATCH_SIZE = '1000';
-      
+
       ({ validateKeyboardConfig } = require('../../../src/config/keyboard.config'));
       expect(() => validateKeyboardConfig()).not.toThrow();
     });

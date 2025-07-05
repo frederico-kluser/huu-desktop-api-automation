@@ -1,29 +1,31 @@
 // Mock dos controllers e rotas
 jest.mock('../../../src/interface/controllers/automation.controller', () => ({
   AutomationController: jest.fn().mockImplementation(() => ({
-    registerRoutes: jest.fn()
-  }))
+    registerRoutes: jest.fn(),
+  })),
 }));
 
 jest.mock('../../../src/interface/controllers/keyboard.controller', () => ({
   KeyboardController: {
     buildRoutes: jest.fn((fastify, opts, done) => {
       done();
-    })
-  }
+    }),
+  },
 }));
 
 jest.mock('../../../src/routes/input-events.routes', () => ({
-  inputEventsRoutes: jest.fn()
+  inputEventsRoutes: jest.fn(),
 }));
 
 jest.mock('../../../src/routes/recorder.routes', () => ({
-  recorderRoutes: jest.fn()
+  recorderRoutes: jest.fn(),
 }));
 
 // Usar require devido ao verbatimModuleSyntax
 const { automationRoutes } = require('../../../src/routes/automation.routes');
-const { AutomationController } = require('../../../src/interface/controllers/automation.controller');
+const {
+  AutomationController,
+} = require('../../../src/interface/controllers/automation.controller');
 const { KeyboardController } = require('../../../src/interface/controllers/keyboard.controller');
 const { inputEventsRoutes } = require('../../../src/routes/input-events.routes');
 const { recorderRoutes } = require('../../../src/routes/recorder.routes');
@@ -34,12 +36,12 @@ describe('automation.routes', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Mock do Fastify server com todas as propriedades necessárias
     mockRegisterOptions = {
-      registeredRoutes: [] as any[]
+      registeredRoutes: [] as any[],
     };
-    
+
     mockServer = {
       register: jest.fn((plugin: any, opts?: any) => {
         // Se plugin é uma função, executá-la
@@ -60,7 +62,7 @@ describe('automation.routes', () => {
       delete: jest.fn(),
       head: jest.fn(),
       patch: jest.fn(),
-      options: jest.fn()
+      options: jest.fn(),
     };
   });
 
@@ -69,7 +71,7 @@ describe('automation.routes', () => {
 
     // Verificar que AutomationController foi instanciado
     expect(AutomationController).toHaveBeenCalledTimes(1);
-    
+
     // Verificar que registerRoutes foi chamado
     const controllerInstance = (AutomationController as jest.Mock).mock.results[0].value;
     expect(controllerInstance.registerRoutes).toHaveBeenCalledWith(mockServer);
@@ -80,12 +82,12 @@ describe('automation.routes', () => {
 
     // Verificar que register foi chamado para keyboard routes
     expect(mockServer.register).toHaveBeenCalled();
-    
+
     // Verificar que KeyboardController.buildRoutes foi chamado
     expect(KeyboardController.buildRoutes).toHaveBeenCalledWith(
       mockServer,
       expect.any(Object),
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -93,10 +95,7 @@ describe('automation.routes', () => {
     await automationRoutes(mockServer, {}, jest.fn());
 
     // Verificar que inputEventsRoutes foi registrado com prefix correto
-    expect(mockServer.register).toHaveBeenCalledWith(
-      inputEventsRoutes,
-      { prefix: '/stream' }
-    );
+    expect(mockServer.register).toHaveBeenCalledWith(inputEventsRoutes, { prefix: '/stream' });
   });
 
   test('should register recorder routes', async () => {
@@ -111,17 +110,17 @@ describe('automation.routes', () => {
 
     // Verificar que todas as rotas foram registradas
     expect(mockServer.register).toHaveBeenCalledTimes(3);
-    
+
     // Verificar ordem de registro
     const registerCalls = (mockServer.register as jest.Mock).mock.calls;
-    
+
     // Primeira chamada: keyboard routes (função inline)
     expect(typeof registerCalls[0][0]).toBe('function');
-    
+
     // Segunda chamada: input events routes com prefix
     expect(registerCalls[1][0]).toBe(inputEventsRoutes);
     expect(registerCalls[1][1]).toEqual({ prefix: '/stream' });
-    
+
     // Terceira chamada: recorder routes
     expect(registerCalls[2][0]).toBe(recorderRoutes);
   });
@@ -137,9 +136,9 @@ describe('automation.routes', () => {
   test('should pass options to automation routes plugin', async () => {
     const customOptions = { customOption: 'test' };
     const mockDone = jest.fn();
-    
+
     await automationRoutes(mockServer, customOptions, mockDone);
-    
+
     // Verificar que o plugin foi executado com as opções corretas
     expect(AutomationController).toHaveBeenCalledTimes(1);
   });
@@ -147,7 +146,7 @@ describe('automation.routes', () => {
   test('should complete done callback for keyboard routes', async () => {
     // Limpar mock anterior
     KeyboardController.buildRoutes.mockClear();
-    
+
     // Mock para capturar o callback done
     let capturedDone: any;
     KeyboardController.buildRoutes.mockImplementation((fastify: any, opts: any, done: any) => {
@@ -169,7 +168,7 @@ describe('automation.routes', () => {
 
     // Cada execução deve criar nova instância do controller
     expect(AutomationController).toHaveBeenCalledTimes(2);
-    
+
     // Cada instância deve ter seu próprio registerRoutes chamado
     const instances = (AutomationController as jest.Mock).mock.results;
     expect(instances[0].value.registerRoutes).toHaveBeenCalledTimes(1);

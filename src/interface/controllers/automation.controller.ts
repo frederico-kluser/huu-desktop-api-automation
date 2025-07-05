@@ -265,15 +265,12 @@ export class AutomationController {
    * @param request - Requisição Fastify
    * @param reply - Resposta Fastify
    */
-  private async mousePositionStream(
-    request: FastifyRequest,
-    reply: FastifyReply,
-  ): Promise<void> {
+  private async mousePositionStream(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     // Configurar headers para Server-Sent Events
     reply.raw.writeHead(200, {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
+      Connection: 'keep-alive',
       'Content-Security-Policy': "default-src 'none'",
       'X-Content-Type-Options': 'nosniff',
     });

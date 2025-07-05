@@ -32,15 +32,15 @@ interface ITypeStrategy {
  */
 class InstantTypeStrategy implements ITypeStrategy {
   constructor(private eventDispatcher?: EventDispatcher) {}
-  
+
   async type(text: string, adapter: IKeyboardAdapter): Promise<void> {
     await adapter.type(text);
-    
+
     // Emitir eventos para cada caractere se dispatcher disponível
     if (this.eventDispatcher) {
       const pos = await mouse.getPosition();
       const chars = Array.from(text);
-      
+
       for (const char of chars) {
         this.eventDispatcher.dispatchKeyPress(char, pos.x, pos.y);
       }
@@ -54,7 +54,7 @@ class InstantTypeStrategy implements ITypeStrategy {
 class PerCharTypeStrategy implements ITypeStrategy {
   constructor(
     private delayPerChar: number,
-    private eventDispatcher?: EventDispatcher
+    private eventDispatcher?: EventDispatcher,
   ) {}
 
   async type(text: string, adapter: IKeyboardAdapter): Promise<void> {
@@ -63,16 +63,16 @@ class PerCharTypeStrategy implements ITypeStrategy {
 
     for (let i = 0; i < chars.length; i += batchSize) {
       const batch = chars.slice(i, i + batchSize);
-      
+
       for (const char of batch) {
         await adapter.type(char);
-        
+
         // Emitir evento de tecla digitada se dispatcher disponível
         if (this.eventDispatcher) {
           const pos = await mouse.getPosition();
           this.eventDispatcher.dispatchKeyPress(char, pos.x, pos.y);
         }
-        
+
         if (this.delayPerChar > 0) {
           await adapter.delay(this.delayPerChar);
         }
@@ -87,19 +87,19 @@ class PerCharTypeStrategy implements ITypeStrategy {
 class TotalTimeTypeStrategy implements ITypeStrategy {
   constructor(
     private totalTime: number,
-    private eventDispatcher?: EventDispatcher
+    private eventDispatcher?: EventDispatcher,
   ) {}
 
   async type(text: string, adapter: IKeyboardAdapter): Promise<void> {
     const chars = Array.from(text);
-    
+
     if (chars.length === 0) {
       return;
     }
 
     if (chars.length === 1) {
       await adapter.type(text);
-      
+
       // Emitir evento para caractere único
       if (this.eventDispatcher) {
         const pos = await mouse.getPosition();
@@ -113,13 +113,13 @@ class TotalTimeTypeStrategy implements ITypeStrategy {
 
     for (const char of chars) {
       await adapter.type(char);
-      
+
       // Emitir evento de tecla digitada se dispatcher disponível
       if (this.eventDispatcher) {
         const pos = await mouse.getPosition();
         this.eventDispatcher.dispatchKeyPress(char, pos.x, pos.y);
       }
-      
+
       if (delayPerChar > 0) {
         await adapter.delay(delayPerChar);
       }
@@ -143,7 +143,7 @@ export interface TypeOptions {
 export class KeyboardService implements IAutomationService {
   constructor(
     @inject('IKeyboardAdapter') private keyboardAdapter: IKeyboardAdapter,
-    @inject(EventDispatcher) private eventDispatcher: EventDispatcher
+    @inject(EventDispatcher) private eventDispatcher: EventDispatcher,
   ) {}
 
   /**
@@ -155,7 +155,7 @@ export class KeyboardService implements IAutomationService {
     try {
       // Sanitiza o texto removendo caracteres de controle perigosos
       const sanitizedText = this.sanitizeText(options.text);
-      
+
       // Valida limites
       if (sanitizedText.length === 0) {
         throw new Error('Text cannot be empty after sanitization');
@@ -167,7 +167,7 @@ export class KeyboardService implements IAutomationService {
 
       // Seleciona estratégia baseada no modo
       const strategy = this.createStrategy(options);
-      
+
       // Executa digitação
       await strategy.type(sanitizedText, this.keyboardAdapter);
 
@@ -176,14 +176,14 @@ export class KeyboardService implements IAutomationService {
         data: {
           textLength: sanitizedText.length,
           mode: options.mode || 'instant',
-          timing: options.value
-        }
+          timing: options.value,
+        },
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       return {
         success: false,
-        error: `Keyboard type error: ${message}`
+        error: `Keyboard type error: ${message}`,
       };
     }
   }
@@ -204,12 +204,12 @@ export class KeyboardService implements IAutomationService {
         cursorY: 0,
         data: {
           key,
-          action: 'down'
-        }
+          action: 'down',
+        },
       });
-      
+
       await this.keyboardAdapter.pressKey(key);
-      
+
       // Emitir evento de key up
       this.eventDispatcher.dispatch({
         id: '',
@@ -219,19 +219,19 @@ export class KeyboardService implements IAutomationService {
         cursorY: 0,
         data: {
           key,
-          action: 'up'
-        }
+          action: 'up',
+        },
       });
-      
+
       return {
         success: true,
-        data: { key }
+        data: { key },
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       return {
         success: false,
-        error: `Keyboard press key error: ${message}`
+        error: `Keyboard press key error: ${message}`,
       };
     }
   }
@@ -254,13 +254,13 @@ export class KeyboardService implements IAutomationService {
       await this.keyboardAdapter.combination(keys);
       return {
         success: true,
-        data: { combination: keys.join('+') }
+        data: { combination: keys.join('+') },
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       return {
         success: false,
-        error: `Keyboard combination error: ${message}`
+        error: `Keyboard combination error: ${message}`,
       };
     }
   }
@@ -273,7 +273,8 @@ export class KeyboardService implements IAutomationService {
     const value = options.value || 0;
 
     // Valida valor máximo
-    if (value > 300000) { // 5 minutos
+    if (value > 300000) {
+      // 5 minutos
       throw new Error('Timing value exceeds maximum of 300000ms (5 minutes)');
     }
 
@@ -283,13 +284,13 @@ export class KeyboardService implements IAutomationService {
           throw new Error('Per-character delay must be non-negative');
         }
         return new PerCharTypeStrategy(value, this.eventDispatcher);
-      
+
       case 'total':
         if (value < 0) {
           throw new Error('Total time must be non-negative');
         }
         return new TotalTimeTypeStrategy(value, this.eventDispatcher);
-      
+
       case 'instant':
       default:
         return new InstantTypeStrategy(this.eventDispatcher);

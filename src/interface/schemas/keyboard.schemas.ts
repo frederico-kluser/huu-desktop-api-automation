@@ -16,23 +16,25 @@ export const keyboardTypeJsonSchema: JSONSchema7 = {
       type: 'string',
       minLength: 1,
       maxLength: 10000,
-      description: 'Text to be typed'
+      description: 'Text to be typed',
     },
     mode: {
       type: 'string',
       enum: ['instant', 'perChar', 'total'],
       default: 'instant',
-      description: 'Typing mode: instant (immediate), perChar (delay per character), total (total duration)'
+      description:
+        'Typing mode: instant (immediate), perChar (delay per character), total (total duration)',
     },
     value: {
       type: 'integer',
       minimum: 0,
       maximum: 300000,
-      description: 'Time value in milliseconds. For perChar mode: delay between each character. For total mode: total duration for typing'
-    }
+      description:
+        'Time value in milliseconds. For perChar mode: delay between each character. For total mode: total duration for typing',
+    },
   },
   required: ['text'],
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 /**
@@ -45,11 +47,11 @@ export const keyboardPressKeyJsonSchema: JSONSchema7 = {
     key: {
       type: 'string',
       minLength: 1,
-      description: 'Key to press (e.g., enter, tab, escape, f1-f12)'
-    }
+      description: 'Key to press (e.g., enter, tab, escape, f1-f12)',
+    },
   },
   required: ['key'],
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 /**
@@ -63,13 +65,13 @@ export const keyboardCombinationJsonSchema: JSONSchema7 = {
       type: 'array',
       items: {
         type: 'string',
-        minLength: 1
+        minLength: 1,
       },
       minItems: 1,
       maxItems: 5,
-      description: 'Array of keys for combination (e.g., ["ctrl", "c"] for Ctrl+C)'
-    }
+      description: 'Array of keys for combination (e.g., ["ctrl", "c"] for Ctrl+C)',
+    },
   },
   required: ['keys'],
-  additionalProperties: false
+  additionalProperties: false,
 };

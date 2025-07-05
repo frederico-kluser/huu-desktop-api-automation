@@ -2,8 +2,8 @@
 jest.mock('@nut-tree-fork/nut-js', () => ({
   screen: {
     width: jest.fn().mockResolvedValue(1920),
-    height: jest.fn().mockResolvedValue(1080)
-  }
+    height: jest.fn().mockResolvedValue(1080),
+  },
 }));
 
 // Mock do pino logger antes de qualquer import
@@ -11,7 +11,7 @@ jest.mock('pino', () => {
   return jest.fn(() => ({
     debug: jest.fn(),
     info: jest.fn(),
-    error: jest.fn()
+    error: jest.fn(),
   }));
 });
 
@@ -19,8 +19,8 @@ jest.mock('pino', () => {
 jest.mock('../../../src/config/environment', () => ({
   environment: {
     logLevel: 'info',
-    nodeEnv: 'test'
-  }
+    nodeEnv: 'test',
+  },
 }));
 
 // Mock do setTimeout para evitar timeouts
@@ -41,24 +41,24 @@ describe('MouseService', () => {
   beforeEach(() => {
     // Clear container
     container.reset();
-    
+
     mockMouseAdapter = {
       move: jest.fn().mockResolvedValue(undefined),
       click: jest.fn().mockResolvedValue(undefined),
       clickAt: jest.fn().mockResolvedValue(undefined),
       drag: jest.fn().mockResolvedValue(undefined),
       scroll: jest.fn().mockResolvedValue(undefined),
-      getPosition: jest.fn().mockResolvedValue({ x: 100, y: 200 })
+      getPosition: jest.fn().mockResolvedValue({ x: 100, y: 200 }),
     };
 
     mockEventDispatcher = {
-      dispatch: jest.fn()
+      dispatch: jest.fn(),
     };
 
     // Register mock dependencies
     container.register('MouseAdapter', { useValue: mockMouseAdapter });
     container.register(EventDispatcher, { useValue: mockEventDispatcher });
-    
+
     mouseService = container.resolve(MouseService);
   });
 
@@ -74,19 +74,27 @@ describe('MouseService', () => {
     });
 
     test('throws error for invalid X coordinate (negative)', async () => {
-      await expect(mouseService.move({ x: -1, y: 500 })).rejects.toThrow('Invalid X coordinate: -1');
+      await expect(mouseService.move({ x: -1, y: 500 })).rejects.toThrow(
+        'Invalid X coordinate: -1',
+      );
     });
 
     test('throws error for invalid X coordinate (too large)', async () => {
-      await expect(mouseService.move({ x: 1920, y: 500 })).rejects.toThrow('Invalid X coordinate: 1920');
+      await expect(mouseService.move({ x: 1920, y: 500 })).rejects.toThrow(
+        'Invalid X coordinate: 1920',
+      );
     });
 
     test('throws error for invalid Y coordinate (negative)', async () => {
-      await expect(mouseService.move({ x: 500, y: -1 })).rejects.toThrow('Invalid Y coordinate: -1');
+      await expect(mouseService.move({ x: 500, y: -1 })).rejects.toThrow(
+        'Invalid Y coordinate: -1',
+      );
     });
 
     test('throws error for invalid Y coordinate (too large)', async () => {
-      await expect(mouseService.move({ x: 500, y: 1080 })).rejects.toThrow('Invalid Y coordinate: 1080');
+      await expect(mouseService.move({ x: 500, y: 1080 })).rejects.toThrow(
+        'Invalid Y coordinate: 1080',
+      );
     });
 
     test('logs and rethrows adapter errors', async () => {
@@ -100,19 +108,31 @@ describe('MouseService', () => {
     test('clicks at specific coordinates with defaults', async () => {
       await mouseService.click({ x: 500, y: 300 });
       expect(mockMouseAdapter.move).toHaveBeenCalledWith({ x: 500, y: 300 }, true, 1000);
-      expect(mockMouseAdapter.clickAt).toHaveBeenCalledWith({ x: 500, y: 300 }, MouseButton.LEFT, false);
+      expect(mockMouseAdapter.clickAt).toHaveBeenCalledWith(
+        { x: 500, y: 300 },
+        MouseButton.LEFT,
+        false,
+      );
       expect(mockEventDispatcher.dispatch).toHaveBeenCalledTimes(2);
     });
 
     test('clicks at specific coordinates without smooth movement', async () => {
       await mouseService.click({ x: 500, y: 300, smooth: false });
       expect(mockMouseAdapter.move).not.toHaveBeenCalled();
-      expect(mockMouseAdapter.clickAt).toHaveBeenCalledWith({ x: 500, y: 300 }, MouseButton.LEFT, false);
+      expect(mockMouseAdapter.clickAt).toHaveBeenCalledWith(
+        { x: 500, y: 300 },
+        MouseButton.LEFT,
+        false,
+      );
     });
 
     test('double clicks with right button', async () => {
       await mouseService.click({ x: 500, y: 300, button: MouseButton.RIGHT, doubleClick: true });
-      expect(mockMouseAdapter.clickAt).toHaveBeenCalledWith({ x: 500, y: 300 }, MouseButton.RIGHT, true);
+      expect(mockMouseAdapter.clickAt).toHaveBeenCalledWith(
+        { x: 500, y: 300 },
+        MouseButton.RIGHT,
+        true,
+      );
     });
 
     test('clicks at current position when no coordinates provided', async () => {
@@ -123,7 +143,9 @@ describe('MouseService', () => {
     });
 
     test('validates coordinates before clicking', async () => {
-      await expect(mouseService.click({ x: -1, y: 500 })).rejects.toThrow('Invalid X coordinate: -1');
+      await expect(mouseService.click({ x: -1, y: 500 })).rejects.toThrow(
+        'Invalid X coordinate: -1',
+      );
     });
 
     test('handles all mouse buttons', async () => {
@@ -136,7 +158,7 @@ describe('MouseService', () => {
 
     test('dispatches events with correct data structure', async () => {
       await mouseService.click({ x: 500, y: 300, button: MouseButton.MIDDLE });
-      
+
       expect(mockEventDispatcher.dispatch).toHaveBeenCalledWith({
         id: '',
         type: 'mouse',
@@ -147,10 +169,10 @@ describe('MouseService', () => {
           action: 'click',
           x: 500,
           y: 300,
-          button: MouseButton.MIDDLE
-        }
+          button: MouseButton.MIDDLE,
+        },
       });
-      
+
       expect(mockEventDispatcher.dispatch).toHaveBeenCalledWith({
         id: '',
         type: 'mouse',
@@ -161,8 +183,8 @@ describe('MouseService', () => {
           action: 'release',
           x: 500,
           y: 300,
-          button: MouseButton.MIDDLE
-        }
+          button: MouseButton.MIDDLE,
+        },
       });
     });
 
@@ -264,10 +286,10 @@ describe('MouseService', () => {
     test('does not call setTimeout on last iteration', async () => {
       const setTimeoutSpy = global.setTimeout as unknown as jest.Mock;
       setTimeoutSpy.mockClear();
-      
+
       await mouseService.scroll({ direction: 'up', amount: 6, duration: 100 });
-      
-      const steps = Math.max(1, Math.floor(100 * 30 / 1000));
+
+      const steps = Math.max(1, Math.floor((100 * 30) / 1000));
       expect(setTimeoutSpy).toHaveBeenCalledTimes(steps - 1);
     });
   });
@@ -284,7 +306,7 @@ describe('MouseService', () => {
     test('handles boundary coordinates', async () => {
       await mouseService.move({ x: 0, y: 0 });
       expect(mockMouseAdapter.move).toHaveBeenCalledWith({ x: 0, y: 0 }, true, 1000);
-      
+
       await mouseService.move({ x: 1919, y: 1079 });
       expect(mockMouseAdapter.move).toHaveBeenCalledWith({ x: 1919, y: 1079 }, true, 1000);
     });

@@ -2,12 +2,12 @@ import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 
 // Usar require() em vez de import para contornar verbatimModuleSyntax
-const { 
-  errorHandler, 
-  DomainError, 
-  NotFoundError, 
-  UnauthorizedError, 
-  LimitExceededError 
+const {
+  errorHandler,
+  DomainError,
+  NotFoundError,
+  UnauthorizedError,
+  LimitExceededError,
 } = require('../../../../src/interface/middleware/error-handler.middleware');
 
 describe('error-handler.middleware', () => {
@@ -184,7 +184,7 @@ describe('error-handler.middleware', () => {
     test('handles generic error in development', async () => {
       const originalEnv = process.env.NODE_ENV;
       process.env.NODE_ENV = 'development';
-      
+
       const error = new Error('Generic error message');
       error.stack = 'Error stack trace';
 
@@ -217,7 +217,7 @@ describe('error-handler.middleware', () => {
     test('handles generic error in production', async () => {
       const originalEnv = process.env.NODE_ENV;
       process.env.NODE_ENV = 'production';
-      
+
       const error = new Error('Generic error message');
       error.stack = 'Error stack trace';
 
@@ -249,7 +249,7 @@ describe('error-handler.middleware', () => {
 
     test('handles all HTTP status codes in errorCodes map', () => {
       const statusCodes = [400, 401, 403, 404, 405, 408, 413, 429, 500, 502, 503, 504];
-      
+
       statusCodes.forEach(async (statusCode) => {
         const error: any = {
           message: `Error ${statusCode}`,

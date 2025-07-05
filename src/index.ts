@@ -30,11 +30,11 @@ server.register(automationRoutes, { prefix: '/api/v1' });
 server.setErrorHandler(errorHandler);
 
 server.get('/health', async (_request: FastifyRequest, reply: FastifyReply) => {
-  await reply.send({ 
+  await reply.send({
     status: 'ok',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    environment: environment.nodeEnv
+    environment: environment.nodeEnv,
   });
 });
 

@@ -4,10 +4,10 @@
  */
 
 // Usando require devido ao verbatimModuleSyntax (know-how.txt)
-const { 
+const {
   clipboardCopyJsonSchema,
-  clipboardPasteJsonSchema, 
-  clipboardClearJsonSchema
+  clipboardPasteJsonSchema,
+  clipboardClearJsonSchema,
 } = require('../../../../src/interface/schemas/clipboard.schemas');
 
 describe('clipboard.schemas', () => {
@@ -24,7 +24,7 @@ describe('clipboard.schemas', () => {
       expect(clipboardCopyJsonSchema.properties.content).toEqual({
         type: 'string',
         minLength: 1,
-        description: 'Content to copy to clipboard (max 1 MB)'
+        description: 'Content to copy to clipboard (max 1 MB)',
       });
     });
 

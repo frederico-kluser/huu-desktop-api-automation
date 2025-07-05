@@ -19,22 +19,20 @@ export class RecorderMouseAdapter extends NutJSMouseAdapter {
     [MouseButton.RIGHT]: 'right',
     [MouseButton.MIDDLE]: 'middle',
   };
-  
+
   private lastMoveTime = 0;
-  
-  constructor(
-    @inject(EventDispatcher) private eventDispatcher: EventDispatcher
-  ) {
+
+  constructor(@inject(EventDispatcher) private eventDispatcher: EventDispatcher) {
     super();
   }
-  
+
   /**
    * Sobrescreve o método drag para emitir eventos durante o movimento
    */
   async drag(from: Point, to: Point, duration: number): Promise<void> {
     // Mover para posição inicial
     await this.move(from, true, duration / 3);
-    
+
     // Emitir mouse down
     this.eventDispatcher.dispatch({
       id: '',
@@ -46,27 +44,27 @@ export class RecorderMouseAdapter extends NutJSMouseAdapter {
         action: 'click',
         x: from.x,
         y: from.y,
-        button: 'left'
-      }
+        button: 'left',
+      },
     });
-    
+
     // Pressionar botão
     await mouse.pressButton(Button.LEFT);
-    
+
     // Calcular passos para movimento
-    const steps = Math.max(1, Math.floor((duration * 2/3) / recorderConfig.moveIntervalMs));
+    const steps = Math.max(1, Math.floor((duration * 2) / 3 / recorderConfig.moveIntervalMs));
     const deltaX = to.x - from.x;
     const deltaY = to.y - from.y;
-    
+
     // Mover com emissão de eventos
     for (let i = 1; i <= steps; i++) {
       const progress = i / steps;
       const x = Math.round(from.x + deltaX * progress);
       const y = Math.round(from.y + deltaY * progress);
-      
+
       // Mover mouse
       await this.move({ x, y }, false, 0);
-      
+
       // Emitir evento de movimento
       this.eventDispatcher.dispatch({
         id: '',
@@ -77,19 +75,19 @@ export class RecorderMouseAdapter extends NutJSMouseAdapter {
         data: {
           action: 'move',
           x,
-          y
-        }
+          y,
+        },
       });
-      
+
       // Aguardar intervalo
       if (i < steps) {
         await this.delayMs(recorderConfig.moveIntervalMs);
       }
     }
-    
+
     // Soltar botão
     await mouse.releaseButton(Button.LEFT);
-    
+
     // Emitir mouse up
     this.eventDispatcher.dispatch({
       id: '',
@@ -101,15 +99,15 @@ export class RecorderMouseAdapter extends NutJSMouseAdapter {
         action: 'release',
         x: to.x,
         y: to.y,
-        button: 'left'
-      }
+        button: 'left',
+      },
     });
   }
-  
+
   /**
    * Aguarda um período em milissegundos
    */
   private delayMs(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

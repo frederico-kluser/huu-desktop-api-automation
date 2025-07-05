@@ -9,7 +9,7 @@ jest.mock('../../../../src/config/logger', () => ({
     info: jest.fn(),
     error: jest.fn(),
     debug: jest.fn(),
-  }
+  },
 }));
 
 jest.mock('../../../../src/config/input-events.config', () => ({
@@ -19,7 +19,7 @@ jest.mock('../../../../src/config/input-events.config', () => ({
     maxRate: 1000,
     maxEventAge: 300000,
     debug: false,
-  }
+  },
 }));
 
 // Mock de setInterval
@@ -53,8 +53,8 @@ describe('InputEventsController', () => {
       getStats: jest.fn().mockReturnValue({
         listeners: 2,
         eventsProcessed: 100,
-        errors: 0
-      })
+        errors: 0,
+      }),
     };
 
     // Mock EventBuffer
@@ -62,12 +62,12 @@ describe('InputEventsController', () => {
       add: jest.fn(),
       getEventsAfter: jest.fn().mockReturnValue([
         { id: 'event1', source: 'mouse', type: 'click', timestamp: Date.now() },
-        { id: 'event2', source: 'keyboard', type: 'keypress', timestamp: Date.now() }
+        { id: 'event2', source: 'keyboard', type: 'keypress', timestamp: Date.now() },
       ]),
       getSize: jest.fn().mockReturnValue(42),
       getLastEventId: jest.fn().mockReturnValue('last-event-123'),
       clear: jest.fn(),
-      pruneOldEvents: jest.fn().mockReturnValue(5)
+      pruneOldEvents: jest.fn().mockReturnValue(5),
     };
 
     // Mock Reply
@@ -75,9 +75,9 @@ describe('InputEventsController', () => {
       raw: {
         writeHead: jest.fn(),
         write: jest.fn(),
-        on: jest.fn()
+        on: jest.fn(),
       },
-      send: jest.fn()
+      send: jest.fn(),
     };
 
     // Mock Request
@@ -86,11 +86,13 @@ describe('InputEventsController', () => {
       headers: {},
       body: {},
       raw: {
-        on: jest.fn()
-      }
+        on: jest.fn(),
+      },
     };
 
-    const { InputEventsController } = require('../../../../src/interface/controllers/input-events.controller');
+    const {
+      InputEventsController,
+    } = require('../../../../src/interface/controllers/input-events.controller');
     controller = new InputEventsController(mockEventDispatcher, mockEventBuffer);
   });
 
@@ -101,14 +103,14 @@ describe('InputEventsController', () => {
       expect(mockReply.raw.writeHead).toHaveBeenCalledWith(200, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'X-Accel-Buffering': 'no'
+        Connection: 'keep-alive',
+        'X-Accel-Buffering': 'no',
       });
     });
 
     test('processa Last-Event-ID quando presente', async () => {
       mockRequest.headers['last-event-id'] = 'last-123';
-      
+
       await controller.streamInputEvents(mockRequest, mockReply);
 
       expect(mockEventBuffer.getEventsAfter).toHaveBeenCalledWith('last-123');
@@ -143,11 +145,11 @@ describe('InputEventsController', () => {
       await controller.streamInputEvents(mockRequest, mockReply);
 
       const listener = mockEventDispatcher.addListener.mock.calls[0][0];
-      const testEvent = { 
-        id: 'test-event', 
-        source: 'mouse', 
-        type: 'click', 
-        timestamp: Date.now() 
+      const testEvent = {
+        id: 'test-event',
+        source: 'mouse',
+        type: 'click',
+        timestamp: Date.now(),
       };
 
       listener.onEvent(testEvent);
@@ -157,12 +159,14 @@ describe('InputEventsController', () => {
     });
 
     test('trata erro no heartbeat', async () => {
-      mockReply.raw.write.mockImplementationOnce(() => {}).mockImplementationOnce(() => {
-        throw new Error('Connection closed');
-      });
+      mockReply.raw.write
+        .mockImplementationOnce(() => {})
+        .mockImplementationOnce(() => {
+          throw new Error('Connection closed');
+        });
 
       await controller.streamInputEvents(mockRequest, mockReply);
-      
+
       const heartbeatFn = (global.setInterval as jest.Mock).mock.calls[0][0];
       heartbeatFn();
 
@@ -174,28 +178,32 @@ describe('InputEventsController', () => {
       inputEventsConfig.debug = true;
 
       await controller.streamInputEvents(mockRequest, mockReply);
-      
+
       const listener = mockEventDispatcher.addListener.mock.calls[0][0];
       listener.onEvent({ id: 'debug-event', source: 'test' });
 
       const { logger } = require('../../../../src/config/logger');
       expect(logger.debug).toHaveBeenCalled();
-      
+
       inputEventsConfig.debug = false;
     });
 
     test('trata erro ao enviar evento SSE', async () => {
-      mockReply.raw.write.mockImplementationOnce(() => {}).mockImplementationOnce(() => {
-        throw new Error('Failed to write');
-      });
+      mockReply.raw.write
+        .mockImplementationOnce(() => {})
+        .mockImplementationOnce(() => {
+          throw new Error('Failed to write');
+        });
 
       await controller.streamInputEvents(mockRequest, mockReply);
-      
+
       const listener = mockEventDispatcher.addListener.mock.calls[0][0];
       listener.onEvent({ id: 'error-event' });
 
       const { logger } = require('../../../../src/config/logger');
-      expect(logger.error).toHaveBeenCalledWith(expect.stringContaining('Erro ao enviar evento SSE'));
+      expect(logger.error).toHaveBeenCalledWith(
+        expect.stringContaining('Erro ao enviar evento SSE'),
+      );
     });
   });
 
@@ -213,19 +221,19 @@ describe('InputEventsController', () => {
           dispatcher: {
             listeners: 2,
             eventsProcessed: 100,
-            errors: 0
+            errors: 0,
           },
           buffer: {
             size: 42,
             maxSize: 1000,
-            lastEventId: 'last-event-123'
+            lastEventId: 'last-event-123',
           },
           config: {
             heartbeatMs: 30000,
             maxRate: 1000,
-            maxEventAge: 300000
-          }
-        }
+            maxEventAge: 300000,
+          },
+        },
       });
     });
   });
@@ -237,7 +245,7 @@ describe('InputEventsController', () => {
       expect(mockEventBuffer.clear).toHaveBeenCalled();
       expect(mockReply.send).toHaveBeenCalledWith({
         success: true,
-        message: 'Buffer limpo com sucesso'
+        message: 'Buffer limpo com sucesso',
       });
     });
   });
@@ -251,14 +259,14 @@ describe('InputEventsController', () => {
         success: true,
         data: {
           removed: 5,
-          maxAgeMs: 300000
-        }
+          maxAgeMs: 300000,
+        },
       });
     });
 
     test('remove eventos antigos com maxAgeMs customizado', async () => {
       mockRequest.body = { maxAgeMs: 60000 };
-      
+
       await controller.pruneBuffer(mockRequest, mockReply);
 
       expect(mockEventBuffer.pruneOldEvents).toHaveBeenCalledWith(60000);
@@ -266,8 +274,8 @@ describe('InputEventsController', () => {
         success: true,
         data: {
           removed: 5,
-          maxAgeMs: 60000
-        }
+          maxAgeMs: 60000,
+        },
       });
     });
   });

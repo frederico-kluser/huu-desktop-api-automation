@@ -60,11 +60,7 @@ describe('ScreenService coverage', () => {
 
       const result = await service.findTemplate(request);
 
-      expect(mockScreenAdapter.find).toHaveBeenCalledWith(
-        expect.any(Buffer),
-        0.85,
-        request.region
-      );
+      expect(mockScreenAdapter.find).toHaveBeenCalledWith(expect.any(Buffer), 0.85, request.region);
       expect(result).toEqual(mockMatches);
       expect(service.logger.debug).toHaveBeenCalled();
       expect(service.logger.info).toHaveBeenCalled();
@@ -80,11 +76,7 @@ describe('ScreenService coverage', () => {
 
       await service.findTemplate(request);
 
-      expect(mockScreenAdapter.find).toHaveBeenCalledWith(
-        expect.any(Buffer),
-        0.8,
-        undefined
-      );
+      expect(mockScreenAdapter.find).toHaveBeenCalledWith(expect.any(Buffer), 0.8, undefined);
     });
 
     test('handles findTemplate error', async () => {
@@ -169,7 +161,7 @@ describe('ScreenService coverage', () => {
       expect(mockScreenAdapter.waitFor).toHaveBeenCalledWith(
         expect.any(Buffer),
         timeout,
-        confidence
+        confidence,
       );
       expect(result).toEqual(mockResult);
     });
@@ -182,20 +174,16 @@ describe('ScreenService coverage', () => {
 
       await service.waitForTemplate(template);
 
-      expect(mockScreenAdapter.waitFor).toHaveBeenCalledWith(
-        expect.any(Buffer),
-        5000,
-        0.8
-      );
+      expect(mockScreenAdapter.waitFor).toHaveBeenCalledWith(expect.any(Buffer), 5000, 0.8);
     });
 
     test('handles waitForTemplate timeout', async () => {
       const error = new Error('Timeout waiting for template');
       mockScreenAdapter.waitFor.mockRejectedValue(error);
 
-      await expect(
-        service.waitForTemplate('data:image/png;base64,TIMEOUT')
-      ).rejects.toThrow('Timeout waiting for template');
+      await expect(service.waitForTemplate('data:image/png;base64,TIMEOUT')).rejects.toThrow(
+        'Timeout waiting for template',
+      );
     });
   });
 
@@ -205,7 +193,7 @@ describe('ScreenService coverage', () => {
 
       // Template sem prefixo data URI
       const rawBase64 = 'SGVsbG8gV29ybGQ=';
-      
+
       await service.findTemplate({ template: rawBase64 });
 
       const callArgs = mockScreenAdapter.find.mock.calls[0];
@@ -237,9 +225,7 @@ describe('ScreenService coverage', () => {
     test('handles adapter throwing non-Error objects', async () => {
       mockScreenAdapter.find.mockRejectedValue('string error');
 
-      await expect(
-        service.findTemplate({ template: 'test' })
-      ).rejects.toBe('string error');
+      await expect(service.findTemplate({ template: 'test' })).rejects.toBe('string error');
     });
 
     test('processes very large base64 strings', async () => {
@@ -253,7 +239,13 @@ describe('ScreenService coverage', () => {
     test('multiple concurrent operations', async () => {
       mockScreenAdapter.find.mockResolvedValue([]);
       mockScreenAdapter.capture.mockResolvedValue(Buffer.from('data'));
-      mockScreenAdapter.waitFor.mockResolvedValue({ x: 0, y: 0, width: 1, height: 1, confidence: 1 });
+      mockScreenAdapter.waitFor.mockResolvedValue({
+        x: 0,
+        y: 0,
+        width: 1,
+        height: 1,
+        confidence: 1,
+      });
 
       const operations = [
         service.findTemplate({ template: 'test1' }),

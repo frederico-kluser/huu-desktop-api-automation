@@ -15,8 +15,8 @@ jest.mock('../src/config/recorder.config.js', () => ({
   recorderConfig: {
     includeScreenshot: true,
     moveIntervalMs: 50,
-    maxScreenshotSize: 2097152
-  }
+    maxScreenshotSize: 2097152,
+  },
 }));
 
 describe('RecorderListenerService', () => {
@@ -24,31 +24,33 @@ describe('RecorderListenerService', () => {
   let eventDispatcher: jest.Mocked<EventDispatcher>;
   let screenService: any;
   let recordedEvents: RecordedEvent[] = [];
-  
+
   beforeEach(() => {
     // Limpar mocks
     jest.clearAllMocks();
     recordedEvents = [];
-    
+
     // Criar mocks
     eventDispatcher = new EventDispatcher() as jest.Mocked<EventDispatcher>;
     screenService = {
-      capture: jest.fn((request: any) => Promise.resolve('data:image/png;base64,base64_screenshot_data'))
+      capture: jest.fn((request: any) =>
+        Promise.resolve('data:image/png;base64,base64_screenshot_data'),
+      ),
     };
-    
+
     // Criar serviço
     service = new RecorderListenerService(eventDispatcher, screenService);
-    
+
     // Adicionar listener para capturar eventos
     service.addListener((event) => {
       recordedEvents.push(event);
     });
   });
-  
+
   afterEach(() => {
     service.dispose();
   });
-  
+
   describe('Mouse Events', () => {
     it('deve gravar evento de mouse down com screenshot', async () => {
       // Simular evento de mouse click
@@ -62,13 +64,13 @@ describe('RecorderListenerService', () => {
           action: 'click',
           x: 100,
           y: 200,
-          button: 'left' as const
-        }
+          button: 'left' as const,
+        },
       };
-      
+
       // Chamar handler diretamente
       await (service as any).handleInputEvent(inputEvent);
-      
+
       // Verificar evento gravado
       expect(recordedEvents).toHaveLength(1);
       expect(recordedEvents[0]).toMatchObject({
@@ -77,13 +79,13 @@ describe('RecorderListenerService', () => {
         x: 100,
         y: 200,
         button: 'left',
-        screenshot: 'data:image/png;base64,base64_screenshot_data'
+        screenshot: 'data:image/png;base64,base64_screenshot_data',
       });
-      
+
       // Verificar que screenshot foi capturado
       expect(screenService.capture).toHaveBeenCalledTimes(1);
     });
-    
+
     it('deve gravar evento de mouse up sem screenshot', async () => {
       // Simular evento de mouse release
       const inputEvent = {
@@ -96,13 +98,13 @@ describe('RecorderListenerService', () => {
           action: 'release',
           x: 100,
           y: 200,
-          button: 'left' as const
-        }
+          button: 'left' as const,
+        },
       };
-      
+
       // Chamar handler
       await (service as any).handleInputEvent(inputEvent);
-      
+
       // Verificar evento gravado
       expect(recordedEvents).toHaveLength(1);
       expect(recordedEvents[0]).toMatchObject({
@@ -110,15 +112,17 @@ describe('RecorderListenerService', () => {
         action: 'up',
         x: 100,
         y: 200,
-        button: 'left'
+        button: 'left',
       });
-      expect('screenshot' in recordedEvents[0] ? recordedEvents[0].screenshot : undefined).toBeUndefined();
-      
+      expect(
+        'screenshot' in recordedEvents[0] ? recordedEvents[0].screenshot : undefined,
+      ).toBeUndefined();
+
       // Verificar que screenshot NÃO foi capturado
       expect(screenService.capture).not.toHaveBeenCalled();
     });
   });
-  
+
   describe('Keyboard Events', () => {
     it('deve gravar evento de tecla pressionada', async () => {
       // Simular evento de keyboard down
@@ -130,22 +134,22 @@ describe('RecorderListenerService', () => {
         cursorY: 0,
         data: {
           key: 'a',
-          action: 'down'
-        }
+          action: 'down',
+        },
       };
-      
+
       // Chamar handler
       await (service as any).handleInputEvent(inputEvent);
-      
+
       // Verificar evento gravado
       expect(recordedEvents).toHaveLength(1);
       expect(recordedEvents[0]).toMatchObject({
         type: 'keyboard',
         action: 'down',
-        key: 'a'
+        key: 'a',
       });
     });
-    
+
     it('deve gravar evento de tecla solta', async () => {
       // Simular evento de keyboard up
       const inputEvent = {
@@ -156,33 +160,33 @@ describe('RecorderListenerService', () => {
         cursorY: 0,
         data: {
           key: 'a',
-          action: 'up'
-        }
+          action: 'up',
+        },
       };
-      
+
       // Chamar handler
       await (service as any).handleInputEvent(inputEvent);
-      
+
       // Verificar evento gravado
       expect(recordedEvents).toHaveLength(1);
       expect(recordedEvents[0]).toMatchObject({
         type: 'keyboard',
         action: 'up',
-        key: 'a'
+        key: 'a',
       });
     });
   });
-  
+
   describe('Listener Management', () => {
     it('deve adicionar e remover listeners', () => {
       const listener = jest.fn();
-      
+
       // Adicionar listener
       service.addListener(listener);
-      
+
       // Remover listener
       service.removeListener(listener);
-      
+
       // Verificar que listener foi removido
       expect((service as any).listeners.size).toBe(1); // Apenas o listener de teste
     });

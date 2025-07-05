@@ -10,7 +10,13 @@ jest.mock('pino', () => ({
 }));
 
 // Usando require para contornar verbatimModuleSyntax
-const { MouseAction, MouseButton, Point, MouseMoveOptions, MouseClickOptions } = require('../../../src/domain/entities/mouse-action');
+const {
+  MouseAction,
+  MouseButton,
+  Point,
+  MouseMoveOptions,
+  MouseClickOptions,
+} = require('../../../src/domain/entities/mouse-action');
 
 describe('mouse-action', () => {
   describe('MouseAction class', () => {
@@ -28,7 +34,7 @@ describe('mouse-action', () => {
         new MouseAction('drag'),
         new MouseAction('scroll'),
       ];
-      
+
       expect(actions[0].type).toBe('move');
       expect(actions[1].type).toBe('click');
       expect(actions[2].type).toBe('drag');
@@ -78,7 +84,7 @@ describe('mouse-action', () => {
     test('click with position and options', () => {
       const action = MouseAction.click(
         { x: 30, y: 40 },
-        { button: MouseButton.RIGHT, doubleClick: true }
+        { button: MouseButton.RIGHT, doubleClick: true },
       );
       expect(action.type).toBe('click');
       expect(action.position).toEqual({ x: 30, y: 40 });

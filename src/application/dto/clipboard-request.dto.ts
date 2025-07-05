@@ -9,15 +9,13 @@ import { z } from 'zod';
  * Schema para copiar conteúdo para clipboard
  */
 export const clipboardCopySchema = z.object({
-  content: z.string()
+  content: z
+    .string()
     .min(1, 'Content cannot be empty')
-    .refine(
-      (content) => {
-        const sizeBytes = Buffer.byteLength(content, 'utf8');
-        return sizeBytes <= 1048576; // 1 MB
-      },
-      'Content size exceeds maximum of 1 MB'
-    )
+    .refine((content) => {
+      const sizeBytes = Buffer.byteLength(content, 'utf8');
+      return sizeBytes <= 1048576; // 1 MB
+    }, 'Content size exceeds maximum of 1 MB'),
 });
 
 /**

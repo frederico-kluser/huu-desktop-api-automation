@@ -8,12 +8,12 @@ export interface CommandResult {
    * Indica se a operação foi bem-sucedida
    */
   success: boolean;
-  
+
   /**
    * Dados retornados pela operação (quando bem-sucedida)
    */
   data?: any;
-  
+
   /**
    * Mensagem de erro (quando falha)
    */

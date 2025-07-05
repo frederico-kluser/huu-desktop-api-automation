@@ -19,12 +19,12 @@ describe('validation.middleware', () => {
 
   beforeEach(() => {
     mockRequest = {
-      body: {}
+      body: {},
     };
-    
+
     mockReply = {
       status: jest.fn().mockReturnThis(),
-      send: jest.fn().mockResolvedValue(undefined)
+      send: jest.fn().mockResolvedValue(undefined),
     };
   });
 
@@ -32,11 +32,11 @@ describe('validation.middleware', () => {
     test('successfully validates correct data', async () => {
       const schema = z.object({
         name: z.string(),
-        age: z.number()
+        age: z.number(),
       });
 
       mockRequest.body = { name: 'John', age: 25 };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -48,11 +48,11 @@ describe('validation.middleware', () => {
     test('fails validation with missing required fields', async () => {
       const schema = z.object({
         name: z.string(),
-        age: z.number()
+        age: z.number(),
       });
 
       mockRequest.body = { name: 'John' }; // missing age
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -60,17 +60,17 @@ describe('validation.middleware', () => {
       expect(mockReply.send).toHaveBeenCalledWith({
         success: false,
         error: 'Validation failed',
-        message: expect.any(String)
+        message: expect.any(String),
       });
     });
 
     test('fails validation with wrong type', async () => {
       const schema = z.object({
-        age: z.number()
+        age: z.number(),
       });
 
       mockRequest.body = { age: 'not a number' };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -78,18 +78,18 @@ describe('validation.middleware', () => {
       expect(mockReply.send).toHaveBeenCalledWith({
         success: false,
         error: 'Validation failed',
-        message: expect.any(String)
+        message: expect.any(String),
       });
     });
 
     test('transforms data according to schema', async () => {
       const schema = z.object({
-        name: z.string().transform(str => str.toUpperCase()),
-        age: z.number()
+        name: z.string().transform((str) => str.toUpperCase()),
+        age: z.number(),
       });
 
       mockRequest.body = { name: 'john', age: 25 };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -98,11 +98,11 @@ describe('validation.middleware', () => {
 
     test('handles empty body', async () => {
       const schema = z.object({
-        name: z.string()
+        name: z.string(),
       });
 
       mockRequest.body = undefined;
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -111,7 +111,7 @@ describe('validation.middleware', () => {
 
     test('handles non-Error exceptions gracefully', async () => {
       const schema = z.object({
-        name: z.string()
+        name: z.string(),
       });
 
       // Force a non-Error exception by mocking parse to throw a string
@@ -120,7 +120,7 @@ describe('validation.middleware', () => {
       });
 
       mockRequest.body = { name: 'test' };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -133,35 +133,35 @@ describe('validation.middleware', () => {
       const schema = z.object({
         user: z.object({
           name: z.string(),
-          email: z.string().email()
+          email: z.string().email(),
         }),
         settings: z.object({
           theme: z.enum(['light', 'dark']),
-          notifications: z.boolean()
-        })
+          notifications: z.boolean(),
+        }),
       });
 
       mockRequest.body = {
         user: { name: 'John', email: 'john@example.com' },
-        settings: { theme: 'dark', notifications: true }
+        settings: { theme: 'dark', notifications: true },
       };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
       expect(mockRequest.body).toEqual({
         user: { name: 'John', email: 'john@example.com' },
-        settings: { theme: 'dark', notifications: true }
+        settings: { theme: 'dark', notifications: true },
       });
     });
 
     test('handles array schemas', async () => {
       const schema = z.object({
-        items: z.array(z.string())
+        items: z.array(z.string()),
       });
 
       mockRequest.body = { items: ['a', 'b', 'c'] };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -171,11 +171,11 @@ describe('validation.middleware', () => {
     test('handles optional fields', async () => {
       const schema = z.object({
         name: z.string(),
-        nickname: z.string().optional()
+        nickname: z.string().optional(),
       });
 
       mockRequest.body = { name: 'John' };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -186,11 +186,11 @@ describe('validation.middleware', () => {
     test('handles default values', async () => {
       const schema = z.object({
         name: z.string(),
-        role: z.string().default('user')
+        role: z.string().default('user'),
       });
 
       mockRequest.body = { name: 'John' };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -199,28 +199,28 @@ describe('validation.middleware', () => {
 
     test('preserves original error message from zod', async () => {
       const schema = z.object({
-        email: z.string().email('Invalid email format')
+        email: z.string().email('Invalid email format'),
       });
 
       mockRequest.body = { email: 'not-an-email' };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
       expect(mockReply.send).toHaveBeenCalledWith({
         success: false,
         error: 'Validation failed',
-        message: expect.stringContaining('email')
+        message: expect.stringContaining('email'),
       });
     });
 
     test('handles coercion', async () => {
       const schema = z.object({
-        age: z.coerce.number()
+        age: z.coerce.number(),
       });
 
       mockRequest.body = { age: '25' };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -229,7 +229,7 @@ describe('validation.middleware', () => {
 
     test('validates union types', async () => {
       const schema = z.object({
-        value: z.union([z.string(), z.number()])
+        value: z.union([z.string(), z.number()]),
       });
 
       // Test with string
@@ -246,15 +246,17 @@ describe('validation.middleware', () => {
     });
 
     test('validates with refinements', async () => {
-      const schema = z.object({
-        password: z.string().min(8),
-        confirmPassword: z.string()
-      }).refine(data => data.password === data.confirmPassword, {
-        message: "Passwords don't match"
-      });
+      const schema = z
+        .object({
+          password: z.string().min(8),
+          confirmPassword: z.string(),
+        })
+        .refine((data) => data.password === data.confirmPassword, {
+          message: "Passwords don't match",
+        });
 
       mockRequest.body = { password: 'password123', confirmPassword: 'different' };
-      
+
       const middleware = validateRequest(schema);
       await middleware(mockRequest as any, mockReply as any);
 
@@ -262,7 +264,7 @@ describe('validation.middleware', () => {
       expect(mockReply.send).toHaveBeenCalledWith({
         success: false,
         error: 'Validation failed',
-        message: expect.any(String)
+        message: expect.any(String),
       });
     });
   });

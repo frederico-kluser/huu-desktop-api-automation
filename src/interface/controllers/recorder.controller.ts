@@ -13,46 +13,51 @@ import { recorderConfig } from '../../config/recorder.config.js';
 
 @injectable()
 export class RecorderController {
-  private activeConnections = new Map<string, { reply: FastifyReply; listener: (event: RecordedEvent) => void }>();
-  
+  private activeConnections = new Map<
+    string,
+    { reply: FastifyReply; listener: (event: RecordedEvent) => void }
+  >();
+
   constructor(
     @inject(RecorderListenerService) private recorderListener: RecorderListenerService,
-    @inject(EventBuffer) private eventBuffer: EventBuffer
+    @inject(EventBuffer) private eventBuffer: EventBuffer,
   ) {}
-  
+
   /**
    * Inicia streaming de eventos gravados
    */
   async streamEvents(request: FastifyRequest, reply: FastifyReply): Promise<void> {
     const connectionId = this.generateConnectionId();
-    
+
     // Configurar headers SSE
     reply.raw.writeHead(200, {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive',
+      Connection: 'keep-alive',
       'X-Accel-Buffering': 'no', // Desabilitar buffering nginx
     });
-    
+
     logger.info(`Nova conexão recorder SSE: ${connectionId}`);
-    
+
     // Enviar evento inicial
     reply.raw.write(`id: ${connectionId}\n`);
     reply.raw.write('event: connected\n');
-    reply.raw.write(`data: ${JSON.stringify({ 
-      connectionId, 
-      config: {
-        includeScreenshot: recorderConfig.includeScreenshot,
-        moveIntervalMs: recorderConfig.moveIntervalMs
-      }
-    })}\n\n`);
-    
+    reply.raw.write(
+      `data: ${JSON.stringify({
+        connectionId,
+        config: {
+          includeScreenshot: recorderConfig.includeScreenshot,
+          moveIntervalMs: recorderConfig.moveIntervalMs,
+        },
+      })}\n\n`,
+    );
+
     // Recuperar last-event-id para replay
     const lastEventId = request.headers['last-event-id'] as string;
     if (lastEventId) {
       await this.replayEvents(reply, lastEventId);
     }
-    
+
     // Criar listener para novos eventos
     const listener = (event: RecordedEvent) => {
       try {
@@ -64,11 +69,11 @@ export class RecorderController {
         logger.error('Erro ao enviar evento SSE:', error);
       }
     };
-    
+
     // Registrar listener
     this.recorderListener.addListener(listener);
     this.activeConnections.set(connectionId, { reply, listener });
-    
+
     // Configurar heartbeat
     const heartbeatInterval = setInterval(() => {
       try {
@@ -78,12 +83,12 @@ export class RecorderController {
         clearInterval(heartbeatInterval);
       }
     }, 30000); // 30 segundos
-    
+
     // Limpar ao desconectar
     request.raw.on('close', () => {
       logger.info(`Conexão recorder SSE fechada: ${connectionId}`);
       clearInterval(heartbeatInterval);
-      
+
       const connection = this.activeConnections.get(connectionId);
       if (connection) {
         this.recorderListener.removeListener(connection.listener);
@@ -91,7 +96,7 @@ export class RecorderController {
       }
     });
   }
-  
+
   /**
    * Retorna estatísticas do recorder
    */
@@ -99,19 +104,19 @@ export class RecorderController {
     const stats = {
       activeConnections: this.activeConnections.size,
       config: recorderConfig,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
-    
+
     reply.send({ success: true, data: stats });
   }
-  
+
   /**
    * Gera ID único para conexão
    */
   private generateConnectionId(): string {
     return `rec_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
   }
-  
+
   /**
    * Faz replay de eventos perdidos
    */

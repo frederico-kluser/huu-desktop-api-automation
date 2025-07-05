@@ -15,7 +15,7 @@ export const automationRoutes: FastifyPluginAsync = async (server) => {
 
   // Registra rotas de streaming de eventos de input
   await server.register(inputEventsRoutes, { prefix: '/stream' });
-  
+
   // Registra rotas do recorder
   await server.register(recorderRoutes);
 };

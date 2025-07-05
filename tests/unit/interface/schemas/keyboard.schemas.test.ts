@@ -27,7 +27,7 @@ describe('keyboard.schemas', () => {
       const result = validator({
         text: 'Hello World',
         mode: 'perChar',
-        value: 50
+        value: 50,
       });
       expect(result).toBe(true);
     });
@@ -61,7 +61,7 @@ describe('keyboard.schemas', () => {
 
     test('validates all mode values', () => {
       const validator = validate();
-      ['instant', 'perChar', 'total'].forEach(mode => {
+      ['instant', 'perChar', 'total'].forEach((mode) => {
         const result = validator({ text: 'Test', mode });
         expect(result).toBe(true);
       });
@@ -127,7 +127,7 @@ describe('keyboard.schemas', () => {
 
     test('validates function keys', () => {
       const validator = validate();
-      ['f1', 'f12', 'tab', 'escape'].forEach(key => {
+      ['f1', 'f12', 'tab', 'escape'].forEach((key) => {
         const result = validator({ key });
         expect(result).toBe(true);
       });
@@ -250,7 +250,7 @@ describe('keyboard.schemas', () => {
     expect(schemas.keyboardTypeJsonSchema).toBeDefined();
     expect(schemas.keyboardPressKeyJsonSchema).toBeDefined();
     expect(schemas.keyboardCombinationJsonSchema).toBeDefined();
-    
+
     // Verify they are objects (schemas)
     expect(typeof schemas.keyboardTypeJsonSchema).toBe('object');
     expect(typeof schemas.keyboardPressKeyJsonSchema).toBe('object');
@@ -262,10 +262,10 @@ describe('keyboard.schemas', () => {
     const allSchemas = [
       schemas.keyboardTypeJsonSchema,
       schemas.keyboardPressKeyJsonSchema,
-      schemas.keyboardCombinationJsonSchema
+      schemas.keyboardCombinationJsonSchema,
     ];
 
-    allSchemas.forEach(schema => {
+    allSchemas.forEach((schema) => {
       expect(schema.$schema).toBe('http://json-schema.org/draft-07/schema#');
       expect(schema.type).toBe('object');
       expect(schema.properties).toBeDefined();

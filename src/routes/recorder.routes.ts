@@ -23,13 +23,13 @@ const StatsResponseSchema = {
           properties: {
             includeScreenshot: { type: 'boolean' },
             moveIntervalMs: { type: 'number' },
-            maxScreenshotSize: { type: 'number' }
-          }
+            maxScreenshotSize: { type: 'number' },
+          },
         },
-        timestamp: { type: 'number' }
-      }
-    }
-  }
+        timestamp: { type: 'number' },
+      },
+    },
+  },
 };
 
 /**
@@ -37,7 +37,7 @@ const StatsResponseSchema = {
  */
 export async function recorderRoutes(fastify: FastifyInstance): Promise<void> {
   const controller = container.resolve(RecorderController);
-  
+
   /**
    * GET /recorder/stream
    * Inicia streaming de eventos gravados via SSE
@@ -50,13 +50,13 @@ export async function recorderRoutes(fastify: FastifyInstance): Promise<void> {
         200: {
           description: 'Stream SSE iniciado',
           type: 'string',
-          contentType: 'text/event-stream'
-        }
-      }
+          contentType: 'text/event-stream',
+        },
+      },
     },
-    handler: controller.streamEvents.bind(controller)
+    handler: controller.streamEvents.bind(controller),
   });
-  
+
   /**
    * GET /recorder/stats
    * Retorna estatísticas do sistema de gravação
@@ -66,9 +66,9 @@ export async function recorderRoutes(fastify: FastifyInstance): Promise<void> {
       description: 'Retorna estatísticas do recorder',
       tags: ['recorder'],
       response: {
-        200: StatsResponseSchema
-      }
+        200: StatsResponseSchema,
+      },
     },
-    handler: controller.getStats.bind(controller)
+    handler: controller.getStats.bind(controller),
   });
 }

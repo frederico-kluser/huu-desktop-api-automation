@@ -1,28 +1,28 @@
 // Mock das dependências antes dos imports
 jest.mock('../../../../../src/config/environment', () => ({
   environment: {
-    mouseSpeed: 1000
-  }
+    mouseSpeed: 1000,
+  },
 }));
 
 jest.mock('@nut-tree-fork/nut-js', () => ({
   mouse: {
     config: {
-      mouseSpeed: 1000
+      mouseSpeed: 1000,
     },
     pressButton: jest.fn().mockResolvedValue(undefined),
     releaseButton: jest.fn().mockResolvedValue(undefined),
     setPosition: jest.fn().mockResolvedValue(undefined),
     getPosition: jest.fn().mockResolvedValue({ x: 0, y: 0 }),
-    move: jest.fn().mockResolvedValue(undefined)
+    move: jest.fn().mockResolvedValue(undefined),
   },
   Button: {
     LEFT: 0,
     RIGHT: 1,
-    MIDDLE: 2
+    MIDDLE: 2,
   },
   Point: jest.fn((x: number, y: number) => ({ x, y })),
-  straightTo: jest.fn((point: any) => point)
+  straightTo: jest.fn((point: any) => point),
 }));
 
 // Mock do setTimeout para executar imediatamente
@@ -32,9 +32,13 @@ global.setTimeout = jest.fn((callback: any) => {
 }) as any;
 
 // Importações
-const { RecorderMouseAdapter } = require('../../../../../src/infrastructure/adapters/nutjs/recorder-mouse.adapter');
+const {
+  RecorderMouseAdapter,
+} = require('../../../../../src/infrastructure/adapters/nutjs/recorder-mouse.adapter');
 const { mouse, Button } = require('@nut-tree-fork/nut-js');
-const { EventDispatcher } = require('../../../../../src/application/services/event-dispatcher.service');
+const {
+  EventDispatcher,
+} = require('../../../../../src/application/services/event-dispatcher.service');
 const { MouseButton } = require('../../../../../src/domain/entities/mouse-action');
 
 describe('RecorderMouseAdapter', () => {
@@ -43,9 +47,9 @@ describe('RecorderMouseAdapter', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     mockEventDispatcher = {
-      dispatch: jest.fn()
+      dispatch: jest.fn(),
     };
 
     adapter = new RecorderMouseAdapter(mockEventDispatcher);
@@ -93,8 +97,8 @@ describe('RecorderMouseAdapter', () => {
           action: 'click',
           x: from.x,
           y: from.y,
-          button: 'left'
-        }
+          button: 'left',
+        },
       });
 
       // Verificar último evento (release)
@@ -107,8 +111,8 @@ describe('RecorderMouseAdapter', () => {
           action: 'release',
           x: to.x,
           y: to.y,
-          button: 'left'
-        }
+          button: 'left',
+        },
       });
     });
 
@@ -137,11 +141,9 @@ describe('RecorderMouseAdapter', () => {
       await adapter.drag(from, to, duration);
 
       const dispatchCalls = mockEventDispatcher.dispatch.mock.calls;
-      
+
       // Filtrar apenas eventos de movimento
-      const moveEvents = dispatchCalls.filter((call: any) => 
-        call[0].data.action === 'move'
-      );
+      const moveEvents = dispatchCalls.filter((call: any) => call[0].data.action === 'move');
 
       // Deve ter pelo menos um evento de movimento
       expect(moveEvents.length).toBeGreaterThan(0);
@@ -161,10 +163,10 @@ describe('RecorderMouseAdapter', () => {
     test('returns a promise that resolves after timeout', async () => {
       // Acessar método privado através de any
       const delayPromise = adapter.delayMs(100);
-      
+
       expect(delayPromise).toBeInstanceOf(Promise);
       await expect(delayPromise).resolves.toBeUndefined();
-      
+
       // Verificar que setTimeout foi chamado
       expect(global.setTimeout).toHaveBeenCalledWith(expect.any(Function), 100);
     });
@@ -174,7 +176,7 @@ describe('RecorderMouseAdapter', () => {
     test('maps MouseButton enum to event button strings', () => {
       // Acessar propriedade privada através de any
       const buttonMap = adapter.eventButtonMap;
-      
+
       expect(buttonMap).toBeDefined();
       expect(buttonMap[MouseButton.LEFT]).toBe('left');
       expect(buttonMap[MouseButton.RIGHT]).toBe('right');
@@ -225,7 +227,7 @@ describe('RecorderMouseAdapter', () => {
 
       expect(mouse.pressButton).toHaveBeenCalled();
       expect(mouse.releaseButton).toHaveBeenCalled();
-      
+
       const dispatchCalls = mockEventDispatcher.dispatch.mock.calls;
       expect(dispatchCalls[0][0].cursorX).toBe(-50);
       expect(dispatchCalls[0][0].cursorY).toBe(-50);

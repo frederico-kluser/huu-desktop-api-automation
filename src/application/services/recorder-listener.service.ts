@@ -9,12 +9,12 @@ import { EventDispatcher } from './event-dispatcher.service.js';
 import { ScreenService } from './screen.service.js';
 import { logger } from '../../config/logger.js';
 import { recorderConfig } from '../../config/recorder.config.js';
-import type { 
-  RecordedEvent, 
-  MouseRecordedEvent, 
+import type {
+  RecordedEvent,
+  MouseRecordedEvent,
   KeyboardRecordedEvent,
   MouseButton,
-  IRecorderEventListener
+  IRecorderEventListener,
 } from '../../types/recorder-event.types.js';
 import type { InputEvent } from '../../types/input-event.types.js';
 
@@ -24,14 +24,14 @@ export class RecorderListenerService {
   private mouseState = new Map<MouseButton, boolean>();
   private lastMouseMoveTime = 0;
   private isDragging = false;
-  
+
   constructor(
     @inject(EventDispatcher) private eventDispatcher: EventDispatcher,
-    @inject('ScreenService') private screenService: ScreenService
+    @inject('ScreenService') private screenService: ScreenService,
   ) {
     this.setupEventListeners();
   }
-  
+
   /**
    * Adiciona um listener para eventos gravados
    */
@@ -39,7 +39,7 @@ export class RecorderListenerService {
     this.listeners.add(listener);
     logger.debug(`Recorder listener adicionado, total: ${this.listeners.size}`);
   }
-  
+
   /**
    * Remove um listener
    */
@@ -47,7 +47,7 @@ export class RecorderListenerService {
     this.listeners.delete(listener);
     logger.debug(`Recorder listener removido, total: ${this.listeners.size}`);
   }
-  
+
   /**
    * Configura os listeners internos
    */
@@ -56,11 +56,11 @@ export class RecorderListenerService {
     const listener = {
       onEvent: (event: InputEvent) => {
         this.handleInputEvent(event);
-      }
+      },
     };
     this.eventDispatcher.addListener(listener);
   }
-  
+
   /**
    * Processa eventos de input
    */
@@ -81,14 +81,14 @@ export class RecorderListenerService {
       logger.error('Erro ao processar evento de input:', error);
     }
   }
-  
+
   /**
    * Processa eventos de mouse
    */
   private async handleMouseEvent(event: InputEvent): Promise<void> {
     if (!('data' in event)) return;
     const data = event.data as any;
-    
+
     // Mapear ações do mouse
     if (data.action === 'click') {
       // Click é down + up, vamos processar apenas o down aqui
@@ -98,7 +98,7 @@ export class RecorderListenerService {
     } else if (data.action === 'release') {
       await this.emitMouseEvent('up', data.x, data.y, data.button);
       this.mouseState.set(data.button, false);
-      this.isDragging = Array.from(this.mouseState.values()).some(state => state);
+      this.isDragging = Array.from(this.mouseState.values()).some((state) => state);
     } else if (data.action === 'move' && this.isDragging) {
       // Throttle mouse move events
       const now = Date.now();
@@ -108,34 +108,34 @@ export class RecorderListenerService {
       }
     }
   }
-  
+
   /**
    * Processa eventos de teclado
    */
   private async handleKeyboardEvent(event: InputEvent): Promise<void> {
     if (!('data' in event)) return;
     const data = event.data as any;
-    
+
     // Emitir evento de teclado
     const recordedEvent: KeyboardRecordedEvent = {
       id: nanoid(),
       timestamp: Date.now(),
       type: 'keyboard',
       action: data.action as 'down' | 'up',
-      key: data.key
+      key: data.key,
     };
-    
+
     this.notifyListeners(recordedEvent);
   }
-  
+
   /**
    * Emite evento de mouse
    */
   private async emitMouseEvent(
-    action: 'down' | 'up' | 'move', 
-    x: number, 
-    y: number, 
-    button?: MouseButton
+    action: 'down' | 'up' | 'move',
+    x: number,
+    y: number,
+    button?: MouseButton,
   ): Promise<void> {
     const recordedEvent: MouseRecordedEvent = {
       id: nanoid(),
@@ -143,13 +143,13 @@ export class RecorderListenerService {
       type: 'mouse',
       action,
       x,
-      y
+      y,
     };
-    
+
     if (button) {
       recordedEvent.button = button;
     }
-    
+
     // Adicionar screenshot apenas em mouse down
     if (action === 'down' && recorderConfig.includeScreenshot) {
       try {
@@ -161,10 +161,10 @@ export class RecorderListenerService {
         logger.error('Erro ao capturar screenshot:', error);
       }
     }
-    
+
     this.notifyListeners(recordedEvent);
   }
-  
+
   /**
    * Captura screenshot da tela
    */
@@ -172,21 +172,21 @@ export class RecorderListenerService {
     try {
       // Capturar tela completa
       const base64 = await this.screenService.capture({ format: 'png' });
-      
+
       // Verificar tamanho
       const size = Buffer.from(base64, 'base64').length;
       if (size > recorderConfig.maxScreenshotSize) {
         logger.warn(`Screenshot muito grande (${size} bytes), ignorando`);
         return null;
       }
-      
+
       return base64;
     } catch (error) {
       logger.error('Falha ao capturar screenshot:', error);
       return null;
     }
   }
-  
+
   /**
    * Notifica todos os listeners
    */
@@ -199,7 +199,7 @@ export class RecorderListenerService {
       }
     }
   }
-  
+
   /**
    * Limpa recursos
    */

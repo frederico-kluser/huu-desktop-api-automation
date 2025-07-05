@@ -14,20 +14,9 @@ export default {
       },
     ],
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!(clipboardy)/)',
-  ],
-  testMatch: [
-    '**/__tests__/**/*.test.ts',
-    '**/tests/**/*.test.ts',
-    '**/tests/**/*.spec.ts',
-  ],
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/**/*.d.ts',
-    '!src/**/*.test.ts',
-    '!src/index.ts',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!(clipboardy)/)'],
+  testMatch: ['**/__tests__/**/*.test.ts', '**/tests/**/*.test.ts', '**/tests/**/*.spec.ts'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts', '!src/**/*.test.ts', '!src/index.ts'],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
   coverageThreshold: {

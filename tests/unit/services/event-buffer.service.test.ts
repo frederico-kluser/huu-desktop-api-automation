@@ -8,8 +8,8 @@ jest.mock('../../../src/config/logger', () => ({
     info: jest.fn(),
     debug: jest.fn(),
     error: jest.fn(),
-    warn: jest.fn()
-  }
+    warn: jest.fn(),
+  },
 }));
 
 describe('EventBuffer', () => {
@@ -20,7 +20,7 @@ describe('EventBuffer', () => {
     button: 'left',
     x: 100,
     y: 200,
-    ts: Date.now()
+    ts: Date.now(),
   };
 
   beforeEach(() => {
@@ -59,7 +59,7 @@ describe('EventBuffer', () => {
       for (let i = 0; i < 10; i++) {
         eventBuffer.add({
           ...mockEvent,
-          id: `test-id-${i}`
+          id: `test-id-${i}`,
         });
       }
       expect(eventBuffer.getSize()).toBe(5); // Limitado ao maxSize
@@ -73,7 +73,7 @@ describe('EventBuffer', () => {
         eventBuffer.add({
           ...mockEvent,
           id: `test-id-${i}`,
-          ts: Date.now() + i
+          ts: Date.now() + i,
         });
       }
     });
@@ -118,7 +118,7 @@ describe('EventBuffer', () => {
       for (let i = 0; i < 7; i++) {
         eventBuffer.add({
           ...mockEvent,
-          id: `test-id-${i}`
+          id: `test-id-${i}`,
         });
       }
       const events = eventBuffer.getAllEvents();
@@ -137,7 +137,7 @@ describe('EventBuffer', () => {
         eventBuffer.add({
           ...mockEvent,
           id: `test-id-${i}`,
-          ts: baseTime + (i * 1000)
+          ts: baseTime + i * 1000,
         });
       }
     });
@@ -164,7 +164,7 @@ describe('EventBuffer', () => {
       eventBuffer.add(mockEvent);
       eventBuffer.add({ ...mockEvent, id: 'test-id-2' });
       expect(eventBuffer.getSize()).toBe(2);
-      
+
       eventBuffer.clear();
       expect(eventBuffer.getSize()).toBe(0);
       expect(eventBuffer.getAllEvents()).toHaveLength(0);
@@ -194,7 +194,7 @@ describe('EventBuffer', () => {
       for (let i = 0; i < 7; i++) {
         eventBuffer.add({
           ...mockEvent,
-          id: `test-id-${i}`
+          id: `test-id-${i}`,
         });
       }
       expect(eventBuffer.getLastEventId()).toBe('test-id-6');
@@ -216,19 +216,19 @@ describe('EventBuffer', () => {
     it('should remove events older than maxAge', () => {
       // Adiciona eventos em momentos diferentes
       eventBuffer.add({ ...mockEvent, id: 'old-1' });
-      
+
       jest.advanceTimersByTime(5000);
       eventBuffer.add({ ...mockEvent, id: 'old-2' });
-      
+
       jest.advanceTimersByTime(5000);
       eventBuffer.add({ ...mockEvent, id: 'recent-1' });
-      
+
       // Remove eventos mais antigos que 8 segundos
       const removed = eventBuffer.pruneOldEvents(8000);
-      
+
       expect(removed).toBe(1);
       expect(eventBuffer.getSize()).toBe(2);
-      
+
       const remainingEvents = eventBuffer.getAllEvents();
       expect(remainingEvents[0].id).toBe('old-2');
       expect(remainingEvents[1].id).toBe('recent-1');
@@ -249,9 +249,9 @@ describe('EventBuffer', () => {
     it('should remove all events when all are old', () => {
       eventBuffer.add({ ...mockEvent, id: 'old-1' });
       eventBuffer.add({ ...mockEvent, id: 'old-2' });
-      
+
       jest.advanceTimersByTime(10000);
-      
+
       const removed = eventBuffer.pruneOldEvents(5000);
       expect(removed).toBe(2);
       expect(eventBuffer.getSize()).toBe(0);
@@ -263,7 +263,7 @@ describe('EventBuffer', () => {
       // Força uma situação com entrada undefined
       eventBuffer.add(mockEvent);
       eventBuffer['buffer'][0] = undefined as any;
-      
+
       const events = eventBuffer.getAllEvents();
       expect(events).toHaveLength(0);
     });

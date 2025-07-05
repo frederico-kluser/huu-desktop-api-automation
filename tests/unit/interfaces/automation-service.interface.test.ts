@@ -12,7 +12,7 @@ describe('IAutomationService', () => {
     class TestAutomationService implements IAutomationService {
       // Interface vazia permite qualquer implementação
     }
-    
+
     const instance = new TestAutomationService();
     expect(instance).toBeInstanceOf(TestAutomationService);
   });
@@ -21,10 +21,10 @@ describe('IAutomationService', () => {
     // Múltiplas implementações da interface
     class ServiceA implements IAutomationService {}
     class ServiceB implements IAutomationService {}
-    
+
     const serviceA = new ServiceA();
     const serviceB = new ServiceB();
-    
+
     expect(serviceA).toBeInstanceOf(ServiceA);
     expect(serviceB).toBeInstanceOf(ServiceB);
   });
@@ -34,7 +34,7 @@ describe('IAutomationService', () => {
     function acceptsAutomationService(service: IAutomationService): boolean {
       return service !== null && service !== undefined;
     }
-    
+
     const mockService: IAutomationService = {};
     expect(acceptsAutomationService(mockService)).toBe(true);
   });

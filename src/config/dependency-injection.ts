@@ -52,12 +52,12 @@ export function configureDependencies(): void {
   container.register(InputEventsController, {
     useClass: InputEventsController,
   });
-  
+
   // Registrar RecorderListenerService
   container.register(RecorderListenerService, {
     useClass: RecorderListenerService,
   });
-  
+
   // Registrar RecorderController
   container.register(RecorderController, {
     useClass: RecorderController,

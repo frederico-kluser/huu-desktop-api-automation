@@ -23,9 +23,9 @@ describe('environment', () => {
     delete process.env.MOUSE_SPEED;
     delete process.env.SCREEN_CONFIDENCE;
     delete process.env.API_KEY;
-    
+
     const { environment, isDevelopment, isProduction } = require('../../../src/config/environment');
-    
+
     expect(environment.nodeEnv).toBe('development');
     expect(environment.port).toBe(3000);
     expect(environment.host).toBe('0.0.0.0');
@@ -47,7 +47,7 @@ describe('environment', () => {
     process.env.API_KEY = 'custom-key';
 
     const { environment, isDevelopment, isProduction } = require('../../../src/config/environment');
-    
+
     expect(environment.nodeEnv).toBe('production');
     expect(environment.port).toBe(8080);
     expect(environment.host).toBe('localhost');
@@ -64,7 +64,7 @@ describe('environment', () => {
     process.env.MOUSE_SPEED = 'not-a-number';
 
     const { environment } = require('../../../src/config/environment');
-    
+
     expect(environment.port).toBe(NaN);
     expect(environment.mouseSpeed).toBe(NaN);
   });
@@ -73,33 +73,33 @@ describe('environment', () => {
     process.env.SCREEN_CONFIDENCE = 'invalid-float';
 
     const { environment } = require('../../../src/config/environment');
-    
+
     expect(environment.screenConfidence).toBe(NaN);
   });
 
   test('isDevelopment is true when NODE_ENV is development', () => {
     process.env.NODE_ENV = 'development';
-    
+
     const { isDevelopment, isProduction } = require('../../../src/config/environment');
-    
+
     expect(isDevelopment).toBe(true);
     expect(isProduction).toBe(false);
   });
 
   test('isProduction is true when NODE_ENV is production', () => {
     process.env.NODE_ENV = 'production';
-    
+
     const { isDevelopment, isProduction } = require('../../../src/config/environment');
-    
+
     expect(isDevelopment).toBe(false);
     expect(isProduction).toBe(true);
   });
 
   test('both flags are false for other NODE_ENV values', () => {
     process.env.NODE_ENV = 'test';
-    
+
     const { isDevelopment, isProduction } = require('../../../src/config/environment');
-    
+
     expect(isDevelopment).toBe(false);
     expect(isProduction).toBe(false);
   });
@@ -107,7 +107,7 @@ describe('environment', () => {
   test('dotenv config is called', () => {
     const dotenv = require('dotenv');
     require('../../../src/config/environment');
-    
+
     expect(dotenv.config).toHaveBeenCalled();
   });
 });

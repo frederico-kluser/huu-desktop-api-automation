@@ -29,7 +29,9 @@ export class ClipboardService implements IAutomationService {
 
       const contentSize = Buffer.byteLength(content, 'utf8');
       if (contentSize > this.MAX_CONTENT_SIZE) {
-        throw new Error(`Content size ${contentSize} bytes exceeds maximum of ${this.MAX_CONTENT_SIZE} bytes (1 MB)`);
+        throw new Error(
+          `Content size ${contentSize} bytes exceeds maximum of ${this.MAX_CONTENT_SIZE} bytes (1 MB)`,
+        );
       }
 
       // Copia para clipboard
@@ -39,14 +41,14 @@ export class ClipboardService implements IAutomationService {
         success: true,
         data: {
           contentLength: content.length,
-          sizeBytes: contentSize
-        }
+          sizeBytes: contentSize,
+        },
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       return {
         success: false,
-        error: `Clipboard copy error: ${message}`
+        error: `Clipboard copy error: ${message}`,
       };
     }
   }
@@ -66,8 +68,8 @@ export class ClipboardService implements IAutomationService {
           data: {
             content: '',
             isEmpty: true,
-            contentLength: 0
-          }
+            contentLength: 0,
+          },
         };
       }
 
@@ -76,14 +78,14 @@ export class ClipboardService implements IAutomationService {
         data: {
           content,
           isEmpty: false,
-          contentLength: content.length
-        }
+          contentLength: content.length,
+        },
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       return {
         success: false,
-        error: `Clipboard paste error: ${message}`
+        error: `Clipboard paste error: ${message}`,
       };
     }
   }
@@ -95,18 +97,18 @@ export class ClipboardService implements IAutomationService {
   async clear(): Promise<CommandResult> {
     try {
       await clipboardy.write('');
-      
+
       return {
         success: true,
         data: {
-          cleared: true
-        }
+          cleared: true,
+        },
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       return {
         success: false,
-        error: `Clipboard clear error: ${message}`
+        error: `Clipboard clear error: ${message}`,
       };
     }
   }

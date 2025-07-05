@@ -56,7 +56,7 @@ describe('dependency-injection', () => {
   test('configureDependencies registers all dependencies', () => {
     // Usar require após todos os mocks
     const { configureDependencies } = require('../../../src/config/dependency-injection');
-    
+
     // Executar configuração
     configureDependencies();
 
@@ -93,7 +93,7 @@ describe('dependency-injection', () => {
     expect(mockContainer.register).toHaveBeenCalledWith(expect.any(Function), {
       useClass: expect.any(Function),
     });
-    
+
     // Total de chamadas register
     expect(mockContainer.register).toHaveBeenCalledTimes(10);
   });
@@ -114,13 +114,13 @@ describe('dependency-injection', () => {
 
     // Verificar algumas chamadas específicas
     const registerCalls = mockContainer.register.mock.calls;
-    
+
     // Encontrar chamadas específicas
-    const mouseAdapterCall = registerCalls.find(call => call[0] === 'MouseAdapter');
+    const mouseAdapterCall = registerCalls.find((call) => call[0] === 'MouseAdapter');
     expect(mouseAdapterCall).toBeDefined();
     expect(mouseAdapterCall[1]).toHaveProperty('useClass');
 
-    const keyboardServiceCall = registerCalls.find(call => call[0] === 'KeyboardService');
+    const keyboardServiceCall = registerCalls.find((call) => call[0] === 'KeyboardService');
     expect(keyboardServiceCall).toBeDefined();
     expect(keyboardServiceCall[1]).toHaveProperty('useClass');
   });

@@ -30,9 +30,19 @@ describe('automation-request.dto coverage', () => {
       { schema: mouseScrollSchema, data: { direction: 'up' } },
       { schema: mouseScrollSchema, data: { direction: 'down', amount: 5, smooth: false } },
       { schema: screenFindSchema, data: { template: 'test.png' } },
-      { schema: screenFindSchema, data: { template: 'test.png', confidence: 0.9, region: { x: 0, y: 0, width: 100, height: 100 } } },
+      {
+        schema: screenFindSchema,
+        data: {
+          template: 'test.png',
+          confidence: 0.9,
+          region: { x: 0, y: 0, width: 100, height: 100 },
+        },
+      },
       { schema: screenCaptureSchema, data: {} },
-      { schema: screenCaptureSchema, data: { format: 'jpg', region: { x: 10, y: 10, width: 200, height: 200 } } },
+      {
+        schema: screenCaptureSchema,
+        data: { format: 'jpg', region: { x: 10, y: 10, width: 200, height: 200 } },
+      },
     ];
 
     schemas.forEach(({ schema, data }) => {
@@ -58,7 +68,10 @@ describe('automation-request.dto coverage', () => {
       { schema: screenFindSchema, data: { template: '' } },
       { schema: screenFindSchema, data: { template: 'test', confidence: -0.1 } },
       { schema: screenFindSchema, data: { template: 'test', confidence: 1.1 } },
-      { schema: screenFindSchema, data: { template: 'test', region: { x: 0, y: 0, width: 0, height: 1 } } },
+      {
+        schema: screenFindSchema,
+        data: { template: 'test', region: { x: 0, y: 0, width: 0, height: 1 } },
+      },
       { schema: screenCaptureSchema, data: { format: 'invalid' } },
     ];
 
@@ -67,7 +80,7 @@ describe('automation-request.dto coverage', () => {
     });
   });
 
-  // Testa os tipos TypeScript exportados  
+  // Testa os tipos TypeScript exportados
   test('type inference works correctly', () => {
     // Os tipos inferidos incluem os valores default
     const moveResult = mouseMoveSchema.parse({ x: 0, y: 0 });
@@ -149,7 +162,9 @@ describe('automation-request.dto coverage', () => {
   test('numeric boundaries are validated correctly', () => {
     // Point schema
     expect(() => pointSchema.parse({ x: 0, y: 0 })).not.toThrow();
-    expect(() => pointSchema.parse({ x: Number.MAX_SAFE_INTEGER, y: Number.MAX_SAFE_INTEGER })).not.toThrow();
+    expect(() =>
+      pointSchema.parse({ x: Number.MAX_SAFE_INTEGER, y: Number.MAX_SAFE_INTEGER }),
+    ).not.toThrow();
 
     // Duration boundaries
     expect(() => mouseMoveSchema.parse({ x: 0, y: 0, duration: 100 })).not.toThrow();
@@ -164,7 +179,9 @@ describe('automation-request.dto coverage', () => {
     expect(() => screenFindSchema.parse({ template: 'test', confidence: 1 })).not.toThrow();
 
     // Region boundaries
-    expect(() => screenCaptureSchema.parse({ region: { x: 0, y: 0, width: 1, height: 1 } })).not.toThrow();
+    expect(() =>
+      screenCaptureSchema.parse({ region: { x: 0, y: 0, width: 1, height: 1 } }),
+    ).not.toThrow();
   });
 
   // Testa dados inválidos adicionais para máxima cobertura
@@ -180,6 +197,8 @@ describe('automation-request.dto coverage', () => {
 
     // Region com valores faltando
     expect(() => screenFindSchema.parse({ template: 'test', region: { x: 0 } })).toThrow();
-    expect(() => screenFindSchema.parse({ template: 'test', region: { x: 0, y: 0, width: 1 } })).toThrow();
+    expect(() =>
+      screenFindSchema.parse({ template: 'test', region: { x: 0, y: 0, width: 1 } }),
+    ).toThrow();
   });
 });

@@ -1,14 +1,14 @@
 // Mock de dependências
 jest.mock('../../../src/config/dependency-injection', () => ({
   container: {
-    resolve: jest.fn()
-  }
+    resolve: jest.fn(),
+  },
 }));
 
 // Mock do controller
 const mockController = {
   streamEvents: jest.fn(),
-  getStats: jest.fn()
+  getStats: jest.fn(),
 };
 
 // Imports após mocks
@@ -20,10 +20,10 @@ describe('recorderRoutes', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Mock do Fastify instance
     mockFastify = {
-      get: jest.fn()
+      get: jest.fn(),
     };
 
     // Container retorna o controller mockado
@@ -46,10 +46,10 @@ describe('recorderRoutes', () => {
       expect.objectContaining({
         schema: expect.objectContaining({
           description: 'Inicia streaming de eventos de mouse e teclado',
-          tags: ['recorder']
+          tags: ['recorder'],
         }),
-        handler: expect.any(Function)
-      })
+        handler: expect.any(Function),
+      }),
     );
 
     // Verifica rota /recorder/stats
@@ -58,10 +58,10 @@ describe('recorderRoutes', () => {
       expect.objectContaining({
         schema: expect.objectContaining({
           description: 'Retorna estatísticas do recorder',
-          tags: ['recorder']
+          tags: ['recorder'],
         }),
-        handler: expect.any(Function)
-      })
+        handler: expect.any(Function),
+      }),
     );
   });
 
@@ -89,7 +89,7 @@ describe('recorderRoutes', () => {
     expect(streamSchema.response[200]).toEqual({
       description: 'Stream SSE iniciado',
       type: 'string',
-      contentType: 'text/event-stream'
+      contentType: 'text/event-stream',
     });
 
     // Verifica schema da rota stats
@@ -98,8 +98,8 @@ describe('recorderRoutes', () => {
       type: 'object',
       properties: {
         success: { type: 'boolean' },
-        data: expect.any(Object)
-      }
+        data: expect.any(Object),
+      },
     });
   });
 
@@ -107,15 +107,21 @@ describe('recorderRoutes', () => {
     await recorderRoutes(mockFastify);
 
     const statsSchema = mockFastify.get.mock.calls[1][1].schema.response[200];
-    
+
     // Verifica estrutura completa do schema
     expect(statsSchema.properties.data.properties).toHaveProperty('activeConnections');
     expect(statsSchema.properties.data.properties).toHaveProperty('config');
     expect(statsSchema.properties.data.properties).toHaveProperty('timestamp');
-    
+
     // Verifica propriedades do config
-    expect(statsSchema.properties.data.properties.config.properties).toHaveProperty('includeScreenshot');
-    expect(statsSchema.properties.data.properties.config.properties).toHaveProperty('moveIntervalMs');
-    expect(statsSchema.properties.data.properties.config.properties).toHaveProperty('maxScreenshotSize');
+    expect(statsSchema.properties.data.properties.config.properties).toHaveProperty(
+      'includeScreenshot',
+    );
+    expect(statsSchema.properties.data.properties.config.properties).toHaveProperty(
+      'moveIntervalMs',
+    );
+    expect(statsSchema.properties.data.properties.config.properties).toHaveProperty(
+      'maxScreenshotSize',
+    );
   });
 });

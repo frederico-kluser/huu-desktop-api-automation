@@ -15,10 +15,6 @@
     },
     "projectLanguage": "js",
     "ignoreTestFiles": true,
-    "testFilePatterns": [
-      "*.test.*",
-      "*.spec.*",
-      "__tests__/**"
-    ]
+    "testFilePatterns": ["*.test.*", "*.spec.*", "__tests__/**"]
   }
 }

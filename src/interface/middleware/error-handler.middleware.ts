@@ -8,7 +8,7 @@ export class DomainError extends Error {
   constructor(
     message: string,
     public readonly code: string,
-    public readonly statusCode: number = 400
+    public readonly statusCode: number = 400,
   ) {
     super(message);
     this.name = 'DomainError';
@@ -100,7 +100,7 @@ export async function errorHandler(
   // Erros com status code específico
   if ('statusCode' in error && error.statusCode) {
     const statusCode = error.statusCode as number;
-    
+
     // Mapeamento de códigos HTTP para códigos de erro
     const errorCodes: Record<number, string> = {
       400: 'BAD_REQUEST',

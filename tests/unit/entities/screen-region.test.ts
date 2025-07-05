@@ -3,7 +3,7 @@ import 'reflect-metadata';
 // Usando dynamic import para contornar o problema de ESM
 describe('screen-region coverage', () => {
   let ScreenRegion: any;
-  
+
   beforeAll(async () => {
     const module = await import('../../../src/domain/entities/screen-region.js');
     ScreenRegion = module.ScreenRegion;
@@ -22,27 +22,27 @@ describe('screen-region coverage', () => {
   describe('contains method', () => {
     test('all contains cases', () => {
       const region = new ScreenRegion(10, 20, 100, 200);
-      
+
       const testCases = [
         // Casos dentro da região
-        [10, 20, true],         // Canto superior esquerdo
-        [110, 220, true],       // Canto inferior direito
-        [60, 120, true],        // Centro
-        [10, 120, true],        // Borda esquerda
-        [110, 120, true],       // Borda direita
-        [60, 20, true],         // Borda superior
-        [60, 220, true],        // Borda inferior
+        [10, 20, true], // Canto superior esquerdo
+        [110, 220, true], // Canto inferior direito
+        [60, 120, true], // Centro
+        [10, 120, true], // Borda esquerda
+        [110, 120, true], // Borda direita
+        [60, 20, true], // Borda superior
+        [60, 220, true], // Borda inferior
         // Casos fora da região
-        [9, 20, false],         // Esquerda
-        [111, 120, false],      // Direita
-        [60, 19, false],        // Acima
-        [60, 221, false],       // Abaixo
-        [9, 19, false],         // Diagonal superior esquerda
-        [111, 221, false],      // Diagonal inferior direita
-        [0, 0, false],          // Origem
-        [-10, -20, false],      // Negativos
+        [9, 20, false], // Esquerda
+        [111, 120, false], // Direita
+        [60, 19, false], // Acima
+        [60, 221, false], // Abaixo
+        [9, 19, false], // Diagonal superior esquerda
+        [111, 221, false], // Diagonal inferior direita
+        [0, 0, false], // Origem
+        [-10, -20, false], // Negativos
       ];
-      
+
       testCases.forEach(([x, y, expected]) => {
         expect(region.contains(x, y)).toBe(expected);
       });
@@ -73,7 +73,7 @@ describe('screen-region coverage', () => {
       { x: -10, y: -20, width: 30, height: 40, confidence: 0.5 },
     ];
 
-    matchResults.forEach(match => {
+    matchResults.forEach((match) => {
       const region = ScreenRegion.fromMatch(match);
       expect(region).toBeInstanceOf(ScreenRegion);
       expect(region.x).toBe(match.x);

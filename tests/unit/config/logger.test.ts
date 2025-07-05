@@ -34,12 +34,12 @@ describe('logger', () => {
   test('creates logger with default configuration', () => {
     const pino = require('pino');
     const { logger } = require('../../../src/config/logger');
-    
+
     expect(pino.default).toHaveBeenCalledWith({
       level: 'info',
       transport: undefined,
     });
-    
+
     expect(logger).toBeDefined();
     expect(logger.info).toBeDefined();
     expect(logger.error).toBeDefined();
@@ -53,10 +53,10 @@ describe('logger', () => {
         nodeEnv: 'development',
       },
     }));
-    
+
     const pino = require('pino');
     const { logger } = require('../../../src/config/logger');
-    
+
     expect(pino.default).toHaveBeenCalledWith({
       level: 'debug',
       transport: {
@@ -77,10 +77,10 @@ describe('logger', () => {
         nodeEnv: 'production',
       },
     }));
-    
+
     const pino = require('pino');
     const { logger } = require('../../../src/config/logger');
-    
+
     expect(pino.default).toHaveBeenCalledWith({
       level: 'info',
       transport: undefined,
@@ -94,10 +94,10 @@ describe('logger', () => {
         nodeEnv: 'production',
       },
     }));
-    
+
     const pino = require('pino');
     const { logger } = require('../../../src/config/logger');
-    
+
     expect(pino.default).toHaveBeenCalledWith({
       level: 'warn',
       transport: undefined,

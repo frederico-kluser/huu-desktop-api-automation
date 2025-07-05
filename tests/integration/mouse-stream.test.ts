@@ -43,7 +43,7 @@ describe('Mouse Position Stream Endpoint', () => {
 
     // Criar instância do Fastify
     app = Fastify({ logger: false });
-    
+
     // Registrar rotas
     const controller = new AutomationController();
     controller.registerRoutes(app);
@@ -137,16 +137,16 @@ describe('Mouse Position Stream Endpoint', () => {
         // Após receber eventos suficientes, verificar e encerrar
         if (receivedData.length >= expectedMinEvents) {
           eventSource.close();
-          
+
           // Verificar que recebemos posições diferentes
           expect(receivedData[0].x).toBe(100);
           expect(receivedData[0].y).toBe(100);
           expect(receivedData[1].x).toBe(150);
           expect(receivedData[1].y).toBe(150);
-          
+
           // Verificar que getPosition foi chamado múltiplas vezes
           expect(mockMouseAdapter.getPosition).toHaveBeenCalledTimes(receivedData.length);
-          
+
           done();
         }
       };
@@ -167,15 +167,15 @@ describe('Mouse Position Stream Endpoint', () => {
 
       eventSource.onmessage = () => {
         eventCount++;
-        
+
         // Fechar após primeiro evento
         if (eventCount === 1) {
           eventSource.close();
-          
+
           // Aguardar um pouco e verificar que não há mais chamadas
           setTimeout(() => {
             const callsAfterFirstEvent = mockMouseAdapter.getPosition.mock.calls.length;
-            
+
             setTimeout(() => {
               // Verificar que não houve novas chamadas
               expect(mockMouseAdapter.getPosition).toHaveBeenCalledTimes(callsAfterFirstEvent);
@@ -207,18 +207,18 @@ describe('Mouse Position Stream Endpoint', () => {
         receivedEvents.push(JSON.parse(event.data));
 
         const elapsedTime = Date.now() - startTime;
-        
+
         // Após 1 segundo, verificar número de eventos
         if (elapsedTime >= 1000) {
           eventSource.close();
-          
+
           expect(receivedEvents.length).toBeGreaterThanOrEqual(minExpectedEvents);
-          
+
           // Verificar que os timestamps estão em ordem crescente
           for (let i = 1; i < receivedEvents.length; i++) {
             expect(receivedEvents[i].timestamp).toBeGreaterThan(receivedEvents[i - 1].timestamp);
           }
-          
+
           done();
         }
       };

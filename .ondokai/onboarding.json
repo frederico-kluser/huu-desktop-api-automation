@@ -57,11 +57,7 @@
     ]
   },
   "technical_stack": {
-    "primary_language": [
-      "TypeScript 5.x",
-      "Node.js 18+",
-      "JavaScript (ESM)"
-    ],
+    "primary_language": ["TypeScript 5.x", "Node.js 18+", "JavaScript (ESM)"],
     "frameworks": [
       "Fastify 4.x",
       "Jest 29.x",
@@ -72,9 +68,7 @@
       "NutJS 2.x",
       "Pino Logger"
     ],
-    "databases": [
-      "None"
-    ],
+    "databases": ["None"],
     "external_services": [
       "Server-Sent Events (SSE) for streaming",
       "NutJS",
@@ -84,10 +78,7 @@
       "dotenv (environment variable management)",
       "Local REST API at http://localhost:3000"
     ],
-    "package_manager": [
-      "npm",
-      "yarn"
-    ]
+    "package_manager": ["npm", "yarn"]
   },
   "architecture_patterns": {
     "design_pattern": [
@@ -189,10 +180,7 @@
     ]
   },
   "testing_strategy": {
-    "test_framework": [
-      "Jest 29.x",
-      "ts-jest"
-    ],
+    "test_framework": ["Jest 29.x", "ts-jest"],
     "test_structure": [
       "tests/unit for unit tests",
       "tests/integration for integration tests",
@@ -215,12 +203,8 @@
     ]
   },
   "development_workflow": {
-    "branch_strategy": [
-      "GitHub Flow with feature, main, and hotfix branches"
-    ],
-    "commit_conventions": [
-      "Conventional Commits"
-    ],
+    "branch_strategy": ["GitHub Flow with feature, main, and hotfix branches"],
+    "commit_conventions": ["Conventional Commits"],
     "pr_requirements": [
       "Mandatory code review",
       "Automated lint and test checks must pass",
@@ -234,32 +218,13 @@
     ]
   },
   "commands": {
-    "setup": [
-      "npm install",
-      "cp .env.example .env"
-    ],
-    "install": [
-      "npm install"
-    ],
-    "dev": [
-      "npm run dev",
-      "tsc --watch"
-    ],
-    "test": [
-      "npm test",
-      "npx jest --coverage"
-    ],
-    "build": [
-      "npm run build"
-    ],
-    "lint": [
-      "npm run lint",
-      "eslint . --ext .ts,.tsx"
-    ],
-    "format": [
-      "npm run format",
-      "prettier --write ."
-    ]
+    "setup": ["npm install", "cp .env.example .env"],
+    "install": ["npm install"],
+    "dev": ["npm run dev", "tsc --watch"],
+    "test": ["npm test", "npx jest --coverage"],
+    "build": ["npm run build"],
+    "lint": ["npm run lint", "eslint . --ext .ts,.tsx"],
+    "format": ["npm run format", "prettier --write ."]
   },
   "security_constraints": {
     "authentication_method": [
@@ -367,9 +332,7 @@
       "ts-jest",
       "Node.js"
     ],
-    "deprecated_packages": [
-      "None"
-    ],
+    "deprecated_packages": ["None"],
     "version_constraints": [
       "TypeScript >=5.0",
       "Node.js >=18",
@@ -465,13 +428,8 @@
     ]
   },
   "api_specifications": {
-    "api_style": [
-      "RESTful API with versioned endpoints (api/v1)",
-      "REST with streaming SSE"
-    ],
-    "versioning_strategy": [
-      "Versioning via URL (e.g., /api/v1)"
-    ],
+    "api_style": ["RESTful API with versioned endpoints (api/v1)", "REST with streaming SSE"],
+    "versioning_strategy": ["Versioning via URL (e.g., /api/v1)"],
     "response_formats": [
       "JSON for standard responses",
       "text/event-stream for SSE",

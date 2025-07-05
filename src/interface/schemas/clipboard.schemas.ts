@@ -15,11 +15,11 @@ export const clipboardCopyJsonSchema: JSONSchema7 = {
     content: {
       type: 'string',
       minLength: 1,
-      description: 'Content to copy to clipboard (max 1 MB)'
-    }
+      description: 'Content to copy to clipboard (max 1 MB)',
+    },
   },
   required: ['content'],
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 /**
@@ -29,7 +29,7 @@ export const clipboardPasteJsonSchema: JSONSchema7 = {
   $schema: 'http://json-schema.org/draft-07/schema#',
   type: 'object',
   properties: {},
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 /**
@@ -39,5 +39,5 @@ export const clipboardClearJsonSchema: JSONSchema7 = {
   $schema: 'http://json-schema.org/draft-07/schema#',
   type: 'object',
   properties: {},
-  additionalProperties: false
+  additionalProperties: false,
 };
