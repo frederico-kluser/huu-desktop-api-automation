@@ -5,6 +5,7 @@ jest.mock('reflect-metadata', () => ({}));
 const mockContainer = {
   register: jest.fn(),
   registerSingleton: jest.fn(),
+  registerInstance: jest.fn(),
 };
 jest.mock('tsyringe', () => ({
   container: mockContainer,
@@ -54,6 +55,15 @@ jest.mock('../../../src/application/services/llm.service', () => ({
 }));
 jest.mock('../../../src/infrastructure/adapters/langchain/langchain-llm.adapter', () => ({
   LangChainLLMAdapter: class MockLangChainLLMAdapter {},
+}));
+jest.mock('../../../src/application/factory/output-parser.factory', () => ({
+  OutputParserFactory: {
+    getInstance: jest.fn().mockReturnValue({
+      getStrategy: jest.fn(),
+      registerStrategy: jest.fn(),
+      cleanup: jest.fn(),
+    }),
+  },
 }));
 
 describe('dependency-injection', () => {

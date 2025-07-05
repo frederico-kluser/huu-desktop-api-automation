@@ -1301,6 +1301,164 @@
               "body": "{\n  \"success\": false,\n  \"error\": \"Unauthorized\"\n}"
             }
           ]
+        },
+        {
+          "name": "Generate Completion with Custom Output Format",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has structured data', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('success', true);",
+                  "    pm.expect(jsonData).to.have.property('data');",
+                  "    pm.expect(jsonData.data).to.have.property('summary');",
+                  "    pm.expect(jsonData.data).to.have.property('benefits');",
+                  "    pm.expect(jsonData.data).to.have.property('rating');",
+                  "    pm.expect(jsonData.data.benefits).to.be.an('array');",
+                  "    pm.expect(jsonData.data.rating).to.be.a('number');",
+                  "});",
+                  "",
+                  "pm.test('Output format is correctly applied', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.rating).to.be.within(1, 10);",
+                  "    pm.expect(jsonData.data.benefits).to.have.lengthOf.at.least(1);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Analyze the benefits of desktop automation tools like NutJS for software development teams.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"You are a technical analyst. Provide structured analysis in the exact JSON format requested.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"summary\": {\n        \"type\": \"string\",\n        \"description\": \"Brief summary of desktop automation benefits\"\n      },\n      \"benefits\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"description\": \"List of specific benefits\"\n      },\n      \"rating\": {\n        \"type\": \"number\",\n        \"description\": \"Overall usefulness rating from 1-10\"\n      },\n      \"recommendation\": {\n        \"type\": \"string\",\n        \"description\": \"Recommendation for implementation\"\n      }\n    },\n    \"required\": [\"summary\", \"benefits\", \"rating\"],\n    \"additionalProperties\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success - Structured Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Analyze the benefits of desktop automation tools like NutJS for software development teams.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"You are a technical analyst. Provide structured analysis in the exact JSON format requested.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"summary\": {\n        \"type\": \"string\",\n        \"description\": \"Brief summary of desktop automation benefits\"\n      },\n      \"benefits\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"description\": \"List of specific benefits\"\n      },\n      \"rating\": {\n        \"type\": \"number\",\n        \"description\": \"Overall usefulness rating from 1-10\"\n      },\n      \"recommendation\": {\n        \"type\": \"string\",\n        \"description\": \"Recommendation for implementation\"\n      }\n    },\n    \"required\": [\"summary\", \"benefits\", \"rating\"],\n    \"additionalProperties\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/llm",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "llm"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"summary\": \"Desktop automation tools like NutJS provide significant productivity gains for development teams by automating repetitive UI testing and interaction tasks across multiple platforms.\",\n    \"benefits\": [\n      \"Automated UI testing without manual intervention\",\n      \"Cross-platform compatibility (Windows, macOS, Linux)\",\n      \"Reduced testing time and human error\",\n      \"Consistent test execution across environments\",\n      \"Integration with CI/CD pipelines\",\n      \"Screen capture and image recognition capabilities\",\n      \"Programmatic control of mouse and keyboard\"\n    ],\n    \"rating\": 8,\n    \"recommendation\": \"Highly recommended for teams with significant UI testing requirements or complex desktop application workflows.\"\n  },\n  \"metadata\": {\n    \"model\": \"gpt-4\",\n    \"finishReason\": \"stop\",\n    \"tokensUsed\": 167,\n    \"processingTime\": 1703875200000\n  }\n}"
+            },
+            {
+              "name": "Error - Invalid Output Format",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Hello world\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"outputFormat\": {\n    \"type\": \"invalid-type\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/llm",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "llm"]
+                }
+              },
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": \"Invalid request body\",\n  \"details\": {\n    \"field\": \"outputFormat.type\",\n    \"message\": \"Invalid enum value. Expected 'object' | 'array' | 'string' | 'number' | 'boolean', received 'invalid-type'\"\n  }\n}"
+            },
+            {
+              "name": "Error - Schema Too Large",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Generate data\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"data\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/llm",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "llm"]
+                }
+              },
+              "status": "Payload Too Large",
+              "code": 413,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": \"Output format muito grande: 15000 bytes (máximo: 10240)\",\n  \"code\": \"SCHEMA_TOO_LARGE\"\n}"
+            }
+          ]
         }
       ]
     }

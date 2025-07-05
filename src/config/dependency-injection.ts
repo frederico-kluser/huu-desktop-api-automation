@@ -14,6 +14,7 @@ import { EventBuffer } from '../application/services/event-buffer.service.js';
 import { InputEventsController } from '../interface/controllers/input-events.controller.js';
 import { RecorderListenerService } from '../application/services/recorder-listener.service.js';
 import { RecorderController } from '../interface/controllers/recorder.controller.js';
+import { OutputParserFactory } from '../application/factory/output-parser.factory.js';
 
 export function configureDependencies(): void {
   container.register('MouseAdapter', {
@@ -51,6 +52,9 @@ export function configureDependencies(): void {
   container.register('LLMService', {
     useClass: LLMService,
   });
+
+  // Registrar OutputParserFactory como singleton
+  container.registerInstance('OutputParserFactory', OutputParserFactory.getInstance());
 
   // Registrar EventDispatcher como singleton
   container.registerSingleton(EventDispatcher);
