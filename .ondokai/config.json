@@ -13,6 +13,12 @@
       "maxSizeMb": 50,
       "cleanupOnFinish": true
     },
-    "projectLanguage": "js"
+    "projectLanguage": "js",
+    "ignoreTestFiles": true,
+    "testFilePatterns": [
+      "*.test.*",
+      "*.spec.*",
+      "__tests__/**"
+    ]
   }
 }
