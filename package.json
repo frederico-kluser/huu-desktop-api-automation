@@ -1,6 +1,6 @@
 {
   "name": "nutjs-rest-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "REST API wrapper for NutJS desktop automation",
   "main": "dist/index.js",
