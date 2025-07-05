@@ -2,7 +2,7 @@
  * Rotas para streaming de eventos de input via SSE
  */
 
-import { type FastifyInstance, type FastifyRequest } from 'fastify';
+import { type FastifyInstance, type FastifyRequest, type FastifyPluginOptions } from 'fastify';
 import { container } from '../config/dependency-injection.js';
 import { InputEventsController } from '../interface/controllers/input-events.controller.js';
 
@@ -39,8 +39,14 @@ const StandardResponseSchema = {
 /**
  * Registra as rotas de eventos de input
  * @param fastify Instância do Fastify
+ * @param _opts Opções do plugin
+ * @param done Callback de conclusão
  */
-export function inputEventsRoutes(fastify: FastifyInstance): void {
+export function inputEventsRoutes(
+  fastify: FastifyInstance,
+  _opts: FastifyPluginOptions,
+  done: (err?: Error) => void,
+): void {
   const controller = container.resolve(InputEventsController);
 
   /**
@@ -202,4 +208,6 @@ export function inputEventsRoutes(fastify: FastifyInstance): void {
       );
     },
   );
+
+  done();
 }
