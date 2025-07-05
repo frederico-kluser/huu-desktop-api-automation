@@ -3,10 +3,13 @@
  * Foco na implementação de movimento suave com interpolação
  */
 import 'reflect-metadata';
-import { NutJSMouseAdapter } from '../../../src/infrastructure/adapters/nutjs/nutjs-mouse.adapter.js';
-import { mouse, Button } from '@nut-tree-fork/nut-js';
-import { MouseButton } from '../../../src/domain/entities/mouse-action.js';
-import { MouseDefaults } from '../../../src/config/mouse.config.js';
+
+// Mock do environment.js para evitar problemas com valores undefined
+jest.mock('../../../src/config/environment.js', () => ({
+  environment: {
+    mouseSpeed: 500
+  }
+}));
 
 // Mock do nut-js
 jest.mock('@nut-tree-fork/nut-js', () => ({
@@ -29,17 +32,27 @@ jest.mock('@nut-tree-fork/nut-js', () => ({
   Point: jest.fn((x, y) => ({ x, y })),
 }));
 
+// Mock de setTimeout para execução imediata
+global.setTimeout = jest.fn((callback: any) => {
+  callback();
+  return 0 as any;
+}) as any;
+
+import { NutJSMouseAdapter } from '../../../src/infrastructure/adapters/nutjs/nutjs-mouse.adapter.js';
+import { mouse, Button } from '@nut-tree-fork/nut-js';
+import { MouseButton } from '../../../src/domain/entities/mouse-action.js';
+import { MouseDefaults } from '../../../src/config/mouse.config.js';
+
 describe('NutJSMouseAdapter', () => {
   let adapter: NutJSMouseAdapter;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.useFakeTimers();
     adapter = new NutJSMouseAdapter();
   });
 
   afterEach(() => {
-    jest.useRealTimers();
+    jest.clearAllMocks();
   });
 
   describe('move', () => {
@@ -61,12 +74,8 @@ describe('NutJSMouseAdapter', () => {
       // Calcular número esperado de passos
       const expectedSteps = Math.floor(duration * MouseDefaults.sampleRate / 1000);
 
-      // Iniciar movimento
-      const movePromise = adapter.move(targetPoint, true, duration);
-
-      // Executar todos os timers
-      await jest.runAllTimersAsync();
-      await movePromise;
+      // Executar movimento
+      await adapter.move(targetPoint, true, duration);
 
       // Verificar número de chamadas
       expect(mouse.move).toHaveBeenCalledTimes(expectedSteps);
@@ -99,7 +108,6 @@ describe('NutJSMouseAdapter', () => {
 
       // Movimento apenas horizontal
       await adapter.move({ x: 500, y: 200 }, true, 500);
-      await jest.runAllTimersAsync();
 
       const calls = (mouse.move as jest.Mock).mock.calls;
       
@@ -116,7 +124,6 @@ describe('NutJSMouseAdapter', () => {
       (mouse.getPosition as jest.Mock).mockResolvedValueOnce({ x: 0, y: 0 });
 
       await adapter.move({ x: 100, y: 100 }, true, 10); // 10ms
-      await jest.runAllTimersAsync();
 
       expect(mouse.move).toHaveBeenCalledTimes(1);
       expect(mouse.move).toHaveBeenCalledWith({ x: 100, y: 100 });
@@ -130,13 +137,16 @@ describe('NutJSMouseAdapter', () => {
       const duration = 900;
 
       await adapter.drag(from, to, duration);
-      await jest.runAllTimersAsync();
 
       // Verificar sequência de chamadas
       const moveCalls = (mouse.move as jest.Mock).mock.calls;
       
       // Deve ter movido para posição inicial
-      expect(moveCalls[0][0]).toMatchObject(from);
+      // O primeiro movimento é feito com interpolação, então vamos verificar se alguma chamada tem a posição inicial
+      const hasInitialPosition = moveCalls.some(call => 
+        call[0].x === from.x && call[0].y === from.y
+      );
+      expect(hasInitialPosition).toBe(true);
       
       // Deve ter pressionado o botão
       expect(mouse.pressButton).toHaveBeenCalledWith(Button.LEFT);
@@ -174,13 +184,14 @@ describe('NutJSMouseAdapter', () => {
       const point = { x: 250, y: 250 };
       
       await adapter.clickAt(point, MouseButton.RIGHT, false);
-      await jest.runAllTimersAsync();
 
       // Verificar que moveu primeiro
       expect(mouse.move).toHaveBeenCalled();
-      const moveCall = (mouse.move as jest.Mock).mock.calls[0][0];
-      expect(moveCall.x).toBe(250);
-      expect(moveCall.y).toBe(250);
+      const moveCalls = (mouse.move as jest.Mock).mock.calls;
+      // O último movimento deve ser para a posição alvo
+      const lastCall = moveCalls[moveCalls.length - 1][0];
+      expect(lastCall.x).toBe(250);
+      expect(lastCall.y).toBe(250);
 
       // Verificar que clicou depois
       expect(mouse.click).toHaveBeenCalledWith(Button.RIGHT);

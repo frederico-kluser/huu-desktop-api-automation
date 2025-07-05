@@ -2,6 +2,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { container } from 'tsyringe';
 import { MouseService } from '../../application/services/mouse.service.js';
 import { ScreenService } from '../../application/services/screen.service.js';
+import { authenticationMiddleware } from '../middleware/auth.middleware.js';
 import {
   mouseMoveJsonSchema,
   mouseClickJsonSchema,
@@ -132,6 +133,7 @@ export class AutomationController {
     server.get(
       '/mouse/position/stream',
       {
+        preHandler: authenticationMiddleware,
         schema: {
           headers: {
             type: 'object',

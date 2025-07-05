@@ -12,6 +12,7 @@ import EventSource from 'eventsource';
 describe('Mouse Position Stream Endpoint', () => {
   let app: FastifyInstance;
   let mockMouseAdapter: jest.Mocked<IMouseAdapter>;
+  let mockScreenService: any;
   let eventSource: EventSource;
   const testPort = 3001;
   const baseUrl = `http://localhost:${testPort}`;
@@ -24,18 +25,19 @@ describe('Mouse Position Stream Endpoint', () => {
       clickAt: jest.fn().mockResolvedValue(undefined),
       drag: jest.fn().mockResolvedValue(undefined),
       scroll: jest.fn().mockResolvedValue(undefined),
-      getPosition: jest.fn()
-        .mockResolvedValueOnce({ x: 100, y: 100 })
-        .mockResolvedValueOnce({ x: 150, y: 150 })
-        .mockResolvedValueOnce({ x: 200, y: 200 })
-        .mockResolvedValueOnce({ x: 250, y: 250 })
-        .mockResolvedValueOnce({ x: 300, y: 300 })
-        .mockResolvedValue({ x: 350, y: 350 }),
+      getPosition: jest.fn(),
+    };
+
+    // Criar mock do ScreenService
+    mockScreenService = {
+      capture: jest.fn().mockResolvedValue(Buffer.from('fake-image')),
+      find: jest.fn().mockResolvedValue({ x: 100, y: 100 }),
     };
 
     // Registrar mocks no container
     container.register('MouseAdapter', { useValue: mockMouseAdapter });
     container.register('MouseService', { useClass: MouseService });
+    container.register('ScreenService', { useValue: mockScreenService });
 
     // Criar instância do Fastify
     app = Fastify({ logger: false });
@@ -57,7 +59,26 @@ describe('Mouse Position Stream Endpoint', () => {
     if (eventSource) {
       eventSource.close();
     }
+    // Resetar apenas as chamadas, não as implementações
     jest.clearAllMocks();
+  });
+
+  beforeEach(() => {
+    // Configurar mock para cada teste
+    let positionCounter = 0;
+    mockMouseAdapter.getPosition.mockImplementation(() => {
+      const positions = [
+        { x: 100, y: 100 },
+        { x: 150, y: 150 },
+        { x: 200, y: 200 },
+        { x: 250, y: 250 },
+        { x: 300, y: 300 },
+        { x: 350, y: 350 },
+      ];
+      const position = positions[positionCounter] || { x: 400, y: 400 };
+      positionCounter++;
+      return Promise.resolve(position);
+    });
   });
 
   describe('GET /mouse/position/stream', () => {

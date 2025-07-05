@@ -22,7 +22,7 @@ jest.mock('../src/config/recorder.config.js', () => ({
 describe('RecorderListenerService', () => {
   let service: RecorderListenerService;
   let eventDispatcher: jest.Mocked<EventDispatcher>;
-  let screenService: jest.Mocked<ScreenService>;
+  let screenService: any;
   let recordedEvents: RecordedEvent[] = [];
   
   beforeEach(() => {
@@ -33,8 +33,8 @@ describe('RecorderListenerService', () => {
     // Criar mocks
     eventDispatcher = new EventDispatcher() as jest.Mocked<EventDispatcher>;
     screenService = {
-      capture: jest.fn().mockResolvedValue('base64_screenshot_data')
-    } as any;
+      capture: jest.fn((request: any) => Promise.resolve('data:image/png;base64,base64_screenshot_data'))
+    };
     
     // Criar serviço
     service = new RecorderListenerService(eventDispatcher, screenService);
@@ -77,7 +77,7 @@ describe('RecorderListenerService', () => {
         x: 100,
         y: 200,
         button: 'left',
-        screenshot: 'base64_screenshot_data'
+        screenshot: 'data:image/png;base64,base64_screenshot_data'
       });
       
       // Verificar que screenshot foi capturado
@@ -112,7 +112,7 @@ describe('RecorderListenerService', () => {
         y: 200,
         button: 'left'
       });
-      expect(recordedEvents[0].screenshot).toBeUndefined();
+      expect('screenshot' in recordedEvents[0] ? recordedEvents[0].screenshot : undefined).toBeUndefined();
       
       // Verificar que screenshot NÃO foi capturado
       expect(screenService.capture).not.toHaveBeenCalled();
