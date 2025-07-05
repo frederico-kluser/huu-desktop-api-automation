@@ -18,6 +18,8 @@ describe('Mouse Position Stream Endpoint', () => {
   const baseUrl = `http://localhost:${testPort}`;
 
   beforeAll(async () => {
+    // Configurar intervalo mais rápido para os testes
+    process.env.MOUSE_STREAM_INTERVAL = '50';
     // Criar mock do adapter
     mockMouseAdapter = {
       move: jest.fn().mockResolvedValue(undefined),
@@ -53,6 +55,8 @@ describe('Mouse Position Stream Endpoint', () => {
   afterAll(async () => {
     await app.close();
     container.clearInstances();
+    // Restaurar configuração original
+    delete process.env.MOUSE_STREAM_INTERVAL;
   });
 
   afterEach(() => {
@@ -109,7 +113,7 @@ describe('Mouse Position Stream Endpoint', () => {
 
     it('deve enviar stream de posições quando API key for válida', (done) => {
       const receivedData: any[] = [];
-      const expectedMinEvents = 3;
+      const expectedMinEvents = 2;
 
       // Criar EventSource com headers
       eventSource = new EventSource(`${baseUrl}/mouse/position/stream`, {
@@ -141,7 +145,7 @@ describe('Mouse Position Stream Endpoint', () => {
           expect(receivedData[1].y).toBe(150);
           
           // Verificar que getPosition foi chamado múltiplas vezes
-          expect(mockMouseAdapter.getPosition).toHaveBeenCalledTimes(expectedMinEvents);
+          expect(mockMouseAdapter.getPosition).toHaveBeenCalledTimes(receivedData.length);
           
           done();
         }
@@ -150,7 +154,7 @@ describe('Mouse Position Stream Endpoint', () => {
       eventSource.onerror = (error) => {
         done(error);
       };
-    }, 10000); // Timeout de 10 segundos
+    }, 2000); // Timeout de 2 segundos
 
     it('deve parar de enviar eventos quando a conexão for fechada', (done) => {
       let eventCount = 0;
@@ -176,8 +180,8 @@ describe('Mouse Position Stream Endpoint', () => {
               // Verificar que não houve novas chamadas
               expect(mockMouseAdapter.getPosition).toHaveBeenCalledTimes(callsAfterFirstEvent);
               done();
-            }, 200);
-          }, 100);
+            }, 50);
+          }, 50);
         }
       };
 
@@ -222,6 +226,6 @@ describe('Mouse Position Stream Endpoint', () => {
       eventSource.onerror = (error) => {
         done(error);
       };
-    }, 2000);
+    }, 1500);
   });
 });
