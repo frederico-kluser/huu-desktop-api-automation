@@ -1,0 +1,223 @@
+## [2025-07-05] - Arquivo DTO com Zod schemas
+**Problema**: ESM syntax is not allowed in a CommonJS module when 'verbatimModuleSyntax' is enabled
+**Contexto**: Testes para arquivo DTO que exporta schemas Zod
+**Solução**: Usar require() em vez de import para contornar restrições do verbatimModuleSyntax nos testes
+**Quando aplicar**: Ao testar arquivos TypeScript com imports ESM em projetos com verbatimModuleSyntax habilitado
+---
+
+## [2025-07-05] - Estrutura de diretórios de teste
+**Problema**: Jest não encontrava os testes quando colocados em src/application/dto/__tests__/
+**Contexto**: Projeto com configuração específica de diretórios de teste
+**Solução**: Colocar testes em tests/unit/[estrutura-espelhada] seguindo o padrão do projeto
+**Quando aplicar**: Sempre verificar o testMatch no jest.config.js antes de criar novos testes
+---
+
+## [2025-07-05] - Coverage de schemas Zod
+**Problema**: Necessidade de testar todos os branches de validação dos schemas
+**Contexto**: Schemas Zod com validações complexas (min, max, enum, optional, default)
+**Solução**: Criar casos de teste para valores válidos, inválidos em cada limite, e edge cases
+**Quando aplicar**: Ao testar schemas de validação, cobrir todos os cenários de sucesso e falha
+---
+
+## [2025-07-05] - Configuração TypeScript para testes
+**Problema**: Incompatibilidade entre configuração do projeto e necessidades dos testes
+**Contexto**: Projeto usa verbatimModuleSyntax mas testes precisam de flexibilidade
+**Solução**: Usar tsconfig.test.json específico para testes com verbatimModuleSyntax desabilitado
+**Quando aplicar**: Quando há conflitos entre configurações TypeScript de produção e teste
+---
+
+## [2025-07-05] - Testes para interfaces TypeScript vazias (marcadoras)
+**Problema**: Interfaces vazias/marcadoras não geram código executável, resultando em 0% coverage
+**Contexto**: Interface IAutomationService usada apenas como marcador de tipo
+**Solução**: Criar testes que verificam: 1) Importação da interface, 2) Implementações da interface, 3) Múltiplas implementações, 4) Uso como constraint de tipo
+**Quando aplicar**: Ao testar interfaces vazias ou marcadoras, focar em verificar que o tipo pode ser usado corretamente em vez de coverage de código
+---
+
+## [2025-07-05] - Mock de módulos ESM puros como clipboardy
+**Problema**: Jest não consegue importar módulos ESM puros como clipboardy, resultando em "Cannot use import statement outside a module"
+**Contexto**: Serviço que depende de biblioteca ESM pura (clipboardy) para funcionalidades de clipboard
+**Solução**: Adicionar mock global no arquivo tests/setup.ts com todas as funções necessárias mockadas, evitando que o Jest tente importar o módulo real
+**Quando aplicar**: Ao testar código que depende de bibliotecas ESM puras que não podem ser transformadas pelo Jest
+---
+
+## [2025-07-05] - Testando arquivos excluídos do coverage (como index.ts)
+**Problema**: Arquivo index.ts está excluído do coverage mas ainda precisa de testes para garantir estrutura
+**Contexto**: Arquivo principal da aplicação (index.ts) com servidor Fastify, excluído em jest.config.js
+**Solução**: Criar teste placeholder mínimo que valida a estrutura de testes sem tentar testar o código real, evitando complexidade desnecessária de mocks ESM
+**Quando aplicar**: Quando um arquivo está explicitamente excluído do coverage mas você quer manter a estrutura de testes consistente
+---
+
+## [2025-07-05] - Testando serviços com buffer circular
+**Problema**: Necessidade de testar comportamento de buffer circular com overflow e edge cases
+**Contexto**: Serviço EventBuffer que implementa buffer circular para armazenar eventos com tamanho máximo
+**Solução**: Criar testes que cobrem: 1) Overflow do buffer adicionando mais elementos que a capacidade, 2) Ordem correta após wrap-around, 3) Cálculos de índices circulares, 4) Comportamento com buffer parcialmente cheio vs completamente cheio
+**Quando aplicar**: Ao testar estruturas de dados circulares, sempre verificar comportamento nos limites e após wrap-around
+---
+
+## [2025-07-05] - Testando código que usa Date.now() e timers
+**Problema**: Testes que dependem de tempo real podem ser instáveis ou lentos
+**Contexto**: Métodos como pruneOldEvents que filtram eventos por idade baseada em timestamps
+**Solução**: Usar jest.useFakeTimers() e jest.setSystemTime() para controlar o tempo nos testes, permitindo simular passagem de tempo com jest.advanceTimersByTime(). Sempre limpar com jest.useRealTimers() no afterEach
+**Quando aplicar**: Quando testar funcionalidades que dependem de timestamps, delays ou timeouts
+---
+
+## [2025-07-05] - Tratamento de parseInt com valores inválidos
+**Problema**: parseInt retorna NaN para strings não numéricas, causando erro em new Array(NaN)
+**Contexto**: Constructor do EventBuffer parseando INPUT_EVENT_BUFFER do process.env
+**Solução**: Em testes, verificar que o erro é lançado com expect(() => new Class()).toThrow() ao invés de tentar criar a instância. No código real, adicionar validação para usar valor default quando parseInt retornar NaN
+**Quando aplicar**: Ao testar parsing de valores de environment variables ou entrada do usuário que podem ser inválidos
+---
+
+## [2025-07-05] - Mock de bibliotecas externas complexas como @nut-tree-fork/nut-js
+**Problema**: Necessidade de mockar biblioteca externa com tipos e estruturas complexas para testes unitários
+**Contexto**: Adapter que usa @nut-tree-fork/nut-js para controle de teclado com múltiplas constantes de teclas
+**Solução**: Criar mock completo no início do arquivo de teste incluindo todas as constantes (Key enum) e funções necessárias, antes dos imports, e usar require() em vez de import para o arquivo testado
+**Quando aplicar**: Ao testar adaptadores ou serviços que dependem de bibliotecas externas complexas com muitas constantes ou enums
+---
+
+## [2025-07-05] - Testando setTimeout com Jest
+**Problema**: Jest não consegue espiar a função global setTimeout diretamente com expect(setTimeout)
+**Contexto**: Função delay() que usa setTimeout internamente precisava ser testada
+**Solução**: Usar jest.spyOn(global, 'setTimeout') dentro do beforeEach após jest.useFakeTimers(), e restaurar o spy no afterEach
+**Quando aplicar**: Sempre que precisar verificar chamadas a funções globais do JavaScript como setTimeout, setInterval, etc.
+---
+
+## [2025-07-05] - Coverage de mapeamentos extensos de constantes
+**Problema**: Funções com grandes objetos de mapeamento (como keyMap) precisam testar todas as possibilidades para 100% coverage
+**Contexto**: Adapter de teclado com mapeamento de strings para teclas do NutJS
+**Solução**: Usar test.each() com array de todos os valores possíveis para testar cada mapeamento individualmente de forma concisa
+**Quando aplicar**: Quando houver switch cases ou objetos de mapeamento com muitas opções que precisam ser testadas para coverage completo
+---
+
+## [2025-07-05] - Mock de setTimeout para testes assíncronos com delays
+**Problema**: Testes com jest.useFakeTimers() causavam timeouts ao testar código com setTimeout e promises assíncronas
+**Contexto**: Adapter de mouse com método move() que usa setTimeout para criar delays entre movimentos interpolados
+**Solução**: Em vez de usar jest.useFakeTimers(), mockar setTimeout diretamente com jest.fn() que executa o callback imediatamente, permitindo que as promises resolvam sem timeouts
+**Quando aplicar**: Quando testar código assíncrono que usa setTimeout dentro de promises e jest.useFakeTimers() causa problemas de timeout
+---
+
+## [2025-07-05] - Mock de setImmediate para testes síncronos
+**Problema**: Testes com setImmediate causavam timeouts ao tentar executar processamento assíncrono de filas
+**Contexto**: EventDispatcher que usa setImmediate para processar fila de eventos de forma não-bloqueante
+**Solução**: Mockar global.setImmediate = ((fn: any) => fn()) as any para executar callbacks de forma síncrona durante os testes, evitando timeouts e simplificando a lógica de teste
+**Quando aplicar**: Ao testar código que usa setImmediate para processamento assíncrono não-bloqueante, especialmente quando promises e async/await causam timeouts
+---
+
+## [2025-07-05] - Testando serviços com estratégias de execução (Strategy Pattern)
+**Problema**: Necessidade de testar serviços que implementam padrão Strategy com múltiplas implementações de uma mesma interface
+**Contexto**: KeyboardService que usa diferentes estratégias de digitação (InstantTypeStrategy, PerCharTypeStrategy, TotalTimeTypeStrategy)
+**Solução**: Testar cada modo/estratégia separadamente, cobrindo: 1) Comportamento específico de cada estratégia, 2) Casos limite como string vazia ou caractere único, 3) Comportamento com e sem dependências opcionais (event dispatcher), 4) Validações de entrada específicas de cada modo
+**Quando aplicar**: Ao testar serviços que implementam Strategy Pattern, garantir coverage de todas as estratégias e seus casos específicos
+---
+
+## [2025-07-05] - Coverage de código com caracteres Unicode e sanitização
+**Problema**: Necessidade de testar processamento correto de caracteres Unicode e sanitização de caracteres de controle
+**Contexto**: Serviço de teclado que precisa lidar com emojis, caracteres especiais e remover caracteres de controle perigosos
+**Solução**: Criar testes específicos com: 1) Strings contendo emojis e caracteres Unicode (👋🌍), 2) Caracteres de controle que devem ser removidos (\x00-\x08), 3) Caracteres permitidos como \n e \t, 4) Usar Array.from() para contar caracteres corretamente
+**Quando aplicar**: Ao testar código que processa entrada de texto do usuário, especialmente quando há sanitização e suporte a Unicode
+---
+
+## [2025-07-05] - Testando adaptadores que herdam de classes base
+**Problema**: Ao testar uma classe que estende outra, o constructor da classe pai pode ter dependências externas não mockadas
+**Contexto**: RecorderMouseAdapter que estende NutJSMouseAdapter, onde a classe pai configura mouse.config.mouseSpeed no constructor
+**Solução**: Mockar completamente a biblioteca externa (@nut-tree-fork/nut-js) incluindo todas as propriedades aninhadas que a classe pai acessa (ex: mouse.config.mouseSpeed), e também mockar environment.js que fornece valores de configuração
+**Quando aplicar**: Ao testar classes que herdam de outras classes com dependências externas no constructor, sempre verificar o que a classe pai precisa e incluir no mock
+---
+
+## [2025-07-05] - Testando controllers Fastify com rotas e SSE
+**Problema**: Necessidade de testar controller que registra rotas Fastify e implementa Server-Sent Events (SSE)
+**Contexto**: AutomationController que registra rotas REST e um endpoint de streaming SSE para posição do mouse
+**Solução**: Mockar Fastify instance com post/get methods, mockar request/reply com raw properties para SSE, mockar setInterval/clearInterval globalmente, testar eventos de close/error separadamente
+**Quando aplicar**: Ao testar controllers que registram rotas no Fastify e especialmente quando há endpoints SSE com streaming de dados
+---
+
+## [2025-07-05] - Mock de setInterval com TypeScript strict
+**Problema**: Erro TS2322 ao mockar global.setInterval - tipos incompatíveis devido ao parâmetro timeout opcional
+**Contexto**: Teste de controller SSE que usa setInterval para heartbeat, com TypeScript strict mode
+**Solução**: Adicionar parâmetro opcional ms?: number no mock e usar type assertion "as any" no final: global.setInterval = jest.fn((fn: any, ms?: number) => { return 123 as any; }) as any;
+**Quando aplicar**: Quando mockar funções globais do JavaScript que têm parâmetros opcionais e o TypeScript reclamar de incompatibilidade de tipos
+---
+
+## [2025-07-05] - Testando serviço que escuta eventos e os transforma
+**Problema**: Testes falhando ao tentar verificar se listeners foram chamados após processar eventos de input em RecorderListenerService
+**Contexto**: Serviço que escuta eventos de EventDispatcher e os transforma em eventos gravados, com lógica condicional baseada em propriedades do evento
+**Solução**: O código verifica 'button' OU 'x' para identificar eventos de mouse, e 'key' para teclado. Importante sempre incluir todas as propriedades esperadas no mock do evento. Para throttle de mouse move, usar jest.useFakeTimers() e jest.advanceTimersByTime() para controlar o tempo
+**Quando aplicar**: Ao testar serviços que processam eventos com estruturas complexas e lógica condicional baseada em propriedades do objeto evento
+---
+
+## [2025-07-05] - Mock de write em SSE deve ser feito após streamEvents
+**Problema**: Teste de heartbeat error falhando porque o mock de write era aplicado antes de chamar streamEvents, afetando as escritas iniciais
+**Contexto**: Controller SSE que escreve eventos iniciais antes de configurar o heartbeat
+**Solução**: Primeiro chamar o método streamEvents para permitir as escritas iniciais, depois aplicar o mock de write para simular erro apenas no heartbeat
+**Quando aplicar**: Ao testar comportamento de erro em callbacks específicos de SSE, sempre mockar após a configuração inicial da conexão
+---
+
+## [2025-07-05] - Mock de pino logger com __esModule
+**Problema**: TypeError: (0 , pino_1.default) is not a function ao tentar criar instância da classe que usa pino
+**Contexto**: Serviço que inicializa logger pino como propriedade de classe
+**Solução**: No mock do pino, adicionar __esModule: true junto com a função default que retorna o objeto logger mockado
+**Quando aplicar**: Ao mockar módulos ES que são importados como default em TypeScript com verbatimModuleSyntax
+---
+
+## [2025-07-05] - Testando middleware de validação Fastify com Zod
+**Problema**: Necessidade de testar middleware que valida requisições usando schemas Zod
+**Contexto**: Middleware que recebe schema Zod e retorna função async que valida request.body
+**Solução**: Criar mocks mínimos de FastifyRequest/Reply, testar cenários de sucesso, falha de validação, transformação de dados, e edge case de exceções não-Error. Usar require() ao invés de import devido ao verbatimModuleSyntax
+**Quando aplicar**: Ao testar middlewares de validação que usam Zod e precisam cobrir todos os branches incluindo tratamento de erros específicos
+---
+
+## [2025-07-05] - Testando arquivos de configuração com environment variables
+**Problema**: Necessidade de testar arquivos que leem process.env e transformam valores com parseInt/parseFloat
+**Contexto**: Arquivo environment.ts que exporta configurações lidas de process.env com valores default e transformações
+**Solução**: 1) Mock dotenv antes de qualquer import, 2) Usar beforeEach com jest.resetModules() e salvar/restaurar process.env original, 3) Deletar variáveis específicas com delete process.env.VAR para testar defaults, 4) Testar valores válidos, inválidos (NaN) e edge cases, 5) Usar require() ao invés de import para recarregar módulo após mudanças em process.env
+**Quando aplicar**: Ao testar arquivos de configuração que dependem de environment variables e precisam ser testados com diferentes valores
+---
+
+## [2025-07-05] - Comportamento de NaN em validações numéricas
+**Problema**: Valores NaN passam validações de intervalo porque todas as comparações com NaN retornam false
+**Contexto**: Arquivo de configuração com validações tipo "value < min || value > max" onde value pode ser NaN
+**Solução**: Entender que NaN < 1 = false e NaN > 100 = false, então NaN não satisfaz nenhuma condição de erro. Para detectar NaN especificamente, usar isNaN() ou Number.isNaN(). Nos testes, verificar que o código aceita NaN sem lançar erro (a menos que haja validação específica para NaN)
+**Quando aplicar**: Ao testar validações numéricas onde parseInt/parseFloat podem retornar NaN com entrada inválida
+---
+
+## [2025-07-05] - Testando arquivos de rotas Fastify
+**Problema**: Necessidade de testar arquivos que registram rotas no Fastify com schemas de validação
+**Contexto**: Arquivo recorder.routes.ts que exporta função assíncrona que registra rotas GET com schemas complexos
+**Solução**: 1) Mockar container de DI que resolve o controller, 2) Mockar instância Fastify com métodos de registro (get, post), 3) Verificar que rotas foram registradas com paths e schemas corretos, 4) Testar que handlers estão vinculados corretamente executando-os e verificando chamadas ao controller, 5) Validar estrutura completa dos schemas de resposta
+**Quando aplicar**: Ao testar arquivos de rotas Fastify, focar em verificar registro correto das rotas, vinculação de handlers e estrutura dos schemas
+---
+
+## [2025-07-05] - Testando arquivos de configuração com pino logger
+**Problema**: Testes não detectavam chamadas ao pino.default após import do logger devido a ordem de execução dos requires
+**Contexto**: Arquivo logger.ts que exporta instância configurada do pino logger com transporte condicional baseado em nodeEnv
+**Solução**: Em cada teste, após fazer jest.doMock() do environment para modificar as configurações, sempre fazer require('pino') ANTES de require do arquivo testado. Isso garante que a referência ao mock seja a mesma usada internamente
+**Quando aplicar**: Ao testar arquivos que criam instâncias de bibliotecas mockadas durante a importação, sempre require o mock antes do arquivo testado em cada teste
+---
+
+## [2025-07-05] - Testando arquivos de configuração simples com const objects
+**Problema**: Teste esperava que objeto exportado como "as const" fosse congelado (Object.isFrozen), mas não era
+**Contexto**: Arquivo mouse.config.ts que exporta objeto MouseDefaults com "as const"
+**Solução**: "as const" no TypeScript apenas garante tipos readonly em tempo de compilação, não congela o objeto em runtime. Para testar configurações, verificar apenas que as propriedades existem e têm os valores esperados, não o estado de congelamento
+**Quando aplicar**: Ao testar objetos de configuração com "as const", focar em testar valores e propriedades, não características de runtime como congelamento
+---
+
+## [2025-07-05] - Validações numéricas em arquivos de configuração com parseInt NaN
+**Problema**: Testes esperavam que parseInt('invalid') lançasse erro na validação, mas NaN não falha em comparações de intervalo
+**Contexto**: Arquivo recorder.config.ts validando valores parseInt com comparações tipo value < min || value > max
+**Solução**: Como NaN < 20 é false e NaN > 200 também é false, a validação passa. Para fazer NaN falhar a validação, adicionar isNaN() check explícito ou inverter a lógica para verificar se está dentro do intervalo válido (value >= min && value <= max)
+**Quando aplicar**: Ao validar valores numéricos parseados de strings, sempre considerar o caso NaN explicitamente se quiser rejeitá-lo
+---
+
+## [2025-07-05] - Testando arquivo que executa código na importação
+**Problema**: Arquivo test-endpoint.ts executa runTests() imediatamente ao ser importado, dificultando testes isolados
+**Contexto**: Script de teste que executa chamadas HTTP automaticamente sem exportar funções
+**Solução**: 1) Mockar fetch e setTimeout globalmente antes de qualquer import, 2) Capturar callbacks de setTimeout em array para execução controlada, 3) Executar callbacks manualmente para simular passagem de tempo, 4) Aguardar operações assíncronas com setImmediate, 5) Testar diferentes cenários de erro configurando mocks antes de cada require
+**Quando aplicar**: Ao testar arquivos que executam código imediatamente na importação sem exportar funções, usar estratégia de controle de execução assíncrona
+---
+
+## [2025-07-05] - Testando interfaces TypeScript puras
+**Problema**: Interfaces TypeScript não geram código JavaScript executável, resultando sempre em 0% de coverage
+**Contexto**: Interface CommandResult com apenas definição de tipos, sem implementação
+**Solução**: Criar testes que verificam padrões de uso da interface: 1) Importação do módulo sem erros, 2) Objetos que seguem a estrutura da interface, 3) Classes que implementam o padrão da interface, 4) Diferentes tipos de dados nas propriedades. O coverage sempre será 0% e isso é normal para interfaces puras.
+**Quando aplicar**: Ao testar interfaces TypeScript que são apenas contratos de tipo sem código executável, focar em validar casos de uso em vez de coverage
+---

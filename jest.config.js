@@ -10,9 +10,13 @@ export default {
       'ts-jest',
       {
         useESM: true,
+        tsconfig: 'tsconfig.test.json',
       },
     ],
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(clipboardy)/)',
+  ],
   testMatch: [
     '**/__tests__/**/*.test.ts',
     '**/tests/**/*.test.ts',

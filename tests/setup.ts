@@ -31,6 +31,19 @@ jest.mock('pino', () => {
   }));
 });
 
+// Mock do clipboardy para evitar problemas com ESM
+jest.mock('clipboardy', () => ({
+  write: jest.fn(),
+  read: jest.fn(),
+  writeSync: jest.fn(),
+  readSync: jest.fn(),
+}));
+
+// Mock do nanoid para evitar problemas com ESM
+jest.mock('nanoid', () => ({
+  nanoid: jest.fn(() => 'test-id-123'),
+}));
+
 // Configuração global do Jest
 beforeAll(() => {
   // Configurações globais antes de todos os testes
