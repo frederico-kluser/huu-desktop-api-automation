@@ -35,7 +35,7 @@ const StatsResponseSchema = {
 /**
  * Registra rotas do recorder
  */
-export async function recorderRoutes(fastify: FastifyInstance): Promise<void> {
+export function recorderRoutes(fastify: FastifyInstance): void {
   const controller = container.resolve(RecorderController);
 
   /**

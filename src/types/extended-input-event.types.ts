@@ -14,7 +14,7 @@ export interface GenericInputEvent {
   timestamp: number;
   cursorX: number;
   cursorY: number;
-  data: any;
+  data: ExtendedMouseData | ExtendedKeyboardData;
 }
 
 /**

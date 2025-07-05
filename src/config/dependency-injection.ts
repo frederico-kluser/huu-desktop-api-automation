@@ -4,9 +4,11 @@ import { MouseService } from '../application/services/mouse.service.js';
 import { ScreenService } from '../application/services/screen.service.js';
 import { KeyboardService } from '../application/services/keyboard.service.js';
 import { ClipboardService } from '../application/services/clipboard.service.js';
+import { LLMService } from '../application/services/llm.service.js';
 import { NutJSMouseAdapter } from '../infrastructure/adapters/nutjs/nutjs-mouse.adapter.js';
 import { NutJSScreenAdapter } from '../infrastructure/adapters/nutjs/nutjs-screen.adapter.js';
 import { NutJSKeyboardAdapter } from '../infrastructure/adapters/nutjs/nutjs-keyboard.adapter.js';
+import { LangChainLLMAdapter } from '../infrastructure/adapters/langchain/langchain-llm.adapter.js';
 import { EventDispatcher } from '../application/services/event-dispatcher.service.js';
 import { EventBuffer } from '../application/services/event-buffer.service.js';
 import { InputEventsController } from '../interface/controllers/input-events.controller.js';
@@ -40,6 +42,14 @@ export function configureDependencies(): void {
 
   container.register('ClipboardService', {
     useClass: ClipboardService,
+  });
+
+  container.register('LLMAdapter', {
+    useClass: LangChainLLMAdapter,
+  });
+
+  container.register('LLMService', {
+    useClass: LLMService,
   });
 
   // Registrar EventDispatcher como singleton

@@ -2,7 +2,7 @@
  * Rotas para streaming de eventos de input via SSE
  */
 
-import { type FastifyInstance } from 'fastify';
+import { type FastifyInstance, type FastifyRequest } from 'fastify';
 import { container } from '../config/dependency-injection.js';
 import { InputEventsController } from '../interface/controllers/input-events.controller.js';
 
@@ -40,7 +40,7 @@ const StandardResponseSchema = {
  * Registra as rotas de eventos de input
  * @param fastify Instância do Fastify
  */
-export async function inputEventsRoutes(fastify: FastifyInstance): Promise<void> {
+export function inputEventsRoutes(fastify: FastifyInstance): void {
   const controller = container.resolve(InputEventsController);
 
   /**
@@ -78,7 +78,14 @@ export async function inputEventsRoutes(fastify: FastifyInstance): Promise<void>
       },
     },
     async (request, reply) => {
-      await controller.streamInputEvents(request as any, reply);
+      await controller.streamInputEvents(
+        request as FastifyRequest<{
+          Headers: {
+            'last-event-id'?: string;
+          };
+        }>,
+        reply,
+      );
     },
   );
 
@@ -185,7 +192,14 @@ export async function inputEventsRoutes(fastify: FastifyInstance): Promise<void>
       },
     },
     async (request, reply) => {
-      await controller.pruneBuffer(request as any, reply);
+      await controller.pruneBuffer(
+        request as FastifyRequest<{
+          Body: {
+            maxAgeMs?: number;
+          };
+        }>,
+        reply,
+      );
     },
   );
 }

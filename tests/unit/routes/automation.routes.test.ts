@@ -21,12 +21,19 @@ jest.mock('../../../src/routes/recorder.routes', () => ({
   recorderRoutes: jest.fn(),
 }));
 
+jest.mock('../../../src/interface/controllers/llm.controller', () => ({
+  LLMController: jest.fn().mockImplementation(() => ({
+    registerRoutes: jest.fn(),
+  })),
+}));
+
 // Usar require devido ao verbatimModuleSyntax
 const { automationRoutes } = require('../../../src/routes/automation.routes');
 const {
   AutomationController,
 } = require('../../../src/interface/controllers/automation.controller');
 const { KeyboardController } = require('../../../src/interface/controllers/keyboard.controller');
+const { LLMController } = require('../../../src/interface/controllers/llm.controller');
 const { inputEventsRoutes } = require('../../../src/routes/input-events.routes');
 const { recorderRoutes } = require('../../../src/routes/recorder.routes');
 
@@ -89,6 +96,17 @@ describe('automation.routes', () => {
       expect.any(Object),
       expect.any(Function),
     );
+  });
+
+  test('should register LLM controller routes', async () => {
+    await automationRoutes(mockServer, {}, jest.fn());
+
+    // Verificar que LLMController foi instanciado
+    expect(LLMController).toHaveBeenCalledTimes(1);
+
+    // Verificar que registerRoutes foi chamado
+    const llmControllerInstance = (LLMController as jest.Mock).mock.results[0].value;
+    expect(llmControllerInstance.registerRoutes).toHaveBeenCalledWith(mockServer);
   });
 
   test('should register input events routes with prefix', async () => {

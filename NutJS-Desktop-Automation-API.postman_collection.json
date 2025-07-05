@@ -1117,6 +1117,192 @@
           ]
         }
       ]
+    },
+    {
+      "name": "LLM Operations",
+      "item": [
+        {
+          "name": "Generate Completion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has required fields', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('success', true);",
+                  "    pm.expect(jsonData).to.have.property('data');",
+                  "    pm.expect(jsonData.data).to.have.property('content');",
+                  "    pm.expect(jsonData.data).to.have.property('model');",
+                  "});",
+                  "",
+                  "pm.test('Content is not empty', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.content).to.not.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Explain what desktop automation is in one sentence.\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success - GPT-3.5 Turbo",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Explain what desktop automation is in one sentence.\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/llm",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "llm"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": \"Desktop automation is the use of software tools to automatically perform repetitive tasks on a computer desktop, such as clicking, typing, and navigating applications.\",\n    \"model\": \"gpt-3.5-turbo\",\n    \"usage\": {\n      \"promptTokens\": 15,\n      \"completionTokens\": 28,\n      \"totalTokens\": 43\n    },\n    \"finishReason\": \"stop\"\n  }\n}"
+            },
+            {
+              "name": "Success - With System Prompt",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"What is NutJS?\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 200,\n  \"systemPrompt\": \"You are a helpful assistant specializing in desktop automation tools and libraries. Provide concise, technical answers.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/llm",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "llm"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": \"NutJS is a Node.js library for desktop automation that provides cross-platform control of mouse, keyboard, and screen. It allows developers to programmatically interact with desktop applications by simulating user input, capturing screenshots, and performing image recognition for UI element detection.\",\n    \"model\": \"gpt-4\",\n    \"usage\": {\n      \"promptTokens\": 42,\n      \"completionTokens\": 55,\n      \"totalTokens\": 97\n    },\n    \"finishReason\": \"stop\"\n  }\n}"
+            },
+            {
+              "name": "Error - Invalid Model",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Hello\",\n  \"model\": \"invalid-model\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/llm",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "llm"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": \"Invalid request body\"\n}"
+            },
+            {
+              "name": "Error - Missing API Key",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prompt\": \"Hello\",\n  \"model\": \"gpt-3.5-turbo\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/llm",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "llm"]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": \"Unauthorized\"\n}"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

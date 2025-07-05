@@ -8,6 +8,8 @@ const mockContainer = {
 };
 jest.mock('tsyringe', () => ({
   container: mockContainer,
+  injectable: () => (target: any) => target,
+  inject: () => () => {},
 }));
 
 // Mock de todos os serviços e adaptadores
@@ -46,6 +48,12 @@ jest.mock('../../../src/application/services/recorder-listener.service', () => (
 }));
 jest.mock('../../../src/interface/controllers/recorder.controller', () => ({
   RecorderController: class MockRecorderController {},
+}));
+jest.mock('../../../src/application/services/llm.service', () => ({
+  LLMService: class MockLLMService {},
+}));
+jest.mock('../../../src/infrastructure/adapters/langchain/langchain-llm.adapter', () => ({
+  LangChainLLMAdapter: class MockLangChainLLMAdapter {},
 }));
 
 describe('dependency-injection', () => {
@@ -94,8 +102,8 @@ describe('dependency-injection', () => {
       useClass: expect.any(Function),
     });
 
-    // Total de chamadas register
-    expect(mockContainer.register).toHaveBeenCalledTimes(10);
+    // Total de chamadas register (agora incluindo LLMService e LLMAdapter)
+    expect(mockContainer.register).toHaveBeenCalledTimes(12);
   });
 
   test('exports container', () => {
