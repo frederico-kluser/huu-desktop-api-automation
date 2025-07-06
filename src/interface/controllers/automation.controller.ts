@@ -208,7 +208,14 @@ export class AutomationController {
     server.get(
       '/screen/print',
       {
+        preHandler: [authenticationMiddleware],
         schema: {
+          headers: {
+            type: 'object',
+            properties: {
+              'x-api-key': { type: 'string' },
+            },
+          },
           response: {
             200: {
               type: 'object',

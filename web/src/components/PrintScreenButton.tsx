@@ -21,7 +21,7 @@ const PrintScreenButton: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch('/api/screen/print', {
+      const response = await fetch('/api/v1/screen/print', {
         method: 'GET',
         headers: {
           'x-api-key': process.env.REACT_APP_API_KEY || 'YOUR_API_KEY_HERE',
