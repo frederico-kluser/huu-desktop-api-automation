@@ -3,9 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './src/index.tsx',
+  entry: path.resolve(__dirname, './src/index.tsx'),
+  context: __dirname,
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist/web'),
     filename: 'bundle.[contenthash].js',
     clean: true,
   },
@@ -31,7 +32,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: path.resolve(__dirname, './public/index.html'),
       inject: 'body',
     }),
   ],

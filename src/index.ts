@@ -33,21 +33,10 @@ const createServer = async () => {
     },
   });
 
+  // Registrar rotas da API primeiro
   await server.register(automationRoutes, { prefix: '/api/v1' });
 
-  // Registrar servir arquivos estáticos da web
-  await server.register(fastifyStatic, {
-    root: path.join(__dirname, '..', 'dist', 'web'),
-    prefix: '/',
-  });
-
-  // Rota para servir o index.html na raiz
-  server.get('/', async (_request: FastifyRequest, reply: FastifyReply) => {
-    return reply.sendFile('index.html');
-  });
-
-  server.setErrorHandler(errorHandler);
-
+  // Health check
   server.get('/health', async (_request: FastifyRequest, reply: FastifyReply) => {
     await reply.send({
       status: 'ok',
@@ -55,6 +44,28 @@ const createServer = async () => {
       uptime: process.uptime(),
       environment: environment.nodeEnv,
     });
+  });
+
+  // Registrar servir arquivos estáticos da web com configuração para não conflitar com API
+  await server.register(fastifyStatic, {
+    root: path.join(__dirname, '..', 'dist', 'web'),
+    prefix: '/',
+    wildcard: false, // Desabilita wildcard para evitar conflitos com rotas da API
+  });
+
+  server.setErrorHandler(errorHandler);
+
+  // Catch-all para SPA - serve index.html para rotas não encontradas (exceto /api)
+  server.setNotFoundHandler(async (request: FastifyRequest, reply: FastifyReply) => {
+    // Se for uma rota da API, retorna 404 normal
+    if (request.url.startsWith('/api/')) {
+      return reply.code(404).send({
+        success: false,
+        error: 'Route not found',
+      });
+    }
+    // Senão, retorna o index.html para o SPA
+    return reply.sendFile('index.html');
   });
 
   return server;

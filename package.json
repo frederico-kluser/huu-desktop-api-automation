@@ -5,10 +5,10 @@
   "description": "REST API wrapper for NutJS desktop automation",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "concurrently \"tsx watch src/index.ts\" \"npm run dev:web\"",
+    "dev": "concurrently \"webpack --watch --mode development --config web/webpack.config.js\" \"tsx watch src/index.ts\"",
     "dev:web": "webpack serve --mode development --config web/webpack.config.cjs",
     "build": "tsc -p tsconfig.json && npm run build:web",
-    "build:web": "webpack --mode production --config web/webpack.config.cjs",
+    "build:web": "webpack --mode production --config web/webpack.config.js",
     "build:prod": "tsc -p tsconfig.prod.json && npm run build:web",
     "start": "node dist/index.js",
     "test": "jest",
