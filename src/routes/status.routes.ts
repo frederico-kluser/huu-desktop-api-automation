@@ -1,10 +1,13 @@
-import type { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import type { FastifyInstance, FastifyRequest, FastifyReply, FastifyPluginOptions } from 'fastify';
 
 /**
  * Rotas para verificação de status da API
  * Usado pelo frontend para monitorar saúde da aplicação
  */
-export const statusRoutes = (fastify: FastifyInstance) => {
+export const statusRoutes = async (
+  fastify: FastifyInstance,
+  _opts: FastifyPluginOptions
+): Promise<void> => {
   /**
    * GET /status
    * Retorna o status atual da API
