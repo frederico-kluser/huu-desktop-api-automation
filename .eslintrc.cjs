@@ -19,4 +19,12 @@ module.exports = {
     '@typescript-eslint/await-thenable': 'error',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
   },
+  overrides: [
+    {
+      files: ['tests/**/*.ts'],
+      parserOptions: {
+        project: './tsconfig.test.json',
+      },
+    },
+  ],
 };

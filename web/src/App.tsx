@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 import Header from './components/Header';
+import PrintScreenButton from './components/PrintScreenButton';
 import './styles/App.css';
 
 const App: React.FC = () => {
@@ -49,6 +50,12 @@ const App: React.FC = () => {
                     </Card>
                   </Col>
                 </Row>
+
+                <div className="mt-5">
+                  <hr className="my-4" />
+                  <h3 className="mb-4">Teste de Funcionalidades</h3>
+                  <PrintScreenButton />
+                </div>
               </Card.Body>
             </Card>
           </Col>

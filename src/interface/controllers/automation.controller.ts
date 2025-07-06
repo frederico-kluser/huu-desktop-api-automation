@@ -20,7 +20,6 @@ import type {
   ScreenCaptureRequest,
 } from '../../application/dto/automation-request.dto.js';
 import { MouseDefaults } from '../../config/mouse.config.js';
-import { environment } from '../../config/environment.js';
 import pino from 'pino';
 
 export class AutomationController {
@@ -133,7 +132,7 @@ export class AutomationController {
     server.get(
       '/mouse/position/stream',
       {
-        preHandler: authenticationMiddleware,
+        preHandler: [authenticationMiddleware],
         schema: {
           headers: {
             type: 'object',
@@ -205,6 +204,31 @@ export class AutomationController {
       },
       this.screenCapture.bind(this),
     );
+
+    server.get(
+      '/screen/print',
+      {
+        schema: {
+          response: {
+            200: {
+              type: 'object',
+              properties: {
+                success: { type: 'boolean' },
+                data: {
+                  type: 'object',
+                  properties: {
+                    image: { type: 'string' },
+                    timestamp: { type: 'number' },
+                    format: { type: 'string' },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      this.screenPrint.bind(this),
+    );
   }
 
   private async mouseMove(
@@ -261,11 +285,52 @@ export class AutomationController {
   }
 
   /**
+   * Captura a tela inteira e retorna como base64
+   * @param request - Requisição Fastify
+   * @param reply - Resposta Fastify
+   */
+  private async screenPrint(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+    try {
+      const startTime = Date.now();
+
+      // Captura tela inteira (sem região específica)
+      const base64Image = await this.screenService.capture({ format: 'png' });
+
+      // Remove o prefixo data:image/png;base64, se presente
+      const imageData = base64Image.replace(/^data:image\/[a-z]+;base64,/, '');
+
+      // Validação de tamanho (máximo 1MB)
+      if (imageData.length > 1_000_000) {
+        this.logger.warn({ size: imageData.length }, 'Captured image exceeds 1MB limit');
+        throw new Error('IMAGE_TOO_LARGE');
+      }
+
+      const duration = Date.now() - startTime;
+      this.logger.info({ durationMs: duration }, 'Screen capture completed');
+
+      await reply.send({
+        success: true,
+        data: {
+          image: imageData,
+          timestamp: Date.now(),
+          format: 'png',
+        },
+      });
+    } catch (error) {
+      this.logger.error({ error }, 'Failed to capture screen');
+      await reply.code(500).send({
+        success: false,
+        error: error instanceof Error ? error.message : 'CAPTURE_FAILED',
+      });
+    }
+  }
+
+  /**
    * Endpoint de streaming para posição contínua do mouse usando Server-Sent Events
    * @param request - Requisição Fastify
    * @param reply - Resposta Fastify
    */
-  private async mousePositionStream(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+  private mousePositionStream(request: FastifyRequest, reply: FastifyReply): void {
     // Configurar headers para Server-Sent Events
     reply.raw.writeHead(200, {
       'Content-Type': 'text/event-stream',
@@ -281,35 +346,37 @@ export class AutomationController {
     let messageCount = 0;
 
     // Função para enviar posição do mouse
-    const sendMousePosition = async () => {
-      try {
-        const position = await this.mouseService.getPosition();
-        const data = {
-          x: position.x,
-          y: position.y,
-          timestamp: Date.now(),
-        };
+    const sendMousePosition = () => {
+      this.mouseService
+        .getPosition()
+        .then((position) => {
+          const data = {
+            x: position.x,
+            y: position.y,
+            timestamp: Date.now(),
+          };
 
-        // Enviar dados no formato SSE
-        reply.raw.write(`data: ${JSON.stringify(data)}\n\n`);
+          // Enviar dados no formato SSE
+          reply.raw.write(`data: ${JSON.stringify(data)}\n\n`);
 
-        // Log apenas 1 em cada 10 mensagens para evitar spam
-        messageCount++;
-        if (messageCount % 10 === 0) {
-          this.logger.debug({ position, messageCount }, 'Sent mouse position');
-        }
-      } catch (error) {
-        this.logger.error({ error }, 'Error getting mouse position');
-        clearInterval(intervalId);
-        reply.raw.end();
-      }
+          // Log apenas 1 em cada 10 mensagens para evitar spam
+          messageCount++;
+          if (messageCount % 10 === 0) {
+            this.logger.debug({ position, messageCount }, 'Sent mouse position');
+          }
+        })
+        .catch((error: unknown) => {
+          this.logger.error({ error }, 'Error getting mouse position');
+          clearInterval(intervalId);
+          reply.raw.end();
+        });
     };
 
     // Iniciar streaming com intervalo configurável
     intervalId = setInterval(sendMousePosition, MouseDefaults.streamInterval);
 
     // Enviar primeira posição imediatamente
-    await sendMousePosition();
+    sendMousePosition();
 
     // Limpar recursos quando a conexão for fechada
     request.raw.on('close', () => {

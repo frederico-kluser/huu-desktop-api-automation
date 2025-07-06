@@ -96,7 +96,7 @@ describe('AutomationController', () => {
 
       // Verificar que todas as rotas foram registradas
       expect(mockFastifyInstance.post).toHaveBeenCalledTimes(6);
-      expect(mockFastifyInstance.get).toHaveBeenCalledTimes(2);
+      expect(mockFastifyInstance.get).toHaveBeenCalledTimes(3);
 
       // Verificar rotas específicas
       const postCalls = mockFastifyInstance.post.mock.calls;
@@ -111,6 +111,7 @@ describe('AutomationController', () => {
 
       expect(getCalls[0][0]).toBe('/mouse/position');
       expect(getCalls[1][0]).toBe('/mouse/position/stream');
+      expect(getCalls[2][0]).toBe('/screen/print');
     });
   });
 
