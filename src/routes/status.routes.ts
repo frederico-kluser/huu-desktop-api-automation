@@ -4,10 +4,11 @@ import type { FastifyInstance, FastifyRequest, FastifyReply, FastifyPluginOption
  * Rotas para verificação de status da API
  * Usado pelo frontend para monitorar saúde da aplicação
  */
-export const statusRoutes = async (
+export const statusRoutes = (
   fastify: FastifyInstance,
-  _opts: FastifyPluginOptions
-): Promise<void> => {
+  _opts: FastifyPluginOptions,
+  done: () => void,
+): void => {
   /**
    * GET /status
    * Retorna o status atual da API
@@ -36,4 +37,6 @@ export const statusRoutes = async (
       });
     }
   });
+
+  done();
 };
