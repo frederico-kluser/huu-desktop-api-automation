@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Alert, Spinner, Image } from 'react-bootstrap';
+import { ScreenCaptureResponse, ApiResponse } from '../types/api.types';
 
 /**
  * Componente para capturar tela e exibir o resultado
@@ -12,7 +13,7 @@ const PrintScreenButton: React.FC = () => {
   /**
    * Realiza a captura de tela através da API
    */
-  const handlePrintScreen = async () => {
+  const handlePrintScreen = async (): Promise<void> => {
     // Previne múltiplos cliques
     if (isLoading) return;
 
@@ -31,14 +32,15 @@ const PrintScreenButton: React.FC = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as ApiResponse<ScreenCaptureResponse>;
 
-      if (data.success && data.data.image) {
+      if (data.success && 'data' in data && data.data.image) {
         // Formata a imagem base64 para exibição
         const imageUrl = `data:image/png;base64,${data.data.image}`;
         setCapturedImage(imageUrl);
       } else {
-        throw new Error('Resposta inválida da API');
+        const errorMessage = 'message' in data ? data.message : 'Resposta inválida da API';
+        throw new Error(errorMessage);
       }
     } catch (err) {
       console.error('Erro ao capturar tela:', err);
@@ -48,12 +50,22 @@ const PrintScreenButton: React.FC = () => {
     }
   };
 
+  /**
+   * Wrapper para o event handler que não retorna Promise
+   */
+  const handlePrintScreenClick = (): void => {
+    handlePrintScreen().catch((err) => {
+      console.error('Erro não tratado na captura de tela:', err);
+      setError(err instanceof Error ? err.message : 'Erro inesperado');
+    });
+  };
+
   return (
     <div className="print-screen-container">
       <Button
         variant="success"
         size="lg"
-        onClick={handlePrintScreen}
+        onClick={handlePrintScreenClick}
         disabled={isLoading}
         className="mb-3"
       >
