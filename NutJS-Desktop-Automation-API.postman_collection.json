@@ -1977,7 +1977,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Explain what desktop automation is in one sentence.\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 100\n}",
+              "raw": "{\n  \"prompt\": \"Explain what desktop automation is in one sentence.\",\n  \"model\": \"gpt-4.1-mini\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 100\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2004,7 +2004,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Explain what desktop automation is in one sentence.\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 100\n}",
+                  "raw": "{\n  \"prompt\": \"Explain what desktop automation is in one sentence.\",\n  \"model\": \"gpt-4.1-mini\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 100\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2022,7 +2022,7 @@
               "_postman_previewlanguage": "json",
               "header": [],
               "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": \"Desktop automation is the use of software tools to automatically perform repetitive tasks on a computer desktop, such as clicking, typing, and navigating applications.\",\n    \"model\": \"gpt-3.5-turbo\",\n    \"usage\": {\n      \"promptTokens\": 15,\n      \"completionTokens\": 28,\n      \"totalTokens\": 43\n    },\n    \"finishReason\": \"stop\"\n  }\n}"
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": \"Desktop automation is the use of software tools to automatically perform repetitive tasks on a computer desktop, such as clicking, typing, and navigating applications.\",\n    \"model\": \"gpt-4.1-mini\",\n    \"usage\": {\n      \"promptTokens\": 15,\n      \"completionTokens\": 28,\n      \"totalTokens\": 43\n    },\n    \"finishReason\": \"stop\"\n  }\n}"
             },
             {
               "name": "Success - With System Prompt",
@@ -2037,7 +2037,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"What is NutJS?\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 200,\n  \"systemPrompt\": \"You are a helpful assistant specializing in desktop automation tools and libraries. Provide concise, technical answers.\"\n}",
+                  "raw": "{\n  \"prompt\": \"What is NutJS?\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 200,\n  \"systemPrompt\": \"You are a helpful assistant specializing in desktop automation tools and libraries. Provide concise, technical answers.\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2055,7 +2055,7 @@
               "_postman_previewlanguage": "json",
               "header": [],
               "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": \"NutJS is a Node.js library for desktop automation that provides cross-platform control of mouse, keyboard, and screen. It allows developers to programmatically interact with desktop applications by simulating user input, capturing screenshots, and performing image recognition for UI element detection.\",\n    \"model\": \"gpt-4\",\n    \"usage\": {\n      \"promptTokens\": 42,\n      \"completionTokens\": 55,\n      \"totalTokens\": 97\n    },\n    \"finishReason\": \"stop\"\n  }\n}"
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"content\": \"NutJS is a Node.js library for desktop automation that provides cross-platform control of mouse, keyboard, and screen. It allows developers to programmatically interact with desktop applications by simulating user input, capturing screenshots, and performing image recognition for UI element detection.\",\n    \"model\": \"gpt-4.1\",\n    \"usage\": {\n      \"promptTokens\": 42,\n      \"completionTokens\": 55,\n      \"totalTokens\": 97\n    },\n    \"finishReason\": \"stop\"\n  }\n}"
             },
             {
               "name": "Error - Invalid Model",
@@ -2097,7 +2097,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Hello\",\n  \"model\": \"gpt-3.5-turbo\"\n}",
+                  "raw": "{\n  \"prompt\": \"Hello\",\n  \"model\": \"gpt-4.1-mini\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2162,7 +2162,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Analyze the benefits of desktop automation tools like NutJS for software development teams.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"You are a technical analyst. Provide structured analysis in the exact JSON format requested.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"summary\": {\n        \"type\": \"string\",\n        \"description\": \"Brief summary of desktop automation benefits\"\n      },\n      \"benefits\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"description\": \"List of specific benefits\"\n      },\n      \"rating\": {\n        \"type\": \"number\",\n        \"description\": \"Overall usefulness rating from 1-10\"\n      },\n      \"recommendation\": {\n        \"type\": \"string\",\n        \"description\": \"Recommendation for implementation\"\n      }\n    },\n    \"required\": [\"summary\", \"benefits\", \"rating\"],\n    \"additionalProperties\": false\n  }\n}",
+              "raw": "{\n  \"prompt\": \"Analyze the benefits of desktop automation tools like NutJS for software development teams.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"You are a technical analyst. Provide structured analysis in the exact JSON format requested.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"summary\": {\n        \"type\": \"string\",\n        \"description\": \"Brief summary of desktop automation benefits\"\n      },\n      \"benefits\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"description\": \"List of specific benefits\"\n      },\n      \"rating\": {\n        \"type\": \"number\",\n        \"description\": \"Overall usefulness rating from 1-10\"\n      },\n      \"recommendation\": {\n        \"type\": \"string\",\n        \"description\": \"Recommendation for implementation\"\n      }\n    },\n    \"required\": [\"summary\", \"benefits\", \"rating\"],\n    \"additionalProperties\": false\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2189,7 +2189,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Analyze the benefits of desktop automation tools like NutJS for software development teams.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"You are a technical analyst. Provide structured analysis in the exact JSON format requested.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"summary\": {\n        \"type\": \"string\",\n        \"description\": \"Brief summary of desktop automation benefits\"\n      },\n      \"benefits\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"description\": \"List of specific benefits\"\n      },\n      \"rating\": {\n        \"type\": \"number\",\n        \"description\": \"Overall usefulness rating from 1-10\"\n      },\n      \"recommendation\": {\n        \"type\": \"string\",\n        \"description\": \"Recommendation for implementation\"\n      }\n    },\n    \"required\": [\"summary\", \"benefits\", \"rating\"],\n    \"additionalProperties\": false\n  }\n}",
+                  "raw": "{\n  \"prompt\": \"Analyze the benefits of desktop automation tools like NutJS for software development teams.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"You are a technical analyst. Provide structured analysis in the exact JSON format requested.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"summary\": {\n        \"type\": \"string\",\n        \"description\": \"Brief summary of desktop automation benefits\"\n      },\n      \"benefits\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        },\n        \"description\": \"List of specific benefits\"\n      },\n      \"rating\": {\n        \"type\": \"number\",\n        \"description\": \"Overall usefulness rating from 1-10\"\n      },\n      \"recommendation\": {\n        \"type\": \"string\",\n        \"description\": \"Recommendation for implementation\"\n      }\n    },\n    \"required\": [\"summary\", \"benefits\", \"rating\"],\n    \"additionalProperties\": false\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2207,7 +2207,7 @@
               "_postman_previewlanguage": "json",
               "header": [],
               "cookie": [],
-              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"summary\": \"Desktop automation tools like NutJS provide significant productivity gains for development teams by automating repetitive UI testing and interaction tasks across multiple platforms.\",\n    \"benefits\": [\n      \"Automated UI testing without manual intervention\",\n      \"Cross-platform compatibility (Windows, macOS, Linux)\",\n      \"Reduced testing time and human error\",\n      \"Consistent test execution across environments\",\n      \"Integration with CI/CD pipelines\",\n      \"Screen capture and image recognition capabilities\",\n      \"Programmatic control of mouse and keyboard\"\n    ],\n    \"rating\": 8,\n    \"recommendation\": \"Highly recommended for teams with significant UI testing requirements or complex desktop application workflows.\"\n  },\n  \"metadata\": {\n    \"model\": \"gpt-4\",\n    \"finishReason\": \"stop\",\n    \"tokensUsed\": 167,\n    \"processingTime\": 1703875200000\n  }\n}"
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"summary\": \"Desktop automation tools like NutJS provide significant productivity gains for development teams by automating repetitive UI testing and interaction tasks across multiple platforms.\",\n    \"benefits\": [\n      \"Automated UI testing without manual intervention\",\n      \"Cross-platform compatibility (Windows, macOS, Linux)\",\n      \"Reduced testing time and human error\",\n      \"Consistent test execution across environments\",\n      \"Integration with CI/CD pipelines\",\n      \"Screen capture and image recognition capabilities\",\n      \"Programmatic control of mouse and keyboard\"\n    ],\n    \"rating\": 8,\n    \"recommendation\": \"Highly recommended for teams with significant UI testing requirements or complex desktop application workflows.\"\n  },\n  \"metadata\": {\n    \"model\": \"gpt-4.1\",\n    \"finishReason\": \"stop\",\n    \"tokensUsed\": 167,\n    \"processingTime\": 1703875200000\n  }\n}"
             },
             {
               "name": "Error - Invalid Output Format",
@@ -2222,7 +2222,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Hello world\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"outputFormat\": {\n    \"type\": \"invalid-type\"\n  }\n}",
+                  "raw": "{\n  \"prompt\": \"Hello world\",\n  \"model\": \"gpt-4.1-mini\",\n  \"outputFormat\": {\n    \"type\": \"invalid-type\"\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2255,7 +2255,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"prompt\": \"Generate data\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"data\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}",
+                  "raw": "{\n  \"prompt\": \"Generate data\",\n  \"model\": \"gpt-4.1-mini\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"data\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -2290,7 +2290,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Write a JavaScript function to control mouse movement with NutJS.\",\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 300,\n  \"systemPrompt\": \"You are a coding assistant specialized in desktop automation. Provide clean, working code examples.\"\n}",
+              "raw": "{\n  \"prompt\": \"Write a JavaScript function to control mouse movement with NutJS.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 300,\n  \"systemPrompt\": \"You are a coding assistant specialized in desktop automation. Provide clean, working code examples.\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2319,7 +2319,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"List the top 5 use cases for desktop automation in QA testing.\",\n  \"model\": \"gpt-4o-mini\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 200\n}",
+              "raw": "{\n  \"prompt\": \"List the top 5 use cases for desktop automation in QA testing.\",\n  \"model\": \"gpt-4.1-mini\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 200\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2348,7 +2348,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Explain the architecture of a desktop automation API in simple terms.\",\n  \"model\": \"deepseek-chat\",\n  \"temperature\": 0.6,\n  \"maxTokens\": 250,\n  \"systemPrompt\": \"You are a technical educator. Explain complex concepts in simple, understandable terms.\"\n}",
+              "raw": "{\n  \"prompt\": \"Explain the architecture of a desktop automation API in simple terms.\",\n  \"model\": \"DeepSeek-V3-0324\",\n  \"temperature\": 0.6,\n  \"maxTokens\": 250,\n  \"systemPrompt\": \"You are a technical educator. Explain complex concepts in simple, understandable terms.\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2377,7 +2377,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Create 5 innovative ideas for using desktop automation in unexpected ways.\",\n  \"model\": \"gpt-4-turbo\",\n  \"temperature\": 1.5,\n  \"maxTokens\": 400,\n  \"systemPrompt\": \"You are a creative innovator. Think outside the box and suggest unconventional applications.\"\n}",
+              "raw": "{\n  \"prompt\": \"Create 5 innovative ideas for using desktop automation in unexpected ways.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 1.5,\n  \"maxTokens\": 400,\n  \"systemPrompt\": \"You are a creative innovator. Think outside the box and suggest unconventional applications.\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2406,7 +2406,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Convert this pseudocode to Python: 'move mouse to (100, 200), wait 2 seconds, click left button'\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 0,\n  \"maxTokens\": 150,\n  \"systemPrompt\": \"You are a code converter. Convert pseudocode to valid Python code using pyautogui library. Be precise and deterministic.\"\n}",
+              "raw": "{\n  \"prompt\": \"Convert this pseudocode to Python: 'move mouse to (100, 200), wait 2 seconds, click left button'\",\n  \"model\": \"gpt-4.1-mini\",\n  \"temperature\": 0,\n  \"maxTokens\": 150,\n  \"systemPrompt\": \"You are a code converter. Convert pseudocode to valid Python code using pyautogui library. Be precise and deterministic.\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2435,7 +2435,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"List 5 keyboard shortcuts that every developer should know.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 300,\n  \"systemPrompt\": \"Provide your response as a JSON array of strings.\",\n  \"outputFormat\": {\n    \"type\": \"array\",\n    \"items\": {\n      \"type\": \"string\"\n    }\n  }\n}",
+              "raw": "{\n  \"prompt\": \"List 5 keyboard shortcuts that every developer should know.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 300,\n  \"systemPrompt\": \"Provide your response as a JSON array of strings.\",\n  \"outputFormat\": {\n    \"type\": \"array\",\n    \"items\": {\n      \"type\": \"string\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2464,7 +2464,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Is desktop automation useful for regression testing? Consider factors like reliability, maintenance effort, and ROI.\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 50,\n  \"systemPrompt\": \"Analyze the question and respond with only true or false.\",\n  \"outputFormat\": {\n    \"type\": \"boolean\"\n  }\n}",
+              "raw": "{\n  \"prompt\": \"Is desktop automation useful for regression testing? Consider factors like reliability, maintenance effort, and ROI.\",\n  \"model\": \"gpt-4.1-mini\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 50,\n  \"systemPrompt\": \"Analyze the question and respond with only true or false.\",\n  \"outputFormat\": {\n    \"type\": \"boolean\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2493,7 +2493,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"On a scale of 1 to 100, how efficient is NutJS for automating desktop applications compared to manual testing? Consider speed, accuracy, and maintainability.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 100,\n  \"systemPrompt\": \"Provide a numerical rating between 1 and 100.\",\n  \"outputFormat\": {\n    \"type\": \"number\"\n  }\n}",
+              "raw": "{\n  \"prompt\": \"On a scale of 1 to 100, how efficient is NutJS for automating desktop applications compared to manual testing? Consider speed, accuracy, and maintainability.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 100,\n  \"systemPrompt\": \"Provide a numerical rating between 1 and 100.\",\n  \"outputFormat\": {\n    \"type\": \"number\"\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2522,7 +2522,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Create a test plan for automating a login form with username, password, and remember me checkbox.\",\n  \"model\": \"gpt-4-turbo\",\n  \"temperature\": 0.6,\n  \"maxTokens\": 600,\n  \"systemPrompt\": \"You are a QA automation expert. Create a detailed test plan in the specified JSON format.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"testName\": {\n        \"type\": \"string\"\n      },\n      \"description\": {\n        \"type\": \"string\"\n      },\n      \"prerequisites\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"steps\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"action\": {\n              \"type\": \"string\"\n            },\n            \"element\": {\n              \"type\": \"string\"\n            },\n            \"data\": {\n              \"type\": \"string\"\n            },\n            \"expectedResult\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\"action\", \"expectedResult\"]\n        }\n      },\n      \"validationPoints\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"estimatedDuration\": {\n        \"type\": \"number\",\n        \"description\": \"Estimated time in seconds\"\n      }\n    },\n    \"required\": [\"testName\", \"description\", \"steps\"],\n    \"additionalProperties\": false\n  }\n}",
+              "raw": "{\n  \"prompt\": \"Create a test plan for automating a login form with username, password, and remember me checkbox.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 0.6,\n  \"maxTokens\": 600,\n  \"systemPrompt\": \"You are a QA automation expert. Create a detailed test plan in the specified JSON format.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"testName\": {\n        \"type\": \"string\"\n      },\n      \"description\": {\n        \"type\": \"string\"\n      },\n      \"prerequisites\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"steps\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"action\": {\n              \"type\": \"string\"\n            },\n            \"element\": {\n              \"type\": \"string\"\n            },\n            \"data\": {\n              \"type\": \"string\"\n            },\n            \"expectedResult\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\"action\", \"expectedResult\"]\n        }\n      },\n      \"validationPoints\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"estimatedDuration\": {\n        \"type\": \"number\",\n        \"description\": \"Estimated time in seconds\"\n      }\n    },\n    \"required\": [\"testName\", \"description\", \"steps\"],\n    \"additionalProperties\": false\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2551,7 +2551,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Hello, how can I help you with desktop automation?\",\n  \"model\": \"gpt-3.5-turbo\"\n}",
+              "raw": "{\n  \"prompt\": \"Hello, how can I help you with desktop automation?\",\n  \"model\": \"gpt-4.1-mini\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2580,7 +2580,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Write a comprehensive guide on desktop automation best practices, covering tools, frameworks, patterns, and real-world examples.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"systemPrompt\": \"You are a technical writer creating detailed documentation.\"\n}",
+              "raw": "{\n  \"prompt\": \"Write a comprehensive guide on desktop automation best practices, covering tools, frameworks, patterns, and real-world examples.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"systemPrompt\": \"You are a technical writer creating detailed documentation.\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2609,7 +2609,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Imagine futuristic desktop automation scenarios for the year 2050.\",\n  \"model\": \"gpt-4-turbo\",\n  \"temperature\": 2.0,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"Be extremely creative and think beyond current technological limitations.\"\n}",
+              "raw": "{\n  \"prompt\": \"Imagine futuristic desktop automation scenarios for the year 2050.\",\n  \"model\": \"gpt-4.1\",\n  \"temperature\": 2.0,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"Be extremely creative and think beyond current technological limitations.\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2638,7 +2638,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"\",\n  \"model\": \"gpt-3.5-turbo\"\n}",
+              "raw": "{\n  \"prompt\": \"\",\n  \"model\": \"gpt-4.1-mini\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2667,7 +2667,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Test prompt\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 2.5\n}",
+              "raw": "{\n  \"prompt\": \"Test prompt\",\n  \"model\": \"gpt-4.1-mini\",\n  \"temperature\": 2.5\n}",
               "options": {
                 "raw": {
                   "language": "json"
