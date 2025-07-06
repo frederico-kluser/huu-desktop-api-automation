@@ -13,6 +13,10 @@ import type { IKeyboardAdapter } from '../../../application/services/keyboard.se
  */
 @injectable()
 export class NutJSKeyboardAdapter implements IKeyboardAdapter {
+  constructor() {
+    // Configurar autoDelayMs como 0 para garantir digitação instantânea
+    keyboard.config.autoDelayMs = 0;
+  }
   /**
    * Digita um texto caractere por caractere
    * @param text - O texto a ser digitado

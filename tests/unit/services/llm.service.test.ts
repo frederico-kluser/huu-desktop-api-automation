@@ -3,6 +3,7 @@ import { OutputParserFactory } from '../../../src/application/factory/output-par
 import type { ILLMAdapter } from '../../../src/infrastructure/adapters/langchain/langchain-llm.adapter.js';
 import type { LLMRequest } from '../../../src/application/dto/llm-request.dto.js';
 import type { LLMResponse } from '../../../src/domain/entities/llm-response.js';
+import { LlmModel } from '../../../src/domain/enums/llm-model.enum.js';
 
 // Mock do OutputParserFactory
 jest.mock('../../../src/application/factory/output-parser.factory.js');
@@ -67,7 +68,7 @@ describe('LLMService', () => {
   describe('generateCompletion', () => {
     const mockLLMResponse: LLMResponse = {
       content: 'Test response',
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4.1-mini' as any,
       finishReason: 'stop',
       usage: {
         promptTokens: 10,
@@ -80,7 +81,7 @@ describe('LLMService', () => {
       // Arrange
       const request: LLMRequest = {
         prompt: 'Test prompt',
-        model: 'gpt-3.5-turbo',
+        model: LlmModel.GPT_4_1_MINI,
         temperature: 0.7,
         maxTokens: 100,
       };
@@ -95,7 +96,7 @@ describe('LLMService', () => {
         success: true,
         data: 'Test response',
         metadata: {
-          model: 'gpt-3.5-turbo',
+          model: LlmModel.GPT_4_1_MINI,
           finishReason: 'stop',
           tokensUsed: 15,
           processingTime: expect.any(Number),
@@ -108,7 +109,7 @@ describe('LLMService', () => {
       // Arrange
       const request: LLMRequest = {
         prompt: 'Test prompt',
-        model: 'gpt-3.5-turbo',
+        model: LlmModel.GPT_4_1_MINI,
         temperature: 0.7,
         maxTokens: 100,
         outputFormat: {
@@ -134,7 +135,7 @@ describe('LLMService', () => {
         success: true,
         data: parsedResponse,
         metadata: {
-          model: 'gpt-3.5-turbo',
+          model: LlmModel.GPT_4_1_MINI,
           finishReason: 'stop',
           tokensUsed: 15,
           processingTime: expect.any(Number),
@@ -151,7 +152,7 @@ describe('LLMService', () => {
       // Arrange
       const request: LLMRequest = {
         prompt: 'Test prompt',
-        model: 'gpt-3.5-turbo',
+        model: LlmModel.GPT_4_1_MINI,
         temperature: 0.7,
         maxTokens: 100,
       };
@@ -173,7 +174,7 @@ describe('LLMService', () => {
       // Arrange
       const request: LLMRequest = {
         prompt: 'Test prompt',
-        model: 'gpt-3.5-turbo',
+        model: LlmModel.GPT_4_1_MINI,
         temperature: 0.7,
         maxTokens: 100,
         outputFormat: {
@@ -199,7 +200,7 @@ describe('LLMService', () => {
         success: true,
         data: 'Test response', // Fallback to string
         metadata: {
-          model: 'gpt-3.5-turbo',
+          model: LlmModel.GPT_4_1_MINI,
           finishReason: 'stop',
           tokensUsed: 15,
           processingTime: expect.any(Number),
@@ -217,7 +218,7 @@ describe('LLMService', () => {
 
       const request: LLMRequest = {
         prompt: 'Test prompt',
-        model: 'gpt-3.5-turbo',
+        model: LlmModel.GPT_4_1_MINI,
         temperature: 0.7,
         maxTokens: 100,
         outputFormat: largeSchema,

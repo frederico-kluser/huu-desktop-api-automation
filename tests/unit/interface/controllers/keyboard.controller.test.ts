@@ -6,12 +6,10 @@ jest.mock('tsyringe', () => ({
     resolve: jest.fn().mockImplementation((token: string) => {
       if (token === 'KeyboardService') {
         return {
-          type: jest
-            .fn()
-            .mockResolvedValue({
-              success: true,
-              data: { textLength: 5, mode: 'instant', timing: 0 },
-            }),
+          type: jest.fn().mockResolvedValue({
+            success: true,
+            data: { textLength: 5, mode: 'instant', timing: 0 },
+          }),
           pressKey: jest.fn().mockResolvedValue({ success: true, data: { key: 'a' } }),
           combination: jest
             .fn()
@@ -23,12 +21,10 @@ jest.mock('tsyringe', () => ({
           copy: jest
             .fn()
             .mockResolvedValue({ success: true, data: { contentLength: 10, sizeBytes: 10 } }),
-          paste: jest
-            .fn()
-            .mockResolvedValue({
-              success: true,
-              data: { content: 'test', isEmpty: false, contentLength: 4 },
-            }),
+          paste: jest.fn().mockResolvedValue({
+            success: true,
+            data: { content: 'test', isEmpty: false, contentLength: 4 },
+          }),
           clear: jest.fn().mockResolvedValue({ success: true, data: { cleared: true } }),
         };
       }

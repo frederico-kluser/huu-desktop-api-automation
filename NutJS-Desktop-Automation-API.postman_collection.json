@@ -266,6 +266,259 @@
             "description": "Stream mouse position in real-time using Server-Sent Events.\n\n**Note:** This endpoint requires API key authentication and returns a continuous stream of position data."
           },
           "response": []
+        },
+        {
+          "name": "Move Mouse - Instant Movement",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": 1200,\n  \"y\": 800,\n  \"smooth\": false,\n  \"duration\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/move",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "move"]
+            },
+            "description": "Example of instant mouse movement without smooth animation (duration: 0)."
+          },
+          "response": []
+        },
+        {
+          "name": "Move Mouse - Very Slow Movement",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": 100,\n  \"y\": 100,\n  \"smooth\": true,\n  \"duration\": 5000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/move",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "move"]
+            },
+            "description": "Example of very slow smooth movement taking 5 seconds (maximum duration)."
+          },
+          "response": []
+        },
+        {
+          "name": "Move Mouse - Top Left Corner",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": 0,\n  \"y\": 0,\n  \"smooth\": true,\n  \"duration\": 500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/move",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "move"]
+            },
+            "description": "Move mouse to the top-left corner of the screen (0, 0)."
+          },
+          "response": []
+        },
+        {
+          "name": "Click Mouse - Right Click",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": 800,\n  \"y\": 600,\n  \"button\": \"right\",\n  \"doubleClick\": false,\n  \"smooth\": true,\n  \"duration\": 300\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/click",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "click"]
+            },
+            "description": "Example of right-click action at specific coordinates."
+          },
+          "response": []
+        },
+        {
+          "name": "Click Mouse - Middle Click",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": 960,\n  \"y\": 540,\n  \"button\": \"middle\",\n  \"doubleClick\": false,\n  \"smooth\": false,\n  \"duration\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/click",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "click"]
+            },
+            "description": "Example of middle mouse button click without smooth movement."
+          },
+          "response": []
+        },
+        {
+          "name": "Click Mouse - Double Click",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"x\": 400,\n  \"y\": 300,\n  \"button\": \"left\",\n  \"doubleClick\": true,\n  \"smooth\": true,\n  \"duration\": 500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/click",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "click"]
+            },
+            "description": "Example of double-click action to open files or select text."
+          },
+          "response": []
+        },
+        {
+          "name": "Drag Mouse - Horizontal Drag",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"x\": 200,\n    \"y\": 400\n  },\n  \"to\": {\n    \"x\": 800,\n    \"y\": 400\n  },\n  \"duration\": 1500,\n  \"smooth\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/drag",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "drag"]
+            },
+            "description": "Example of horizontal drag (useful for sliders or horizontal scrolling)."
+          },
+          "response": []
+        },
+        {
+          "name": "Drag Mouse - Vertical Drag",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"x\": 600,\n    \"y\": 100\n  },\n  \"to\": {\n    \"x\": 600,\n    \"y\": 700\n  },\n  \"duration\": 1000,\n  \"smooth\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/drag",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "drag"]
+            },
+            "description": "Example of vertical drag (useful for scrolling or moving items vertically)."
+          },
+          "response": []
+        },
+        {
+          "name": "Drag Mouse - Quick Drag",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"x\": 300,\n    \"y\": 300\n  },\n  \"to\": {\n    \"x\": 700,\n    \"y\": 500\n  },\n  \"duration\": 100,\n  \"smooth\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/drag",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "drag"]
+            },
+            "description": "Example of quick drag with minimum duration (100ms) and no smooth movement."
+          },
+          "response": []
+        },
+        {
+          "name": "Scroll Mouse - Maximum Amount",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"direction\": \"down\",\n  \"amount\": 10,\n  \"smooth\": true,\n  \"duration\": 2000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/scroll",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "scroll"]
+            },
+            "description": "Example of maximum scroll amount (10 units) with smooth scrolling."
+          },
+          "response": []
+        },
+        {
+          "name": "Scroll Mouse - Single Unit Up",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"direction\": \"up\",\n  \"amount\": 1,\n  \"smooth\": false,\n  \"duration\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/mouse/scroll",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "mouse", "scroll"]
+            },
+            "description": "Example of minimal scroll (1 unit) upward without smooth animation."
+          },
+          "response": []
         }
       ]
     },
@@ -466,6 +719,248 @@
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"combination\": \"ctrl+c\"\n  }\n}"
             }
           ]
+        },
+        {
+          "name": "Type Long Text - Instant Mode",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\",\n  \"mode\": \"instant\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/type",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "type"]
+            },
+            "description": "Example of typing a long paragraph of text instantly without delay."
+          },
+          "response": []
+        },
+        {
+          "name": "Type Special Characters",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Special chars: !@#$%^&*()_+-=[]{}|;':\\\",./<>?`~\",\n  \"mode\": \"perChar\",\n  \"value\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/type",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "type"]
+            },
+            "description": "Example of typing text with various special characters."
+          },
+          "response": []
+        },
+        {
+          "name": "Type Emojis",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Hello World! 😀 🚀 ✨ 🎉 💻 🔥 🌟 👍 ❤️ 🎯\",\n  \"mode\": \"perChar\",\n  \"value\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/type",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "type"]
+            },
+            "description": "Example of typing text with emoji characters."
+          },
+          "response": []
+        },
+        {
+          "name": "Type Very Fast (10ms delay)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"This text is being typed extremely fast with only 10ms delay between each character!\",\n  \"mode\": \"perChar\",\n  \"value\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/type",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "type"]
+            },
+            "description": "Example of very fast typing with minimal delay between characters."
+          },
+          "response": []
+        },
+        {
+          "name": "Type Very Slow (500ms delay)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"This... text... types... very... slowly...\",\n  \"mode\": \"perChar\",\n  \"value\": 500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/type",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "type"]
+            },
+            "description": "Example of very slow typing with 500ms delay between each character."
+          },
+          "response": []
+        },
+        {
+          "name": "Select All (Ctrl+A)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keys\": [\"ctrl\", \"a\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/combination",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "combination"]
+            },
+            "description": "Select all text in the current field or document (Ctrl+A)."
+          },
+          "response": []
+        },
+        {
+          "name": "Paste (Ctrl+V)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keys\": [\"ctrl\", \"v\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/combination",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "combination"]
+            },
+            "description": "Paste content from clipboard (Ctrl+V)."
+          },
+          "response": []
+        },
+        {
+          "name": "Undo (Ctrl+Z)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keys\": [\"ctrl\", \"z\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/combination",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "combination"]
+            },
+            "description": "Undo the last action (Ctrl+Z)."
+          },
+          "response": []
+        },
+        {
+          "name": "Press Tab Multiple Times",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// This example demonstrates pressing Tab key 5 times",
+                  "// You would need to make 5 separate API calls to achieve this"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"tab\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/press",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "press"]
+            },
+            "description": "Press Tab key to navigate between form fields. Note: To press Tab multiple times, you need to make multiple API calls. This example shows a single Tab press."
+          },
+          "response": []
+        },
+        {
+          "name": "Press F5 (Refresh)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"f5\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/keyboard/press",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "keyboard", "press"]
+            },
+            "description": "Press F5 key to refresh the current page or application."
+          },
+          "response": []
         }
       ]
     },
@@ -657,6 +1152,167 @@
               "body": "{\n  \"success\": true,\n  \"data\": {\n    \"cleared\": true\n  }\n}"
             }
           ]
+        },
+        {
+          "name": "Copy Long Text to Clipboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\n\\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "copy"]
+            },
+            "description": "Example of copying a long text with multiple paragraphs to clipboard."
+          },
+          "response": []
+        },
+        {
+          "name": "Copy JSON to Clipboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"{\\n  \\\"name\\\": \\\"John Doe\\\",\\n  \\\"email\\\": \\\"john@example.com\\\",\\n  \\\"age\\\": 30,\\n  \\\"address\\\": {\\n    \\\"street\\\": \\\"123 Main St\\\",\\n    \\\"city\\\": \\\"New York\\\",\\n    \\\"zip\\\": \\\"10001\\\"\\n  }\\n}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "copy"]
+            },
+            "description": "Example of copying JSON data to clipboard (useful for testing data transfer)."
+          },
+          "response": []
+        },
+        {
+          "name": "Copy Code Snippet to Clipboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"function fibonacci(n) {\\n  if (n <= 1) return n;\\n  return fibonacci(n - 1) + fibonacci(n - 2);\\n}\\n\\n// Example usage\\nconsole.log(fibonacci(10)); // Output: 55\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "copy"]
+            },
+            "description": "Example of copying code snippet to clipboard with proper formatting."
+          },
+          "response": []
+        },
+        {
+          "name": "Copy URL to Clipboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"https://github.com/nut-tree/nut.js\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "copy"]
+            },
+            "description": "Example of copying a URL to clipboard."
+          },
+          "response": []
+        },
+        {
+          "name": "Copy Email Template to Clipboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Subject: Desktop Automation Test Report\\n\\nDear Team,\\n\\nI am pleased to share the results of our latest desktop automation tests:\\n\\n• Test Suite: Login Flow\\n• Total Tests: 25\\n• Passed: 23\\n• Failed: 2\\n• Duration: 3m 45s\\n\\nPlease review the attached detailed report.\\n\\nBest regards,\\nQA Team\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "copy"]
+            },
+            "description": "Example of copying an email template with formatting."
+          },
+          "response": []
+        },
+        {
+          "name": "Copy Special Characters to Clipboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Special characters: © ® ™ € £ ¥ § ¶ • … × ÷ ± ≠ ≤ ≥ ∞ ∫ ∑ √ π Ω α β γ δ\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "copy"]
+            },
+            "description": "Example of copying special unicode characters and symbols."
+          },
+          "response": []
+        },
+        {
+          "name": "Copy Base64 Data to Clipboard",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/clipboard/copy",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "clipboard", "copy"]
+            },
+            "description": "Example of copying base64 encoded data (1x1 transparent PNG)."
+          },
+          "response": []
         }
       ]
     },
@@ -785,6 +1441,167 @@
               "path": ["api", "v1", "screen", "waitFor"]
             },
             "description": "Wait for an image to appear on screen.\n\n**Parameters:**\n- `template` (required): Base64 encoded image to wait for\n- `timeout` (optional): Max wait time in ms (default: 5000)\n- `confidence` (optional): Match confidence threshold 0-1 (default: 0.8)\n- `region` (optional): Limit search to specific region"
+          },
+          "response": []
+        },
+        {
+          "name": "Capture Screen - Specific Region",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"region\": {\n    \"x\": 100,\n    \"y\": 100,\n    \"width\": 400,\n    \"height\": 300\n  },\n  \"format\": \"png\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/screen/capture",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "screen", "capture"]
+            },
+            "description": "Capture a specific region of the screen (e.g., a window or dialog box)."
+          },
+          "response": []
+        },
+        {
+          "name": "Capture Screen - JPEG Format",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"format\": \"jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/screen/capture",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "screen", "capture"]
+            },
+            "description": "Capture full screen in JPEG format (smaller file size, lossy compression)."
+          },
+          "response": []
+        },
+        {
+          "name": "Find on Screen - High Confidence",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n  \"confidence\": 0.95\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/screen/find",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "screen", "find"]
+            },
+            "description": "Find image with high confidence (0.95) for precise matching."
+          },
+          "response": []
+        },
+        {
+          "name": "Find on Screen - Low Confidence",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n  \"confidence\": 0.5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/screen/find",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "screen", "find"]
+            },
+            "description": "Find image with low confidence (0.5) for fuzzy matching."
+          },
+          "response": []
+        },
+        {
+          "name": "Find on Screen - Search in Region",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n  \"confidence\": 0.8,\n  \"region\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"width\": 500,\n    \"height\": 500\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/screen/find",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "screen", "find"]
+            },
+            "description": "Search for image only in the top-left quadrant of the screen."
+          },
+          "response": []
+        },
+        {
+          "name": "Wait for Image - Long Timeout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n  \"timeout\": 30000,\n  \"confidence\": 0.85\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/screen/waitFor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "screen", "waitFor"]
+            },
+            "description": "Wait up to 30 seconds for an image to appear (useful for slow-loading applications)."
+          },
+          "response": []
+        },
+        {
+          "name": "Wait for Image - Quick Check",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template\": \"data:image/png;base64,iVBORw0KGgoAAAANS...\",\n  \"timeout\": 1000,\n  \"confidence\": 0.9,\n  \"region\": {\n    \"x\": 500,\n    \"y\": 300,\n    \"width\": 200,\n    \"height\": 100\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/screen/waitFor",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "screen", "waitFor"]
+            },
+            "description": "Quick 1-second check for an image in a specific region."
           },
           "response": []
         }
@@ -1459,6 +2276,412 @@
               "body": "{\n  \"success\": false,\n  \"error\": \"Output format muito grande: 15000 bytes (máximo: 10240)\",\n  \"code\": \"SCHEMA_TOO_LARGE\"\n}"
             }
           ]
+        },
+        {
+          "name": "Generate Completion - GPT-4o Model",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Write a JavaScript function to control mouse movement with NutJS.\",\n  \"model\": \"gpt-4o\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 300,\n  \"systemPrompt\": \"You are a coding assistant specialized in desktop automation. Provide clean, working code examples.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example using GPT-4o model with low temperature for precise code generation."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - GPT-4o-mini Model",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"List the top 5 use cases for desktop automation in QA testing.\",\n  \"model\": \"gpt-4o-mini\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 200\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example using GPT-4o-mini model for cost-effective completions."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - DeepSeek Model",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Explain the architecture of a desktop automation API in simple terms.\",\n  \"model\": \"deepseek-chat\",\n  \"temperature\": 0.6,\n  \"maxTokens\": 250,\n  \"systemPrompt\": \"You are a technical educator. Explain complex concepts in simple, understandable terms.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example using DeepSeek model for explanatory content."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - High Temperature Creative",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Create 5 innovative ideas for using desktop automation in unexpected ways.\",\n  \"model\": \"gpt-4-turbo\",\n  \"temperature\": 1.5,\n  \"maxTokens\": 400,\n  \"systemPrompt\": \"You are a creative innovator. Think outside the box and suggest unconventional applications.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example with high temperature (1.5) for more creative and diverse outputs."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Low Temperature Deterministic",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Convert this pseudocode to Python: 'move mouse to (100, 200), wait 2 seconds, click left button'\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 0,\n  \"maxTokens\": 150,\n  \"systemPrompt\": \"You are a code converter. Convert pseudocode to valid Python code using pyautogui library. Be precise and deterministic.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example with temperature 0 for deterministic, consistent outputs."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Array Output Format",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"List 5 keyboard shortcuts that every developer should know.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 300,\n  \"systemPrompt\": \"Provide your response as a JSON array of strings.\",\n  \"outputFormat\": {\n    \"type\": \"array\",\n    \"items\": {\n      \"type\": \"string\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example with array output format for list responses."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Boolean Output Format",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Is desktop automation useful for regression testing? Consider factors like reliability, maintenance effort, and ROI.\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 50,\n  \"systemPrompt\": \"Analyze the question and respond with only true or false.\",\n  \"outputFormat\": {\n    \"type\": \"boolean\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example with boolean output format for yes/no decisions."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Number Output Format",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"On a scale of 1 to 100, how efficient is NutJS for automating desktop applications compared to manual testing? Consider speed, accuracy, and maintainability.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.5,\n  \"maxTokens\": 100,\n  \"systemPrompt\": \"Provide a numerical rating between 1 and 100.\",\n  \"outputFormat\": {\n    \"type\": \"number\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example with number output format for ratings or scores."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Complex Nested Object",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Create a test plan for automating a login form with username, password, and remember me checkbox.\",\n  \"model\": \"gpt-4-turbo\",\n  \"temperature\": 0.6,\n  \"maxTokens\": 600,\n  \"systemPrompt\": \"You are a QA automation expert. Create a detailed test plan in the specified JSON format.\",\n  \"outputFormat\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"testName\": {\n        \"type\": \"string\"\n      },\n      \"description\": {\n        \"type\": \"string\"\n      },\n      \"prerequisites\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"steps\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"action\": {\n              \"type\": \"string\"\n            },\n            \"element\": {\n              \"type\": \"string\"\n            },\n            \"data\": {\n              \"type\": \"string\"\n            },\n            \"expectedResult\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\"action\", \"expectedResult\"]\n        }\n      },\n      \"validationPoints\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"estimatedDuration\": {\n        \"type\": \"number\",\n        \"description\": \"Estimated time in seconds\"\n      }\n    },\n    \"required\": [\"testName\", \"description\", \"steps\"],\n    \"additionalProperties\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example with complex nested object structure for detailed test plans."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Minimal Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Hello, how can I help you with desktop automation?\",\n  \"model\": \"gpt-3.5-turbo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Minimal request with only required fields (prompt and model). Uses default values for temperature (0.7) and maxTokens (1000)."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Max Tokens Limit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Write a comprehensive guide on desktop automation best practices, covering tools, frameworks, patterns, and real-world examples.\",\n  \"model\": \"gpt-4\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"systemPrompt\": \"You are a technical writer creating detailed documentation.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example using maximum allowed tokens (4096) for long-form content generation."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Temperature at Maximum",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Imagine futuristic desktop automation scenarios for the year 2050.\",\n  \"model\": \"gpt-4-turbo\",\n  \"temperature\": 2.0,\n  \"maxTokens\": 500,\n  \"systemPrompt\": \"Be extremely creative and think beyond current technological limitations.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example with maximum temperature (2.0) for highly creative and unpredictable outputs."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Error: Empty Prompt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"\",\n  \"model\": \"gpt-3.5-turbo\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example of validation error when prompt is empty."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Completion - Error: Invalid Temperature",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"Test prompt\",\n  \"model\": \"gpt-3.5-turbo\",\n  \"temperature\": 2.5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/llm",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "llm"]
+            },
+            "description": "Example of validation error when temperature exceeds maximum value (2.0)."
+          },
+          "response": []
         }
       ]
     }

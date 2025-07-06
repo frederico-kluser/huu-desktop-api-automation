@@ -3,6 +3,9 @@ const mockKeyboard = {
   type: jest.fn(),
   pressKey: jest.fn(),
   releaseKey: jest.fn(),
+  config: {
+    autoDelayMs: 0,
+  },
 };
 
 const Key = {
