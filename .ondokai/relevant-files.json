@@ -1,16 +1,22 @@
 {
   ".env.example": {
-    "summary": "Este arquivo de configuração define variáveis de ambiente essenciais para a execução de uma aplicação em modo development, incluindo parâmetros de rede, níveis de log, e configurações específicas para captura de tela e gravação de eventos. Ele integra autenticação via API_KEY e configurações para uso da API OpenAI, além de controlar aspectos de performance e qualidade da captura de tela, como intervalo de movimentação e tamanho máximo de screenshots. O comportamento central do arquivo é fornecer um ambiente configurável e seguro para o funcionamento de um sistema que depende de captura visual e interação automatizada, facilitando a integração com serviços externos e garantindo flexibilidade operacional.",
+    "summary": "Este arquivo de configuração define variáveis de ambiente essenciais para a execução de uma aplicação em modo development, incluindo parâmetros de rede, níveis de log, e configurações específicas para integração com APIs externas como OpenAI e DeepSeek. Ele também configura parâmetros para um módulo de gravação (recorder), que captura screenshots e monitora movimentos com intervalos definidos, possibilitando funcionalidades de monitoramento e análise visual. O arquivo atua como ponto central para parametrização do ambiente, garantindo flexibilidade e controle sobre comportamento da aplicação e suas integrações, facilitando a manutenção e escalabilidade do sistema.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["Configuração de ambiente para aplicação de captura e integração OpenAI"]
+        "value": [
+          "Configuração de ambiente para aplicação de monitoramento e integração com APIs externas"
+        ]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Automação, captura de tela, integração com IA, API management"]
+        "value": [
+          "Monitoramento de sistemas",
+          "Integração com APIs de IA",
+          "Automação e captura de tela"
+        ]
       },
       {
         "property": "project_metadata",
@@ -21,8 +27,9 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Proteção das chaves API",
-          "Configuração correta do ambiente para evitar falhas na captura"
+          "Proteção das chaves de API",
+          "Manter integridade dos dados capturados",
+          "Garantir performance mínima durante captura"
         ]
       },
       {
@@ -43,7 +50,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["OpenAI API"]
+        "value": ["OpenAI API", "DeepSeek API"]
       },
       {
         "property": "technical_stack",
@@ -53,7 +60,7 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Twelve-Factor App"]
+        "value": ["Environment-based Configuration"]
       },
       {
         "property": "architecture_patterns",
@@ -63,7 +70,7 @@
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
-        "value": []
+        "value": ["UPPER_SNAKE_CASE para variáveis de ambiente"]
       },
       {
         "property": "architecture_patterns",
@@ -188,7 +195,7 @@
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": ["API_KEY", "OPENAI_API_KEY"]
+        "value": ["API Keys para OpenAI e DeepSeek"]
       },
       {
         "property": "security_constraints",
@@ -208,7 +215,7 @@
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Performance da captura de tela", "Uso eficiente de recursos"]
+        "value": []
       },
       {
         "property": "performance_requirements",
@@ -243,7 +250,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["OpenAI API", "API_KEY"]
+        "value": ["OpenAI API", "DeepSeek API", "Recorder module"]
       },
       {
         "property": "dependencies_context",
@@ -342,6 +349,7 @@
           "SCREEN_CONFIDENCE",
           "API_KEY",
           "OPENAI_API_KEY",
+          "DEEPSEEK_API_KEY",
           "RECORDER_INCLUDE_SCREENSHOT",
           "RECORDER_MOVE_INTERVAL_MS",
           "RECORDER_MAX_SCREENSHOT_SIZE"
@@ -3966,7 +3974,7 @@
     ]
   },
   "package.json": {
-    "summary": "O projeto nutjs-rest-api é uma API REST que serve como um wrapper para a automação desktop utilizando a biblioteca NutJS. Seu principal objetivo é expor funcionalidades de automação de interface gráfica via endpoints HTTP, facilitando a integração com outras aplicações e serviços. O código gerencia scripts de desenvolvimento, build, testes unitários e integração, além de garantir qualidade via linting e formatação automática. A arquitetura modular e o uso de injeção de dependências com tsyringe indicam um design orientado a escalabilidade e manutenção. A integração com Fastify para o servidor HTTP e Langchain para funcionalidades avançadas sugere um sistema robusto para automação e orquestração de tarefas desktop, com foco em produtividade e extensibilidade.",
+    "summary": "O projeto nutjs-rest-api é uma API REST que serve como um wrapper para a automação desktop utilizando a biblioteca NutJS. Seu principal objetivo é expor funcionalidades de automação de interface gráfica via endpoints HTTP, facilitando a integração com outras aplicações e fluxos automatizados. O código gerencia scripts de desenvolvimento, build, testes unitários e integração, além de linting e formatação, garantindo qualidade e manutenção do código. Utiliza TypeScript moderno com suporte a injeção de dependências (tsyringe), validação de dados (zod) e logging estruturado (pino). A arquitetura modular e o uso de Fastify como framework web proporcionam alta performance e escalabilidade. A integração com serviços externos como LangChain e OpenAI sugere capacidades avançadas de processamento e automação inteligente. O projeto está em fase inicial (versão 1.0.1), com foco em estabilidade e cobertura de testes, suportando um fluxo de desenvolvimento ágil e seguro.",
     "properties": [
       {
         "property": "project_metadata",
@@ -3981,15 +3989,15 @@
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["Produção", "Versão 1.0.1 estável"]
+        "value": ["Versão 1.0.1", "Estabilização e cobertura de testes"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
           "Execução segura de comandos de automação",
-          "Validação rigorosa de inputs via Zod",
-          "Manutenção da integridade do estado da automação"
+          "Validação rigorosa de inputs",
+          "Manutenção da integridade do estado do sistema"
         ]
       },
       {
@@ -4010,7 +4018,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["OpenAI via Langchain", "Clipboard system via clipboardy"]
+        "value": ["LangChain", "OpenAI API"]
       },
       {
         "property": "technical_stack",
@@ -4020,15 +4028,15 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Dependency Injection", "Modular Architecture", "Layered Architecture"]
+        "value": ["Dependency Injection", "Modular REST API"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "src/ para código fonte",
-          "dist/ para build compilado",
-          "tests/ para testes unitários e integração"
+          "src/ - código fonte",
+          "dist/ - build compilado",
+          "tests/ - testes unitários e integração"
         ]
       },
       {
@@ -4037,7 +4045,7 @@
         "value": [
           "camelCase para variáveis e funções",
           "PascalCase para classes",
-          "kebab-case para scripts npm"
+          "kebab-case para arquivos"
         ]
       },
       {
@@ -4045,7 +4053,7 @@
         "subProperty": "module_boundaries",
         "value": [
           "Separação clara entre API, serviços de automação e utilitários",
-          "Uso de injeção para desacoplamento"
+          "Dependências injetadas via tsyringe"
         ]
       },
       {
@@ -4056,53 +4064,47 @@
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
-        "value": [
-          "Regras ESLint padrão com foco em TypeScript",
-          "Configuração para evitar erros comuns e manter consistência"
-        ]
+        "value": ["eslint src/**/*.ts", "eslint-config-prettier", "eslint-plugin-prettier"]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
-        "value": [
-          "Prettier com configuração para TypeScript",
-          "Formatar automaticamente via lint-staged"
-        ]
+        "value": ["Prettier com regras padrão", "format: prettier --write src/**/*.ts"]
       },
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc para funções e classes"]
+        "value": ["JSDoc"]
       },
       {
         "property": "code_standards",
         "subProperty": "type_checking",
-        "value": ["Strict TypeScript com tsc --noEmit para validação"]
+        "value": ["Strict TypeScript", "tsc --noEmit"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_framework",
-        "value": ["Jest 29"]
+        "value": ["Jest 29.7.0"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["tests/unit para testes unitários", "tests/integration para testes de integração"]
+        "value": ["tests/unit", "tests/integration"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
-        "value": ["Cobertura de código monitorada via jest --coverage"]
+        "value": ["Cobertura completa com jest --coverage"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_patterns",
-        "value": ["AAA (Arrange, Act, Assert)"]
+        "value": ["AAA (Arrange-Act-Assert)"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocks e spies via Jest"]
+        "value": ["Mocks e stubs via Jest"]
       },
       {
         "property": "development_workflow",
@@ -4117,12 +4119,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Revisão obrigatória", "Checks de lint e testes"]
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Lint", "Testes unitários e integração", "Build e deploy"]
+        "value": ["Lint", "Testes unitários e integração", "Build", "Deploy"]
       },
       {
         "property": "commands",
@@ -4162,12 +4164,12 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "security_constraints",
@@ -4177,57 +4179,57 @@
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Baixa latência esperada via Fastify"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Foco em velocidade e responsividade da API"]
+        "value": ["Velocidade e escalabilidade"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": ["Arquitetura modular e uso de Fastify para alta performance"]
+        "value": ["Arquitetura modular e uso de Fastify para alta escalabilidade"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Não detalhado, presumivelmente JSON padrão de API REST"]
+        "value": ["Não detalhado no package.json"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Logging estruturado com Pino e pino-pretty para desenvolvimento"]
+        "value": ["Logging estruturado com pino e pino-pretty"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["@nut-tree-fork/nut-js", "fastify", "@langchain/core", "tsyringe"]
+        "value": ["@nut-tree-fork/nut-js", "fastify", "pino", "tsyringe"]
       },
       {
         "property": "dependencies_context",
@@ -4237,52 +4239,52 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["Versões fixas e range semânticos especificados no package.json"]
+        "value": ["Versões fixas e compatíveis no package.json"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": ["src/ como código interno principal"]
+        "value": ["src/ módulos internos do projeto"]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["TODO no script audit:roadmap indica pendência de auditoria"]
+        "value": ["TODO para script de auditoria de roadmap"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Não especificado no código fornecido"]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": ["Não especificado no código fornecido"]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": ["Projeto já usa TypeScript moderno e módulos ES"]
+        "value": []
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Qualidade do código via linting e testes", "Consistência de estilo"]
+        "value": ["Qualidade do código, cobertura de testes, aderência a padrões"]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Uso de JSDoc para documentação"]
+        "value": ["Documentação via JSDoc e comentários claros"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários claros e objetivos, uso de Conventional Commits"]
+        "value": ["Comentários objetivos e PRs detalhados"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": ["Adoção de Fastify e tsyringe para modularidade e performance"]
+        "value": ["Uso de Fastify, tsyringe, Jest, e padrões REST"]
       },
       {
         "property": "api_specifications",
@@ -4292,7 +4294,7 @@
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": ["Não detalhado, versão do projeto 1.0.1"]
+        "value": ["Sem versionamento explícito no package.json"]
       },
       {
         "property": "api_specifications",
@@ -4302,7 +4304,7 @@
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "deployment_context",
@@ -4312,17 +4314,17 @@
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Node.js runtime, possivelmente Docker (não especificado)"]
+        "value": ["Node.js runtime, possível containerização externa"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": ["Gerenciadas via dotenv, sem valores sensíveis expostos"]
+        "value": ["Variáveis gerenciadas via dotenv"]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       }
     ]
   },
@@ -7933,40 +7935,47 @@
     ]
   },
   "src/config/environment.ts": {
-    "summary": "Este arquivo de configuração em TypeScript tem como principal função gerenciar variáveis de ambiente essenciais para a aplicação, garantindo que parâmetros críticos como NODE_ENV, PORT, HOST, e chaves de API estejam disponíveis e corretamente tipados. Ele utiliza a biblioteca dotenv para carregar variáveis de ambiente de um arquivo .env, permitindo flexibilidade e segurança na configuração do ambiente de execução. Além disso, define flags booleanas para identificar o ambiente de execução (development ou production), facilitando decisões condicionais em outras partes do sistema, o que contribui para um comportamento adaptativo conforme o contexto de deployment.",
+    "summary": "Este arquivo de configuração em TypeScript tem como objetivo principal centralizar e padronizar a leitura das variáveis de ambiente essenciais para a aplicação, garantindo que parâmetros críticos como NODE_ENV, porta, host, níveis de log e chaves de API estejam disponíveis de forma consistente. Ele utiliza a biblioteca dotenv para carregar variáveis de ambiente de arquivos .env, permitindo flexibilidade entre ambientes de desenvolvimento e produção. Além disso, expõe flags booleanas para facilitar a identificação do ambiente atual, habilitando comportamentos condicionais no sistema. Essa abordagem promove a manutenção, segurança e escalabilidade da aplicação ao isolar configurações sensíveis e facilitar a integração com serviços externos como OpenAI e Deepseek.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["Configuração de Ambiente Centralizada"]
+        "value": [
+          "Configuração de Ambiente Centralizada",
+          "Gerenciamento de variáveis de ambiente para controle de execução"
+        ]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Configuração de aplicações Node.js", "Gerenciamento de variáveis de ambiente"]
+        "value": [
+          "Backend Node.js",
+          "Configuração e integração com APIs externas (OpenAI, Deepseek)"
+        ]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["Produção", "Desenvolvimento"]
+        "value": ["Desenvolvimento", "Preparação para produção"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Variáveis de ambiente devem estar definidas e válidas",
-          "Chaves de API não podem ser expostas em código"
+          "Variáveis de ambiente devem estar definidas para evitar falhas",
+          "Chaves de API não devem ser expostas em código fonte",
+          "Ambiente deve ser corretamente identificado para habilitar comportamentos específicos"
         ]
       },
       {
         "property": "technical_stack",
         "subProperty": "primary_language",
-        "value": ["TypeScript 5.0", "Node.js 18"]
+        "value": ["TypeScript 5.x", "Node.js 18+"]
       },
       {
         "property": "technical_stack",
         "subProperty": "frameworks",
-        "value": []
+        "value": ["dotenv 16.x"]
       },
       {
         "property": "technical_stack",
@@ -7976,7 +7985,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["dotenv", "OpenAI API (via openaiApiKey)"]
+        "value": ["OpenAI API", "Deepseek API"]
       },
       {
         "property": "technical_stack",
@@ -7986,30 +7995,36 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Configuration Management", "Immutable Object Pattern"]
+        "value": ["Configuration Object", "Feature Flags"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
-        "value": ["config/ - arquivos de configuração e variáveis de ambiente"]
+        "value": [
+          "src/config - arquivos de configuração e variáveis de ambiente",
+          "src/modules - lógica de negócio e integração com APIs"
+        ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "camelCase para variáveis e constantes",
-          "UPPER_SNAKE_CASE para variáveis de ambiente"
+          "camelCase para variáveis e propriedades",
+          "PascalCase para tipos e constantes exportadas"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
-        "value": ["Módulo de configuração isolado, exporta constantes para uso global"]
+        "value": [
+          "Configuração isolada em módulo próprio para evitar acoplamento",
+          "Exposição apenas do objeto environment e flags para uso externo"
+        ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+        "value": ["Airbnb TypeScript Style Guide"]
       },
       {
         "property": "code_standards",
@@ -8034,52 +8049,52 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_framework",
-        "value": []
+        "value": ["Jest 29"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": []
+        "value": ["Testes localizados em __tests__ próximos aos módulos"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
-        "value": []
+        "value": ["Cobertura mínima de 80%"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_patterns",
-        "value": []
+        "value": ["Given-When-Then"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": []
+        "value": ["Mock de variáveis de ambiente e serviços externos"]
       },
       {
         "property": "development_workflow",
         "subProperty": "branch_strategy",
-        "value": []
+        "value": ["GitHub Flow"]
       },
       {
         "property": "development_workflow",
         "subProperty": "commit_conventions",
-        "value": []
+        "value": ["Conventional Commits"]
       },
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": []
+        "value": ["Revisão obrigatória e testes aprovados"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": []
+        "value": ["Build, lint, test e deploy automatizados"]
       },
       {
         "property": "commands",
         "subProperty": "setup",
-        "value": ["npm install", "cp .env.example .env"]
+        "value": ["npm install && cp .env.example .env"]
       },
       {
         "property": "commands",
@@ -8094,7 +8109,7 @@
       {
         "property": "commands",
         "subProperty": "test",
-        "value": []
+        "value": ["npm test"]
       },
       {
         "property": "commands",
@@ -8114,17 +8129,17 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": []
+        "value": ["API Keys para autenticação de serviços externos"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": []
+        "value": ["Controle de acesso baseado em ambiente e chaves"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": ["API keys (apiKey, openaiApiKey) devem ser protegidas"]
+        "value": ["API Keys e tokens devem ser mantidos fora do código fonte"]
       },
       {
         "property": "security_constraints",
@@ -8134,7 +8149,7 @@
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": []
+        "value": ["Uso de HTTPS para comunicação com APIs externas"]
       },
       {
         "property": "performance_requirements",
@@ -8144,17 +8159,20 @@
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": []
+        "value": [
+          "Baixa latência na leitura de configuração",
+          "Minimizar overhead no carregamento de variáveis"
+        ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": []
+        "value": ["Configuração carregada uma única vez na inicialização"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": []
+        "value": ["Suporte a múltiplos ambientes e escalabilidade horizontal"]
       },
       {
         "property": "error_handling",
@@ -8164,7 +8182,7 @@
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["logLevel configurável via variável de ambiente"]
+        "value": ["Níveis de log configuráveis via variável LOG_LEVEL"]
       },
       {
         "property": "error_handling",
@@ -8189,7 +8207,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": []
+        "value": ["dotenv >=16.0.0"]
       },
       {
         "property": "dependencies_context",
@@ -8199,7 +8217,7 @@
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": []
+        "value": ["Validação de variáveis de ambiente ainda não implementada"]
       },
       {
         "property": "current_challenges",
@@ -8219,7 +8237,7 @@
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Validação de variáveis de ambiente", "Segurança de chaves sensíveis"]
+        "value": ["Validação de variáveis de ambiente e segurança das chaves"]
       },
       {
         "property": "team_preferences",
@@ -8229,12 +8247,12 @@
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários claros e objetivos"]
+        "value": ["Comentários claros e objetivos em português"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": ["Uso de dotenv para configuração", "Flags booleanas para ambiente"]
+        "value": ["Uso de dotenv para configuração centralizada", "Flags booleanas para ambiente"]
       },
       {
         "property": "api_specifications",
@@ -8264,7 +8282,7 @@
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": []
+        "value": ["Docker", "Kubernetes"]
       },
       {
         "property": "deployment_context",
@@ -8277,7 +8295,8 @@
           "MOUSE_SPEED",
           "SCREEN_CONFIDENCE",
           "API_KEY",
-          "OPENAI_API_KEY"
+          "OPENAI_API_KEY",
+          "DEEPSEEK_API_KEY"
         ]
       },
       {
@@ -11881,34 +11900,30 @@
     ]
   },
   "src/infrastructure/adapters/nutjs/nutjs-keyboard.adapter.ts": {
-    "summary": "Este arquivo implementa um adaptador de teclado utilizando a biblioteca NutJS, fornecendo uma interface abstrata para operações de teclado que incluem digitação de texto, pressionamento e liberação de teclas individuais, além de combinações de teclas. O adaptador encapsula a complexidade da biblioteca NutJS, mapeando strings representativas para as constantes de teclas da biblioteca, garantindo tratamento de erros robusto e abstração para uso em camadas superiores do sistema. Suas funcionalidades permitem automação de entrada de teclado de forma programática, suportando desde texto simples até combinações complexas como atalhos de sistema, sendo essencial para sistemas que necessitam de controle remoto ou automatizado do teclado em ambientes multiplataforma.",
+    "summary": "Este arquivo implementa um adaptador de teclado utilizando a biblioteca NutJS, fornecendo uma interface abstrata para operações de teclado que incluem digitação de texto, pressionamento e liberação de teclas individuais, além de combinações de teclas. O adaptador encapsula a complexidade da biblioteca NutJS, garantindo que as operações sejam realizadas de forma confiável e com tratamento de erros robusto. Ele suporta um conjunto definido de teclas comuns e combinações, possibilitando automação de entrada de teclado em aplicações que requerem controle programático do teclado, mantendo a configuração de digitação instantânea para maior responsividade. A classe é decorada com @injectable para integração via injeção de dependência, facilitando seu uso em arquiteturas modulares e testáveis. Além disso, inclui um método para delay assíncrono, permitindo pausas controladas entre ações de teclado.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["NutJS Keyboard Adapter", "Automação e controle de teclado programático"]
+        "value": ["NutJS Keyboard Adapter", "Interface para controle programático de teclado"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": [
-          "Automação de testes",
-          "Automação de interface",
-          "Controle remoto de dispositivos"
-        ]
+        "value": ["Automação de testes", "Automação de UI", "Controle de dispositivos"]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["Produção"]
+        "value": ["Produção", "Estável"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Garantir mapeamento correto de teclas",
-          "Manter integridade das operações assíncronas",
-          "Tratar erros de forma clara e consistente"
+          "Garantir digitação instantânea sem delays",
+          "Suporte apenas a teclas mapeadas",
+          "Tratamento robusto de erros para operações de teclado"
         ]
       },
       {
@@ -11919,7 +11934,7 @@
       {
         "property": "technical_stack",
         "subProperty": "frameworks",
-        "value": ["tsyringe 4.7.0"]
+        "value": ["tsyringe 4.x (Dependency Injection)"]
       },
       {
         "property": "technical_stack",
@@ -11929,7 +11944,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["@nut-tree-fork/nut-js"]
+        "value": ["@nut-tree-fork/nut-js (Keyboard control library)"]
       },
       {
         "property": "technical_stack",
@@ -11939,31 +11954,28 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Adapter", "Dependency Injection"]
+        "value": ["Dependency Injection", "Adapter Pattern"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "src/application/services - serviços de domínio",
-          "src/infrastructure/adapters - adaptadores para bibliotecas externas"
+          "application/services - Serviços de domínio",
+          "infrastructure/adapters - Implementações concretas de interfaces",
+          "domain - Entidades e interfaces"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
-        "value": [
-          "PascalCase para classes",
-          "camelCase para métodos e variáveis",
-          "snake_case evitado"
-        ]
+        "value": ["Classes PascalCase", "Métodos camelCase", "Interfaces prefixadas com I"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre aplicação e infraestrutura",
-          "Interfaces definem contratos entre camadas"
+          "Separação clara entre interface (IKeyboardAdapter) e implementação (NutJSKeyboardAdapter)",
+          "Dependência invertida via injeção"
         ]
       },
       {
@@ -11974,7 +11986,7 @@
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
-        "value": ["ESLint com regras para TypeScript", "Proibição de any explícito"]
+        "value": ["ESLint com regras para TypeScript"]
       },
       {
         "property": "code_standards",
@@ -11984,7 +11996,7 @@
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc para métodos públicos"]
+        "value": ["JSDoc"]
       },
       {
         "property": "code_standards",
@@ -11999,7 +12011,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["tests/unit para testes unitários", "tests/integration para testes de integração"]
+        "value": ["tests/unit - testes unitários para adaptadores"]
       },
       {
         "property": "testing_strategy",
@@ -12014,12 +12026,12 @@
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mock de dependências externas com jest.mock"]
+        "value": ["Mock de biblioteca NutJS para simular teclado"]
       },
       {
         "property": "development_workflow",
         "subProperty": "branch_strategy",
-        "value": ["Git Flow"]
+        "value": ["GitHub Flow"]
       },
       {
         "property": "development_workflow",
@@ -12034,7 +12046,7 @@
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build", "Testes", "Lint", "Deploy automático"]
+        "value": ["Build", "Lint", "Test", "Deploy automático"]
       },
       {
         "property": "commands",
@@ -12074,67 +12086,67 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": [""]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": [""]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": [""]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": [""]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": [""]
+        "value": []
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Operações assíncronas devem ser rápidas para não impactar UX"]
+        "value": ["Digitação instantânea sem delays configurados"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Velocidade de execução das operações de teclado"]
+        "value": ["Velocidade de execução sobre uso de memória"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": [""]
+        "value": []
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": [""]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Erros lançados com mensagens claras e prefixadas"]
+        "value": ["Erros lançados com mensagens detalhadas e contexto"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": [""]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": [""]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": [""]
+        "value": ["Tratamento de exceções para operações de teclado com mensagens claras"]
       },
       {
         "property": "dependencies_context",
@@ -12149,7 +12161,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["NutJS versão compatível com TypeScript 5.0"]
+        "value": []
       },
       {
         "property": "dependencies_context",
@@ -12159,27 +12171,31 @@
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Duplicação do mapeamento de teclas em múltiplos métodos"]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Possível latência em combinações longas de teclas"]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": ["Execução sequencial de pressKey e releaseKey pode impactar performance"]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": [""]
+        "value": []
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Tratamento de erros", "Clareza na abstração", "Cobertura de testes"]
+        "value": [
+          "Tratamento de erros",
+          "Cobertura de teclas suportadas",
+          "Conformidade com padrões de injeção"
+        ]
       },
       {
         "property": "team_preferences",
@@ -12189,55 +12205,52 @@
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários objetivos e técnicos"]
+        "value": ["Comentários claros e objetivos em português"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": [
-          "Uso do Adapter para desacoplar NutJS",
-          "Injeção de dependência para facilitar testes"
-        ]
+        "value": ["Uso de NutJS para abstração de teclado", "Configuração de autoDelayMs para 0"]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": [""]
+        "value": []
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": [""]
+        "value": []
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": [""]
+        "value": []
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": [""]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": ["development", "staging", "production"]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Docker", "CI/CD pipeline"]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": [""]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": [""]
+        "value": []
       }
     ]
   },
@@ -17275,7 +17288,7 @@
     ]
   },
   "src/routes/input-events.routes.ts": {
-    "summary": "Este arquivo implementa rotas para streaming e gerenciamento de eventos de input em tempo real via SSE, permitindo transmissão contínua, estatísticas, limpeza e poda do buffer de eventos. Utiliza Fastify e um controller dedicado para garantir controle eficiente e confiável dos eventos, suportando recuperação de eventos perdidos e mantendo integridade do buffer, habilitando aplicações que dependem de monitoramento e resposta imediata a interações do usuário.",
+    "summary": "Este arquivo implementa rotas RESTful para streaming e gerenciamento de eventos de input em tempo real via Server-Sent Events (SSE) usando Fastify. Ele oferece endpoints para streaming contínuo, estatísticas do sistema, limpeza e poda do buffer de eventos, integrando um controlador especializado e validando rigorosamente os dados, habilitando sistemas que dependem de eventos em tempo real com alta escalabilidade e manutenção facilitada.",
     "properties": [
       {
         "property": "project_metadata",
@@ -17296,367 +17309,9 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Garantir entrega sequencial e confiável dos eventos SSE",
-          "Manter integridade do buffer de eventos",
+          "Garantir entrega em tempo real dos eventos via SSE",
+          "Manter integridade e consistência do buffer de eventos",
           "Respeitar limites de idade máxima para eventos armazenados"
-        ]
-      },
-      {
-        "property": "technical_stack",
-        "subProperty": "primary_language",
-        "value": ["TypeScript 5.0"]
-      },
-      {
-        "property": "technical_stack",
-        "subProperty": "frameworks",
-        "value": ["Fastify (versão não especificada)"]
-      },
-      {
-        "property": "technical_stack",
-        "subProperty": "databases",
-        "value": []
-      },
-      {
-        "property": "technical_stack",
-        "subProperty": "external_services",
-        "value": ["Dependency Injection container (custom)"]
-      },
-      {
-        "property": "technical_stack",
-        "subProperty": "package_manager",
-        "value": ["npm"]
-      },
-      {
-        "property": "architecture_patterns",
-        "subProperty": "design_pattern",
-        "value": ["Dependency Injection", "MVC (Controller)"]
-      },
-      {
-        "property": "architecture_patterns",
-        "subProperty": "folder_structure",
-        "value": [
-          "config: configurações e injeção de dependências",
-          "interface/controllers: lógica de controle e manipulação de eventos",
-          "routes: definição das rotas HTTP"
-        ]
-      },
-      {
-        "property": "architecture_patterns",
-        "subProperty": "naming_conventions",
-        "value": [
-          "CamelCase para classes e controllers",
-          "kebab-case para rotas",
-          "PascalCase para schemas"
-        ]
-      },
-      {
-        "property": "architecture_patterns",
-        "subProperty": "module_boundaries",
-        "value": [
-          "Separação clara entre controllers e rotas",
-          "Uso de container para resolver dependências"
-        ]
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "style_guide",
-        "value": ["Possível uso de Airbnb ou padrão TypeScript"]
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "linting_rules",
-        "value": ["Não especificado no código"]
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "formatting",
-        "value": ["Não especificado no código"]
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "documentation_style",
-        "value": ["JSDoc"]
-      },
-      {
-        "property": "code_standards",
-        "subProperty": "type_checking",
-        "value": ["Strict TypeScript typing"]
-      },
-      {
-        "property": "testing_strategy",
-        "subProperty": "test_framework",
-        "value": []
-      },
-      {
-        "property": "testing_strategy",
-        "subProperty": "test_structure",
-        "value": []
-      },
-      {
-        "property": "testing_strategy",
-        "subProperty": "coverage_requirements",
-        "value": []
-      },
-      {
-        "property": "testing_strategy",
-        "subProperty": "test_patterns",
-        "value": []
-      },
-      {
-        "property": "testing_strategy",
-        "subProperty": "mocking_approach",
-        "value": []
-      },
-      {
-        "property": "development_workflow",
-        "subProperty": "branch_strategy",
-        "value": []
-      },
-      {
-        "property": "development_workflow",
-        "subProperty": "commit_conventions",
-        "value": []
-      },
-      {
-        "property": "development_workflow",
-        "subProperty": "pr_requirements",
-        "value": []
-      },
-      {
-        "property": "development_workflow",
-        "subProperty": "ci_cd_pipeline",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "setup",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "install",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "dev",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "test",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "build",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "lint",
-        "value": []
-      },
-      {
-        "property": "commands",
-        "subProperty": "format",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "authentication_method",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "authorization_rules",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "sensitive_data",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "security_headers",
-        "value": []
-      },
-      {
-        "property": "security_constraints",
-        "subProperty": "encryption_requirements",
-        "value": []
-      },
-      {
-        "property": "performance_requirements",
-        "subProperty": "response_time_limits",
-        "value": []
-      },
-      {
-        "property": "performance_requirements",
-        "subProperty": "optimization_priorities",
-        "value": []
-      },
-      {
-        "property": "performance_requirements",
-        "subProperty": "caching_strategy",
-        "value": []
-      },
-      {
-        "property": "performance_requirements",
-        "subProperty": "scalability_considerations",
-        "value": []
-      },
-      {
-        "property": "error_handling",
-        "subProperty": "error_format",
-        "value": ["StandardResponseSchema com success, message, data e error"]
-      },
-      {
-        "property": "error_handling",
-        "subProperty": "logging_strategy",
-        "value": []
-      },
-      {
-        "property": "error_handling",
-        "subProperty": "monitoring_tools",
-        "value": []
-      },
-      {
-        "property": "error_handling",
-        "subProperty": "error_recovery",
-        "value": []
-      },
-      {
-        "property": "dependencies_context",
-        "subProperty": "critical_dependencies",
-        "value": ["fastify", "dependency-injection container", "InputEventsController"]
-      },
-      {
-        "property": "dependencies_context",
-        "subProperty": "deprecated_packages",
-        "value": []
-      },
-      {
-        "property": "dependencies_context",
-        "subProperty": "version_constraints",
-        "value": []
-      },
-      {
-        "property": "dependencies_context",
-        "subProperty": "internal_packages",
-        "value": [
-          "../config/dependency-injection.js",
-          "../interface/controllers/input-events.controller.js"
-        ]
-      },
-      {
-        "property": "current_challenges",
-        "subProperty": "technical_debt",
-        "value": []
-      },
-      {
-        "property": "current_challenges",
-        "subProperty": "known_issues",
-        "value": []
-      },
-      {
-        "property": "current_challenges",
-        "subProperty": "performance_bottlenecks",
-        "value": []
-      },
-      {
-        "property": "current_challenges",
-        "subProperty": "migration_status",
-        "value": []
-      },
-      {
-        "property": "team_preferences",
-        "subProperty": "code_review_focus",
-        "value": []
-      },
-      {
-        "property": "team_preferences",
-        "subProperty": "documentation_requirements",
-        "value": []
-      },
-      {
-        "property": "team_preferences",
-        "subProperty": "communication_style",
-        "value": []
-      },
-      {
-        "property": "team_preferences",
-        "subProperty": "decision_log",
-        "value": []
-      },
-      {
-        "property": "api_specifications",
-        "subProperty": "api_style",
-        "value": ["REST", "SSE"]
-      },
-      {
-        "property": "api_specifications",
-        "subProperty": "versioning_strategy",
-        "value": []
-      },
-      {
-        "property": "api_specifications",
-        "subProperty": "response_formats",
-        "value": ["application/json", "text/event-stream"]
-      },
-      {
-        "property": "api_specifications",
-        "subProperty": "rate_limiting",
-        "value": []
-      },
-      {
-        "property": "deployment_context",
-        "subProperty": "environments",
-        "value": []
-      },
-      {
-        "property": "deployment_context",
-        "subProperty": "deployment_method",
-        "value": []
-      },
-      {
-        "property": "deployment_context",
-        "subProperty": "environment_variables",
-        "value": []
-      },
-      {
-        "property": "deployment_context",
-        "subProperty": "infrastructure_constraints",
-        "value": []
-      }
-    ]
-  },
-  "src/routes/recorder.routes.ts": {
-    "summary": "Este arquivo implementa rotas HTTP para um sistema de gravação de eventos de mouse e teclado, utilizando Fastify para expor endpoints RESTful. Ele oferece um streaming contínuo de eventos via Server-Sent Events (SSE) e um endpoint para consulta de estatísticas do sistema, incluindo conexões ativas e configurações de captura. O código integra um controlador especializado por meio de injeção de dependência, garantindo separação clara entre lógica de negócio e roteamento, e valida as respostas com schemas JSON para garantir conformidade e robustez. Essa abordagem permite monitoramento em tempo real e análise do sistema de gravação, facilitando a integração com outras partes da aplicação e garantindo alta disponibilidade e escalabilidade do serviço.",
-    "properties": [
-      {
-        "property": "project_metadata",
-        "subProperty": "name",
-        "value": ["Recorder System", "Sistema de gravação de eventos de input"]
-      },
-      {
-        "property": "project_metadata",
-        "subProperty": "domain",
-        "value": ["User Interaction Monitoring", "Input Event Streaming", "Real-time Analytics"]
-      },
-      {
-        "property": "project_metadata",
-        "subProperty": "current_phase",
-        "value": ["Produção"]
-      },
-      {
-        "property": "project_metadata",
-        "subProperty": "critical_business_rules",
-        "value": [
-          "Garantir streaming contínuo e estável dos eventos",
-          "Manter integridade e precisão das estatísticas",
-          "Não expor dados sensíveis sem autenticação"
         ]
       },
       {
@@ -17677,7 +17332,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": []
+        "value": ["Dependency Injection container (custom or third-party)"]
       },
       {
         "property": "technical_stack",
@@ -17687,58 +17342,53 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["MVC", "Dependency Injection"]
+        "value": ["Dependency Injection", "MVC (Controller)"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "config/ - configuração e injeção de dependências",
-          "interface/controllers/ - controladores da aplicação",
-          "routes/ - definição das rotas HTTP"
+          "config (configurações e DI)",
+          "interface/controllers (lógica de controle)",
+          "routes (definição de rotas)"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
+          "CamelCase para classes",
           "camelCase para funções e variáveis",
-          "PascalCase para classes",
-          "kebab-case para rotas e arquivos"
+          "kebab-case para rotas"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre controller e rotas",
-          "Uso de container para resolver dependências",
-          "Isolamento da lógica de negócio no controller"
+          "Separação clara entre controllers e rotas",
+          "Uso de container para resolver dependências"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+        "value": ["TypeScript ESLint recommended"]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
-        "value": [
-          "ESLint com regras para TypeScript",
-          "Proibição de any implícito",
-          "Regras para evitar side effects em handlers"
-        ]
+        "value": ["@typescript-eslint rules", "no-explicit-any", "strict typing"]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
-        "value": ["Prettier com configuração padrão", "Quebra de linha em 80 caracteres"]
+        "value": ["Prettier com configuração padrão"]
       },
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc para funções e classes"]
+        "value": ["JSDoc"]
       },
       {
         "property": "code_standards",
@@ -17753,7 +17403,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["tests/unit para testes unitários", "tests/integration para testes de integração"]
+        "value": ["Testes localizados em __tests__ próximos aos controllers e rotas"]
       },
       {
         "property": "testing_strategy",
@@ -17768,12 +17418,12 @@
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocks para dependências externas e controllers"]
+        "value": ["Mock de dependências via container DI"]
       },
       {
         "property": "development_workflow",
         "subProperty": "branch_strategy",
-        "value": ["GitHub Flow"]
+        "value": ["Git Flow"]
       },
       {
         "property": "development_workflow",
@@ -17783,12 +17433,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Revisão obrigatória", "Checks de lint e testes"]
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build", "Test", "Lint", "Deploy automático em staging"]
+        "value": ["Build, Test, Lint, Deploy"]
       },
       {
         "property": "commands",
@@ -17828,32 +17478,32 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": ["Não implementado explicitamente no código analisado"]
+        "value": ["Não especificado no código (possível autenticação externa)"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": ["Não implementado explicitamente no código analisado"]
+        "value": ["Não implementado explicitamente"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": ["Eventos de input do usuário - devem ser protegidos"]
+        "value": ["Nenhum dado sensível manipulado diretamente"]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": ["Não especificado no código"]
+        "value": ["Não especificado, recomendação para SSE"]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["Não especificado no código"]
+        "value": ["Não especificado"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Baixa latência para streaming SSE", "Resposta rápida para estatísticas"]
+        "value": ["Baixa latência para streaming SSE"]
       },
       {
         "property": "performance_requirements",
@@ -17863,7 +17513,367 @@
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
+        "value": ["Buffer interno para eventos com limite de tamanho e idade"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Suporte a múltiplos listeners simultâneos via SSE"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Formato padrão com success, message, data e error"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Não detalhado no código"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
         "value": ["Não especificado"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Recuperação de eventos perdidos via last-event-id"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["Fastify", "Dependency Injection container", "InputEventsController"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["Fastify 4.x", "TypeScript 5.0"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": [
+          "../config/dependency-injection.js",
+          "../interface/controllers/input-events.controller.js"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Autenticação e autorização não implementadas"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Possível falta de controle de rate limiting"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Gerenciamento do buffer e listeners em alta escala"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Validação de schemas", "Tratamento de erros", "Performance do streaming"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["JSDoc para funções públicas e rotas"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e técnicos"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso de SSE para streaming em tempo real",
+          "Separação clara entre controller e rotas"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["REST com SSE para streaming"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON para respostas padrão, text/event-stream para SSE"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não implementado explicitamente"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "prod"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker (provável)"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["Não especificado no código"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Suporte a conexões SSE persistentes"]
+      }
+    ]
+  },
+  "src/routes/recorder.routes.ts": {
+    "summary": "Este arquivo define rotas HTTP para um sistema de gravação de eventos de mouse e teclado, utilizando o framework Fastify. Ele expõe dois endpoints principais: um para iniciar um streaming contínuo de eventos via Server-Sent Events (SSE) e outro para fornecer estatísticas do sistema de gravação, incluindo conexões ativas e configurações atuais. O código integra um controlador especializado para gerenciar a lógica de streaming e coleta de dados, garantindo uma interface clara e validada para comunicação em tempo real e monitoramento do recorder. A arquitetura modular e o uso de schemas de validação asseguram robustez e escalabilidade, facilitando a integração com outros componentes do sistema e a manutenção futura.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["Recorder System", "Sistema de captura e streaming de eventos de input"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["User Interaction Tracking", "Event Streaming", "Real-time Monitoring"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Garantir integridade e continuidade do streaming de eventos",
+          "Manter precisão e atualidade das estatísticas do sistema"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["Fastify 4.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["MVC", "Dependency Injection"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "config (configurações e DI)",
+          "interface/controllers (lógica de controle)",
+          "routes (definição de rotas)"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "camelCase para funções e variáveis",
+          "PascalCase para classes",
+          "kebab-case para rotas"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre rotas e controllers",
+          "Uso de container para resolver dependências"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/unit para testes unitários", "tests/integration para testes de integração"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Given-When-Then"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mocks para controllers e container DI"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Git Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Revisão obrigatória", "Checks automáticos de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build", "Test", "Lint", "Deploy automático em staging e produção"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["Não especificado no código atual"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Não especificado no código atual"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Eventos de input do usuário (mouse, teclado)"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Não especificado no código atual"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["Não especificado no código atual"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Baixa latência para streaming SSE"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Velocidade e escalabilidade do streaming"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Não aplicável"]
       },
       {
         "property": "performance_requirements",
@@ -17873,22 +17883,22 @@
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Não detalhado no código, presumivelmente JSON padrão"]
+        "value": ["Não detalhado no código atual"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Não especificado no código"]
+        "value": ["Não detalhado no código atual"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": ["Não especificado no código"]
+        "value": ["Não detalhado no código atual"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Não especificado no código"]
+        "value": ["Não detalhado no código atual"]
       },
       {
         "property": "dependencies_context",
@@ -17916,36 +17926,36 @@
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Ausência de autenticação e autorização nos endpoints"]
+        "value": ["Falta de autenticação e autorização nos endpoints"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Potencial sobrecarga no streaming SSE com muitos clientes"]
+        "value": ["Potencial impacto de performance em alta carga SSE"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": ["Gerenciamento de conexões SSE em alta escala"]
+        "value": ["Gerenciamento de múltiplas conexões SSE simultâneas"]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": ["Nenhuma migração em andamento detectada"]
+        "value": ["Nenhuma migração em andamento"]
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Separação clara de responsabilidades",
+          "Clareza na separação de responsabilidades",
           "Validação de schemas",
-          "Performance do streaming"
+          "Tratamento de erros"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação JSDoc para rotas e controladores"]
+        "value": ["Documentação JSDoc para rotas e controllers"]
       },
       {
         "property": "team_preferences",
@@ -17955,20 +17965,17 @@
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": [
-          "Uso de SSE para streaming em tempo real",
-          "Injeção de dependência para desacoplamento"
-        ]
+        "value": ["Uso de DI para desacoplamento", "Streaming SSE para eventos em tempo real"]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": ["REST com endpoints HTTP GET"]
+        "value": ["REST com endpoints HTTP"]
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": ["Não especificado no código"]
+        "value": ["Não especificado"]
       },
       {
         "property": "api_specifications",
@@ -17978,7 +17985,7 @@
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Não implementado no código"]
+        "value": ["Não especificado"]
       },
       {
         "property": "deployment_context",
@@ -17998,7 +18005,7 @@
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": ["Necessidade de suportar conexões SSE persistentes"]
+        "value": ["Suporte a conexões persistentes SSE", "Escalabilidade horizontal"]
       }
     ]
   },
@@ -21959,7 +21966,7 @@
     ]
   },
   "src/application/dto/llm-request.dto.ts": {
-    "summary": "Este arquivo define um schema de validação para requisições a um modelo de linguagem (LLM) utilizando a biblioteca Zod, garantindo que os dados de entrada estejam conformes com os parâmetros esperados para chamadas a APIs de modelos GPT. Ele especifica propriedades essenciais como prompt, modelo, temperatura, limite de tokens, prompt do sistema e formato de saída, assegurando tipos e restrições para cada campo. A funcionalidade principal é validar e tipar as requisições para evitar erros de entrada e facilitar a integração com serviços de LLM, promovendo robustez e consistência no fluxo de dados entre o front-end e o back-end ou serviços externos.",
+    "summary": "Este arquivo define um schema de validação para requisições relacionadas a Large Language Models (LLM) utilizando a biblioteca zod em TypeScript. Ele especifica os campos obrigatórios e opcionais para a construção de uma requisição, incluindo prompt, modelo, temperatura, limite de tokens, prompt do sistema e formato de saída, garantindo que os dados estejam corretos antes do processamento. A estrutura permite integração segura e consistente com o domínio de modelos LLM, facilitando a validação e inferência de tipos para uso em outras partes do sistema.",
     "properties": [
       {
         "property": "project_metadata",
@@ -21969,7 +21976,7 @@
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Inteligência Artificial", "Modelos de Linguagem", "APIs GPT"]
+        "value": ["Inteligência Artificial", "Natural Language Processing", "Large Language Models"]
       },
       {
         "property": "project_metadata",
@@ -21980,7 +21987,8 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Validação rigorosa dos parâmetros de entrada para evitar chamadas inválidas à API GPT"
+          "Validação rigorosa dos parâmetros de entrada para evitar chamadas inválidas ao LLM",
+          "Respeito aos limites de tokens e temperatura"
         ]
       },
       {
@@ -22001,7 +22009,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["OpenAI GPT APIs"]
+        "value": ["Serviço de LLM externo (não especificado)"]
       },
       {
         "property": "technical_stack",
@@ -22011,27 +22019,34 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Schema Validation", "Modular Design"]
+        "value": ["Modularização", "Schema Validation"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
-        "value": ["dto - Data Transfer Objects e schemas de validação"]
+        "value": [
+          "domain/enums - enums do domínio",
+          "dto - Data Transfer Objects e schemas de validação"
+        ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
-        "value": ["CamelCase para tipos e schemas", "kebab-case para arquivos"]
+        "value": [
+          "CamelCase para tipos e enums",
+          "camelCase para propriedades e variáveis",
+          "suffix Schema para schemas de validação"
+        ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
-        "value": ["Separação clara entre schemas de validação e lógica de negócio"]
+        "value": ["Separação clara entre domínio, DTOs e enums para evitar acoplamento"]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+        "value": ["Airbnb TypeScript Style Guide"]
       },
       {
         "property": "code_standards",
@@ -22061,7 +22076,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["Testes localizados em pasta __tests__ ao lado dos arquivos de schema"]
+        "value": ["Testes localizados em __tests__ próximos aos arquivos de código"]
       },
       {
         "property": "testing_strategy",
@@ -22076,7 +22091,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocks para schemas externos e validação de erros"]
+        "value": ["Mocks para dependências externas e enums"]
       },
       {
         "property": "development_workflow",
@@ -22091,12 +22106,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Revisão obrigatória e testes aprovados"]
+        "value": ["Revisão obrigatória e testes automatizados"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Lint, Testes, Build e Deploy automatizados"]
+        "value": ["Build, lint, test e deploy automatizados"]
       },
       {
         "property": "commands",
@@ -22136,72 +22151,72 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": ["OAuth2 via token para API GPT"]
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": ["Controle de acesso baseado em roles no backend"]
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": ["Tokens de API e prompts sensíveis devem ser protegidos"]
+        "value": ["Prompt pode conter dados sensíveis, deve ser tratado com confidencialidade"]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": ["CORS, CSP e outros headers padrão de segurança"]
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["TLS para comunicação com APIs externas"]
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Resposta em até 2 segundos para validação local"]
+        "value": ["Validação rápida para não impactar performance de chamadas LLM"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Baixa latência e validação eficiente"]
+        "value": ["Validação eficiente e leve"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": ["Nenhum cache aplicado neste módulo"]
+        "value": ["Não aplicável"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": ["Escalabilidade horizontal via stateless validation"]
+        "value": ["Escalabilidade garantida pela simplicidade do schema"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Erros padronizados via ZodError com mensagens claras"]
+        "value": ["Erros de validação padronizados pela biblioteca zod"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Logs de erros críticos para monitoramento"]
+        "value": ["Não implementado neste módulo"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": ["Sentry para captura de erros em produção"]
+        "value": ["Não aplicável"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Fallback para mensagens de erro amigáveis ao usuário"]
+        "value": ["Falha na validação impede processamento subsequente"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["zod", "outputFormatSchema"]
+        "value": ["zod", "LlmModel enum", "outputFormatSchema"]
       },
       {
         "property": "dependencies_context",
@@ -22211,62 +22226,67 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["zod >=3.0.0 <4.0.0"]
+        "value": ["zod versão compatível com TypeScript 5.0"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": ["./output-format.dto.js"]
+        "value": ["../../domain/enums/llm-model.enum.js", "./output-format.dto.js"]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Necessidade de manter schemas sincronizados com APIs externas"]
+        "value": ["Nenhum identificado neste módulo"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Limites de tokens podem variar conforme modelo GPT"]
+        "value": [
+          "Dependência de schemas externos pode causar inconsistências se não sincronizados"
+        ]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": []
+        "value": ["Nenhum relevante"]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": ["Migração para TypeScript 5.0 concluída"]
+        "value": ["Estável"]
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Validação de tipos e cobertura de testes"]
+        "value": [
+          "Validação correta dos tipos e limites",
+          "Consistência com enums e schemas externos"
+        ]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação clara dos schemas e exemplos de uso"]
+        "value": ["Documentação clara dos campos e regras de validação"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários objetivos e PRs detalhados"]
+        "value": ["Comentários objetivos e técnicos"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": ["Uso de Zod para validação por simplicidade e robustez"]
+        "value": ["Uso de zod para validação e tipagem segura"]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": ["REST"]
+        "value": ["REST (implícito)"]
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": ["Versionamento semântico via URL e headers"]
+        "value": ["Não especificado neste módulo"]
       },
       {
         "property": "api_specifications",
@@ -22276,7 +22296,7 @@
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Rate limiting aplicado pela API GPT externa"]
+        "value": ["Não aplicável neste módulo"]
       },
       {
         "property": "deployment_context",
@@ -22286,17 +22306,17 @@
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Docker", "Kubernetes"]
+        "value": ["Docker"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": ["OPENAI_API_KEY", "NODE_ENV"]
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": ["Limite de memória para containers de 512MB"]
+        "value": ["Nenhuma específica"]
       }
     ]
   },
@@ -22667,30 +22687,30 @@
     ]
   },
   "src/config/langchain.config.ts": {
-    "summary": "O arquivo LangChainConfig define uma configuração centralizada para parâmetros de modelos de linguagem utilizados em uma aplicação, incluindo valores padrão para temperatura, tokens máximos, timeout e tentativas de requisição. Ele especifica características técnicas e econômicas de diferentes modelos GPT, como limites de tokens e custo por token, permitindo que o sistema ajuste dinamicamente o uso dos modelos conforme restrições e custos. Essa configuração suporta a integração eficiente com APIs de modelos de linguagem, facilitando controle de recursos e otimização de custos em processos de geração de texto automatizada.",
+    "summary": "O arquivo LangChainConfig define uma configuração centralizada para gerenciamento de parâmetros e modelos de linguagem (LLMs) utilizados em uma aplicação que integra múltiplos modelos de AI. Ele especifica valores padrão para temperatura, tokens máximos, timeout e tentativas de requisição, além de detalhar características específicas de cada modelo suportado, como limite de tokens e custo por token. Essa configuração permite controle granular sobre o uso dos modelos, facilitando decisões de custo e performance, e serve como referência única para o sistema ao interagir com diferentes LLMs, garantindo consistência e escalabilidade na orquestração das chamadas de API e no gerenciamento de recursos computacionais.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["LangChainConfig", "Configuração centralizada para modelos GPT"]
+        "value": ["LangChain AI Integration", "Configuração centralizada para modelos LLM"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Inteligência Artificial", "Natural Language Processing", "Modelos de linguagem"]
+        "value": ["Inteligência Artificial", "Modelos de Linguagem Natural", "Configuração de APIs"]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["Produção", "Estabilização"]
+        "value": ["Produção"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Respeitar limites de tokens por modelo",
-          "Controlar custo por token para otimização financeira",
-          "Timeout máximo para requisições"
+          "Manter limites de maxTokens por modelo",
+          "Respeitar custo por token para controle financeiro",
+          "Timeout e retries configurados para evitar falhas silenciosas"
         ]
       },
       {
@@ -22711,7 +22731,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["OpenAI API", "LangChain"]
+        "value": ["APIs de modelos LLM (OpenAI GPT-4, DeepSeek)"]
       },
       {
         "property": "technical_stack",
@@ -22721,23 +22741,27 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Immutable Configuration", "Modular Design"]
+        "value": ["Configuration Object Pattern", "Type-safe Constants"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
-        "value": ["Configuração centralizada em arquivo único para fácil manutenção e extensão"]
+        "value": [
+          "domain/enums - enums e definições de domínio",
+          "config - configurações centrais do sistema"
+        ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
-        "value": ["CamelCase para constantes e tipos", "PascalCase para tipos"]
+        "value": ["CamelCase para constantes e tipos", "UPPER_SNAKE_CASE para enums"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Configuração isolada para ser importada por módulos de lógica de negócio e integração"
+          "Separação clara entre domínio (enums) e configuração",
+          "Configuração imutável exportada para uso global"
         ]
       },
       {
@@ -22753,12 +22777,12 @@
       {
         "property": "code_standards",
         "subProperty": "formatting",
-        "value": ["Prettier"]
+        "value": ["Prettier com configuração padrão"]
       },
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc"]
+        "value": ["JSDoc para tipos e constantes"]
       },
       {
         "property": "code_standards",
@@ -22873,12 +22897,12 @@
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Timeout configurado em 30000 ms (30 segundos) para requisições"]
+        "value": ["Timeout configurado em 30000ms para chamadas de API"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Balancear custo por token e capacidade de geração de texto"]
+        "value": ["Balanceamento entre custo e capacidade de tokens por modelo"]
       },
       {
         "property": "performance_requirements",
@@ -22888,7 +22912,7 @@
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": []
+        "value": ["Configuração extensível para múltiplos modelos e ajustes finos"]
       },
       {
         "property": "error_handling",
@@ -22908,12 +22932,12 @@
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Número de retries configurado para 3 tentativas em caso de falha"]
+        "value": ["Retries configurados em 3 tentativas para falhas temporárias"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["OpenAI API", "LangChain"]
+        "value": ["LlmModel enum para identificação dos modelos"]
       },
       {
         "property": "dependencies_context",
@@ -22928,7 +22952,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": []
+        "value": ["../domain/enums/llm-model.enum.js"]
       },
       {
         "property": "current_challenges",
@@ -23363,17 +23387,21 @@
     ]
   },
   "src/infrastructure/adapters/langchain/langchain-llm.adapter.ts": {
-    "summary": "Este arquivo implementa um adapter para integração com modelos de linguagem da OpenAI via LangChain, encapsulando a geração de completions baseadas em prompts fornecidos. Seu comportamento central consiste em receber uma requisição contendo parâmetros como modelo, temperatura e prompts, construir mensagens formatadas para o modelo, invocar a API do ChatOpenAI e retornar uma resposta estruturada com conteúdo gerado e metadados de uso. O código também realiza logging detalhado para monitoramento e tratamento de erros, garantindo robustez na comunicação com o serviço externo. Essa implementação habilita a aplicação a consumir capacidades avançadas de NLP de forma desacoplada e configurável, facilitando a extensão e manutenção do sistema.",
+    "summary": "Este arquivo implementa um adaptador para integração com Large Language Models (LLMs) utilizando a biblioteca LangChain, suportando múltiplos provedores como OpenAI e DeepSeek. Seu comportamento central consiste em receber requisições contendo prompts e parâmetros de configuração, selecionar dinamicamente o provedor adequado, construir mensagens de sistema e humano, invocar o modelo para gerar respostas e extrair metadados de uso e finalização. O código também realiza logging detalhado para monitoramento e tratamento robusto de erros, garantindo confiabilidade na geração de completions. Essa funcionalidade habilita aplicações a consumir LLMs de forma abstrata e configurável, facilitando a extensão e manutenção do sistema de geração de texto automatizado.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["LangChain LLM Integration Adapter"]
+        "value": ["LangChain LLM Adapter", "Interface para integração com modelos de linguagem"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Natural Language Processing", "AI Integration", "OpenAI API"]
+        "value": [
+          "Inteligência Artificial",
+          "Processamento de Linguagem Natural",
+          "Automação de texto"
+        ]
       },
       {
         "property": "project_metadata",
@@ -23384,9 +23412,9 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Garantir segurança da chave API",
-          "Manter integridade das respostas do modelo",
-          "Registrar logs de sucesso e falha"
+          "Garantir resposta consistente do LLM",
+          "Manter segurança das chaves API",
+          "Registrar logs de uso e erros"
         ]
       },
       {
@@ -23397,7 +23425,7 @@
       {
         "property": "technical_stack",
         "subProperty": "frameworks",
-        "value": ["LangChain", "tsyringe 4.x"]
+        "value": ["LangChain", "tsyringe"]
       },
       {
         "property": "technical_stack",
@@ -23407,7 +23435,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["OpenAI API"]
+        "value": ["OpenAI API", "DeepSeek API"]
       },
       {
         "property": "technical_stack",
@@ -23417,32 +23445,32 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Adapter", "Dependency Injection"]
+        "value": ["Adapter", "Dependency Injection", "Factory Method"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "application/dto para DTOs",
-          "domain/entities para entidades de domínio",
-          "config para configurações",
-          "adapters para integração com serviços externos"
+          "application/dto - Data Transfer Objects para requisições",
+          "domain/entities - Entidades de domínio",
+          "config - Configurações do sistema",
+          "domain/enums - Enumerações de domínio"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "PascalCase para classes",
-          "camelCase para métodos e variáveis",
-          "Interfaces prefixadas com I"
+          "CamelCase para classes",
+          "camelCase para variáveis e funções",
+          "PascalCase para interfaces"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre domínio, aplicação e infraestrutura",
+          "Separação clara entre aplicação, domínio e infraestrutura",
           "Dependências unidirecionais"
         ]
       },
@@ -23479,7 +23507,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["tests/unit para testes unitários", "tests/integration para testes de integração"]
+        "value": ["Testes localizados em __tests__ próximos aos módulos"]
       },
       {
         "property": "testing_strategy",
@@ -23514,7 +23542,7 @@
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build, Test, Lint, Deploy"]
+        "value": ["Build, Test, Lint, Deploy automatizados"]
       },
       {
         "property": "commands",
@@ -23554,72 +23582,72 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": ["API Key (OpenAI)"]
+        "value": ["API Key"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": ["Controle de acesso via roles no sistema principal"]
+        "value": ["Chaves API restritas e armazenadas em environment variables"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": ["Chave API OpenAI deve ser protegida e não exposta"]
+        "value": ["API Keys, tokens de acesso"]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": ["Headers padrão de segurança HTTP aplicados no gateway"]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["TLS para comunicação externa"]
+        "value": ["Criptografia em trânsito via HTTPS"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Timeout configurado via LangChainConfig.timeout"]
+        "value": ["Timeout configurável via LangChainConfig.timeout"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Balancear latência da API com retries para confiabilidade"]
+        "value": ["Balancear latência e confiabilidade"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": ["Nenhum cache implementado neste adapter"]
+        "value": []
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": ["Adapter stateless para fácil escalabilidade horizontal"]
+        "value": ["Suporte a múltiplos provedores para escalabilidade e fallback"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Erro lançado com mensagem detalhada em caso de falha"]
+        "value": ["Erro encapsulado com mensagem clara e log detalhado"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Logs estruturados com pino, níveis info e error"]
+        "value": ["Uso do pino para logs estruturados com níveis info e error"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": ["Integrado a sistema de logs centralizados (ex: ELK)"]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Retries configurados via LangChainConfig.retries"]
+        "value": ["Propagação de erro para camadas superiores para tratamento"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["@langchain/openai", "pino", "tsyringe"]
+        "value": ["LangChain", "pino", "tsyringe"]
       },
       {
         "property": "dependencies_context",
@@ -23629,37 +23657,41 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["Compatibilidade com versões recentes do TypeScript e LangChain"]
+        "value": ["Compatibilidade com versões específicas do LangChain e TypeScript"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": ["application/dto", "domain/entities", "config"]
+        "value": ["application/dto", "domain/entities", "config", "domain/enums"]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Tratamento de erros pode ser mais granular"]
+        "value": ["Tratamento de erros genérico pode ser refinado"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Dependência da estabilidade da API OpenAI"]
+        "value": ["Dependência de chaves API externas sujeitas a expiração"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": ["Latência da API externa pode impactar tempo de resposta"]
+        "value": ["Latência nas chamadas assíncronas a provedores externos"]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": ["Nenhuma migração em andamento"]
+        "value": []
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Tratamento de erros, cobertura de testes, clareza do logging"]
+        "value": [
+          "Clareza no tratamento de erros",
+          "Consistência no uso de async/await",
+          "Cobertura de testes"
+        ]
       },
       {
         "property": "team_preferences",
@@ -23669,52 +23701,52 @@
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários objetivos e explicativos em português"]
+        "value": ["Comentários objetivos e técnicos"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": ["Uso do Adapter para desacoplar integração com LLM"]
+        "value": ["Escolha do padrão Adapter para flexibilidade de provedores"]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": ["REST (indireto via OpenAI API)"]
+        "value": ["Abstração para chamadas a APIs REST de LLMs"]
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": ["Versionamento gerenciado externamente pela OpenAI"]
+        "value": []
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": ["JSON com conteúdo textual e metadados de uso"]
+        "value": ["Objeto LLMResponse com conteúdo, modelo, motivo de finalização e uso de tokens"]
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Gerenciado pela OpenAI, não tratado localmente"]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": ["dev, staging, production"]
+        "value": ["dev", "staging", "prod"]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Docker containerizado"]
+        "value": ["Docker", "Kubernetes"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": ["OPENAI_API_KEY"]
+        "value": ["openaiApiKey", "deepseekApiKey"]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": ["Limitações de timeout e conexões externas"]
+        "value": []
       }
     ]
   },
@@ -24090,87 +24122,345 @@
     ]
   },
   "src/interface/schemas/llm.schemas.ts": {
-    "summary": "Este arquivo define um JSON Schema para validação de requisições destinadas a chamadas de modelos de linguagem (LLM) da OpenAI, como GPT-3.5 e GPT-4. Ele especifica a estrutura esperada do objeto de entrada, incluindo propriedades obrigatórias como 'prompt' e 'model', além de parâmetros opcionais para controle do comportamento do modelo, como 'temperature' e 'maxTokens'. O schema também permite a definição detalhada do formato de saída esperado, suportando tipos primitivos e compostos, com validação de propriedades internas, garantindo robustez e flexibilidade na integração com sistemas que consomem APIs de LLM. Essa definição facilita a padronização, validação e documentação das requisições, assegurando conformidade e previsibilidade no processamento das chamadas ao modelo.",
+    "summary": "Este arquivo define um JSON Schema para validação de requisições destinadas a modelos de linguagem (LLM). Seu propósito principal é garantir que os dados enviados para a API estejam estruturados corretamente, incluindo propriedades essenciais como prompt, modelo, temperatura, limite de tokens e formato de saída esperado. O schema impõe restrições de tipo, valores mínimos e máximos, além de enumerar opções válidas para o modelo e o formato de saída, assegurando a integridade e previsibilidade das requisições. Funcionalmente, ele atua como uma camada de validação estática que previne erros de entrada e facilita a interoperabilidade entre componentes do sistema que consomem modelos LLM, promovendo robustez e consistência no fluxo de dados. A estrutura modular e o uso de enums externos indicam integração com um domínio maior, reforçando a governança dos dados e a aderência a regras de negócio específicas do projeto.",
     "properties": [
       {
-        "property": "prompt",
-        "subProperty": "type",
-        "value": ["string"]
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["LLM Request Validation Schema"]
       },
       {
-        "property": "prompt",
-        "subProperty": "minLength",
-        "value": [1]
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Inteligência Artificial", "Natural Language Processing", "Modelos de Linguagem"]
       },
       {
-        "property": "model",
-        "subProperty": "type",
-        "value": ["string"]
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção"]
       },
       {
-        "property": "model",
-        "subProperty": "enum",
-        "value": ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo", "gpt-4o", "gpt-4o-mini"]
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Validação rigorosa dos parâmetros de entrada para evitar chamadas inválidas ao LLM",
+          "Respeito aos limites de tokens e temperatura para controle de custo e performance"
+        ]
       },
       {
-        "property": "temperature",
-        "subProperty": "type",
-        "value": ["number"]
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
       },
       {
-        "property": "temperature",
-        "subProperty": "minimum",
-        "value": [0]
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": []
       },
       {
-        "property": "temperature",
-        "subProperty": "maximum",
-        "value": [2]
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
       },
       {
-        "property": "temperature",
-        "subProperty": "default",
-        "value": [0.7]
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["Modelos LLM integrados via enum LlmModel"]
       },
       {
-        "property": "maxTokens",
-        "subProperty": "type",
-        "value": ["integer"]
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
       },
       {
-        "property": "maxTokens",
-        "subProperty": "minimum",
-        "value": [1]
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Schema Validation", "Domain-Driven Design (uso de enums do domínio)"]
       },
       {
-        "property": "maxTokens",
-        "subProperty": "maximum",
-        "value": [4096]
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": ["domain/enums (definição de enums de domínio)", "schemas (validação de dados)"]
       },
       {
-        "property": "maxTokens",
-        "subProperty": "default",
-        "value": [1000]
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": ["CamelCase para enums e constantes", "camelCase para propriedades JSON"]
       },
       {
-        "property": "systemPrompt",
-        "subProperty": "type",
-        "value": ["string"]
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": ["Separação clara entre domínio (enums) e validação (schemas)"]
       },
       {
-        "property": "outputFormat",
-        "subProperty": "type",
-        "value": ["object"]
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript/TypeScript Style Guide"]
       },
       {
-        "property": "outputFormat",
-        "subProperty": "properties.type.enum",
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras padrão para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["../../domain/enums/llm-model.enum.js"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["domain enums para padronização de modelos LLM"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Validação de tipos e enums", "Conformidade com schema JSON"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação clara dos schemas e enums"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários técnicos em português com termos técnicos em inglês"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de enums para garantir integridade dos modelos LLM"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
         "value": ["object", "array", "string", "number", "boolean"]
       },
       {
-        "property": "outputFormat",
-        "subProperty": "required",
-        "value": ["type"]
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
       }
     ]
   },
@@ -26034,30 +26324,34 @@
     ]
   },
   "tests/unit/services/llm.service.test.ts": {
-    "summary": "Este arquivo contém testes unitários para o serviço LLMService, que encapsula a interação com um Large Language Model (LLM) por meio de um adapter específico. O código foca em validar o comportamento da função generateCompletion, que gera respostas baseadas em prompts, podendo aplicar parsing estruturado conforme um esquema de output definido. O serviço gerencia erros do adapter e do parser, garantindo fallback para respostas em string quando necessário, além de validar limites de tamanho do esquema de saída. A abordagem modular e o uso de mocks evidenciam um design orientado a testes, assegurando robustez na integração com componentes externos e na manipulação de formatos de resposta variados, suportando diferentes cenários de uso e falhas. O arquivo é essencial para garantir a confiabilidade e a correta transformação dos dados gerados pelo LLM, integrando-se a uma arquitetura limpa e orientada a estratégias de parsing configuráveis.",
+    "summary": "Este arquivo contém testes unitários para o serviço LLMService, que encapsula a interação com um Large Language Model (LLM) via um adapter específico. O código foca em validar o comportamento da geração de completions, incluindo o processamento de formatos de saída customizados, tratamento de erros do adapter e do parser, além da validação de limites de tamanho do schema de saída. Através de mocks, o teste simula respostas do LLM e estratégias de parsing, garantindo que o serviço retorne dados estruturados ou texto simples conforme o contexto, além de assegurar a robustez frente a falhas. O arquivo é fundamental para garantir a confiabilidade e integridade da camada de aplicação que orquestra chamadas ao LLM, valida formatos e gerencia erros, suportando a integração com múltiplos modelos e formatos de resposta.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["LLMService - Serviço de geração de completions com parsing configurável"]
+        "value": ["LLMService - Serviço de geração de texto com suporte a parsing customizado"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Inteligência Artificial", "Natural Language Processing", "Large Language Models"]
+        "value": [
+          "Inteligência Artificial",
+          "Processamento de Linguagem Natural",
+          "Modelos de Linguagem"
+        ]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["Produção com cobertura de testes unitários"]
+        "value": ["Produção com testes unitários robustos"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Validação do tamanho máximo do output format schema",
-          "Fallback seguro para resposta em string em caso de erro de parsing",
-          "Tratamento consistente de erros do LLM adapter"
+          "Garantir integridade e formato correto da resposta do LLM",
+          "Tratar erros do modelo sem falhas silenciosas",
+          "Limitar tamanho e profundidade do schema de saída"
         ]
       },
       {
@@ -26078,7 +26372,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["LLM API via LLMAdapter", "OutputParserFactory"]
+        "value": ["LLM APIs via LLMAdapter", "Logging via pino"]
       },
       {
         "property": "technical_stack",
@@ -26088,24 +26382,25 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Clean Architecture", "Factory", "Strategy"]
+        "value": ["Factory Pattern", "Clean Architecture"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "src/application/services - lógica de negócio",
-          "src/application/factory - criação de estratégias",
-          "src/infrastructure/adapters - integração com serviços externos"
+          "src/application - lógica de aplicação",
+          "src/domain - entidades e enums",
+          "src/infrastructure - adapters e integrações",
+          "tests - testes unitários"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "CamelCase para classes e interfaces",
+          "CamelCase para classes e enums",
           "camelCase para funções e variáveis",
-          "suffix Service para serviços"
+          "Arquivos com extensão .ts ou .js"
         ]
       },
       {
@@ -26113,18 +26408,18 @@
         "subProperty": "module_boundaries",
         "value": [
           "Separação clara entre domínio, aplicação e infraestrutura",
-          "Dependência unidirecional da aplicação para infraestrutura"
+          "Dependências unidirecionais do domínio para aplicação e infraestrutura"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Airbnb JavaScript/TypeScript Style Guide"]
+        "value": ["TypeScript ESLint Recommended"]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
-        "value": ["ESLint com regras para TypeScript"]
+        "value": ["Regras padrão ESLint para TypeScript"]
       },
       {
         "property": "code_standards",
@@ -26134,7 +26429,7 @@
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc"]
+        "value": ["JSDoc para documentação de funções e classes"]
       },
       {
         "property": "code_standards",
@@ -26149,7 +26444,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["Testes localizados em __tests__ ou arquivos *.spec.ts próximos ao código"]
+        "value": ["Testes localizados próximos ao código fonte em pastas __tests__ ou paralelas"]
       },
       {
         "property": "testing_strategy",
@@ -26224,6 +26519,359 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
+        "value": ["Não aplicável diretamente neste módulo"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Não aplicável diretamente neste módulo"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Tokens e prompts devem ser tratados com confidencialidade"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Não aplicável diretamente neste módulo"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["Comunicação com LLM deve ser segura via TLS"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["ParseTimeout configurado para 5000ms"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Equilíbrio entre velocidade de resposta e integridade do parsing"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Não implementado neste módulo"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Suporte a múltiplos modelos LLM e formatos de saída"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Objeto com success:boolean, error:string e code:string"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Uso do pino com níveis info, error, warn e debug"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Não especificado no código"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Fallback para string simples em caso de falha no parser"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["LLMAdapter", "OutputParserFactory"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["TypeScript 5.0", "Jest 29"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": [
+          "src/application/services",
+          "src/application/factory",
+          "src/infrastructure/adapters"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Necessidade de testes de integração com LLM real"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Limitação na validação de schemas muito grandes pode impactar performance"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Parsing de formatos complexos pode ser custoso"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Nenhuma migração em andamento"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Cobertura de testes, tratamento de erros e clareza de código"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação clara via JSDoc para funções públicas"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e explicativos em português"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de Factory para parsing e fallback para string em erro"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["Não aplicável diretamente neste módulo"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Não aplicável diretamente neste módulo"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["Suporte a string e objetos JSON conforme outputFormat"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não implementado neste módulo"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "prod"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker e Kubernetes"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["Configurações de outputFormat, credenciais LLM"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Limite de memória para parsing e tempo máximo de execução"]
+      }
+    ]
+  },
+  "src/domain/enums/llm-model.enum.ts": {
+    "summary": "Este arquivo define uma enumeração (enum) que lista os modelos de Large Language Models (LLMs) suportados pela aplicação, incluindo modelos da OpenAI e DeepSeek. Além disso, contém um mapeamento que associa cada modelo ao seu respectivo provedor, facilitando a identificação do backend responsável pelo processamento. A função getProviderForModel encapsula essa lógica, retornando o provedor correspondente para um dado modelo, o que permite uma integração modular e flexível com diferentes serviços de LLM. O código é focado em fornecer uma abstração clara e centralizada para o gerenciamento dos modelos e seus provedores, suportando decisões dinâmicas baseadas no modelo selecionado.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["LLM Model Provider Mapping", "Gerenciamento de modelos de linguagem"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Inteligência Artificial", "Natural Language Processing", "Machine Learning"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção", "Estabilização"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Mapeamento correto entre modelo e provedor",
+          "Consistência na enumeração de modelos"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["OpenAI API", "DeepSeek API"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Enum Pattern", "Mapping Dictionary", "Functional Abstraction"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/models - definição de enums e tipos",
+          "src/utils - funções utilitárias como getProviderForModel"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": ["Enums em PascalCase", "Constantes em UPPER_SNAKE_CASE", "Funções em camelCase"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre definição de modelos e lógica de mapeamento",
+          "Funções puras para lógica de decisão"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb TypeScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/unit - testes para funções utilitárias"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["AAA (Arrange, Act, Assert)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock de enums e funções puras"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build", "Test", "Lint", "Deploy automático"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
         "value": []
       },
       {
@@ -26249,12 +26897,12 @@
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["parseTimeout configurado para 5000ms"]
+        "value": []
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Equilíbrio entre velocidade de resposta e robustez no parsing"]
+        "value": ["Baixa latência na resolução do provedor"]
       },
       {
         "property": "performance_requirements",
@@ -26269,12 +26917,12 @@
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Objeto com success boolean, error string e código de erro"]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Uso de logger pino com níveis info, error, warn, debug"]
+        "value": []
       },
       {
         "property": "error_handling",
@@ -26284,12 +26932,12 @@
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Fallback para resposta em string quando parsing falha"]
+        "value": []
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["LLMAdapter", "OutputParserFactory"]
+        "value": ["OpenAI API", "DeepSeek API"]
       },
       {
         "property": "dependencies_context",
@@ -26299,26 +26947,22 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["maxSchemaSize: 10240 bytes", "parseTimeout: 5000ms"]
+        "value": ["TypeScript >=5.0"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": [
-          "src/application/services",
-          "src/application/factory",
-          "src/infrastructure/adapters"
-        ]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Necessidade de testes de integração para validar parsing real"]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Possível mascaramento de erros de parsing pelo fallback"]
+        "value": ["Necessidade de manter sincronização entre enum e mapeamento"]
       },
       {
         "property": "current_challenges",
@@ -26333,22 +26977,22 @@
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Cobertura de testes, tratamento de erros, clareza de mocks"]
+        "value": ["Consistência de enum e mapeamento", "Cobertura de testes"]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação clara de métodos públicos e contratos de dados"]
+        "value": ["JSDoc para funções e enums"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários objetivos e explicativos em português"]
+        "value": ["Comentários objetivos e técnicos"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": ["Uso de Strategy para parsing, fallback para string, limites de schema"]
+        "value": ["Uso de enum para modelos para garantir tipagem forte"]
       },
       {
         "property": "api_specifications",
@@ -26363,7 +27007,7 @@
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": ["string ou objeto JSON conforme outputFormat"]
+        "value": []
       },
       {
         "property": "api_specifications",
@@ -26383,12 +27027,1425 @@
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": ["outputFormatConfig com parâmetros de parsing"]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
         "value": []
+      }
+    ]
+  },
+  "test-deepseek-coder.js": {
+    "summary": "Este script Node.js é um teste automatizado para verificar a integração com a API do DeepSeek Coder, um modelo de linguagem para geração de código. Ele realiza uma requisição HTTP POST para um endpoint local, enviando um payload com parâmetros para gerar uma função Python que calcula o fatorial. O código captura e exibe o status da resposta, além do conteúdo retornado, tratando erros de rede ou falhas na requisição. Sua funcionalidade principal é validar a comunicação e autenticação via API key, garantindo que o serviço de geração de código esteja operacional e respondendo conforme esperado, facilitando o diagnóstico e monitoramento da integração no ambiente de desenvolvimento local.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["DeepSeek Coder Integration Test Script"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["AI-assisted code generation", "API integration", "Developer tooling"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Development / Integration Testing"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "API key must be valid and kept secret",
+          "Service endpoint must respond within acceptable time",
+          "Payload format must comply with API specification"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["JavaScript (Node.js 18+)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["None (uses native Node.js and node-fetch)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": ["None"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["DeepSeek Coder API (local instance at http://localhost:3000/api/v1/llm)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Script-based procedural testing"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": ["Single script file for integration test"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": ["camelCase for functions and variables", "UPPER_SNAKE_CASE for constants"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": ["Single module script with external dependency on node-fetch"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Standard JavaScript style, no explicit guide declared"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["Not specified"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["No explicit formatter configured"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["Inline comments in Portuguese and emojis for clarity"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["None (JavaScript without TypeScript)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["None (ad-hoc script)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Single script file executed manually or via CLI"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Not applicable"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Direct API call and response validation"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["None"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Not specified"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Not specified"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Not specified"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Not specified"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["node script.js"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["node script.js"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["Not applicable"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["Not specified"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["Not specified"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["API key via HTTP header 'x-api-key'"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["API key must be valid and authorized for endpoint access"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["API key hardcoded in script (security risk)"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Content-Type: application/json", "x-api-key"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["None (HTTP used, no HTTPS)"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Not explicitly definido, mas esperado rápido para testes locais"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Simplicidade e clareza para testes, não otimização de performance"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Nenhuma"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Não aplicável para script de teste local"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Logs no console com mensagens e JSON da resposta"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Console.log para etapas e erros"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Nenhum"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Nenhuma recuperação automática, apenas log de erro"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["node-fetch"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": ["Nenhum identificado"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["node-fetch versão compatível com Node.js 18+"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["Nenhum"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["API key exposta no código", "Falta de tratamento detalhado de erros"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Dependência de endpoint local limita testes em outros ambientes"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Nenhum identificado"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Segurança da API key", "Tratamento de erros e logging"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Comentários claros e explicativos"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Uso de emojis e comentários em português para clareza"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de node-fetch para simplicidade e compatibilidade"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["RESTful JSON API"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Versão na URL (/api/v1/llm)"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["Development (http://localhost:3000)"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Local Node.js server"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["API_KEY (não externalizado, hardcoded no script)"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Necessidade de servidor local rodando na porta 3000"]
+      }
+    ]
+  },
+  "test-deepseek.js": {
+    "summary": "Este script Node.js é uma ferramenta de teste automatizado para validar a integração com a API DeepSeek, que oferece modelos de linguagem para processamento de prompts relacionados a automação desktop e raciocínio complexo. Ele realiza requisições HTTP POST autenticadas via API key para endpoints locais, enviando payloads com prompts e parâmetros de configuração do modelo, e processa as respostas para verificar sucesso ou falha. O código suporta testes individuais para o modelo 'deepseek-chat' e testes combinados para os modelos 'deepseek-chat' e 'deepseek-reasoner', exibindo logs detalhados do processo, status das respostas e dados de tokens usados, facilitando a validação funcional e a detecção de erros na integração com o serviço DeepSeek.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["DeepSeek Integration Test Script"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Inteligência Artificial, NLP, automação desktop"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["MVP / Testes de integração"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Autenticação via API key obrigatória",
+          "Resposta válida do modelo deve conter dados no formato esperado",
+          "Testes devem validar múltiplos modelos para cobertura funcional"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["JavaScript (Node.js 18+)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["Nenhum framework específico, uso de node-fetch para HTTP"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["DeepSeek API local em http://localhost:3000"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Script procedural modular com funções assíncronas"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": ["Único arquivo script para testes, sem estrutura complexa"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": ["CamelCase para funções e variáveis", "Constantes em maiúsculas"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Isolamento das funções de teste por modelo",
+          "Dependência externa apenas para fetch"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Padrão JavaScript moderno, sem guia formal explícito"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Indentação padrão 2 espaços"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["Comentários inline explicativos"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["JavaScript sem tipagem estática"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Nenhum framework formal, script de teste manual"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Funções específicas para cada modelo testado"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura manual via execução do script"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Execução sequencial e logging para verificação"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["node script.js"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["node script.js --both"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["API key via header 'x-api-key'"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Chave API deve ser válida para acesso"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["API key hardcoded, risco de exposição"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Content-Type application/json", "x-api-key obrigatório"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["Não especificado, comunicação HTTP local"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Foco em confiabilidade e clareza do teste"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Logs de erro no console com mensagens claras"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Logs detalhados para cada etapa da requisição"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Captura de exceções para evitar crash do script"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["node-fetch", "DeepSeek API local"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": ["Nenhum identificado"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["node-fetch compatível com Node.js 18+"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["Nenhum"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Chave API exposta no código", "Ausência de testes automatizados formais"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Dependência de endpoint local ativo"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Nenhum identificado"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Clareza nos logs e tratamento de erros"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Comentários explicativos inline"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Uso de emojis e mensagens claras no console"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Separação de testes por modelo para modularidade"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["REST API"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Versão na URL /api/v1/llm"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON com campos data e metadata"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["Localhost para desenvolvimento e testes"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Execução local via Node.js"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["API_KEY (não usada diretamente, chave hardcoded)"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Necessidade de API DeepSeek rodando localmente"]
+      }
+    ]
+  },
+  "tests/unit/infrastructure/adapters/nutjs/nutjs-keyboard.adapter.test.ts": {
+    "summary": "Este arquivo contém testes unitários para o adaptador NutJSKeyboardAdapter, que encapsula funcionalidades do módulo @nut-tree-fork/nut-js para manipulação de teclado em automações. O adaptador oferece métodos para digitar texto, pressionar e liberar teclas individuais, além de executar combinações de teclas com suporte a modificadores comuns como Ctrl, Alt, Shift e Meta. O código foca em garantir o comportamento correto do adaptador, incluindo tratamento robusto de erros, suporte a variações de nomenclatura de teclas (case insensitive) e a ordem correta de pressionamento e liberação em combinações. Também inclui um método de delay para pausas assíncronas. A suíte de testes valida cenários de sucesso, falha e casos extremos, assegurando a integração correta com a biblioteca subjacente e a consistência do comportamento esperado em diferentes condições.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "NutJS Keyboard Adapter",
+          "Automação de entrada de teclado para testes e aplicações"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Automação de testes", "Automação de UI", "Input simulation"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção", "Estabilização"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Suporte correto a todas as teclas mapeadas",
+          "Tratamento robusto de erros para evitar falhas silenciosas",
+          "Execução correta da ordem de pressionar e liberar em combinações"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 4.x", "JavaScript ES6+"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["Jest 29.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["@nut-tree-fork/nut-js"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Adapter Pattern", "Dependency Injection"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/infrastructure/adapters/nutjs - adaptadores para bibliotecas externas",
+          "tests/unit - testes unitários isolados"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para classes",
+          "camelCase para métodos e variáveis",
+          "snake_case para arquivos de teste"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre adaptadores e lógica de negócio",
+          "Mocks isolam dependências externas em testes"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras padrão Airbnb"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para documentação de métodos e classes"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29.x"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": [
+          "Testes unitários localizados em pasta tests/unit",
+          "Mocks para dependências externas"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)", "Testes parametrizados para múltiplos casos"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mocks manuais com jest.fn()", "Mock de módulos externos via jest.mock()"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Git Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Revisão obrigatória", "Checks automáticos de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build", "Testes unitários", "Lint", "Deploy automático em staging"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": [""]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": [""]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": [""]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": [""]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": [""]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Operações assíncronas rápidas, sem bloqueio perceptível"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Baixa latência em simulação de teclado", "Uso eficiente de promises"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": [""]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": [""]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Erros encapsulados com mensagens claras e prefixos contextuais"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": [""]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": [""]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Tratamento de erros não-Error com fallback para mensagens genéricas"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["@nut-tree-fork/nut-js", "jest"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": [""]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["Compatibilidade com versões recentes do NutJS e Jest"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["src/infrastructure/adapters/nutjs"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Manutenção do mapeamento de teclas e suporte a novas teclas"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Tratamento limitado para erros lançados como tipos não-Error"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": [""]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": [""]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Cobertura de testes", "Tratamento de erros", "Consistência de nomenclatura"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação clara para métodos públicos do adaptador"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e explicativos em inglês e português"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso do Adapter para desacoplar biblioteca externa",
+          "Padronização de erros com mensagens prefixadas"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": [""]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": [""]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": [""]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": [""]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["development", "staging", "production"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker", "CI/CD pipelines"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": [""]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": [""]
+      }
+    ]
+  },
+  "tests/unit/interface/controllers/keyboard.controller.test.ts": {
+    "summary": "Este arquivo de teste automatizado em Jest valida o comportamento do KeyboardController, um componente responsável por gerenciar operações relacionadas a teclado e clipboard em uma aplicação backend. Ele assegura que as rotas HTTP para digitação, pressionamento de tecla, combinação de teclas, cópia, colagem e limpeza do clipboard sejam registradas corretamente e que seus handlers respondam adequadamente a cenários de sucesso, falha e exceções. O código utiliza mocks para simular serviços externos (KeyboardService e ClipboardService) e valida a robustez do controller frente a erros internos, garantindo respostas padronizadas e logging apropriado. Além disso, verifica a aplicação de schemas de validação e a configuração do logger, promovendo confiabilidade e manutenção facilitada no contexto de uma API RESTful para automação de entrada e manipulação de dados do usuário.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["Keyboard and Clipboard Automation API"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Backend API", "Automation", "Input Control", "Clipboard Management"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Testing and Validation"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Reliable input simulation",
+          "Consistent clipboard state",
+          "Graceful error handling"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0", "JavaScript (Node.js)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["Fastify", "Jest 29", "tsyringe"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["KeyboardService", "ClipboardService"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Dependency Injection", "Controller Pattern", "Middleware Pattern"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/interface/controllers - Controllers para rotas HTTP",
+          "src/interface/middleware - Middlewares para validação",
+          "src/config - Configurações de ambiente",
+          "tests - Testes unitários e de integração"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para classes",
+          "camelCase para funções e variáveis",
+          "kebab-case para rotas"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre controllers, serviços e middlewares",
+          "Injeção de dependências via tsyringe"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para TypeScript e JavaScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Testes localizados em pasta tests com mocks para dependências externas"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)", "Mocking extensivo para isolamento"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": [
+          "Mock de serviços externos via jest.mock",
+          "Mock de instâncias Fastify e requests"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review obrigatório", "Testes automatizados passando"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build, Test, Lint, Deploy stages"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["Não aplicável no escopo deste controller"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Não aplicável no escopo deste controller"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Conteúdo do clipboard tratado com cuidado para evitar vazamento"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Configuração esperada via Fastify, não detalhada no teste"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["Não aplicável no escopo deste controller"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Respostas rápidas para operações de teclado e clipboard, idealmente < 100ms"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Baixa latência e alta confiabilidade"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Não aplicável para operações dinâmicas de input"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Escalabilidade horizontal via instâncias Fastify"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["JSON com campos success, error e data"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Logs de info e error via Fastify logger"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Não especificado no código"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Handlers retornam respostas padronizadas e logam erros"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["tsyringe para DI", "Fastify para servidor HTTP", "Jest para testes"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["tsyringe mockada para compatibilidade com TypeScript 5.0"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["src/interface/controllers", "src/interface/middleware", "src/config"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Nenhum identificado explicitamente"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Necessidade de mocks extensivos para testes isolados"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Nenhum identificado explicitamente"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Cobertura de testes", "Tratamento de erros", "Clareza e organização do código"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação via JSDoc para controllers e serviços"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e explicativos em português"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de DI para facilitar testes e modularidade"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["REST"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON com campos success, data e error"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["Development, Staging, Production"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Containerized via Docker (presumido)"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["KEYBOARD_SPEED"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Não especificado"]
       }
     ]
   }
