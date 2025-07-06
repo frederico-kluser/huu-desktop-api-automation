@@ -3,7 +3,7 @@
  * Endpoints para streaming de eventos de mouse e teclado
  */
 
-import type { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import type { FastifyInstance, FastifyPluginOptions, FastifyPluginCallback } from 'fastify';
 import { container } from '../config/dependency-injection.js';
 import { RecorderController } from '../interface/controllers/recorder.controller.js';
 
@@ -35,7 +35,11 @@ const StatsResponseSchema = {
 /**
  * Registra rotas do recorder
  */
-export function recorderRoutes(fastify: FastifyInstance, _opts: FastifyPluginOptions): void {
+export const recorderRoutes: FastifyPluginCallback = (
+  fastify: FastifyInstance,
+  _opts: FastifyPluginOptions,
+  done?: (error?: Error) => void,
+): void => {
   const controller = container.resolve(RecorderController);
 
   /**
@@ -71,4 +75,8 @@ export function recorderRoutes(fastify: FastifyInstance, _opts: FastifyPluginOpt
     },
     handler: controller.getStats.bind(controller),
   });
-}
+
+  if (done) {
+    done();
+  }
+};
