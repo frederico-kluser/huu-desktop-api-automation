@@ -1,19 +1,18 @@
-# API de Automação Desktop - Documentação Completa
+# API de Automação Desktop - Documentação de Uso
 
 ## Índice
 
 - [Visão Geral](#visão-geral)
-- [Instalação e Configuração](#instalação-e-configuração)
 - [Autenticação](#autenticação)
 - [Formato de Resposta](#formato-de-resposta)
 - [Tratamento de Erros](#tratamento-de-erros)
 - [Endpoints da API](#endpoints-da-api)
   - [1. Operações de Teclado](#1-operações-de-teclado)
-  - [2. Operações de Mouse](#2-operações-de-mouse)
-  - [3. Operações de Tela](#3-operações-de-tela)
-  - [4. Operações de Área de Transferência](#4-operações-de-área-de-transferência)
-  - [5. Integração com LLM](#5-integração-com-llm)
-  - [6. Streaming de Eventos](#6-streaming-de-eventos)
+  + [2. Operações de Mouse](#2-operações-de-mouse)
+  + [3. Operações de Tela](#3-operações-de-tela)
+  + [4. Operações de Área de Transferência](#4-operações-de-área-de-transferência)
+  + [5. Integração com LLM](#5-integração-com-llm)
+  + [6. Streaming de Eventos](#6-streaming-de-eventos)
   - [7. Health Check](#7-health-check)
 - [Configurações Avançadas](#configurações-avançadas)
 - [Exemplos de Uso](#exemplos-de-uso)
@@ -22,7 +21,10 @@
 
 ## Visão Geral
 
-Esta API REST fornece uma interface completa para automação desktop, permitindo controle programático de mouse, teclado, captura de tela e integração com modelos de linguagem (LLMs). Construída com TypeScript, Fastify e NutJS, seguindo os princípios de Clean Architecture.
+Esta API REST fornece uma interface completa em http://localhost:3000/api/v1
+para automação desktop, permitindo controle programático de mouse, teclado,
+captura de tela e integração com modelos de linguagem (LLMs). Construída com
+TypeScript, Fastify e NutJS, seguindo os princípios de Clean Architecture.
 
 ### Características Principais
 
@@ -37,90 +39,6 @@ Esta API REST fornece uma interface completa para automação desktop, permitind
 
 ```
 http://localhost:3000/api/v1
-```
-
-## Instalação e Configuração
-
-### Pré-requisitos
-
-- Node.js >= 18.x
-- npm ou yarn
-- Permissões de acessibilidade (macOS)
-- Variável DISPLAY configurada (Linux)
-
-### Instalação
-
-```bash
-# Clone o repositório
-git clone [repositório]
-
-# Instale as dependências
-npm install
-
-# Configure as variáveis de ambiente
-cp .env.example .env
-
-# Execute em modo desenvolvimento
-npm run dev
-
-# Ou compile e execute em produção
-npm run build
-npm start
-```
-
-### Variáveis de Ambiente
-
-Crie um arquivo `.env` na raiz do projeto com as seguintes configurações:
-
-```env
-# Configurações do Servidor
-NODE_ENV=development              # Ambiente: development, staging, production
-PORT=3000                        # Porta do servidor
-HOST=0.0.0.0                     # Host do servidor
-LOG_LEVEL=info                   # Nível de log: debug, info, warn, error
-
-# Configurações de Automação
-MOUSE_SPEED=500                  # Velocidade padrão do mouse (ms)
-SCREEN_CONFIDENCE=0.8            # Confiança padrão para busca na tela (0-1)
-
-# Autenticação
-API_KEY=your-api-key-here        # Chave de API para endpoints protegidos
-
-# Integração com LLMs
-OPENAI_API_KEY=sk-...            # Chave da API OpenAI
-DEEPSEEK_API_KEY=sk-...          # Chave da API DeepSeek
-
-# Configurações do Mouse
-MOUSE_MIN_DUR=100                # Duração mínima para ações do mouse (ms)
-MOUSE_MAX_DUR=5000               # Duração máxima para ações do mouse (ms)
-MOUSE_DEFAULT_SMOOTH=false       # Movimento suave padrão
-MOUSE_SAMPLE_RATE=30             # Taxa de amostragem para interpolação (fps)
-MOUSE_STREAM_INTERVAL=100        # Intervalo padrão para streaming de posição (ms)
-MOUSE_DEFAULT_DURATION=1000      # Duração padrão do movimento (ms)
-
-# Configurações do Teclado
-KEYBOARD_DEFAULT_MODE=instant     # Modo padrão: instant, perChar, total
-KEYBOARD_MAX_TEXT_LENGTH=10000   # Comprimento máximo do texto
-KEYBOARD_DEFAULT_DELAY_PER_CHAR=0 # Atraso padrão por caractere (ms)
-KEYBOARD_MAX_DELAY=300000        # Atraso máximo permitido (5 minutos)
-KEYBOARD_BATCH_SIZE=50           # Tamanho do lote para processamento
-KEYBOARD_DEBUG=false             # Habilitar logs de debug
-
-# Configurações de Eventos de Entrada
-INPUT_EVENT_BUFFER=1000          # Tamanho máximo do buffer de eventos
-INPUT_EVENT_HEARTBEAT=30000      # Intervalo de heartbeat (ms)
-INPUT_EVENT_RATE=5000            # Máximo de eventos por segundo
-INPUT_EVENT_MAX_AGE=300000       # Idade máxima do evento no buffer (5 minutos)
-INPUT_EVENT_DEBUG=false          # Habilitar debug para eventos
-
-# Configurações de Formato de Saída
-OUTPUT_SCHEMA_MAX_SIZE=10240     # Tamanho máximo do schema (bytes)
-OUTPUT_SCHEMA_MAX_DEPTH=5        # Profundidade máxima de aninhamento
-OUTPUT_SCHEMA_DEFAULT_MODE=string # Modo padrão: string ou object
-OUTPUT_SCHEMA_PARSE_TIMEOUT=500  # Timeout de parsing (ms)
-OUTPUT_SCHEMA_ENABLE_CACHE=true  # Habilitar cache de schema
-OUTPUT_SCHEMA_CACHE_TTL=10       # TTL do cache (minutos)
-OUTPUT_SCHEMA_DEBUG=false        # Habilitar logs de debug
 ```
 
 ## Autenticação
@@ -970,7 +888,8 @@ curl -X POST http://localhost:3000/api/v1/llm \
           \"type\": \"array\",
           \"items\": {\"type\": \"string\"}
         }
-      }
+      },
+      \"required\": [\"description\", \"elements\"]
     }
   }"
 ```
