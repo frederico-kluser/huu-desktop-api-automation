@@ -26,6 +26,10 @@ export const LangChainConfig = {
       maxTokens: 32768,
       costPerToken: 0.00055,
     },
+    [LlmModel.DEEPSEEK_CODER]: {
+      maxTokens: 32768,
+      costPerToken: 0.00014, // Same as deepseek-chat (merged)
+    },
   },
 } as const;
 

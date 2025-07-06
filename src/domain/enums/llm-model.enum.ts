@@ -5,6 +5,7 @@
  * Para DeepSeek:
  * - 'deepseek-chat' = DeepSeek V3 (mais rápido, suporta tool calling)
  * - 'deepseek-reasoner' = DeepSeek R1 (reasoning, não suporta tool calling)
+ * - 'deepseek-coder' = Alias para DeepSeek V3 (merged com deepseek-chat)
  */
 export enum LlmModel {
   O3 = 'o3',
@@ -12,6 +13,7 @@ export enum LlmModel {
   GPT_4_1_MINI = 'gpt-4.1-mini',
   DEEPSEEK_CHAT = 'deepseek-chat',
   DEEPSEEK_REASONER = 'deepseek-reasoner',
+  DEEPSEEK_CODER = 'deepseek-coder',
 }
 
 /**
@@ -23,6 +25,7 @@ export const LLM_PROVIDER_MAP: Record<LlmModel, 'openai' | 'deepseek'> = {
   [LlmModel.GPT_4_1_MINI]: 'openai',
   [LlmModel.DEEPSEEK_CHAT]: 'deepseek',
   [LlmModel.DEEPSEEK_REASONER]: 'deepseek',
+  [LlmModel.DEEPSEEK_CODER]: 'deepseek',
 };
 
 /**
