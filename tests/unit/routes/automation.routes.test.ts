@@ -23,6 +23,10 @@ jest.mock('../../../src/interface/controllers/llm.controller', () => ({
   })),
 }));
 
+jest.mock('../../../src/routes/status.routes', () => ({
+  statusRoutes: jest.fn(),
+}));
+
 // Usar require devido ao verbatimModuleSyntax
 const { automationRoutes } = require('../../../src/routes/automation.routes');
 const {
@@ -31,6 +35,7 @@ const {
 const { KeyboardController } = require('../../../src/interface/controllers/keyboard.controller');
 const { LLMController } = require('../../../src/interface/controllers/llm.controller');
 const { inputEventsRoutes } = require('../../../src/routes/input-events.routes');
+const { statusRoutes } = require('../../../src/routes/status.routes');
 
 describe('automation.routes', () => {
   let mockServer: any;
@@ -115,7 +120,7 @@ describe('automation.routes', () => {
     await automationRoutes(mockServer, {}, jest.fn());
 
     // Verificar que todas as rotas foram registradas
-    expect(mockServer.register).toHaveBeenCalledTimes(2);
+    expect(mockServer.register).toHaveBeenCalledTimes(3);
 
     // Verificar ordem de registro
     const registerCalls = (mockServer.register as jest.Mock).mock.calls;
@@ -123,9 +128,12 @@ describe('automation.routes', () => {
     // Primeira chamada: keyboard routes (função inline)
     expect(typeof registerCalls[0][0]).toBe('function');
 
-    // Segunda chamada: input events routes com prefix
-    expect(registerCalls[1][0]).toBe(inputEventsRoutes);
-    expect(registerCalls[1][1]).toEqual({ prefix: '/stream' });
+    // Segunda chamada: status routes
+    expect(registerCalls[1][0]).toBe(statusRoutes);
+
+    // Terceira chamada: input events routes com prefix
+    expect(registerCalls[2][0]).toBe(inputEventsRoutes);
+    expect(registerCalls[2][1]).toEqual({ prefix: '/stream' });
   });
 
   test('should handle async registration properly', async () => {
