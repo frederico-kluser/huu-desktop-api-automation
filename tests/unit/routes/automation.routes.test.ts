@@ -17,10 +17,6 @@ jest.mock('../../../src/routes/input-events.routes', () => ({
   inputEventsRoutes: jest.fn(),
 }));
 
-jest.mock('../../../src/routes/recorder.routes', () => ({
-  recorderRoutes: jest.fn(),
-}));
-
 jest.mock('../../../src/interface/controllers/llm.controller', () => ({
   LLMController: jest.fn().mockImplementation(() => ({
     registerRoutes: jest.fn(),
@@ -35,7 +31,6 @@ const {
 const { KeyboardController } = require('../../../src/interface/controllers/keyboard.controller');
 const { LLMController } = require('../../../src/interface/controllers/llm.controller');
 const { inputEventsRoutes } = require('../../../src/routes/input-events.routes');
-const { recorderRoutes } = require('../../../src/routes/recorder.routes');
 
 describe('automation.routes', () => {
   let mockServer: any;
@@ -116,18 +111,11 @@ describe('automation.routes', () => {
     expect(mockServer.register).toHaveBeenCalledWith(inputEventsRoutes, { prefix: '/stream' });
   });
 
-  test('should register recorder routes', async () => {
-    await automationRoutes(mockServer, {}, jest.fn());
-
-    // Verificar que recorderRoutes foi registrado
-    expect(mockServer.register).toHaveBeenCalledWith(recorderRoutes);
-  });
-
   test('should register all routes in correct order', async () => {
     await automationRoutes(mockServer, {}, jest.fn());
 
     // Verificar que todas as rotas foram registradas
-    expect(mockServer.register).toHaveBeenCalledTimes(3);
+    expect(mockServer.register).toHaveBeenCalledTimes(2);
 
     // Verificar ordem de registro
     const registerCalls = (mockServer.register as jest.Mock).mock.calls;
@@ -138,9 +126,6 @@ describe('automation.routes', () => {
     // Segunda chamada: input events routes com prefix
     expect(registerCalls[1][0]).toBe(inputEventsRoutes);
     expect(registerCalls[1][1]).toEqual({ prefix: '/stream' });
-
-    // Terceira chamada: recorder routes
-    expect(registerCalls[2][0]).toBe(recorderRoutes);
   });
 
   test('should handle async registration properly', async () => {

@@ -1,276 +1,443 @@
 /**
- * Serviço para capturar eventos globais de mouse e teclado
- * Usa uiohook-napi para monitorar eventos do sistema operacional
+ * Serviço de captura global de eventos de mouse e teclado
+ * Captura eventos do sistema operacional em tempo real usando múltiplas bibliotecas
+ * para máxima compatibilidade no macOS
  */
 
 import { injectable, inject } from 'tsyringe';
 import { EventDispatcher } from './event-dispatcher.service.js';
 import { logger } from '../../config/logger.js';
+import type { MouseButton } from '../../types/input-event.types.js';
+
+/**
+ * Interface para eventos do uiohook
+ */
+interface UIOHookEvent {
+  type: number;
+  time: number;
+  x: number;
+  y: number;
+  button?: number;
+  keycode?: number;
+  keychar?: string;
+}
+
+/**
+ * Interface para o uiohook
+ */
+interface UIOHook {
+  start(): void;
+  stop(): void;
+  on(
+    event: 'mousedown' | 'mouseup' | 'mousemove' | 'mousedrag' | 'keydown' | 'keyup' | 'input',
+    callback: (event: UIOHookEvent) => void,
+  ): void;
+  on(event: 'error', callback: (error: Error) => void): void;
+}
+
+/**
+ * Interface para o GlobalKeyboardListener
+ */
+interface GlobalKeyboardListener {
+  addListener(callback: (e: any, down: any) => void): void;
+  kill(): void;
+}
 
 @injectable()
 export class GlobalInputCaptureService {
-  private uiohook: any = null;
   private isRunning = false;
-  private mouseButtonMap = new Map<number, string>([
-    [1, 'left'],
-    [2, 'right'],
-    [3, 'middle'],
-  ]);
+  private uiohook: UIOHook | null = null;
+  private keyboardListener: GlobalKeyboardListener | null = null;
+  private eventCount = 0;
+  private readonly maxEventsPerSecond = 1000;
+  private eventTimes: number[] = [];
+  private lastMousePosition = { x: 0, y: 0 };
+  private mousePositionInterval: NodeJS.Timeout | null = null;
 
   constructor(@inject(EventDispatcher) private eventDispatcher: EventDispatcher) {}
 
   /**
-   * Inicia a captura de eventos globais
+   * Inicia a captura global de eventos
    */
   async start(): Promise<void> {
     if (this.isRunning) {
-      logger.warn('🔍 GlobalInputCaptureService já está em execução');
+      logger.warn('🔄 GlobalInputCaptureService já está rodando');
       return;
     }
 
     try {
-      // Tentar importar uiohook-napi dinamicamente
+      logger.info('🎯 Iniciando captura global de eventos...');
+
+      // Importar dinamicamente o uiohook-napi
       const { uIOhook } = await import('uiohook-napi');
-      this.uiohook = uIOhook;
+      this.uiohook = uIOhook as unknown as UIOHook;
 
-      logger.info('📡 Iniciando captura de eventos globais com uiohook-napi');
+      // Configurar listeners para eventos de mouse
+      this.setupMouseListeners();
 
-      // Configurar listeners de eventos
-      this.setupEventListeners();
+      // Configurar listeners para eventos de teclado
+      this.setupKeyboardListeners();
+
+      // Configurar tratamento de erros
+      this.setupErrorHandling();
 
       // Iniciar captura
-      if (this.uiohook) {
-        this.uiohook.start();
-        this.isRunning = true;
-        logger.info('🎯 GlobalInputCaptureService iniciado com sucesso');
+      this.uiohook.start();
+      this.isRunning = true;
 
-        // Teste de debug: verificar se eventos estão sendo capturados
-        setTimeout(() => {
-          logger.info('📊 Verificando captura de eventos após 5 segundos...');
-        }, 5000);
+      logger.info('✅ Captura global iniciada com sucesso');
+    } catch (error) {
+      logger.error('❌ Erro ao iniciar captura global:', error);
+      throw error;
+    }
+  }
 
+  /**
+   * Para a captura global de eventos
+   */
+  stop(): Promise<void> {
+    return new Promise((resolve) => {
+      if (!this.isRunning || !this.uiohook) {
+        logger.warn('⚠️ GlobalInputCaptureService não está rodando');
+        resolve();
         return;
       }
-    } catch (error) {
-      logger.error('❌ Erro ao carregar uiohook-napi:', error);
-    }
 
-    // Se chegou aqui, uiohook-napi não funcionou
-    logger.warn('📋 uiohook-napi não disponível, usando fallback com polling');
-    this.startMousePolling();
-  }
+      try {
+        logger.info('🛑 Parando captura global...');
 
-  /**
-   * Para a captura de eventos globais
-   */
-  stop(): void {
-    if (!this.isRunning) return;
-
-    try {
-      if (this.uiohook) {
         this.uiohook.stop();
+        this.isRunning = false;
+        this.uiohook = null;
+
+        logger.info('✅ Captura global parada com sucesso');
+        resolve();
+      } catch (error) {
+        logger.error('❌ Erro ao parar captura global:', error);
+        resolve();
       }
-      this.isRunning = false;
-      logger.info('🛑 GlobalInputCaptureService parado');
-    } catch (error) {
-      logger.error('❌ Erro ao parar GlobalInputCaptureService:', error);
-    }
+    });
   }
 
   /**
-   * Configura os listeners de eventos do uiohook
+   * Configura listeners para eventos de mouse
    */
-  private setupEventListeners(): void {
+  private setupMouseListeners(): void {
     if (!this.uiohook) return;
 
-    logger.info('🔧 Configurando listeners de eventos...');
+    // Mouse down - início do clique
+    this.uiohook.on('mousedown', (event: UIOHookEvent) => {
+      if (!this.shouldProcessEvent()) return;
 
-    // Listener de erro para capturar problemas
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    this.uiohook.on('error', (error: any) => {
-      logger.error('❌ Erro no uiohook-napi:', error);
-    });
+      const button = this.mapMouseButton(event.button || 0);
+      if (button) {
+        logger.debug(`🖱️ Mouse down: ${button} em (${event.x}, ${event.y})`);
 
-    // Eventos de mouse
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    this.uiohook.on('mousedown', (event: any) => {
-      logger.info('🔥 MOUSEDOWN capturado no serviço!', event);
-      this.handleMouseEvent('mousedown', event);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    this.uiohook.on('mouseup', (event: any) => {
-      logger.info('🔥 MOUSEUP capturado no serviço!', event);
-      this.handleMouseEvent('mouseup', event);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    this.uiohook.on('mousemove', (event: any) => {
-      // Apenas log de alguns eventos de movimento para não spam
-      if (Math.random() < 0.1) {
-        // 10% dos eventos
-        logger.info('🔥 MOUSEMOVE capturado no serviço!', { x: event.x, y: event.y });
+        // Emitir evento de mouse down
+        this.eventDispatcher.dispatch({
+          id: '',
+          type: 'mouse',
+          timestamp: Date.now(),
+          cursorX: event.x,
+          cursorY: event.y,
+          data: {
+            action: 'click',
+            x: event.x,
+            y: event.y,
+            button,
+          },
+        });
       }
-      this.handleMouseEvent('move', event);
     });
 
-    // Eventos de teclado
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    this.uiohook.on('keydown', (event: any) => {
-      logger.info('🔥 KEYDOWN capturado no serviço!', event);
-      this.handleKeyboardEvent('down', event);
+    // Mouse up - fim do clique
+    this.uiohook.on('mouseup', (event: UIOHookEvent) => {
+      if (!this.shouldProcessEvent()) return;
+
+      const button = this.mapMouseButton(event.button || 0);
+      if (button) {
+        logger.debug(`🖱️ Mouse up: ${button} em (${event.x}, ${event.y})`);
+
+        // Emitir evento de mouse up
+        this.eventDispatcher.dispatch({
+          id: '',
+          type: 'mouse',
+          timestamp: Date.now(),
+          cursorX: event.x,
+          cursorY: event.y,
+          data: {
+            action: 'release',
+            x: event.x,
+            y: event.y,
+            button,
+          },
+        });
+      }
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    this.uiohook.on('keyup', (event: any) => {
-      logger.info('🔥 KEYUP capturado no serviço!', event);
-      this.handleKeyboardEvent('up', event);
+    // Mouse move - movimento do mouse
+    this.uiohook.on('mousemove', (event: UIOHookEvent) => {
+      if (!this.shouldProcessEvent()) return;
+
+      // Throttle mouse move events (a cada 50ms)
+      if (this.eventCount % 20 === 0) {
+        logger.debug(`🖱️ Mouse move: (${event.x}, ${event.y})`);
+
+        // Emitir evento de mouse move
+        this.eventDispatcher.dispatch({
+          id: '',
+          type: 'mouse',
+          timestamp: Date.now(),
+          cursorX: event.x,
+          cursorY: event.y,
+          data: {
+            action: 'move',
+            x: event.x,
+            y: event.y,
+          },
+        });
+      }
     });
 
-    logger.info('✅ Listeners configurados no serviço');
-  } /**
-   * Processa eventos de mouse
+    // Mouse drag - arrastar (combinação de move + botão pressionado)
+    this.uiohook.on('mousedrag', (event: UIOHookEvent) => {
+      if (!this.shouldProcessEvent()) return;
+
+      const button = this.mapMouseButton(event.button || 0);
+      if (button) {
+        logger.debug(`🖱️ Mouse drag: ${button} em (${event.x}, ${event.y})`);
+
+        // Emitir evento de mouse drag
+        this.eventDispatcher.dispatch({
+          id: '',
+          type: 'mouse',
+          timestamp: Date.now(),
+          cursorX: event.x,
+          cursorY: event.y,
+          data: {
+            action: 'move',
+            x: event.x,
+            y: event.y,
+            button,
+          },
+        });
+      }
+    });
+  }
+
+  /**
+   * Configura listeners para eventos de teclado
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private handleMouseEvent(action: string, event: any): void {
-    logger.info(`🔍 Recebido evento de mouse: ${action}`, event);
+  private setupKeyboardListeners(): void {
+    if (!this.uiohook) return;
 
-    const button = this.mouseButtonMap.get(event.button || 1) || 'left';
-    const x = event.x || 0;
-    const y = event.y || 0;
+    // Key down - tecla pressionada
+    this.uiohook.on('keydown', (event: UIOHookEvent) => {
+      if (!this.shouldProcessEvent()) return;
 
-    // Mapear ações para o formato esperado pelo RecorderListenerService
-    let mappedAction = action;
-    if (action === 'mousedown') mappedAction = 'click';
-    if (action === 'mouseup') mappedAction = 'release';
+      const key = this.mapKeyCode(event.keycode || 0);
+      if (key) {
+        logger.debug(`⌨️ Key down: "${key}" (${event.keycode})`);
 
-    const eventData = {
-      id: '',
-      type: 'mouse',
-      timestamp: event.timestamp || Date.now(),
-      cursorX: x,
-      cursorY: y,
-      data: {
-        action: mappedAction,
-        x,
-        y,
-        button,
-      },
+        // Emitir evento de key down
+        this.eventDispatcher.dispatch({
+          id: '',
+          type: 'keyboard',
+          timestamp: Date.now(),
+          cursorX: 0,
+          cursorY: 0,
+          data: {
+            key,
+            action: 'down',
+          },
+        });
+      }
+    });
+
+    // Key up - tecla solta
+    this.uiohook.on('keyup', (event: UIOHookEvent) => {
+      if (!this.shouldProcessEvent()) return;
+
+      const key = this.mapKeyCode(event.keycode || 0);
+      if (key) {
+        logger.debug(`⌨️ Key up: "${key}" (${event.keycode})`);
+
+        // Emitir evento de key up
+        this.eventDispatcher.dispatch({
+          id: '',
+          type: 'keyboard',
+          timestamp: Date.now(),
+          cursorX: 0,
+          cursorY: 0,
+          data: {
+            key,
+            action: 'up',
+          },
+        });
+      }
+    });
+  }
+
+  /**
+   * Configura tratamento de erros
+   */
+  private setupErrorHandling(): void {
+    if (!this.uiohook) return;
+
+    this.uiohook.on('error', (error: Error) => {
+      logger.error('🔥 Erro no uiohook:', error);
+    });
+
+    this.uiohook.on('input', (event: UIOHookEvent) => {
+      logger.debug('📥 Evento de input genérico:', event);
+    });
+  }
+
+  /**
+   * Mapeia códigos de botão do mouse do uiohook para nossos tipos
+   */
+  private mapMouseButton(button: number): MouseButton | null {
+    switch (button) {
+      case 1:
+        return 'left';
+      case 2:
+        return 'right';
+      case 3:
+        return 'middle';
+      default:
+        return null;
+    }
+  }
+
+  /**
+   * Mapeia códigos de tecla do uiohook para strings legíveis
+   */
+  private mapKeyCode(keycode: number): string | null {
+    // Mapeamento básico de keycodes comuns
+    const keyMap: Record<number, string> = {
+      // Letras
+      30: 'a',
+      48: 'b',
+      46: 'c',
+      32: 'd',
+      18: 'e',
+      33: 'f',
+      34: 'g',
+      35: 'h',
+      23: 'i',
+      36: 'j',
+      37: 'k',
+      38: 'l',
+      50: 'm',
+      49: 'n',
+      24: 'o',
+      25: 'p',
+      16: 'q',
+      19: 'r',
+      31: 's',
+      20: 't',
+      22: 'u',
+      47: 'v',
+      17: 'w',
+      45: 'x',
+      21: 'y',
+      44: 'z',
+
+      // Números
+      11: '0',
+      2: '1',
+      3: '2',
+      4: '3',
+      5: '4',
+      6: '5',
+      7: '6',
+      8: '7',
+      9: '8',
+      10: '9',
+
+      // Teclas especiais
+      1: 'Escape',
+      15: 'Tab',
+      28: 'Enter',
+      29: 'Ctrl',
+      42: 'Shift',
+      56: 'Alt',
+      57: 'Space',
+      14: 'Backspace',
+      211: 'Delete',
+
+      // Setas
+      200: 'ArrowUp',
+      208: 'ArrowDown',
+      203: 'ArrowLeft',
+      205: 'ArrowRight',
+
+      // Função
+      59: 'F1',
+      60: 'F2',
+      61: 'F3',
+      62: 'F4',
+      63: 'F5',
+      64: 'F6',
+      65: 'F7',
+      66: 'F8',
+      67: 'F9',
+      68: 'F10',
+      87: 'F11',
+      88: 'F12',
     };
 
-    logger.info(`📤 Enviando evento para dispatcher:`, eventData);
-
-    // Emitir evento no formato compatível com o sistema existente
-    this.eventDispatcher.dispatch(eventData);
-
-    logger.info(`🖱️ Mouse ${mappedAction}: ${button} em (${x}, ${y})`);
+    return keyMap[keycode] || `Key${keycode}`;
   }
 
   /**
-   * Processa eventos de teclado
+   * Controla rate limiting para evitar spam de eventos
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private handleKeyboardEvent(action: string, event: any): void {
-    // Usar keychar se disponível, senão tentar keycode
-    let key = '';
-    if (event.keychar && event.keychar.length > 0) {
-      key = event.keychar;
-    } else if (event.keycode) {
-      // Mapear alguns códigos especiais
-      const specialKeys: Record<number, string> = {
-        8: 'Backspace',
-        9: 'Tab',
-        13: 'Enter',
-        16: 'Shift',
-        17: 'Ctrl',
-        18: 'Alt',
-        27: 'Escape',
-        32: ' ', // Espaço
-        37: 'ArrowLeft',
-        38: 'ArrowUp',
-        39: 'ArrowRight',
-        40: 'ArrowDown',
-        46: 'Delete',
-      };
+  private shouldProcessEvent(): boolean {
+    const now = Date.now();
+    this.eventCount++;
 
-      key = specialKeys[event.keycode] || String.fromCharCode(event.keycode);
-    } else {
-      key = 'Unknown';
+    // Limpar eventos antigos (mais de 1 segundo)
+    this.eventTimes = this.eventTimes.filter((time) => now - time < 1000);
+
+    // Adicionar evento atual
+    this.eventTimes.push(now);
+
+    // Verificar se excedeu o limite
+    if (this.eventTimes.length > this.maxEventsPerSecond) {
+      if (this.eventCount % 100 === 0) {
+        logger.warn(`⚠️ Rate limit excedido: ${this.eventTimes.length} eventos/segundo`);
+      }
+      return false;
     }
 
-    // Emitir evento no formato compatível com o sistema existente
-    this.eventDispatcher.dispatch({
-      id: '',
-      type: 'keyboard',
-      timestamp: event.timestamp || Date.now(),
-      cursorX: 0,
-      cursorY: 0,
-      data: {
-        action,
-        key,
-      },
+    return true;
+  }
+
+  /**
+   * Retorna estatísticas do serviço
+   */
+  getStats(): {
+    isRunning: boolean;
+    eventCount: number;
+    eventsPerSecond: number;
+  } {
+    const now = Date.now();
+    const recentEvents = this.eventTimes.filter((time) => now - time < 1000);
+
+    return {
+      isRunning: this.isRunning,
+      eventCount: this.eventCount,
+      eventsPerSecond: recentEvents.length,
+    };
+  }
+
+  /**
+   * Limpa recursos
+   */
+  dispose(): void {
+    this.stop().catch((error) => {
+      logger.error('Erro ao fazer dispose do GlobalInputCaptureService:', error);
     });
-
-    logger.debug(`⌨️ Teclado ${action}: "${key}" (code: ${event.keycode})`);
-  }
-
-  /**
-   * Fallback: polling da posição do mouse (sem captura de eventos)
-   */
-  private startMousePolling(): void {
-    logger.info('🔄 Iniciando polling de posição do mouse como fallback');
-
-    // Importar mouse do @nut-tree-fork/nut-js para posição
-    import('@nut-tree-fork/nut-js')
-      .then(({ mouse }) => {
-        let lastX = 0;
-        let lastY = 0;
-
-        const pollInterval = setInterval(() => {
-          mouse
-            .getPosition()
-            .then((position) => {
-              if (position.x !== lastX || position.y !== lastY) {
-                this.eventDispatcher.dispatch({
-                  id: '',
-                  type: 'mouse',
-                  timestamp: Date.now(),
-                  cursorX: position.x,
-                  cursorY: position.y,
-                  data: {
-                    action: 'move',
-                    x: position.x,
-                    y: position.y,
-                  },
-                });
-
-                lastX = position.x;
-                lastY = position.y;
-              }
-            })
-            .catch((error) => {
-              logger.error('❌ Erro no polling do mouse:', error);
-            });
-        }, 100); // Poll a cada 100ms
-
-        // Limpar intervalo ao parar
-        const originalStop = this.stop.bind(this);
-        this.stop = () => {
-          clearInterval(pollInterval);
-          originalStop();
-        };
-      })
-      .catch((error) => {
-        logger.error('❌ Erro ao iniciar polling do mouse:', error);
-      });
-
-    this.isRunning = true;
-  }
-
-  /**
-   * Retorna se o serviço está em execução
-   */
-  isActive(): boolean {
-    return this.isRunning;
   }
 }

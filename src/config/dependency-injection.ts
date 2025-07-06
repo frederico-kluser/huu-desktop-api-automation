@@ -12,8 +12,6 @@ import { LangChainLLMAdapter } from '../infrastructure/adapters/langchain/langch
 import { EventDispatcher } from '../application/services/event-dispatcher.service.js';
 import { EventBuffer } from '../application/services/event-buffer.service.js';
 import { InputEventsController } from '../interface/controllers/input-events.controller.js';
-import { RecorderListenerService } from '../application/services/recorder-listener.service.js';
-import { RecorderController } from '../interface/controllers/recorder.controller.js';
 import { GlobalInputCaptureService } from '../application/services/global-input-capture.service.js';
 import { ApplicationStartupService } from '../application/services/application-startup.service.js';
 import { OutputParserFactory } from '../application/factory/output-parser.factory.js';
@@ -67,16 +65,6 @@ export function configureDependencies(): void {
   // Registrar InputEventsController
   container.register(InputEventsController, {
     useClass: InputEventsController,
-  });
-
-  // Registrar RecorderListenerService
-  container.register(RecorderListenerService, {
-    useClass: RecorderListenerService,
-  });
-
-  // Registrar RecorderController
-  container.register(RecorderController, {
-    useClass: RecorderController,
   });
 
   // Registrar GlobalInputCaptureService como singleton

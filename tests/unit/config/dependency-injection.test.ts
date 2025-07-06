@@ -44,12 +44,6 @@ jest.mock('../../../src/application/services/event-buffer.service', () => ({
 jest.mock('../../../src/interface/controllers/input-events.controller', () => ({
   InputEventsController: class MockInputEventsController {},
 }));
-jest.mock('../../../src/application/services/recorder-listener.service', () => ({
-  RecorderListenerService: class MockRecorderListenerService {},
-}));
-jest.mock('../../../src/interface/controllers/recorder.controller', () => ({
-  RecorderController: class MockRecorderController {},
-}));
 jest.mock('../../../src/application/services/llm.service', () => ({
   LLMService: class MockLLMService {},
 }));
@@ -112,8 +106,8 @@ describe('dependency-injection', () => {
       useClass: expect.any(Function),
     });
 
-    // Total de chamadas register (agora incluindo LLMService, LLMAdapter e ApplicationStartupService)
-    expect(mockContainer.register).toHaveBeenCalledTimes(13);
+    // Total de chamadas register (agora reduzido após remoção do recorder)
+    expect(mockContainer.register).toHaveBeenCalledTimes(11);
   });
 
   test('exports container', () => {
