@@ -9,3 +9,5 @@ ecosystem.config.js
 jest.config.js
 .eslintrc.js
 *.md
+web/
+webpack.config.cjs

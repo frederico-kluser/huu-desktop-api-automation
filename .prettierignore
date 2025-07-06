@@ -9,3 +9,5 @@ package-lock.json
 *.md
 .env
 .env.*
+web/dist/
+web/node_modules/
