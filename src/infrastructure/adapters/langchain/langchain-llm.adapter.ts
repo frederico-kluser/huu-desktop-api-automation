@@ -7,7 +7,7 @@ import type { LLMRequest } from '../../../application/dto/llm-request.dto.js';
 import type { LLMResponse } from '../../../domain/entities/llm-response.js';
 import { LangChainConfig } from '../../../config/langchain.config.js';
 import { environment } from '../../../config/environment.js';
-import { getProviderForModel, LlmModel } from '../../../domain/enums/llm-model.enum.js';
+import { getProviderForModel } from '../../../domain/enums/llm-model.enum.js';
 
 export interface ILLMAdapter {
   generateCompletion(request: LLMRequest): Promise<LLMResponse>;
@@ -26,7 +26,7 @@ export class LangChainLLMAdapter implements ILLMAdapter {
       const model =
         provider === 'deepseek'
           ? new ChatDeepSeek({
-              model: request.model,
+              model: request.model, // DeepSeek usa os nomes 'deepseek-chat' ou 'deepseek-reasoner'
               temperature: request.temperature,
               maxTokens: request.maxTokens,
               apiKey: environment.deepseekApiKey,

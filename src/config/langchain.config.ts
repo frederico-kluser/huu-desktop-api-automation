@@ -18,9 +18,13 @@ export const LangChainConfig = {
       maxTokens: 8192,
       costPerToken: 0.01,
     },
-    [LlmModel.DEEPSEEK_V3_0324]: {
-      maxTokens: 16384,
-      costPerToken: 0.0004,
+    [LlmModel.DEEPSEEK_CHAT]: {
+      maxTokens: 32768,
+      costPerToken: 0.00014,
+    },
+    [LlmModel.DEEPSEEK_REASONER]: {
+      maxTokens: 32768,
+      costPerToken: 0.00055,
     },
   },
 } as const;

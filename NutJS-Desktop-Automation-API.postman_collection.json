@@ -2348,7 +2348,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"prompt\": \"Explain the architecture of a desktop automation API in simple terms.\",\n  \"model\": \"DeepSeek-V3-0324\",\n  \"temperature\": 0.6,\n  \"maxTokens\": 250,\n  \"systemPrompt\": \"You are a technical educator. Explain complex concepts in simple, understandable terms.\"\n}",
+              "raw": "{\n  \"prompt\": \"Explain the architecture of a desktop automation API in simple terms.\",\n  \"model\": \"deepseek-chat\",\n  \"temperature\": 0.6,\n  \"maxTokens\": 250,\n  \"systemPrompt\": \"You are a technical educator. Explain complex concepts in simple, understandable terms.\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
