@@ -144,6 +144,8 @@ export class EventDispatcher implements IEventPublisher {
       return;
     }
 
+    logger.info('📦 EventDispatcher.dispatch chamado:', event);
+
     // Adicionar ID se não existir
     if (!event.id) {
       event.id = nanoid();
@@ -152,12 +154,15 @@ export class EventDispatcher implements IEventPublisher {
     // Converter para formato compatível se necessário
     if (event.type === 'mouse' && event.data) {
       // Evento estendido de mouse
+      logger.info('📦 Despachando evento de mouse estendido');
       this.enqueueEvent(event);
     } else if (event.type === 'keyboard' && event.data) {
       // Evento estendido de teclado
+      logger.info('📦 Despachando evento de teclado estendido');
       this.enqueueEvent(event);
     } else {
       // Tentar processar como evento padrão
+      logger.info('📦 Despachando evento padrão');
       this.enqueueEvent(event as InputEvent);
     }
   }

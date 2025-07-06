@@ -105,15 +105,15 @@ describe('dependency-injection', () => {
 
     // Verificar registros de singletons
     expect(mockContainer.registerSingleton).toHaveBeenCalledWith(expect.any(Function));
-    expect(mockContainer.registerSingleton).toHaveBeenCalledTimes(2); // EventDispatcher e EventBuffer
+    expect(mockContainer.registerSingleton).toHaveBeenCalledTimes(3); // EventDispatcher, EventBuffer e GlobalInputCaptureService
 
     // Verificar registros de controllers
     expect(mockContainer.register).toHaveBeenCalledWith(expect.any(Function), {
       useClass: expect.any(Function),
     });
 
-    // Total de chamadas register (agora incluindo LLMService e LLMAdapter)
-    expect(mockContainer.register).toHaveBeenCalledTimes(12);
+    // Total de chamadas register (agora incluindo LLMService, LLMAdapter e ApplicationStartupService)
+    expect(mockContainer.register).toHaveBeenCalledTimes(13);
   });
 
   test('exports container', () => {

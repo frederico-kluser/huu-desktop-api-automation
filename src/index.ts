@@ -3,7 +3,8 @@ import Fastify from 'fastify';
 import type { FastifyRequest, FastifyReply } from 'fastify';
 import { automationRoutes } from './routes/automation.routes.js';
 import { errorHandler } from './interface/middleware/error-handler.middleware.js';
-import { configureDependencies } from './config/dependency-injection.js';
+import { configureDependencies, container } from './config/dependency-injection.js';
+import { ApplicationStartupService } from './application/services/application-startup.service.js';
 import { environment } from './config/environment.js';
 
 configureDependencies();
@@ -40,6 +41,10 @@ server.get('/health', async (_request: FastifyRequest, reply: FastifyReply) => {
 
 const start = async () => {
   try {
+    // Inicializar serviços da aplicação
+    const startupService = container.resolve(ApplicationStartupService);
+    await startupService.initialize();
+
     await server.listen({ port: environment.port, host: environment.host });
     server.log.info(`Server listening on http://${environment.host}:${environment.port}`);
   } catch (err) {
