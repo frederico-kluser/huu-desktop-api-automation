@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import Header from './components/Header';
 import PrintScreenButton from './components/PrintScreenButton';
 import './styles/App.css';
