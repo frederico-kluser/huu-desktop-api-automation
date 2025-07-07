@@ -43,7 +43,7 @@ const PrintScreenButton: React.FC = () => {
         throw new Error(errorMessage);
       }
     } catch (err) {
-      console.error('Erro ao capturar tela:', err);
+      console.error('Erro ao capturar tela:', err); // eslint-disable-line no-console
       setError(err instanceof Error ? err.message : 'Erro ao capturar tela');
     } finally {
       setIsLoading(false);
@@ -55,7 +55,7 @@ const PrintScreenButton: React.FC = () => {
    */
   const handlePrintScreenClick = (): void => {
     handlePrintScreen().catch((err) => {
-      console.error('Erro não tratado na captura de tela:', err);
+      console.error('Erro não tratado na captura de tela:', err); // eslint-disable-line no-console
       setError(err instanceof Error ? err.message : 'Erro inesperado');
     });
   };
