@@ -28472,40 +28472,40 @@
     ]
   },
   "web/src/App.tsx": {
-    "summary": "Este arquivo React implementa a interface principal de um aplicativo focado em automação desktop utilizando a biblioteca NutJS. A aplicação apresenta uma estrutura visual clara e responsiva, exibindo funcionalidades centrais como controle do mouse, controle do teclado e captura de tela, facilitando a interação do usuário com recursos de automação. O componente integra elementos visuais do React-Bootstrap para layout e estilização, além de componentes customizados como Header e PrintScreenButton, promovendo modularidade e reutilização. O comportamento do código é estático, sem manipulação de estado interno, focando na apresentação e navegação inicial do usuário, servindo como ponto de entrada para funcionalidades mais complexas da automação desktop. A integração com componentes externos e a organização visual contribuem para uma experiência de onboarding intuitiva e clara, habilitando usuários a entender rapidamente as capacidades do sistema.",
+    "summary": "Este arquivo define o componente principal de uma aplicação React que utiliza React Router para gerenciar a navegação entre páginas. Seu comportamento central é prover roteamento client-side, permitindo que o usuário navegue entre a HomePage e a AutomationPage sem recarregar a página, garantindo uma experiência SPA (Single Page Application). A estrutura é simples e focada em definir rotas estáticas, integrando componentes de página e estilos CSS, habilitando a organização modular e escalável da interface do usuário.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["Automação Desktop NutJS", "Interface de Apresentação e Controle"]
+        "value": ["React SPA com roteamento para páginas Home e Automation"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Automação Desktop", "Automação de Interface", "NutJS API"]
+        "value": ["Web Application", "User Interface", "Client-side Routing"]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["MVP", "Interface Inicial"]
+        "value": ["MVP"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Apresentar funcionalidades principais claramente",
-          "Garantir responsividade e acessibilidade"
+          "Navegação correta entre rotas definidas",
+          "Manter estado da SPA sem recarregamento"
         ]
       },
       {
         "property": "technical_stack",
         "subProperty": "primary_language",
-        "value": ["TypeScript 4.x", "React 18"]
+        "value": ["TypeScript 4.x", "JavaScript ES6+"]
       },
       {
         "property": "technical_stack",
         "subProperty": "frameworks",
-        "value": ["React 18.2", "React-Bootstrap 2.x"]
+        "value": ["React 18.x", "React Router DOM 6.x"]
       },
       {
         "property": "technical_stack",
@@ -28525,15 +28525,15 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Component-Based Architecture", "Functional Components"]
+        "value": ["SPA", "Component-Based Architecture", "Declarative Routing"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "components: componentes reutilizáveis",
-          "styles: arquivos CSS",
-          "root: componente App principal"
+          "pages/: componentes de páginas",
+          "styles/: arquivos CSS globais",
+          "App.tsx: componente raiz com roteamento"
         ]
       },
       {
@@ -28541,7 +28541,7 @@
         "subProperty": "naming_conventions",
         "value": [
           "PascalCase para componentes React",
-          "camelCase para funções e variáveis",
+          "camelCase para variáveis e funções",
           "kebab-case para arquivos CSS"
         ]
       },
@@ -28549,14 +28549,14 @@
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre componentes UI e lógica de negócio",
-          "Componentes isolados em pasta components"
+          "Separação clara entre componentes de página e roteamento",
+          "Estilos isolados em pasta própria"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+        "value": ["Airbnb JavaScript Style Guide"]
       },
       {
         "property": "code_standards",
@@ -28566,12 +28566,12 @@
       {
         "property": "code_standards",
         "subProperty": "formatting",
-        "value": ["Prettier com configuração padrão para React/TypeScript"]
+        "value": ["Prettier com configuração padrão"]
       },
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["Comentários inline e JSDoc para componentes"]
+        "value": ["JSDoc para funções e componentes"]
       },
       {
         "property": "code_standards",
@@ -28581,17 +28581,17 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_framework",
-        "value": ["Jest 29"]
+        "value": ["Jest 29", "React Testing Library"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["Testes localizados em pasta __tests__ dentro de components"]
+        "value": ["tests/ com testes unitários e de integração para componentes e rotas"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
-        "value": ["Cobertura mínima de 80%"]
+        "value": [">= 80% cobertura"]
       },
       {
         "property": "testing_strategy",
@@ -28601,7 +28601,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocking de componentes e funções externas com Jest"]
+        "value": ["Mocks para dependências externas e componentes filhos"]
       },
       {
         "property": "development_workflow",
@@ -28616,12 +28616,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Revisão obrigatória e testes aprovados"]
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build, Test, Lint, Deploy"]
+        "value": ["Build, Test, Lint, Deploy automáticos"]
       },
       {
         "property": "commands",
@@ -28661,72 +28661,72 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": [""]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": [""]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": [""]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": [""]
+        "value": []
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": [""]
+        "value": []
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": [""]
+        "value": []
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Responsividade e fluidez da UI"]
+        "value": ["Velocidade de navegação e carregamento"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": [""]
+        "value": []
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": [""]
+        "value": ["Escalabilidade horizontal via componentes desacoplados"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": [""]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": [""]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": [""]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": [""]
+        "value": []
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["react", "react-bootstrap", "fontawesome"]
+        "value": ["react", "react-router-dom"]
       },
       {
         "property": "dependencies_context",
@@ -28736,92 +28736,92 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["React >=18.0.0", "React-Bootstrap >=2.0.0"]
+        "value": ["react >=18.0.0", "react-router-dom >=6.0.0"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": ["./components/Header", "./components/PrintScreenButton"]
+        "value": ["./pages/HomePage", "./pages/AutomationPage"]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Ausência de gerenciamento de estado para funcionalidades futuras"]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Nenhum problema crítico identificado no código atual"]
+        "value": ["Falta de tratamento para rotas não definidas"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": ["Potencial impacto do uso excessivo de ícones FontAwesome"]
+        "value": []
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": ["Nenhuma migração em andamento"]
+        "value": []
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Clareza na composição dos componentes", "Consistência visual e responsividade"]
+        "value": ["Consistência de rotas", "Uso correto de React Router", "Qualidade do JSX"]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação clara para novos componentes e props"]
+        "value": ["Documentação clara de componentes e rotas"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários objetivos e diretos"]
+        "value": ["Comentários objetivos e claros", "PRs detalhados"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": ["Uso de React-Bootstrap para acelerar desenvolvimento UI"]
+        "value": ["Adoção do React Router v6 para roteamento declarativo"]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": [""]
+        "value": []
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": [""]
+        "value": []
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": [""]
+        "value": []
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": [""]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": ["development", "production"]
+        "value": ["development", "staging", "production"]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Docker", "CI/CD pipeline via GitHub Actions"]
+        "value": ["Docker", "CI/CD pipeline"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": [""]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": [""]
+        "value": []
       }
     ]
   },
@@ -30932,41 +30932,46 @@
     ]
   },
   "web/package.json": {
-    "summary": "Este projeto consiste em uma interface web para a API NutJS Desktop Automation, permitindo a interação e controle de automação desktop via navegador. A aplicação é construída com React 18 e utiliza Webpack para bundling e desenvolvimento local, integrando bibliotecas como Bootstrap para estilização e React-Bootstrap para componentes UI. O foco principal é fornecer uma camada frontend que facilita o uso das funcionalidades da API NutJS, incluindo automação de tarefas no desktop, com scripts configurados para desenvolvimento, build, linting e verificação de qualidade de código. A arquitetura modular e o uso de TypeScript garantem escalabilidade e manutenção facilitada, enquanto as dependências de desenvolvimento asseguram a qualidade e padronização do código. O projeto está em fase inicial (versão 1.0.0), com foco em desenvolvimento e entrega de MVP funcional para automação desktop via web.",
+    "summary": "Este projeto consiste em uma interface web para a API NutJS Desktop Automation, permitindo a interação e controle de automação desktop via navegador. Ele utiliza React 18.2 com React Router para navegação, Bootstrap para estilização e Webpack para bundling e desenvolvimento local. O comportamento central envolve a construção de uma SPA (Single Page Application) que consome a API de automação, facilitando a criação, execução e monitoramento de scripts de automação desktop. O sistema integra-se com a API backend NutJS, gerenciando estados de UI e roteamento, além de garantir qualidade de código via ESLint e suporte a TypeScript para tipagem estática. A arquitetura modular e o uso de ferramentas modernas garantem escalabilidade e manutenção facilitada, habilitando usuários a controlar automações desktop de forma intuitiva e eficiente.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["nutjs-desktop-automation-web", "Web interface for NutJS Desktop Automation API"]
+        "value": ["nutjs-desktop-automation-web", "Web interface para NutJS Desktop Automation API"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Desktop Automation", "Web Interface", "Automation API"]
+        "value": ["Automação Desktop", "Desktop Automation", "Web Interface"]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["MVP", "Development"]
+        "value": ["MVP", "Desenvolvimento"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Garantir controle preciso e seguro da automação desktop",
-          "Manter integridade da API NutJS",
-          "Evitar falhas na interface que comprometam automação"
+          "Integridade da comunicação com API NutJS",
+          "Manter responsividade da UI",
+          "Garantir compatibilidade com múltiplas versões do backend"
         ]
       },
       {
         "property": "technical_stack",
         "subProperty": "primary_language",
-        "value": ["TypeScript 5.3"]
+        "value": ["TypeScript 5.3.0"]
       },
       {
         "property": "technical_stack",
         "subProperty": "frameworks",
-        "value": ["React 18.2.0", "Bootstrap 5.3.2", "React-Bootstrap 2.9.0", "Webpack 5.89.0"]
+        "value": [
+          "React 18.2.0",
+          "React Router DOM 7.6.3",
+          "Bootstrap 5.3.2",
+          "React Bootstrap 2.9.0"
+        ]
       },
       {
         "property": "technical_stack",
@@ -30986,15 +30991,16 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Component-Based Architecture", "Modular Frontend", "MVC (implícito via React)"]
+        "value": ["SPA (Single Page Application)", "Component-based Architecture"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "src/: código fonte React",
-          "public/: arquivos estáticos",
-          "config/: configurações do Webpack e ESLint"
+          "src/components - UI components",
+          "src/pages - Views/Pages",
+          "public - assets estáticos",
+          "config - configurações do Webpack e ESLint"
         ]
       },
       {
@@ -31002,7 +31008,7 @@
         "subProperty": "naming_conventions",
         "value": [
           "CamelCase para componentes React",
-          "kebab-case para arquivos e pastas",
+          "kebab-case para arquivos estáticos",
           "PascalCase para classes e tipos"
         ]
       },
@@ -31010,37 +31016,37 @@
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre UI components e lógica de configuração",
-          "Dependências gerenciadas via package.json"
+          "Separação clara entre UI components e lógica de roteamento",
+          "Dependência unidirecional de componentes para serviços"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Airbnb JavaScript Style Guide (implícito via ESLint)"]
+        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
         "value": [
           "ESLint com plugins @typescript-eslint, react, react-hooks",
-          "Regras para correção automática e verificação"
+          "Regras para correção automática e prevenção de erros comuns"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
-        "value": ["Configuração via ESLint (sem Prettier explícito)"]
+        "value": []
       },
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc para documentação inline"]
+        "value": ["JSDoc para funções e componentes"]
       },
       {
         "property": "code_standards",
         "subProperty": "type_checking",
-        "value": ["Strict TypeScript com ts-loader"]
+        "value": ["Strict TypeScript"]
       },
       {
         "property": "testing_strategy",
@@ -31100,7 +31106,7 @@
       {
         "property": "commands",
         "subProperty": "dev",
-        "value": ["npm run dev", "npm run start"]
+        "value": ["npm run dev"]
       },
       {
         "property": "commands",
@@ -31115,7 +31121,7 @@
       {
         "property": "commands",
         "subProperty": "lint",
-        "value": ["npm run lint", "npm run lint:check"]
+        "value": ["npm run lint"]
       },
       {
         "property": "commands",
@@ -31190,7 +31196,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["react", "webpack", "typescript", "eslint"]
+        "value": ["react", "react-router-dom", "webpack", "typescript"]
       },
       {
         "property": "dependencies_context",
@@ -31250,7 +31256,7 @@
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": ["REST (implícito via API NutJS)"]
+        "value": ["REST"]
       },
       {
         "property": "api_specifications",
@@ -34507,41 +34513,36 @@
     ]
   },
   "web/.eslintrc.js": {
-    "summary": "Este arquivo configura o ESLint para um projeto TypeScript com suporte a React e React Hooks, garantindo a qualidade e consistência do código através de regras rigorosas de linting. Ele define o ambiente de execução (browser, Node.js, ES2021), utiliza o parser do TypeScript para análise estática avançada e integra plugins específicos para React e hooks, promovendo boas práticas como evitar variáveis não utilizadas, uso restrito do tipo any e controle rigoroso de promessas. A configuração também ignora arquivos e pastas comuns que não precisam ser analisados, facilitando a manutenção e integração contínua do código em ambientes modernos de desenvolvimento front-end e back-end. Assim, habilita equipes a manterem um código limpo, seguro e alinhado com padrões atuais, reduzindo bugs e problemas de manutenção.",
+    "summary": "Este arquivo configura o ESLint para um projeto que utiliza TypeScript e React, definindo regras de linting específicas para garantir a qualidade e consistência do código. Ele habilita ambientes para browser, Node.js e ES2021, utiliza o parser do TypeScript para análise sintática e integra plugins para React e React Hooks, aplicando regras que previnem erros comuns, como uso incorreto de hooks e variáveis não utilizadas. Além disso, o arquivo ignora diretórios e arquivos específicos para otimizar a análise e possui uma configuração de override para arquivos de tipos, desabilitando a regra de variáveis não utilizadas nesses casos. Essa configuração promove boas práticas de desenvolvimento, melhora a manutenção do código e reduz bugs relacionados a padrões React e TypeScript.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["Projeto TypeScript React Linting"]
+        "value": ["Configuração ESLint para projeto React com TypeScript"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": [
-          "Desenvolvimento Front-end e Back-end",
-          "TypeScript",
-          "React",
-          "Qualidade de Código"
-        ]
+        "value": ["Desenvolvimento Frontend", "React", "TypeScript", "Linting"]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["Produção"]
+        "value": ["Produção", "Manutenção"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Garantir código seguro e consistente",
-          "Evitar uso de any e variáveis não utilizadas",
-          "Cumprir regras de React Hooks"
+          "Garantir qualidade e consistência do código",
+          "Prevenir erros em React Hooks",
+          "Evitar variáveis não utilizadas"
         ]
       },
       {
         "property": "technical_stack",
         "subProperty": "primary_language",
-        "value": ["TypeScript 5.x"]
+        "value": ["TypeScript 4.x", "JavaScript ES2021"]
       },
       {
         "property": "technical_stack",
@@ -34561,49 +34562,60 @@
       {
         "property": "technical_stack",
         "subProperty": "package_manager",
-        "value": ["npm"]
+        "value": ["npm", "yarn"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Plugin-based Configuration"]
+        "value": ["Plugin-based linting configuration"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
-        "value": ["node_modules/ (dependências)", "dist/ (build output)", "src/ (código fonte)"]
+        "value": [
+          "node_modules/ (dependências)",
+          "dist/ (build output)",
+          "src/ (código fonte)",
+          "overrides para arquivos .types.ts"
+        ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "camelCase para variáveis e funções",
-          "PascalCase para componentes React e classes"
+          "Arquivos .ts e .tsx para código e componentes",
+          "Arquivos .types.ts para definições de tipos"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre código fonte e build",
-          "Linting aplicado somente em arquivos TypeScript e JSX"
+          "Separação entre código fonte e build/output",
+          "Regras específicas para arquivos de tipos"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["ESLint Recommended", "@typescript-eslint Recommended"]
+        "value": [
+          "eslint:recommended",
+          "plugin:react/recommended",
+          "plugin:react-hooks/recommended"
+        ]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
         "value": [
-          "@typescript-eslint/no-unused-vars: error",
-          "@typescript-eslint/no-explicit-any: error",
-          "react-hooks/rules-of-hooks: error",
-          "no-console: warn",
-          "prefer-const: error",
-          "no-var: error"
+          "'react/react-in-jsx-scope': off",
+          "'react/prop-types': off",
+          "'react-hooks/rules-of-hooks': error",
+          "'react-hooks/exhaustive-deps': warn",
+          "'no-console': warn",
+          "'prefer-const': error",
+          "'no-var': error",
+          "'no-unused-vars': error com exceção para args iniciados com _"
         ]
       },
       {
@@ -34619,7 +34631,7 @@
       {
         "property": "code_standards",
         "subProperty": "type_checking",
-        "value": ["Strict TypeScript com tsconfig.json"]
+        "value": ["TypeScript parser com regras estritas para variáveis não utilizadas"]
       },
       {
         "property": "testing_strategy",
@@ -34669,7 +34681,7 @@
       {
         "property": "commands",
         "subProperty": "setup",
-        "value": []
+        "value": ["npm install"]
       },
       {
         "property": "commands",
@@ -34694,7 +34706,7 @@
       {
         "property": "commands",
         "subProperty": "lint",
-        "value": ["eslint . --ext .ts,.tsx"]
+        "value": ["eslint ."]
       },
       {
         "property": "commands",
@@ -34769,13 +34781,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": [
-          "eslint",
-          "@typescript-eslint/parser",
-          "@typescript-eslint/eslint-plugin",
-          "eslint-plugin-react",
-          "eslint-plugin-react-hooks"
-        ]
+        "value": ["@typescript-eslint/parser", "eslint-plugin-react", "eslint-plugin-react-hooks"]
       },
       {
         "property": "dependencies_context",
@@ -34785,7 +34791,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": []
+        "value": ["Compatibilidade com ESLint e React versões recentes"]
       },
       {
         "property": "dependencies_context",
@@ -34816,9 +34822,9 @@
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Conformidade com regras de linting",
-          "Uso correto de hooks",
-          "Evitar any e variáveis não utilizadas"
+          "Conformidade com regras React Hooks",
+          "Evitar variáveis não utilizadas",
+          "Uso preferencial de const"
         ]
       },
       {
@@ -34834,7 +34840,10 @@
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": []
+        "value": [
+          "Desabilitar prop-types em favor de TypeScript",
+          "Ignorar arquivos de tipos para regra no-unused-vars"
+        ]
       },
       {
         "property": "api_specifications",
@@ -34879,12 +34888,12 @@
     ]
   },
   "web/src/components/PrintScreenButton.tsx": {
-    "summary": "O componente React PrintScreenButton é responsável por permitir que o usuário capture a tela atual via uma chamada assíncrona a uma API RESTful, exibindo o resultado em formato de imagem base64. Ele gerencia estados internos para controlar o loading, erros e a imagem capturada, garantindo uma experiência responsiva e robusta ao usuário. O componente utiliza React Bootstrap para UI, implementa tratamento de erros detalhado e previne múltiplos cliques simultâneos, integrando-se a um backend que fornece a captura de tela, habilitando funcionalidades de captura visual para aplicações web.",
+    "summary": "O componente React PrintScreenButton é responsável por permitir que o usuário capture a tela atual via uma chamada assíncrona a uma API RESTful. Ele gerencia estados internos para controlar o processo de captura, exibindo feedback visual durante a operação, como um spinner de carregamento, mensagens de erro e a imagem capturada em base64. O componente previne múltiplos cliques simultâneos, trata erros de rede e resposta da API, e integra-se com o ambiente React Bootstrap para UI, garantindo uma experiência fluida e responsiva. Essa funcionalidade habilita usuários a obter capturas de tela diretamente na interface, facilitando fluxos que dependem de evidências visuais ou documentação rápida, com tratamento robusto de falhas e feedback claro.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["PrintScreen Web Capture", "Componente para captura de tela via API"]
+        "value": ["PrintScreen Capture UI", "Captura de tela via API"]
       },
       {
         "property": "project_metadata",
@@ -34901,7 +34910,7 @@
         "subProperty": "critical_business_rules",
         "value": [
           "Não permitir múltiplas requisições simultâneas",
-          "Exibir mensagens claras de erro",
+          "Exibir feedback claro de erro",
           "Garantir segurança da chave API"
         ]
       },
@@ -34923,7 +34932,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["API REST /api/v1/screen/print", "Environment Variables for API Key"]
+        "value": ["API REST /api/v1/screen/print"]
       },
       {
         "property": "technical_stack",
@@ -34933,7 +34942,7 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Component-Based Architecture", "Hooks Pattern", "Separation of Concerns"]
+        "value": ["Component-Based Architecture", "Hooks Pattern"]
       },
       {
         "property": "architecture_patterns",
@@ -34941,75 +34950,75 @@
         "value": [
           "src/components - UI components",
           "src/types - TypeScript types",
-          "src/api - API interaction abstractions (implied)"
+          "src/api - API integration"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "PascalCase for Components",
-          "camelCase for functions and variables",
-          "Upper snake case for environment variables"
+          "CamelCase para componentes e funções",
+          "PascalCase para componentes React",
+          "snake_case para variáveis de ambiente"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "UI components isolated from API logic",
-          "Types imported from centralized types module"
+          "Separação clara entre UI components e API types",
+          "Isolamento do componente PrintScreenButton"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Airbnb JavaScript Style Guide (implied)"]
+        "value": ["Airbnb JavaScript Style Guide"]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
-        "value": ["ESLint with React plugin (implied)"]
+        "value": [".eslintrc.json com regras para React e TypeScript"]
       },
       {
         "property": "code_standards",
         "subProperty": "formatting",
-        "value": ["Prettier with default config (implied)"]
+        "value": ["Prettier com configuração padrão"]
       },
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc style comments"]
+        "value": ["JSDoc para funções e componentes"]
       },
       {
         "property": "code_standards",
         "subProperty": "type_checking",
-        "value": ["Strict TypeScript typing"]
+        "value": ["Strict TypeScript"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_framework",
-        "value": ["Jest (implied)"]
+        "value": ["Jest 29", "React Testing Library"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["__tests__ folders or alongside components (implied)"]
+        "value": ["__tests__ folders próximos aos componentes"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
-        "value": [">=80% coverage (implied)"]
+        "value": ["Cobertura mínima de 80%"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_patterns",
-        "value": ["AAA (Arrange-Act-Assert)"]
+        "value": ["Arrange-Act-Assert (AAA)"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mock fetch API calls"]
+        "value": ["Mock de fetch API com jest-fetch-mock"]
       },
       {
         "property": "development_workflow",
@@ -35024,12 +35033,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Code review mandatory", "CI checks required"]
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Linting", "Testing", "Build", "Deploy"]
+        "value": ["Build, Test, Lint, Deploy"]
       },
       {
         "property": "commands",
@@ -35069,72 +35078,72 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": ["API Key via HTTP Header"]
+        "value": ["API Key via header 'x-api-key'"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": ["Valid API Key required for endpoint access"]
+        "value": ["Chave API deve ser mantida secreta e não exposta publicamente"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": ["API Key stored in environment variables, não exposta no código"]
+        "value": ["Imagem base64 tratada apenas em memória, não armazenada localmente"]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": ["x-api-key header"]
+        "value": ["x-api-key header obrigatório"]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["HTTPS obrigatório para comunicação segura"]
+        "value": ["Comunicação via HTTPS para proteger dados em trânsito"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Resposta da API em até 2 segundos (recomendado)"]
+        "value": ["Resposta da API esperada em menos de 2 segundos"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Minimizar latência da captura", "Evitar bloqueio UI durante requisição"]
+        "value": ["Velocidade de resposta e experiência do usuário"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": ["Nenhum cache explícito no cliente"]
+        "value": ["Sem cache local da imagem capturada"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": ["API deve suportar múltiplas requisições simultâneas"]
+        "value": ["Componente isolado, escalável via React"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Objeto JSON com campos success, message e data"]
+        "value": ["Mensagens de erro exibidas via Alert com dismissible"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Console.error para erros no cliente"]
+        "value": ["Console.error para erros capturados"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": ["Não especificado no código"]
+        "value": []
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Reset de estado de erro via dismissible Alert"]
+        "value": ["Permite nova tentativa após erro, resetando estado de erro"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["React", "React Bootstrap", "API REST /api/v1/screen/print"]
+        "value": ["React", "React Bootstrap", "API externa de captura de tela"]
       },
       {
         "property": "dependencies_context",
@@ -35154,48 +35163,42 @@
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Melhorar tratamento de erros e retries", "Implementar caching para imagens"]
+        "value": ["Melhorar tratamento de erros e feedback", "Gerenciamento seguro da chave API"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": [
-          "Nenhum fallback para falha na API",
-          "Chave API pode ser exposta se não configurada corretamente"
-        ]
+        "value": ["Possível exposição da chave API no front-end"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": ["Renderização de imagens grandes pode impactar UI"]
+        "value": ["Nenhum identificado no componente isolado"]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": ["Nenhuma migração em andamento"]
+        "value": []
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Tratamento de erros", "Manutenção da responsividade", "Segurança da chave API"]
+        "value": ["Tratamento de erros", "Clareza na UI", "Segurança da chave API"]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Comentários JSDoc para funções públicas"]
+        "value": ["Documentação via JSDoc para novos componentes"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Clareza e objetividade em comentários e PRs"]
+        "value": ["Comentários claros e objetivos"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": [
-          "Uso de React Bootstrap para UI",
-          "Separação da lógica assíncrona do handler de evento"
-        ]
+        "value": ["Uso de React Hooks para estado local", "API Key via header para autenticação"]
       },
       {
         "property": "api_specifications",
@@ -35205,27 +35208,27 @@
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": ["Versionamento via URL (/v1/)"]
+        "value": ["Versão na URL (/api/v1)"]
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": ["JSON com campos success, message, data"]
+        "value": ["JSON com campo base64 para imagem"]
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Não especificado no cliente"]
+        "value": []
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": ["Development, Staging, Production (URLs variáveis)"]
+        "value": ["development", "staging", "production"]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Docker (implied), CI/CD pipelines"]
+        "value": ["Docker", "CI/CD pipeline"]
       },
       {
         "property": "deployment_context",
@@ -35235,7 +35238,7 @@
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": ["Necessidade de HTTPS para segurança"]
+        "value": []
       }
     ]
   },
@@ -35553,6 +35556,2865 @@
         "property": "api_specifications",
         "subProperty": "response_formats",
         "value": ["JSON"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "web/install-action-builder-deps.sh": {
+    "summary": "Este script Bash automatiza a instalação das dependências essenciais para o projeto ActionBuilder, focado em garantir que os pacotes necessários estejam disponíveis para o desenvolvimento e execução da aplicação. Ele instala bibliotecas de produção como 'nanoid' para geração de IDs únicos e 'react-bootstrap-icons' para ícones na interface, além de tipos TypeScript para suporte ao desenvolvimento tipado. O script promove uma configuração rápida e padronizada do ambiente, reduzindo erros manuais e facilitando a integração contínua, ao mesmo tempo que orienta o usuário sobre os próximos passos para iniciar o servidor de desenvolvimento.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["ActionBuilder - ferramenta para criação e gerenciamento de ações interativas"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Desenvolvimento de software", "Interface de usuário", "Gerenciamento de ações"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Setup inicial / desenvolvimento"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Garantir IDs únicos para ações",
+          "Manter integridade visual com ícones consistentes"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript (versão não especificada)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["React (implícito pelo uso de react-bootstrap-icons)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Não aplicável (script de setup)"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": ["Não especificado no script"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": ["Não especificado no script"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["Comentários inline simples"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["TypeScript com tipos instalados para nanoid"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["./install_dependencies.sh"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm start"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Não implementado"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Mensagens simples no console"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Não implementado"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["nanoid", "react-bootstrap-icons"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": ["Nenhum identificado"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Ausência de controle de versões explícito"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Nenhum identificado no script"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Comentários simples inline"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Informativo e direto no console"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de npm para gerenciamento de pacotes"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Não especificado"]
+      }
+    ]
+  },
+  "web/src/components/ActionBuilder.tsx": {
+    "summary": "O componente ActionBuilder é uma ferramenta React para construção dinâmica de sequências de automação, permitindo que usuários adicionem, atualizem e removam ações de mouse e teclado. Utiliza um reducer para gerenciar o estado das ações, garantindo controle eficiente e previsível das operações, além de notificar componentes pais sobre mudanças via callback. O componente também impõe um limite máximo configurável de ações, exibindo alertas quando esse limite é atingido, e integra formulários e tabelas para facilitar a interação do usuário com a lista de ações, promovendo uma experiência fluida e controlada na criação de fluxos automatizados.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["Automation Action Builder", "Construtor de sequências de automação"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": [
+          "Automação de interface",
+          "Automação de testes",
+          "Automação de tarefas repetitivas"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção", "Estável"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Limite máximo de ações não pode ser ultrapassado",
+          "IDs das ações devem ser únicos",
+          "Notificação de mudanças deve ocorrer sempre que o estado mudar"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 4.x", "JavaScript ES6+"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["React 18.x", "React-Bootstrap 2.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["nanoid (ID generation)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm", "yarn"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Reducer pattern", "Component-based architecture"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "components/: UI components",
+          "types/: TypeScript type definitions",
+          "utils/: utility functions"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "PascalCase para componentes React",
+          "camelCase para funções e variáveis",
+          "UPPER_SNAKE_CASE para constantes"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": ["Separação clara entre UI (ActionForm, ActionTable) e lógica de estado (reducer)"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para React e TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para documentação de funções e componentes"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29", "React Testing Library"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/unit", "tests/integration"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [">= 80% coverage"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock de funções callback e hooks"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review obrigatório", "Checks automáticos de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build", "Test", "Lint", "Deploy"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run start"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm run test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": [
+          "Performance para manipulação de listas de ações",
+          "Memória otimizada para até 100 ações"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Limitação de número máximo de ações para evitar degradação"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["react", "nanoid", "react-bootstrap"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["./ActionForm", "./ActionTable", "../types/automation-builder.types"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Clareza na manipulação do estado",
+          "Uso correto de hooks",
+          "Manutenção da imutabilidade"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação clara via JSDoc para funções e componentes"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e em português", "PRs com descrição clara"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso do reducer para estado complexo",
+          "Limite máximo de ações para controle de performance"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "web/src/components/ActionTable.tsx": {
+    "summary": "Este componente React denominado ActionTable é responsável por exibir e gerenciar uma lista de ações de automação, especificamente ações de mouse e teclado, permitindo ao usuário visualizar, formatar e remover essas ações de forma interativa. Ele transforma dados complexos de ações em descrições legíveis, exibindo detalhes relevantes e possibilitando a remoção individual ou a limpeza total da lista. A tabela utiliza componentes do React-Bootstrap para renderização responsiva e estilizada, integrando-se a um sistema maior de automação que manipula eventos de input para controle programático de dispositivos de entrada.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "Automation Builder",
+          "Gerenciamento de ações de automação para dispositivos de entrada"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Automação de interface", "Input device automation", "Mouse e Keyboard actions"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção", "Estável"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Integridade das ações de automação",
+          "Remoção correta e segura das ações",
+          "Exibição precisa das ações configuradas"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 4.x", "JavaScript ES6+"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["React 18.x", "React-Bootstrap 2.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm", "yarn"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Component-Based Architecture", "Presentational and Container Components"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/components - componentes React",
+          "src/types - definições de tipos TypeScript",
+          "src/utils - funções auxiliares"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para componentes e funções",
+          "PascalCase para tipos e interfaces",
+          "snake_case para arquivos não React"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre tipos, componentes e utilitários",
+          "Dependência unidirecional de tipos para componentes"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para React e TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão para React/TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para funções e componentes"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29", "React Testing Library"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/unit/components", "tests/integration"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [">= 80% cobertura"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock de props e funções callback"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build", "Lint", "Test", "Deploy automático"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run start"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm run test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Responsividade UI", "Baixa latência na renderização"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Renderização eficiente para listas médias de ações"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["react", "react-bootstrap", "typescript"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["React >=18.0.0", "TypeScript >=4.0.0"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["../types/automation-builder.types"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": [
+          "Ausência de tratamento de erros explícito",
+          "Possível complexidade crescente na formatação de ações"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Clareza na formatação de ações", "Manutenção da separação de responsabilidades"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação JSDoc para funções e componentes"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e em português"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de React-Bootstrap para UI", "Separação de formatação em funções auxiliares"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "web/src/components/AutomationPanel.tsx": {
+    "summary": "O componente AutomationPanel é um painel React que integra funcionalidades de captura de tela e construção de ações automatizadas, permitindo ao usuário alternar entre uma visualização compacta e uma expandida com um construtor de ações. Ele gerencia o estado local para exibir ou ocultar o ActionBuilder, facilitando a criação e modificação de uma lista de ações automatizadas, com suporte para notificar mudanças via callback. Essa combinação modular permite substituir diretamente o PrintScreenButton, agregando valor ao fluxo de automação com uma interface intuitiva e responsiva, adequada para aplicações que demandam captura e manipulação de ações automatizadas em um ambiente web.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["AutomationPanel", "Painel de automação para captura e construção de ações"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Automação", "UI Web", "Captura de tela", "Construção de ações"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção", "Estável"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Manter integridade das ações automatizadas",
+          "Garantir responsividade do painel",
+          "Notificar corretamente alterações via callback"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 4.x", "React 18.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["React 18.x", "React-Bootstrap 2.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm", "yarn"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Component-Based Architecture", "Callback Pattern", "Conditional Rendering"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "components/: componentes React reutilizáveis",
+          "types/: definições de tipos TypeScript",
+          "styles/: arquivos CSS/SCSS"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "PascalCase para componentes",
+          "camelCase para funções e variáveis",
+          "kebab-case para arquivos"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre UI (PrintScreenButton, ActionBuilder) e lógica de estado (AutomationPanel)",
+          "Tipos centralizados em pasta types"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [
+          "ESLint com regras para React e TypeScript",
+          "Proibição de any explícito",
+          "Regras para hooks"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão", "Quebra de linha em 80-100 caracteres"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para componentes e funções públicas"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript", "Interfaces para props e tipos de dados"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29", "React Testing Library"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/unit/components", "tests/integration"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [">= 80% cobertura de componentes"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert", "Snapshot Testing para UI"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock de callbacks", "Mock de componentes filhos"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build", "Test", "Lint", "Deploy automático em staging"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run start"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm run test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Responsividade UI", "Renderização condicional para otimização"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["react", "react-bootstrap", "PrintScreenButton", "ActionBuilder"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["React >=18.0.0", "React-Bootstrap >=2.0.0"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["./PrintScreenButton", "./ActionBuilder", "../types/automation-builder.types"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Clareza na gestão de estado", "Uso correto de hooks", "Consistência na UI"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação JSDoc para componentes e props"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e em português", "PRs pequenos e focados"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso de React Functional Components com hooks",
+          "Separação clara entre captura de tela e construção de ações"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["development", "staging", "production"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker", "CI/CD pipelines"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "web/src/components/index.ts": {
+    "summary": "Este arquivo atua como um ponto central de exportação para componentes React relacionados a funcionalidades de automação e captura de tela. Ele organiza e disponibiliza componentes modulares como PrintScreenButton, ActionBuilder, ActionForm, ActionTable e AutomationPanel, facilitando a reutilização e integração desses elementos em outras partes do sistema. O comportamento principal é estruturar a interface de automação, permitindo que usuários construam, visualizem e gerenciem ações automatizadas, promovendo maior eficiência operacional e padronização na manipulação de fluxos automatizados.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["Automation UI Components Library"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Automação de processos", "Interface de usuário", "React Components"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": ["Integridade dos dados de ações automatizadas", "Consistência na captura de tela"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["React 18.2"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Component-Based Architecture", "Module Index Pattern"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "Cada componente reside em sua própria pasta com arquivos de implementação e testes"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": ["PascalCase para componentes React", "camelCase para funções e variáveis"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Módulos isolados por funcionalidade, exportados via arquivo index para centralização"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [".eslintrc.json com regras para React e TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Testes localizados na pasta __tests__ dentro de cada componente"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["AAA (Arrange, Act, Assert)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mocks com Jest e fixtures para dados de entrada"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Revisão obrigatória e testes aprovados"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build, Test, Lint e Deploy automatizados"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["React 18.2", "TypeScript 5.0"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["Componentes locais importados via paths relativos"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Consistência de nomenclatura", "Cobertura de testes", "Clareza na documentação"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação JSDoc para todos os componentes"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e claros, foco em comportamento"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso do padrão de indexação para centralizar exports"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "web/src/pages/AutomationPage.tsx": {
+    "summary": "Este arquivo implementa uma página React para automação de interface, combinando captura de tela e construção de sequências de ações automatizadas. O componente principal gerencia um estado local de ações que podem ser criadas, salvas, exportadas e executadas sequencialmente, simulando a interação com uma API para execução. A interface é dividida em seções para captura de tela, construção de ações e controle da execução, oferecendo feedback visual e controle de estado para evitar execuções concorrentes. A funcionalidade permite ao usuário montar fluxos de automação com ações de mouse e teclado, salvar rascunhos localmente, exportar para JSON e executar as ações em ordem, facilitando testes e automações de interface de forma interativa e modular.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["Automation Interface Builder"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Automação de Interface", "UI Automation", "Automação de Testes"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["MVP", "Desenvolvimento Inicial"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Execução sequencial das ações",
+          "Persistência segura dos rascunhos",
+          "Prevenção de execução concorrente"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 4.x", "React 18"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["React 18.2", "React-Bootstrap 2.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": ["Nenhum banco de dados persistente (uso localStorage)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["API de execução de ações (a implementar)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Component-Based Architecture", "Hooks Pattern", "Separation of Concerns"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "components/ - componentes reutilizáveis",
+          "types/ - definições de tipos TypeScript",
+          "pages/ - páginas da aplicação"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "PascalCase para componentes React",
+          "camelCase para funções e variáveis",
+          "UpperCamelCase para tipos"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre UI (components) e tipos (types)",
+          "Página principal orquestra componentes e estado"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para React e TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão para React/TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para funções e componentes"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript com tipagem explícita para estados e props"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29", "React Testing Library"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Testes localizados em __tests__ próximos aos componentes"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80% para componentes críticos"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock de APIs e timers com Jest"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Revisão obrigatória e testes aprovados"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build, Test, Lint e Deploy automatizados"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["Não implementado no código atual"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Não aplicável no escopo atual"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Dados de ações armazenados localmente sem criptografia"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["Não implementado"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Execução das ações simulada com delay de 500ms por ação"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Responsividade da UI e prevenção de execuções concorrentes"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Uso de localStorage para persistência local"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Limite máximo de 50 ações para evitar sobrecarga"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Uso de alert e console.error para feedback de erros"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Logs no console para execução e erros"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Reset do estado isExecuting após erro"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": [
+          "React",
+          "React-Bootstrap",
+          "Componentes internos PrintScreenButton e ActionBuilder"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": ["Nenhum identificado"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["React 18.x", "React-Bootstrap 2.x"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["../components", "../types"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Execução de ações via API ainda não implementada"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Uso de alert para notificações pode ser melhorado"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Execução sequencial com delay pode impactar performance em grandes listas"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Nenhuma migração em andamento"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Clareza na gestão de estado e tratamento de erros"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação clara para novos componentes e funções"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e uso de JSDoc"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Separação clara entre UI e lógica de execução",
+          "Uso de localStorage para persistência temporária"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["REST (planejado)"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Não implementado"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON para exportação de ações"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "prod"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker (provável) ou deployment estático via CDN"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["Nenhum utilizado no código atual"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Aplicação client-side com dependência mínima de backend"]
+      }
+    ]
+  },
+  "web/src/pages/HomePage.tsx": {
+    "summary": "Este arquivo React implementa a HomePage de uma aplicação web focada em automação desktop utilizando a biblioteca NutJS. A página apresenta uma interface visual clara e responsiva, exibindo funcionalidades principais como controle do mouse, controle do teclado e captura de tela, além de permitir navegação para uma seção de automação. O componente integra elementos visuais do React-Bootstrap para layout e estilização, e utiliza React Router para navegação interna, promovendo uma experiência de usuário fluida e intuitiva. A presença de componentes reutilizáveis como Header e PrintScreenButton indica uma arquitetura modular, facilitando manutenção e extensibilidade do sistema.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["Automação Desktop NutJS", "Interface Web para controle e captura"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Automação Desktop", "Automação de UI", "Controle de Mouse e Teclado"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["MVP", "Interface inicial funcional"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Navegação segura entre páginas",
+          "Apresentação clara das funcionalidades",
+          "Modularidade para extensibilidade"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 4.x", "React 18"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["React 18.2", "React-Bootstrap 2.x", "React Router 6.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Component-Based Architecture", "Hook Pattern"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "components: UI reutilizáveis",
+          "styles: arquivos CSS",
+          "pages: telas da aplicação"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "PascalCase para componentes React",
+          "camelCase para funções e variáveis",
+          "kebab-case para arquivos CSS"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre componentes UI e lógica de navegação",
+          "Importação explícita de componentes e estilos"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para React e TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para componentes e funções"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29", "React Testing Library"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Testes localizados em __tests__ ou junto aos componentes"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mocks para navegação e componentes externos"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review obrigatório", "Checks automáticos de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build, Test, Lint, Deploy"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm start"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Responsividade UI", "Baixa latência na navegação"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["react", "react-bootstrap", "react-router-dom"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["React 18.x", "React Router 6.x"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["../components/Header", "../components/PrintScreenButton"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Clareza e modularidade", "Uso correto de hooks", "Consistência visual"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação clara em JSDoc para componentes"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e informativos"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Adoção de React-Bootstrap para UI", "Uso de React Router para navegação"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "web/src/types/automation-builder.types.ts": {
+    "summary": "Este arquivo define tipos TypeScript e estruturas para o componente ActionBuilder, que permite a construção e manipulação de sequências de automação de ações de mouse e teclado. Ele especifica enums para diferentes tipos de ações (como mover, clicar, arrastar, rolar para mouse e digitar, pressionar, combinação para teclado), além de payloads detalhados para cada ação, incluindo parâmetros como coordenadas, botões, modos de digitação e duração. O código também estabelece restrições e constantes para validação, como limites de texto, duração e quantidade de teclas em combinações, garantindo robustez e controle sobre as ações automatizadas. Além disso, define interfaces para o estado do formulário e ações do reducer, facilitando a gestão do estado e atualização das sequências de automação. Essa estrutura modular e tipada habilita a criação de fluxos complexos de interação com dispositivos de entrada, suportando integração com componentes React e possibilitando extensibilidade e manutenção eficiente.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["ActionBuilder - Automação de ações de mouse e teclado"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": [
+          "Automação de interface",
+          "Automação de testes",
+          "Interação com dispositivos de entrada"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Respeitar limites de duração e quantidade de teclas em combinações",
+          "Garantir que ações de digitação não excedam 10.000 caracteres",
+          "Manter integridade das coordenadas e parâmetros de movimento"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["React 18.2"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Reducer Pattern", "Discriminated Union Types"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "types/ - definições de tipos e enums",
+          "components/ - componentes React como ActionBuilder",
+          "reducers/ - lógica de estado para ações"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "Enums em PascalCase",
+          "Interfaces prefixadas com I ou nome descritivo",
+          "Constantes em UPPER_SNAKE_CASE"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre tipos, constantes e lógica de estado",
+          "Interfaces e tipos exportados para uso em componentes"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb TypeScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para TypeScript e React"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/unit para testes de tipos e reducers"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["AAA (Arrange-Act-Assert)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mocks para payloads e ações"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build, Test, Lint, Deploy"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Equilíbrio entre performance e precisão na execução das ações"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Consistência de tipos",
+          "Validação de restrições",
+          "Clareza na modelagem de ações"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação clara via JSDoc para tipos e interfaces"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e técnicos"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso de enums para garantir valores válidos",
+          "Separação clara entre payloads de mouse e teclado"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
       },
       {
         "property": "api_specifications",
