@@ -86,10 +86,10 @@ export class OcrWorkerPool {
    */
   private async createConfiguredWorker(languages: string[]): Promise<Worker> {
     const worker = await createWorker(languages, OEM.LSTM_ONLY, {
-      langPath: ocrConfig.langPath,
+      langPath: 'https://tessdata.projectnaptha.com/4.0.0',
       cachePath: ocrConfig.cachePath,
-      cacheMethod: 'write',
-      logger: ocrConfig.enableMetrics ? this.logWorkerProgress.bind(this) : undefined,
+      cacheMethod: 'readOnly',
+      logger: ocrConfig.enableMetrics ? (m: any) => this.logWorkerProgress(m) : () => {},
     });
 
     // Configurar parâmetros otimizados para precisão
@@ -109,8 +109,10 @@ export class OcrWorkerPool {
    * @param log Log do worker
    */
   private logWorkerProgress(log: any): void {
-    if (log.status === 'recognizing text' && log.progress) {
+    if (typeof log === 'object' && log.status === 'recognizing text' && log.progress) {
       logger.debug(`OCR progresso: ${Math.round(log.progress * 100)}%`);
+    } else if (typeof log === 'string') {
+      logger.debug(`OCR: ${log}`);
     }
   }
 

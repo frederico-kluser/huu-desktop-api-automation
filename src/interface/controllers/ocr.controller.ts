@@ -36,7 +36,7 @@ export class OcrController {
   registerRoutes(app: FastifyInstance): void {
     // Endpoint principal OCR - processar imagem base64
     app.post(
-      '/api/v1/ocr/base64',
+      '/ocr/base64',
       {
         preHandler: authenticationMiddleware,
         schema: {
@@ -60,7 +60,7 @@ export class OcrController {
 
     // Endpoint para processamento em lote
     app.post(
-      '/api/v1/ocr/batch',
+      '/ocr/batch',
       {
         preHandler: authenticationMiddleware,
         schema: {
@@ -75,7 +75,7 @@ export class OcrController {
 
     // Endpoint para obter métricas
     app.get(
-      '/api/v1/ocr/metrics',
+      '/ocr/metrics',
       {
         preHandler: authenticationMiddleware,
         schema: {
@@ -92,7 +92,7 @@ export class OcrController {
 
     // Endpoint para limpar cache
     app.post(
-      '/api/v1/ocr/cache/clear',
+      '/ocr/cache/clear',
       {
         preHandler: authenticationMiddleware,
         schema: {
@@ -106,7 +106,7 @@ export class OcrController {
     );
 
     // Endpoint de health check
-    app.get('/api/v1/ocr/health', this.healthCheck.bind(this));
+    app.get('/ocr/health', this.healthCheck.bind(this));
 
     logger.info('Rotas OCR registradas com sucesso');
   }

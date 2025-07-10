@@ -4,7 +4,7 @@
     "name": "NutJS Desktop Automation API",
     "description": "Complete REST API for desktop automation using NutJS. Supports mouse control, keyboard input, clipboard operations, screen capture/recognition, and real-time event recording.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "version": "3.0.0"
+    "version": "3.1.0"
   },
   "auth": {
     "type": "apikey",
@@ -2483,6 +2483,423 @@
               "path": ["api", "v1", "llm"]
             },
             "description": "Example of validation error when temperature exceeds maximum value (2.0)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "OCR Operations",
+      "description": "Optical Character Recognition endpoints for text extraction from images",
+      "item": [
+        {
+          "name": "Process Base64 Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n  \"config\": {\n    \"languages\": [\"eng\", \"por\"],\n    \"mode\": \"balanced\",\n    \"pageSegmentationMode\": 3,\n    \"timeout\": 30000\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ocr/base64",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "ocr", "base64"]
+            },
+            "description": "Processes a base64 encoded image and returns extracted text with position information. Supports JPEG, PNG, GIF, BMP, and WebP formats."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n  \"config\": {\n    \"languages\": [\"eng\"],\n    \"mode\": \"balanced\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/ocr/base64",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "ocr", "base64"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"text\": \"Hello World\\nThis is a test document.\",\n  \"confidence\": 92.5,\n  \"words\": [\n    {\n      \"text\": \"Hello\",\n      \"confidence\": 95.2,\n      \"bbox\": {\n        \"x\": 10,\n        \"y\": 20,\n        \"width\": 50,\n        \"height\": 20\n      }\n    },\n    {\n      \"text\": \"World\",\n      \"confidence\": 93.8,\n      \"bbox\": {\n        \"x\": 65,\n        \"y\": 20,\n        \"width\": 45,\n        \"height\": 20\n      }\n    }\n  ],\n  \"lines\": [\n    {\n      \"text\": \"Hello World\",\n      \"confidence\": 94.5,\n      \"bbox\": {\n        \"x0\": 10,\n        \"y0\": 20,\n        \"x1\": 110,\n        \"y1\": 40\n      },\n      \"words\": []\n    }\n  ],\n  \"processingTime\": 1250\n}"
+            },
+            {
+              "name": "Error - Invalid Image",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"not-a-valid-base64-image\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/ocr/base64",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "ocr", "base64"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": false,\n  \"error\": \"Invalid image format. Use: data:image/[type];base64,[data]\",\n  \"code\": \"INVALID_IMAGE\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Process Image Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"images\": [\n    \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n    \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEA...\"\n  ],\n  \"config\": {\n    \"languages\": [\"eng\"],\n    \"mode\": \"fast\",\n    \"timeout\": 10000\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ocr/batch",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "ocr", "batch"]
+            },
+            "description": "Process multiple images (up to 10) in parallel for OCR text extraction."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"images\": [\n    \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n    \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEA...\"\n  ],\n  \"config\": {\n    \"languages\": [\"eng\"],\n    \"mode\": \"fast\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/ocr/batch",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "ocr", "batch"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"results\": [\n    {\n      \"success\": true,\n      \"text\": \"First document text\",\n      \"confidence\": 89.5,\n      \"words\": [],\n      \"lines\": [],\n      \"processingTime\": 850\n    },\n    {\n      \"success\": true,\n      \"text\": \"Second document text\",\n      \"confidence\": 91.2,\n      \"words\": [],\n      \"lines\": [],\n      \"processingTime\": 920\n    }\n  ],\n  \"totalProcessed\": 2\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get OCR Metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ocr/metrics",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "ocr", "metrics"]
+            },
+            "description": "Get OCR service metrics including job statistics and performance data."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/ocr/metrics",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "ocr", "metrics"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"totalJobs\": 156,\n  \"successfulJobs\": 148,\n  \"failedJobs\": 8,\n  \"averageProcessingTime\": 1125.5,\n  \"successRate\": 0.949,\n  \"uptime\": 3600000,\n  \"cacheSize\": 45,\n  \"isInitialized\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Clear OCR Cache",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ocr/cache/clear",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "ocr", "cache", "clear"]
+            },
+            "description": "Clear all cached OCR results to free up memory."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{apiKey}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/ocr/cache/clear",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "ocr", "cache", "clear"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Cache limpo com sucesso\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "OCR Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ocr/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "ocr", "health"]
+            },
+            "description": "Check if the OCR service is healthy and ready to process images."
+          },
+          "response": [
+            {
+              "name": "Service Healthy",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/ocr/health",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "ocr", "health"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"healthy\",\n  \"timestamp\": \"2024-01-10T15:30:00.000Z\",\n  \"uptime\": 3600000,\n  \"initialized\": true,\n  \"details\": {\n    \"totalJobs\": 156,\n    \"successRate\": 0.949,\n    \"cacheSize\": 45\n  }\n}"
+            },
+            {
+              "name": "Service Unhealthy",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/ocr/health",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "ocr", "health"]
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"unhealthy\",\n  \"timestamp\": \"2024-01-10T15:30:00.000Z\",\n  \"uptime\": 0,\n  \"initialized\": false,\n  \"details\": {\n    \"totalJobs\": 0,\n    \"successRate\": 0,\n    \"cacheSize\": 0\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Process Image - Fast Mode",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n  \"config\": {\n    \"mode\": \"fast\",\n    \"timeout\": 10000\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ocr/base64",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "ocr", "base64"]
+            },
+            "description": "Example of using fast mode for quicker but less accurate OCR processing."
+          },
+          "response": []
+        },
+        {
+          "name": "Process Image - Accurate Mode",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...\",\n  \"config\": {\n    \"mode\": \"accurate\",\n    \"languages\": [\"eng\", \"por\"],\n    \"timeout\": 30000\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/ocr/base64",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "ocr", "base64"]
+            },
+            "description": "Example of using accurate mode for best OCR quality with multiple languages."
           },
           "response": []
         }
