@@ -23,8 +23,26 @@ jest.mock('../../../src/interface/controllers/llm.controller', () => ({
   })),
 }));
 
+jest.mock('../../../src/interface/controllers/ocr.controller', () => ({
+  OcrController: jest.fn().mockImplementation(() => ({
+    registerRoutes: jest.fn(),
+  })),
+}));
+
 jest.mock('../../../src/routes/status.routes', () => ({
   statusRoutes: jest.fn(),
+}));
+
+jest.mock('../../../src/config/dependency-injection', () => ({
+  container: {
+    resolve: jest.fn().mockImplementation((token) => {
+      const { OcrController } = require('../../../src/interface/controllers/ocr.controller');
+      if (token === OcrController || token.name === 'OcrController') {
+        return new OcrController();
+      }
+      return null;
+    }),
+  },
 }));
 
 // Usar require devido ao verbatimModuleSyntax
@@ -34,8 +52,10 @@ const {
 } = require('../../../src/interface/controllers/automation.controller');
 const { KeyboardController } = require('../../../src/interface/controllers/keyboard.controller');
 const { LLMController } = require('../../../src/interface/controllers/llm.controller');
+const { OcrController } = require('../../../src/interface/controllers/ocr.controller');
 const { inputEventsRoutes } = require('../../../src/routes/input-events.routes');
 const { statusRoutes } = require('../../../src/routes/status.routes');
+const { container } = require('../../../src/config/dependency-injection');
 
 describe('automation.routes', () => {
   let mockServer: any;
@@ -107,6 +127,20 @@ describe('automation.routes', () => {
     // Verificar que registerRoutes foi chamado
     const llmControllerInstance = (LLMController as jest.Mock).mock.results[0].value;
     expect(llmControllerInstance.registerRoutes).toHaveBeenCalledWith(mockServer);
+  });
+
+  test('should register OCR controller routes', async () => {
+    await automationRoutes(mockServer, {}, jest.fn());
+
+    // Verificar que container.resolve foi chamado com OcrController
+    expect(container.resolve).toHaveBeenCalledWith(OcrController);
+
+    // Verificar que OcrController foi instanciado
+    expect(OcrController).toHaveBeenCalledTimes(1);
+
+    // Verificar que registerRoutes foi chamado
+    const ocrControllerInstance = (OcrController as jest.Mock).mock.results[0].value;
+    expect(ocrControllerInstance.registerRoutes).toHaveBeenCalledWith(mockServer);
   });
 
   test('should register input events routes with prefix', async () => {

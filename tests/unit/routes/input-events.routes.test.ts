@@ -189,4 +189,12 @@ describe('input-events.routes', () => {
     // O handler deve propagar o erro
     await expect(route.handler(mockRequest, mockReply)).rejects.toThrow('Test error');
   });
+
+  test('deve chamar callback done quando fornecido', () => {
+    const mockDone = jest.fn();
+
+    inputEventsRoutes(mockFastify, {}, mockDone);
+
+    expect(mockDone).toHaveBeenCalled();
+  });
 });
