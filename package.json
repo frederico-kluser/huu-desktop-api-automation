@@ -25,7 +25,9 @@
     "format:check": "prettier --check src/**/*.ts",
     "typecheck": "tsc --noEmit",
     "audit:roadmap": "echo 'TODO: Implement roadmap audit script'",
-    "prepare": "husky"
+    "prepare": "husky",
+    "download-tessdata": "node scripts/download-tessdata.js",
+    "postinstall": "node scripts/download-tessdata.js || echo 'Tessdata download failed, will download on first use'"
   },
   "dependencies": {
     "@fastify/static": "^6.12.0",
@@ -48,6 +50,7 @@
     "reflect-metadata": "^0.2.1",
     "robotjs": "^0.6.0",
     "sharp": "^0.34.2",
+    "tesseract.js": "^6.0.1",
     "tsyringe": "^4.8.0",
     "uiohook-napi": "^1.5.4",
     "zod": "^3.22.4"
