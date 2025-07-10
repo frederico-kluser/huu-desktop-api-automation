@@ -1,95 +1,92 @@
 {
   "project_metadata": {
-    "name": "NutJS Desktop Automation API – Web/Mobile/Desktop automation, input event capture, LLM and OCR integration",
+    "name": "NutJS Desktop Automation API – Web/Mobile/Desktop automation, input event streaming, LLM integration, and OCR services",
     "domain": [
       "Web/Mobile/Desktop Automation",
-      "Input Event Capture and Processing",
-      "AI Integration (LLM, OCR, NLP)",
-      "Backend API",
-      "Frontend Web Application",
+      "Input Event Streaming",
+      "AI Integration",
       "Clipboard Management",
-      "Screen Capture and Computer Vision",
+      "Screen Capture",
       "Keyboard and Mouse Control",
       "Robotic Process Automation (RPA)",
-      "Software Testing and Automation",
-      "API Authentication and Security",
-      "Data Validation and Error Handling"
+      "Computer Vision",
+      "Optical Character Recognition (OCR)",
+      "Large Language Models (LLM)",
+      "API Development",
+      "Software Testing",
+      "Backend",
+      "Frontend",
+      "Security",
+      "DevOps"
     ],
     "current_phase": [
       "Development",
       "Production",
       "Maintenance",
-      "Stable Configuration",
-      "Testing and Validation",
+      "Stable",
+      "Testing Automation",
       "MVP"
     ],
     "critical_business_rules": [
-      "API keys must be kept secret and required for all sensitive endpoints",
-      "Strict input validation for all parameters to prevent invalid commands",
-      "Clipboard content must not exceed 1 MB and must be sanitized",
-      "Key combinations must use only allowed modifiers and letters, with a maximum of 5 keys",
-      "Timing values must be non-negative integers and not exceed 300000ms",
+      "API key authentication required for sensitive endpoints",
+      "Strict input validation for all parameters and payloads",
+      "Clipboard content must not exceed 1 MB",
+      "Text input must be non-empty and free of control characters",
+      "Key combinations must use allowed modifiers and have 1-5 keys",
+      "Timing values must be non-negative and not exceed 300000ms",
       "Mouse and screen coordinates must be within valid screen bounds",
-      "All operations must return standardized responses with proper HTTP status codes",
-      "Consistent error response format with no sensitive details in production",
-      "Event buffer size, heartbeat, and rate must respect configured limits",
+      "Consistent error response format with proper HTTP status codes",
+      "No sensitive error details exposed in production",
       "Singleton services must be unique and globally accessible",
+      "Rate limiting to prevent overload (max 50000 events/s)",
+      "Buffer size must be between 1 and 100000",
+      "Heartbeat interval must be between 1000 and 300000 ms",
+      "Max event age must be between 1000 and 3600000 ms",
+      "Batch requests limited to max 10 images",
+      "Image size must not exceed 14MB encoded (approx. 10MB raw)",
+      "OCR processing must respect configured languages and modes",
+      "Timeouts must be enforced to avoid resource exhaustion",
       "Environment variables must be loaded safely and set for each environment",
-      "Test coverage must be at least 80% for critical modules",
-      "Output images must be valid base64 PNG and not exceed 1MB",
-      "LLM requests must conform to defined schemas and respect token/temperature limits",
-      "Batch OCR requests limited to 10 images, each under 14MB encoded",
-      "Graceful shutdown to avoid data loss and resource leaks",
-      "Consistent logging for audit and debugging, with log level reflecting environment",
-      "Strict JSON Schema validation for all API requests and responses",
-      "No additional properties allowed in requests",
-      "Proper authentication required for streaming and sensitive operations"
+      "API versioning must be respected",
+      "Coverage minimum 80% for critical modules",
+      "No leakage of sensitive data (API keys, clipboard, user input)",
+      "Consistent logging for audit and debugging",
+      "Graceful shutdown to avoid data loss",
+      "Strict TypeScript typing and linting enforced"
     ]
   },
   "technical_stack": {
-    "primary_language": [
-      "TypeScript",
-      "JavaScript (ES2020+)",
-      "Node.js >=18",
-      "React 18",
-      "HTML5",
-      "CSS3"
-    ],
+    "primary_language": ["TypeScript", "JavaScript (ES2020+)", "Node.js >=18"],
     "frameworks": [
       "Fastify 4.x",
       "React 18.x",
-      "Jest 29.x",
-      "Webpack 5.x",
-      "TSyringe",
-      "Zod 3.x",
       "NutJS",
-      "LangChain",
-      "React-Bootstrap 2.x",
-      "React Router DOM 6.x",
+      "Zod 3.x",
+      "TSyringe 4.x",
+      "Webpack 5.x",
+      "Jest 29.x",
       "Sharp 0.32.x",
-      "tesseract.js 4.x"
+      "tesseract.js 4.x",
+      "React-Bootstrap 2.x",
+      "LangChain"
     ],
-    "databases": [
-      "None (stateless, uses localStorage for frontend state)",
-      "PostgreSQL 15",
-      "Redis 7.0"
-    ],
+    "databases": ["None", "PostgreSQL 15", "Redis 7.0", "localStorage (frontend only)"],
     "external_services": [
       "OpenAI API",
       "DeepSeek API",
       "NutJS",
       "Tesseract.js (OCR)",
       "clipboardy",
-      "sharp",
+      "dotenv",
+      "pino",
       "nanoid",
-      "LangChain LLM API",
       "Server-Sent Events (SSE)",
-      "Environment variables (dotenv)",
-      "Custom logger (pino)",
-      "Local HTTP API (http://localhost:3000)",
-      "React environment variables",
-      "CDN Bootstrap",
-      "CDN Font Awesome"
+      "LangChain LLM API",
+      "Sharp",
+      "Custom Logger",
+      "GitHub (documentation)",
+      "Bootstrap CDN",
+      "Font Awesome CDN"
     ],
     "package_manager": ["npm", "yarn"]
   },
@@ -99,49 +96,45 @@
       "Dependency Injection",
       "Modular Architecture",
       "RESTful API",
-      "Event-driven (SSE for streaming)",
+      "Event-driven (SSE)",
       "Singleton",
-      "Adapter Pattern",
       "Factory Pattern",
-      "DTO Pattern",
-      "Service Layer",
-      "Schema Validation",
+      "Adapter Pattern",
       "Observer Pattern",
+      "DTO Pattern",
+      "Schema Validation",
+      "Service Layer",
       "Component-Based Architecture (frontend)",
       "SPA (Single Page Application)",
-      "Plugin Architecture",
-      "Worker Pool",
-      "LRU Cache"
+      "Cache Aside Pattern"
     ],
     "folder_structure": [
       "src/ (backend source code)",
-      "web/ (frontend React app)",
+      "web/ (frontend source code)",
       "dist/ (build output)",
       "node_modules/ (dependencies)",
       "tests/ (unit and integration tests)",
       "config/ (configuration and logger)",
       "domain/ (entities and interfaces)",
-      "application/services (business logic)",
-      "infrastructure/adapters (external integrations)",
-      "interface/controllers (API controllers)",
-      "dto/ (Data Transfer Objects and validation schemas)",
-      "schemas/ (JSON Schema and Zod validation)",
+      "application/services/ (business logic and DTOs)",
+      "infrastructure/adapters/ (external integrations)",
+      "interface/controllers/ (API controllers and middleware)",
+      "schemas/ (validation schemas)",
       "public/ (static assets)",
-      "src/components/ (React UI components)",
-      "src/types/ (TypeScript types and enums)",
-      "src/hooks/ (custom React hooks)",
-      "src/styles/ (CSS/SCSS files)"
+      "components/ (React UI components)",
+      "types/ (TypeScript type definitions)"
     ],
     "naming_conventions": [
-      "PascalCase for classes, interfaces, and React components",
-      "camelCase for variables, functions, and methods",
+      "PascalCase for classes, interfaces, and types",
+      "camelCase for variables, functions, and properties",
       "UPPER_SNAKE_CASE for environment variables and constants",
-      "kebab-case for filenames and static assets",
+      "kebab-case for filenames and configuration files",
+      "Suffix 'Service' for service classes",
+      "Suffix 'Controller' for controllers",
+      "Suffix 'Adapter' for adapters",
+      "Prefix 'I' for interfaces",
       "DTOs with 'Request'/'Response' suffix",
-      "Controllers with 'Controller' suffix",
-      "Schemas with 'Schema' suffix",
-      "Interfaces prefixed with 'I'",
-      "Test files with .test.ts or .test.tsx suffix"
+      "Files with .ts or .tsx extensions"
     ],
     "module_boundaries": [
       "Clear separation between backend and frontend",
@@ -149,29 +142,25 @@
       "Application depends on Domain",
       "Infrastructure depends on Application",
       "Interface depends on Application and Infrastructure",
-      "Controllers expose routes and delegate to services",
-      "Services encapsulate business logic and integrations",
-      "DTOs and schemas isolate validation and typing",
-      "Types and enums centralized in types/ and domain/enums",
-      "Config, logger, and environment isolated in config/",
-      "Mocks and tests isolated in tests/",
-      "Frontend components, hooks, and types separated by folder"
+      "Controllers depend on services via dependency injection",
+      "Validation schemas isolated from business logic",
+      "Types and DTOs isolated from services and entities",
+      "Config and logger isolated in dedicated modules",
+      "Mocks isolated in tests",
+      "Single responsibility per module"
     ]
   },
   "code_standards": {
-    "style_guide": [
-      "Airbnb JavaScript/TypeScript Style Guide",
-      "ESLint Recommended",
-      "Prettier",
-      "TypeScript ESLint Recommended"
-    ],
+    "style_guide": ["Airbnb JavaScript/TypeScript Style Guide", "ESLint Recommended", "Prettier"],
     "linting_rules": [
       "ESLint with @typescript-eslint plugin",
-      "no-explicit-any: error",
-      "no-unused-vars: error (ignore args starting with '_')",
-      "strict typing enforced",
-      "no-async-promise-executor: error",
-      "no-await-in-loop: warn",
+      "No explicit any",
+      "Strict typing",
+      "No unused variables (except args prefixed with _)",
+      "No async-promise-executor",
+      "No floating promises",
+      "No var",
+      "Prefer const",
       "plugin:react/recommended",
       "plugin:react-hooks/recommended"
     ],
@@ -180,50 +169,57 @@
       "semi: true",
       "singleQuote: true",
       "trailingComma: all",
-      "printWidth: 100",
       "tabWidth: 2",
-      "Integration with ESLint for consistent formatting"
+      "printWidth: 100",
+      "Integration with ESLint"
     ],
     "documentation_style": [
       "JSDoc for all public methods, classes, and interfaces",
-      "JSDoc for schemas and DTOs",
-      "Inline comments in Portuguese for context"
+      "Inline comments in Portuguese for context",
+      "JSDoc for schemas and DTOs"
     ],
     "type_checking": [
       "Strict TypeScript (strict mode enabled)",
-      "Explicit types for parameters and returns",
-      "Zod for runtime validation",
+      "No implicit any",
       "StrictNullChecks",
-      "noImplicitAny"
+      "TypeScript typings for all payloads and responses",
+      "Zod for runtime validation"
     ]
   },
   "testing_strategy": {
     "test_framework": ["Jest 29.x", "React Testing Library", "ts-jest"],
     "test_structure": [
-      "tests/unit/ for unit tests",
-      "tests/integration/ for integration tests",
-      "tests/components/ for React component tests",
+      "tests/ for unit and integration tests",
       "__tests__ folders alongside source files",
+      "tests/unit for services, schemas, and utils",
+      "tests/integration for API and event flows",
       "Mocks for external dependencies"
     ],
     "coverage_requirements": [
-      "Minimum 80% coverage on statements, branches, functions, and lines",
-      ">= 90% coverage for validation schemas and DTOs",
-      ">= 80% coverage for critical modules"
+      "Minimum 80% coverage for critical modules",
+      "branches >= 80%",
+      "functions >= 80%",
+      "lines >= 80%",
+      "statements >= 80%"
     ],
     "test_patterns": [
-      "AAA (Arrange-Act-Assert)",
+      "AAA (Arrange, Act, Assert)",
       "Given-When-Then",
       "Mocks for external dependencies",
       "Snapshot testing for UI",
-      "Parameterized tests for multiple cases"
+      "**/__tests__/**/*.test.ts",
+      "**/tests/**/*.test.ts",
+      "**/tests/**/*.spec.ts"
     ],
     "mocking_approach": [
       "Jest mocks and spies",
       "jest.mock for external modules",
-      "Mocks for clipboardy, nanoid, logger, and NutJS",
-      "Mocking Fastify request and reply",
-      "Mocking React hooks and API calls"
+      "Mocks for clipboardy, pino, nanoid, and adapters",
+      "Mock environment variables",
+      "Mock Fastify request and reply",
+      "Mock global for localStorage",
+      "Mocks for services and controllers",
+      "Mocks for LLM and OCR responses"
     ]
   },
   "development_workflow": {
@@ -232,14 +228,14 @@
     "pr_requirements": [
       "Code review mandatory",
       "Passing CI checks",
-      "Automated lint and test checks",
+      "Lint and test checks required",
       "At least one reviewer approval"
     ],
     "ci_cd_pipeline": [
       "Build, lint, test, and deploy automated via GitHub Actions",
-      "Unit tests with coverage",
+      "Unit tests",
       "Linting",
-      "Deploy to staging and production"
+      "Deploy"
     ]
   },
   "commands": {
@@ -249,9 +245,16 @@
       "npm run dev",
       "npm run dev:web",
       "npm run dev:full",
+      "node scripts/testGlobalInputCapture.js",
       "webpack serve --config webpack.config.js"
     ],
-    "test": ["npm test", "npm run test:unit", "npm run test:integration", "npm run test:coverage"],
+    "test": [
+      "npm test",
+      "npm run test:unit",
+      "npm run test:integration",
+      "npm run test:coverage",
+      "npm test -- --coverage"
+    ],
     "build": [
       "npm run build",
       "npm run build:web",
@@ -264,25 +267,25 @@
   },
   "security_constraints": {
     "authentication_method": [
-      "API Key via HTTP header 'x-api-key'",
+      "API key via HTTP header 'x-api-key'",
       "JWT (for external services)",
-      "API Keys for OpenAI and DeepSeek"
+      "API keys for external services"
     ],
     "authorization_rules": [
       "Role-based Access Control (RBAC)",
       "Access restricted to users with valid API key",
-      "401/403 errors for unauthorized access",
-      "macOS Accessibility permissions required for input capture",
-      "No access to /status endpoint required"
+      "No sensitive endpoints without authentication",
+      "macOS Accessibility permissions required for input capture"
     ],
     "sensitive_data": [
-      "API Keys for OpenAI and DeepSeek",
-      "Clipboard content (must be sanitized and limited)",
-      "User input event data (mouse, keyboard)",
-      "Base64 image data (must be validated and not stored)",
-      "Environment variables (must not expose sensitive data)",
-      "Prompt and LLM responses (must be handled confidentially)",
-      "Tokens and credentials (must be stored in environment variables)"
+      "API keys for OpenAI and DeepSeek",
+      "Clipboard content",
+      "User input data (mouse, keyboard, screen capture)",
+      "Environment variables",
+      "Base64 image data",
+      "LLM prompts and responses",
+      "Tokens and credentials",
+      "No sensitive data exposed in logs or responses"
     ],
     "security_headers": [
       "Content-Security-Policy",
@@ -291,23 +294,23 @@
       "Content-type: application/json",
       "x-api-key header required",
       "Cache-Control: no-cache",
-      "CORS"
+      "X-Content-type-Options: nosniff"
     ],
     "encryption_requirements": [
       "TLS for all network communication",
-      "HTTPS required for API and external services",
-      "Hashing for sensitive data (e.g., bcrypt for passwords)",
-      "No sensitive data stored in logs or localStorage"
+      "HTTPS required for external API calls",
+      "Environment variables must not expose sensitive data",
+      "Base64 images handled in memory only",
+      "No sensitive data stored unencrypted"
     ]
   },
   "performance_requirements": {
     "response_time_limits": [
       "API responses < 200ms for standard operations",
       "Screen capture and OCR responses < 5000ms",
-      "Real-time event capture with minimal latency",
-      "LLM completions ideally < 1s",
-      "Timeouts for OCR and LLM processing between 1000ms and 300000ms",
-      "Status checks < 2s"
+      "Real-time event streaming with minimal latency",
+      "Timeouts enforced for LLM and OCR requests",
+      "Batch processing limited to 10 images per request"
     ],
     "optimization_priorities": [
       "Low latency for input and automation operations",
@@ -315,54 +318,51 @@
       "Fast build and test cycles",
       "Validation efficiency to minimize request overhead",
       "Performance optimized for production",
-      "Responsiveness and smooth UI interactions",
-      "Batch processing and parallelism for OCR"
+      "Responsiveness and UI performance"
     ],
     "caching_strategy": [
       "Redis cache with configurable TTL for static data",
       "In-memory buffer for recent events",
-      "LocalStorage cache for frontend status (TTL 60s)",
-      "LRU cache for OCR results",
-      "Static asset caching via Webpack contenthash",
-      "No dynamic cache for input events"
+      "Cache LRU for OCR results",
+      "Cache localStorage with TTL for frontend status",
+      "No cache for dynamic input operations"
     ],
     "scalability_considerations": [
-      "Horizontally scalable via Fastify and Node.js cluster",
+      "Horizontal scalability via Fastify and Node.js cluster",
       "Support for multiple concurrent requests and SSE clients",
-      "Batch size and worker pool configurable for OCR",
-      "Modular architecture for horizontal scaling",
-      "Singletons for global services, but can scale horizontally",
-      "Frontend and backend can be deployed independently"
+      "Batch processing and worker pools for OCR",
+      "Modular architecture for service scaling",
+      "Singletons for global services",
+      "Configurable buffer and batch sizes"
     ]
   },
   "error_handling": {
     "error_format": [
       "Standard JSON with fields: success, error, code, details",
-      "Zod validation error format for schema validation",
-      "CommandResult with success:boolean, data?:object, error?:string",
-      "Proper HTTP status codes for all errors",
-      "No sensitive details in production error responses"
+      "Zod validation error format",
+      "CommandResult with success, data, and error",
+      "Consistent error response for all APIs"
     ],
     "logging_strategy": [
-      "Structured logging with pino (levels: info, warn, error, debug)",
-      "Log level configurable via LOG_LEVEL environment variable",
-      "Logs separated for errors and standard output",
-      "Human-readable logs in development, performant logs in production",
-      "Sensitive data masked in logs"
+      "Structured logging with pino",
+      "Log level configurable via LOG_LEVEL",
+      "Separate logs for info, warn, error, and debug",
+      "Sensitive data masked in logs",
+      "Console.error for critical errors"
     ],
     "monitoring_tools": [
       "Sentry for production error monitoring",
       "PM2 internal monitoring",
       "Prometheus/Grafana (optional integration)",
-      "Custom logger with possible external integration"
+      "Custom logger with external integration possible"
     ],
     "error_recovery": [
       "Automatic retries for transient failures",
-      "Graceful shutdown to avoid data loss",
+      "Graceful shutdown on critical errors",
+      "Fallbacks for parsing and external service errors",
       "Strict input validation to prevent invalid states",
-      "Fallbacks for parsing and LLM errors",
-      "Batch processing with error reporting per item",
-      "Timeouts and aborts handled gracefully with specific error codes"
+      "Centralized error handling middleware",
+      "Timeouts and aborts handled gracefully"
     ]
   },
   "dependencies_context": {
@@ -372,17 +372,17 @@
       "TypeScript",
       "Fastify",
       "React",
-      "Jest",
-      "Webpack",
+      "NutJS",
       "TSyringe",
       "Zod",
-      "NutJS",
+      "Jest",
+      "Webpack",
+      "pino",
       "clipboardy",
-      "sharp",
-      "tesseract.js",
       "nanoid",
-      "LangChain",
-      "pino"
+      "tesseract.js",
+      "Sharp",
+      "dotenv"
     ],
     "deprecated_packages": ["robotjs (deprecated, replaced by NutJS)"],
     "version_constraints": [
@@ -395,9 +395,7 @@
       "Sharp 0.32.x",
       "tesseract.js 4.x",
       "clipboardy >=3.0.0",
-      "tsyringe 4.x",
-      "dotenv >=16.0.0",
-      "JSON Schema Draft 7 compliance"
+      "nanoid >=4.0.0"
     ],
     "internal_packages": [
       "@nut-tree-fork/nut-js",
@@ -406,9 +404,9 @@
       "application/services",
       "infrastructure/adapters",
       "interface/controllers",
-      "dto",
-      "types",
       "config",
+      "types",
+      "dto",
       "schemas"
     ]
   },
@@ -416,116 +414,111 @@
     "technical_debt": [
       "Refactoring legacy JavaScript modules to TypeScript",
       "Improve error handling and logging granularity",
-      "Expand test coverage for edge cases (clipboard, input events)",
-      "Enhance environment variable validation",
-      "Improve documentation for dependency container and routes",
-      "Authentication and authorization logic to be further hardened",
-      "Monitor and alert integration pending",
-      "Optimize worker recycling and OCR error handling",
-      "Expand support for additional image formats and languages"
+      "Expand test coverage for edge cases",
+      "Enhance validation for environment variables",
+      "Document new endpoints and services",
+      "Standardize custom error classes",
+      "Improve fallback and error handling in complex parsing",
+      "Migrate legacy output format to dynamic schema",
+      "Remove hardcoded API keys from scripts"
     ],
     "known_issues": [
       "Inconsistencies in local development environments",
       "macOS Accessibility permissions may block event capture",
-      "Possible event loss in full event buffer",
-      "Rate limiting may drop events during spikes",
-      "Large base64 images may impact memory usage",
-      "Dependency on local API availability",
-      "Timeouts may cause failures on complex images",
+      "Possible event loss on buffer overflow",
+      "Batch size and image size limits may reject large requests",
+      "Dependency on local API for some tests",
+      "Potential platform compatibility issues with uiohook-napi",
+      "Timeouts may cause failures on complex OCR images",
       "Possible exposure of API key in frontend if not handled properly"
     ],
     "performance_bottlenecks": [
-      "Image processing and OCR can be resource-intensive",
-      "Sequential typing with per-character delay may be slow for long texts",
+      "Image processing and OCR can be resource intensive",
+      "Sequential typing with delays may cause slowdowns for long texts",
       "Streaming SSE may generate overhead with many clients",
       "Parsing and validation of large schemas may impact latency",
       "OCR processing time varies with image complexity and mode"
     ],
     "migration_status": [
       "Migration to TypeScript completed",
-      "Fastify 4.x and TypeScript 5.x in use",
-      "Ongoing improvements and refactoring planned",
+      "Migration to Fastify 4.x completed",
+      "Ongoing improvements and refactoring",
       "Stable in production"
     ]
   },
   "team_preferences": {
     "code_review_focus": [
       "Test coverage",
-      "Code quality and linting",
-      "TypeScript type safety",
+      "Code quality",
+      "Linting and style compliance",
+      "Strict TypeScript typing",
       "Security and input validation",
-      "Consistent error handling and logging",
-      "Separation of concerns and modularity",
-      "Documentation clarity",
-      "Performance and responsiveness"
+      "Consistent error handling",
+      "Separation of concerns",
+      "Modularity and dependency injection",
+      "Logging quality",
+      "Documentation clarity"
     ],
     "documentation_requirements": [
       "Clear documentation via JSDoc for all public methods and interfaces",
-      "README and API documentation with usage examples",
-      "JSDoc for schemas, DTOs, and endpoints",
+      "Document all endpoints and DTOs",
+      "Update README and know-how.txt after major changes",
       "Inline comments in Portuguese for context"
     ],
     "communication_style": [
       "Objective and technical comments",
       "Portuguese for context, English for technical terms",
-      "Clear and concise PRs",
-      "Use of Markdown for technical discussions",
-      "Emphasis on collective learning"
+      "Clear and concise PR descriptions",
+      "Use of Markdown for technical discussions"
     ],
     "decision_log": [
       "Adoption of Clean Architecture and modular separation",
       "Use of Fastify for high performance",
       "TypeScript and Zod for strict typing and validation",
-      "API key authentication for sensitive endpoints",
+      "API key for authentication",
       "Singleton pattern for shared services",
-      "Event-driven pattern for input capture",
-      "React 18 and React-Bootstrap for frontend",
-      "Webpack for build and static asset management",
-      "LRU cache for OCR results",
+      "Use of pino for structured logging",
+      "React and React-Bootstrap for frontend",
       "GitHub Actions for CI/CD",
-      "Conventional Commits for commit messages",
-      "Jest and React Testing Library for testing",
-      "Structured logging with pino",
-      "Environment variables managed via dotenv",
-      "Batch processing and worker pool for OCR",
-      "Strict error handling and standardized response formats"
+      "Separation of backend and frontend codebases",
+      "Use of enums for LLM models and error codes",
+      "LocalStorage cache for frontend status",
+      "Batch size and image size limits for performance and security"
     ]
   },
   "api_specifications": {
     "api_style": ["RESTful", "REST with SSE for streaming", "Internal event dispatching API"],
     "versioning_strategy": [
       "URI versioning (e.g., /api/v1)",
-      "Version in URL (/api/v1/llm, /api/v1/screen)",
-      "Versioning via package.json for internal modules"
+      "Version in URL (/api/v1/llm, /api/v1/status)"
     ],
     "response_formats": [
       "application/json",
       "Standard JSON with fields: success, data, error",
-      "Base64 encoded PNG images",
+      "Base64 encoded images",
       "text/event-stream for SSE",
       "Zod validation error format"
     ],
     "rate_limiting": [
-      "Configurable via environment variable (default 5000 events/sec)",
-      "1000 requests per minute per IP (recommended)",
-      "Batch OCR requests limited to 10 images",
-      "No rate limiting on /status endpoint"
+      "Configurable via environment variable (maxRate)",
+      "Default 5000 events per second",
+      "Batch requests limited to 10 images"
     ]
   },
   "deployment_context": {
     "environments": [
-      "development (http://localhost:3000)",
-      "staging (http://staging.example.com)",
-      "production (http://example.com)",
-      "test"
+      "development",
+      "staging",
+      "production",
+      "test",
+      "localhost (http://localhost:3000)"
     ],
     "deployment_method": [
       "Docker container",
       "PM2 process manager",
-      "CI/CD pipeline via GitHub Actions",
       "Node.js runtime",
-      "Webpack for frontend bundling",
-      "Static hosting for frontend"
+      "CI/CD pipeline via GitHub Actions",
+      "Webpack for frontend bundling"
     ],
     "environment_variables": [
       "NODE_ENV",
@@ -538,26 +531,35 @@
       "INPUT_EVENT_RATE",
       "KEYBOARD_DEFAULT_MODE",
       "KEYBOARD_MAX_TEXT_LENGTH",
-      "MOUSE_SPEED",
+      "KEYBOARD_DEFAULT_DELAY_PER_CHAR",
+      "KEYBOARD_MAX_DELAY",
+      "KEYBOARD_BATCH_SIZE",
+      "MOUSE_MIN_DUR",
+      "MOUSE_MAX_DUR",
+      "MOUSE_DEFAULT_SMOOTH",
+      "MOUSE_SAMPLE_RATE",
+      "MOUSE_STREAM_INTERVAL",
       "SCREEN_CONFIDENCE",
       "OCR_WORKER_COUNT",
       "OCR_MAX_IMAGE_SIZE_MB",
       "OCR_TIMEOUT_MS",
+      "OCR_LANGUAGES",
       "CACHE_TTL",
+      "ENABLE_CACHE",
       "REACT_APP_API_URL"
     ],
     "infrastructure_constraints": [
-      "Memory and CPU limits for Docker/Kubernetes pods",
+      "Memory limits for Docker/Kubernetes pods",
       "macOS Accessibility permissions required for input capture",
       "Firewall rules for API access",
-      "Support for Windows, Linux, and macOS",
-      "Environment variables must be configured correctly",
-      "Local API must be running for full functionality",
+      "Node.js >=18 required",
+      "Permissions for desktop automation",
       "Batch size and image size limits for OCR",
-      "Persistent SSE connections require proper server configuration",
-      "LocalStorage limits for frontend state",
-      "Node.js >=18 required"
+      "Persistent SSE connections require proper proxy configuration",
+      "Environment variables must be set correctly",
+      "Local API must be running for some features",
+      "High availability and low latency required"
     ]
   },
-  "lastCommitHash": "f6bb70497de545cba2c3dc6f76595ad0f0aaa1d9"
+  "lastCommitHash": "377eecaa0ba30a8d95f2f6b53ec52e380e01be8f"
 }

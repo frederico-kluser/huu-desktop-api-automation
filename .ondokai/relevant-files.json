@@ -39541,12 +39541,12 @@
     ]
   },
   "src/application/services/ocr-worker-pool.service.ts": {
-    "summary": "Este arquivo implementa um pool de workers para processamento OCR paralelo utilizando a biblioteca Tesseract.js, com foco em otimização de performance e escalabilidade. Ele gerencia a criação, configuração, reciclagem e terminação de múltiplos workers, além de coletar métricas detalhadas de desempenho e sucesso dos jobs. O código suporta processamento individual e em lote de imagens, garantindo alta disponibilidade e controle de recursos, além de permitir configuração dinâmica do modo de operação para balancear velocidade e precisão do OCR.",
+    "summary": "O código implementa um pool de workers para processamento OCR paralelo utilizando a biblioteca Tesseract.js, com foco em otimização de performance e escalabilidade. Ele gerencia a criação, reciclagem e configuração dinâmica dos workers, além de coletar métricas detalhadas de desempenho e sucesso dos jobs. A solução suporta processamento em lote, controle de modos operacionais (fast, balanced, accurate) e garante a integridade dos dados de linguagem, promovendo alta disponibilidade e resiliência no reconhecimento de texto em imagens.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["OCR Worker Pool", "Processamento paralelo OCR com Tesseract.js"]
+        "value": ["OCR Worker Pool", "Processamento paralelo de OCR com Tesseract.js"]
       },
       {
         "property": "project_metadata",
@@ -39567,15 +39567,15 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Reciclagem periódica dos workers para evitar vazamentos de memória",
-          "Garantir alta taxa de sucesso no reconhecimento OCR",
-          "Manter integridade e disponibilidade do pool de workers"
+          "Reciclagem periódica dos workers para evitar vazamento de memória",
+          "Garantir disponibilidade dos dados de linguagem para OCR",
+          "Manter alta taxa de sucesso no reconhecimento"
         ]
       },
       {
         "property": "technical_stack",
         "subProperty": "primary_language",
-        "value": ["TypeScript 5.0", "Node.js 18"]
+        "value": ["TypeScript 5.0", "Node.js 18+"]
       },
       {
         "property": "technical_stack",
@@ -39590,7 +39590,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["Tesseract language data downloads (on demand)"]
+        "value": ["Tessdata CDN (https://tessdata.projectnaptha.com)"]
       },
       {
         "property": "technical_stack",
@@ -39600,16 +39600,16 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Worker Pool", "Dependency Injection", "Scheduler"]
+        "value": ["Dependency Injection", "Resource Pooling", "Scheduler Pattern"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "config/ - configurações gerais e específicas do OCR",
+          "config/ - configurações do sistema",
           "types/ - definições de tipos TypeScript",
-          "src/ - código fonte principal incluindo o pool de workers",
-          "logs/ - arquivos de log gerados"
+          "services/ - lógica de negócio e workers",
+          "utils/ - utilitários e helpers"
         ]
       },
       {
@@ -39626,13 +39626,13 @@
         "subProperty": "module_boundaries",
         "value": [
           "Separação clara entre configuração, tipos, e lógica de negócio",
-          "Dependência unidirecional do pool para config e logger"
+          "Dependência unidirecional para evitar acoplamento circular"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Airbnb TypeScript Style Guide"]
+        "value": ["Airbnb JavaScript/TypeScript Style Guide"]
       },
       {
         "property": "code_standards",
@@ -39646,7 +39646,7 @@
       {
         "property": "code_standards",
         "subProperty": "formatting",
-        "value": ["Prettier com configuração padrão", "Indentação de 2 espaços"]
+        "value": ["Prettier com configuração padrão", "Quebra de linha em 80-100 caracteres"]
       },
       {
         "property": "code_standards",
@@ -39656,7 +39656,7 @@
       {
         "property": "code_standards",
         "subProperty": "type_checking",
-        "value": ["Strict TypeScript", "Uso de tipos explícitos para parâmetros e retornos"]
+        "value": ["Strict TypeScript", "Tipos explícitos para funções assíncronas"]
       },
       {
         "property": "testing_strategy",
@@ -39667,7 +39667,7 @@
         "property": "testing_strategy",
         "subProperty": "test_structure",
         "value": [
-          "Testes localizados em __tests__ próximos aos módulos",
+          "Testes localizados em __tests__ ou pasta tests",
           "Testes unitários para métodos públicos e privados"
         ]
       },
@@ -39704,7 +39704,7 @@
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build", "Testes", "Lint", "Deploy automático em staging e produção"]
+        "value": ["Build", "Testes", "Lint", "Deploy automático em staging"]
       },
       {
         "property": "commands",
@@ -39744,20 +39744,17 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": ["Não aplicável (módulo interno)"]
+        "value": ["Não aplicável (módulo OCR interno)"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": ["Não aplicável (módulo interno)"]
+        "value": ["Não aplicável"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": [
-          "Imagens processadas devem ser tratadas conforme política de privacidade",
-          "Logs não devem conter dados sensíveis"
-        ]
+        "value": ["Imagens processadas devem ser tratadas com confidencialidade"]
       },
       {
         "property": "security_constraints",
@@ -39767,36 +39764,30 @@
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["Não aplicável diretamente no módulo OCR"]
+        "value": ["Dados em trânsito devem usar TLS", "Cache local pode ser criptografado"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": [
-          "Processamento paralelo para reduzir latência",
-          "Reciclagem de workers para manter performance estável"
-        ]
+        "value": ["Processamento OCR em milissegundos a segundos, dependendo do tamanho da imagem"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
         "value": [
-          "Balancear precisão e velocidade via modos configuráveis",
-          "Minimizar vazamentos de memória"
+          "Balancear velocidade e precisão via modos configuráveis",
+          "Reciclagem para evitar degradação de performance"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": ["Cache local para dados de linguagem via configuração do Tesseract"]
+        "value": ["Cache local para dados de linguagem com método readOnly"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": [
-          "Configuração dinâmica do número de workers",
-          "Processamento em lote com paralelismo controlado"
-        ]
+        "value": ["Número configurável de workers para escalar processamento paralelo"]
       },
       {
         "property": "error_handling",
@@ -39811,29 +39802,26 @@
         "subProperty": "logging_strategy",
         "value": [
           "Logs estruturados com níveis info, warn, debug e error",
-          "Logs de progresso do OCR para monitoramento"
+          "Logs de progresso detalhados para OCR"
         ]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": [
-          "Logger customizado integrado",
-          "Possível integração com sistemas externos via logger"
-        ]
+        "value": ["Logger customizado integrado ao sistema"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
         "value": [
           "Reciclagem automática dos workers após limite de jobs",
-          "Tratamento de falhas no reconhecimento com atualização de métricas"
+          "Tratamento de falhas na inicialização com fallback"
         ]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["tesseract.js", "tsyringe", "logger interno", "ocrConfig"]
+        "value": ["tesseract.js", "tsyringe", "ocrConfig", "logger"]
       },
       {
         "property": "dependencies_context",
@@ -39843,7 +39831,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["Compatibilidade com tesseract.js 4.x", "Node.js 18+"]
+        "value": ["Compatibilidade com tesseract.js 4.x", "Node.js 18 ou superior"]
       },
       {
         "property": "dependencies_context",
@@ -39857,26 +39845,17 @@
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": [
-          "Necessidade de testes mais abrangentes para reciclagem de workers",
-          "Melhorar tratamento de erros específicos do Tesseract"
-        ]
+        "value": ["Necessidade de testes mais abrangentes para reciclagem de workers"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": [
-          "Possível falha se arquivos de linguagem não forem baixados corretamente",
-          "Limite fixo de jobs por worker pode impactar performance em cargas variáveis"
-        ]
+        "value": ["Possível falha se dados de linguagem não estiverem disponíveis no cache"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": [
-          "Sobrecarga na criação e reciclagem de workers",
-          "Latência no processamento de imagens muito grandes"
-        ]
+        "value": ["Limite de jobs por worker pode impactar throughput se mal configurado"]
       },
       {
         "property": "current_challenges",
@@ -39887,34 +39866,28 @@
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
-          "Clareza na gestão de estado dos workers",
-          "Tratamento adequado de erros e logs",
-          "Consistência na tipagem TypeScript"
+          "Verificação de tratamento de erros",
+          "Consistência na configuração dos workers",
+          "Cobertura de testes"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": [
-          "Documentação clara via JSDoc para métodos públicos",
-          "Comentários explicativos para lógica complexa"
-        ]
+        "value": ["Documentação clara via JSDoc para métodos públicos e privados"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": [
-          "Comentários objetivos e técnicos",
-          "Uso de inglês para termos técnicos e português para contexto"
-        ]
+        "value": ["Comentários objetivos e técnicos, sem redundância"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
         "value": [
-          "Escolha do Tesseract.js para OCR",
-          "Uso de pool para otimizar paralelismo",
-          "Reciclagem para evitar vazamentos de memória"
+          "Escolha do tesseract.js para OCR",
+          "Uso de pool e scheduler para paralelismo",
+          "Reciclagem preventiva para estabilidade"
         ]
       },
       {
@@ -39930,17 +39903,17 @@
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": ["Objetos JSON com dados OCR ou erro"]
+        "value": ["JSON com dados OCR ou objeto de erro"]
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Controle interno via limite de jobs por worker"]
+        "value": ["Não implementado no módulo"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": ["dev", "staging", "production"]
+        "value": ["dev", "staging", "prod"]
       },
       {
         "property": "deployment_context",
@@ -39957,7 +39930,7 @@
         "subProperty": "infrastructure_constraints",
         "value": [
           "Limitação de memória para múltiplos workers",
-          "Necessidade de armazenamento para arquivos de linguagem"
+          "Necessidade de acesso à internet para download de dados de linguagem"
         ]
       }
     ]
@@ -40722,17 +40695,20 @@
     ]
   },
   "src/interface/controllers/ocr.controller.ts": {
-    "summary": "Este arquivo implementa um controller REST para operações de OCR (Optical Character Recognition) utilizando Fastify e TypeScript, focado em expor endpoints para processamento de imagens em base64 e em lote, além de fornecer métricas, limpeza de cache e health check do serviço. O controller gerencia autenticação, validação de entrada via schemas, tratamento robusto de erros específicos do domínio OCR e logging detalhado para monitoramento. Ele integra-se com um serviço OCR injetado via dependency injection, coordenando processamento assíncrono e respostas HTTP padronizadas, garantindo alta confiabilidade e escalabilidade para aplicações que necessitam extrair texto de imagens de forma segura e eficiente.",
+    "summary": "Este arquivo implementa um controller REST para operações de OCR (Optical Character Recognition) utilizando o framework Fastify e injeção de dependências via tsyringe. Ele expõe endpoints para processar imagens em base64 individualmente ou em lote, além de fornecer métricas do serviço, limpeza de cache e health check. O controller gerencia autenticação, validação de dados via schemas, tratamento detalhado de erros específicos do domínio OCR e logging estruturado, garantindo robustez e observabilidade no processamento de reconhecimento de texto em imagens. A arquitetura segue princípios de Clean Architecture, separando responsabilidades entre controller, serviços e DTOs, facilitando manutenção e escalabilidade do sistema.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["OCR Service API", "Serviço de Reconhecimento Óptico de Caracteres"]
+        "value": [
+          "OCR Service",
+          "Serviço de reconhecimento óptico de caracteres para extração de texto em imagens"
+        ]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Computer Vision", "OCR", "Reconhecimento de Texto em Imagens", "API REST"]
+        "value": ["Computer Vision", "OCR", "Reconhecimento de texto", "Fastify", "API REST"]
       },
       {
         "property": "project_metadata",
@@ -40743,10 +40719,11 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Autenticação obrigatória para todos endpoints exceto health check",
-          "Limite máximo de tamanho para imagens base64",
+          "Autenticação obrigatória para acesso aos endpoints",
+          "Limite máximo de tamanho para imagens processadas",
           "Processamento em lote limitado a 10 imagens simultâneas",
-          "Tratamento e resposta adequada para erros específicos OCR"
+          "Tratamento e resposta adequada para erros específicos do OCR",
+          "Manutenção da integridade e disponibilidade do cache"
         ]
       },
       {
@@ -40767,7 +40744,11 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["OCRService (interno)", "Logger customizado"]
+        "value": [
+          "OCR processing service (interno)",
+          "Logging service",
+          "Authentication middleware"
+        ]
       },
       {
         "property": "technical_stack",
@@ -40777,7 +40758,7 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Clean Architecture", "Controller Pattern", "Dependency Injection"]
+        "value": ["Clean Architecture", "Dependency Injection", "MVC (Controller)"]
       },
       {
         "property": "architecture_patterns",
@@ -40785,28 +40766,30 @@
         "value": [
           "application/ - lógica de negócio e serviços",
           "application/dto/ - objetos de transferência de dados",
-          "config/ - configurações e logger",
-          "interfaces/ - controllers, middlewares, schemas",
-          "types/ - definições de tipos e enums"
+          "config/ - configurações gerais e logger",
+          "types/ - definições de tipos e enums",
+          "middleware/ - middlewares para autenticação e tratamento de erros",
+          "schemas/ - validação de dados via Zod ou similar",
+          "controllers/ - definição dos endpoints REST"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "Classes em PascalCase (ex: OcrController)",
-          "Funções e métodos em camelCase",
-          "Schemas com sufixo Schema",
-          "DTOs com sufixo DTO"
+          "Classes em PascalCase (ex: OcrController, OcrService)",
+          "Métodos em camelCase",
+          "Arquivos com extensão .ts e nomes kebab-case",
+          "DTOs com sufixo Request ou Response"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre controller e serviço OCR",
-          "DTOs usados para validação e transporte de dados",
-          "Middleware isolado para autenticação e erros"
+          "Separação clara entre controller, serviço e DTO",
+          "Dependência injetada via tsyringe para facilitar testes e desacoplamento",
+          "Middleware isolado para autenticação e tratamento de erros"
         ]
       },
       {
@@ -40817,9 +40800,7 @@
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
-        "value": [
-          "ESLint com regras para TypeScript, incluindo regras de segurança e acessibilidade"
-        ]
+        "value": ["ESLint com regras para TypeScript, incluindo regras para async/await e imports"]
       },
       {
         "property": "code_standards",
@@ -40829,12 +40810,12 @@
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc para documentação de métodos e classes"]
+        "value": ["JSDoc para documentação de classes e métodos públicos"]
       },
       {
         "property": "code_standards",
         "subProperty": "type_checking",
-        "value": ["Strict TypeScript com uso de tipos explícitos e DTOs validados"]
+        "value": ["Strict TypeScript com uso de tipos explícitos e DTOs para validação"]
       },
       {
         "property": "testing_strategy",
@@ -40844,27 +40825,27 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["Testes localizados em pastas __tests__ próximas aos módulos"]
+        "value": ["Testes localizados em __tests__ ou pasta tests, organizados por módulo"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
-        "value": ["Cobertura mínima de 80%"]
+        "value": ["Cobertura mínima de 80% para lógica crítica"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_patterns",
-        "value": ["Arrange-Act-Assert (AAA)"]
+        "value": ["AAA (Arrange-Act-Assert)", "Given-When-Then para testes de integração"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocks para OCRService e middlewares"]
+        "value": ["Mocks para serviços externos e injeção de dependências para isolamento"]
       },
       {
         "property": "development_workflow",
         "subProperty": "branch_strategy",
-        "value": ["Git Flow"]
+        "value": ["GitHub Flow"]
       },
       {
         "property": "development_workflow",
@@ -40874,12 +40855,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Revisão obrigatória e testes aprovados"]
+        "value": ["Revisão obrigatória e checks de lint e testes"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build, Test, Lint, Deploy automatizados"]
+        "value": ["Build, lint, test e deploy automatizados via GitHub Actions"]
       },
       {
         "property": "commands",
@@ -40924,14 +40905,12 @@
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": [
-          "Acesso restrito a usuários autenticados para todos endpoints exceto health check"
-        ]
+        "value": ["Acesso restrito a usuários autenticados para todos endpoints OCR"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": ["Imagens base64 e textos extraídos, tratados com validação e limites de tamanho"]
+        "value": ["Imagens base64 e resultados OCR tratados com confidencialidade"]
       },
       {
         "property": "security_constraints",
@@ -40941,12 +40920,14 @@
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["Transporte via HTTPS obrigatório (não mostrado no código)"]
+        "value": ["Transporte via HTTPS obrigatório para proteger dados em trânsito"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Timeouts configurados para processamento OCR, resposta em até alguns segundos"]
+        "value": [
+          "Processamento OCR deve ser rápido, com timeout configurado para evitar bloqueios"
+        ]
       },
       {
         "property": "performance_requirements",
@@ -40956,7 +40937,7 @@
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": ["Cache de resultados com endpoint para limpeza manual"]
+        "value": ["Cache de resultados OCR com endpoint para limpeza manual"]
       },
       {
         "property": "performance_requirements",
@@ -40971,22 +40952,22 @@
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Logs estruturados para info, debug e error com contexto detalhado"]
+        "value": ["Logs estruturados com níveis info, debug e error"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": ["Logger customizado, possível integração externa não mostrada"]
+        "value": ["Logger customizado, possível integração com sistemas externos"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Tratamento específico para erros OCR, incluindo timeouts e limites de tamanho"]
+        "value": ["Tratamento específico para erros conhecidos e fallback para erro genérico"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["Fastify", "tsyringe", "OCRService", "Schemas e DTOs"]
+        "value": ["Fastify", "tsyringe", "OCR Service interno", "Zod para validação"]
       },
       {
         "property": "dependencies_context",
@@ -41001,52 +40982,47 @@
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": [
-          "application/services",
-          "application/dto",
-          "interfaces/middleware",
-          "config/logger"
-        ]
+        "value": ["application/services", "application/dto", "middleware", "schemas"]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Necessidade de monitoramento mais robusto e métricas detalhadas"]
+        "value": ["Necessidade de melhorar tratamento de erros para casos extremos"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Limite rígido de tamanho pode impactar usuários com imagens grandes"]
+        "value": ["Limite rígido de tamanho de imagem pode causar rejeição frequente"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": ["Processamento OCR pode ser custoso em lote e imagens grandes"]
+        "value": ["Processamento OCR pode ser custoso em imagens grandes ou lotes extensos"]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": ["Nenhuma migração em andamento detectada"]
+        "value": ["Projeto está em produção, sem migrações ativas"]
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Tratamento de erros, segurança, clareza de logs e validação de entrada"]
+        "value": ["Validação de tratamento de erros, cobertura de testes e padrões de injeção"]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação via JSDoc e schemas OpenAPI"]
+        "value": ["Documentação clara via JSDoc para APIs e serviços"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários objetivos e informativos, uso de logs para contexto"]
+        "value": ["Comentários objetivos e PRs com descrição clara do propósito"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": ["Uso de DI para desacoplamento, Fastify para performance, schemas para validação"]
+        "value": ["Adoção de Clean Architecture e injeção de dependências para modularidade"]
       },
       {
         "property": "api_specifications",
@@ -41056,39 +41032,41 @@
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": ["Versionamento via URL (/api/v1)"]
+        "value": [
+          "Sem versionamento explícito no path, versionamento via headers ou futura implementação"
+        ]
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": ["JSON padronizado com códigos HTTP apropriados"]
+        "value": ["JSON com estrutura padronizada para sucesso e erro"]
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Não explicitamente implementado no código fornecido"]
+        "value": [
+          "Não implementado diretamente neste controller, pode ser aplicado via middleware externo"
+        ]
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": ["dev", "staging", "production"]
+        "value": ["development", "staging", "production"]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Docker e orquestração externa (não detalhado no código)"]
+        "value": ["Docker containerizado, orquestração via Kubernetes"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": ["Variáveis para configuração de logger, autenticação e OCRService"]
+        "value": ["OCR_SERVICE_API_KEY", "LOG_LEVEL", "NODE_ENV"]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": [
-          "Limitações de memória para processamento OCR, necessidade de escalabilidade horizontal"
-        ]
+        "value": ["Limitação de memória para evitar out of memory no processamento OCR"]
       }
     ]
   },
