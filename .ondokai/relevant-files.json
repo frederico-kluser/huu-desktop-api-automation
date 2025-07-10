@@ -3282,40 +3282,41 @@
     ]
   },
   "package.json": {
-    "summary": "O projeto nutjs-rest-api é uma API REST que serve como um wrapper para a automação desktop utilizando a biblioteca NutJS. Seu principal objetivo é expor funcionalidades de automação de interface gráfica via endpoints HTTP, permitindo a integração com outras aplicações e sistemas. O código gerencia scripts de desenvolvimento, build, testes e linting, além de utilizar diversas dependências para manipulação de eventos globais, logging, injeção de dependências e frameworks web modernos como Fastify e React. A arquitetura modular e o uso de TypeScript garantem escalabilidade e manutenção facilitada, enquanto a integração com ferramentas de qualidade de código e testes assegura robustez e confiabilidade. O projeto está em fase de produção, com foco em oferecer uma solução estável para automação desktop via API REST, suportando desenvolvimento web e desktop em paralelo.",
+    "summary": "O projeto nutjs-rest-api é uma API REST que serve como um wrapper para a automação desktop utilizando a biblioteca NutJS. Seu principal objetivo é expor funcionalidades de automação de interface gráfica via endpoints HTTP, permitindo controle programático de ações no desktop, como manipulação de mouse, teclado e captura de tela. A aplicação integra tecnologias modernas como Fastify para o servidor web, React para interface web, e ferramentas de OCR como Tesseract.js, além de utilizar injeção de dependências com tsyringe para modularidade. O projeto possui scripts robustos para desenvolvimento, build, testes unitários e integração, além de ferramentas para linting e formatação, garantindo qualidade e manutenção. A arquitetura modular e o uso de padrões como injeção de dependência e separação clara entre backend e frontend facilitam a escalabilidade e integração com sistemas maiores. A solução é ideal para automatizar tarefas repetitivas em desktops via API, habilitando integrações com outras aplicações e fluxos de trabalho automatizados.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["nutjs-rest-api", "REST api wrapper for NutJS desktop automation"]
+        "value": ["nutjs-rest-api", "API REST para automação desktop com NutJS"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Desktop Automation", "API REST", "Automation", "NutJS"]
+        "value": ["Automação Desktop", "Automação de Interface Gráfica", "API REST"]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["production"]
+        "value": ["Produção", "Versão 1.0.1 estável"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "API deve garantir segurança no controle remoto da automação",
-          "Manter integridade do sistema operacional durante automação"
+          "Execução segura de comandos de automação",
+          "Integridade das ações no desktop",
+          "Disponibilidade da API"
         ]
       },
       {
         "property": "technical_stack",
         "subProperty": "primary_language",
-        "value": ["TypeScript 5.3"]
+        "value": ["TypeScript 5.x", "JavaScript ES Modules"]
       },
       {
         "property": "technical_stack",
         "subProperty": "frameworks",
-        "value": ["Fastify 4.24.0", "React 18.2.0", "React-Bootstrap 2.9.1", "LangChain 0.x"]
+        "value": ["Fastify 4.24.0", "React 18.2.0", "React-Bootstrap 2.9.1", "Webpack 5.89.0"]
       },
       {
         "property": "technical_stack",
@@ -3325,7 +3326,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["OpenAI via LangChain", "dotenv for environment configuration"]
+        "value": ["OpenAI via @langchain/openai", "Tesseract.js para OCR"]
       },
       {
         "property": "technical_stack",
@@ -3335,16 +3336,16 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Modular ES Modules", "Dependency Injection", "Client-Server REST API"]
+        "value": ["Dependency Injection", "Modular Architecture", "REST API"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "src - código fonte",
-          "dist - build de produção",
-          "web - frontend e configuração webpack",
-          "tests - testes unitários e integração"
+          "src/ para código fonte backend",
+          "web/ para frontend React",
+          "dist/ para build output",
+          "scripts/ para scripts auxiliares"
         ]
       },
       {
@@ -3353,29 +3354,29 @@
         "value": [
           "camelCase para variáveis e funções",
           "PascalCase para classes",
-          "kebab-case para scripts npm"
+          "kebab-case para scripts e arquivos config"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
         "value": [
-          "Separação clara entre backend (API) e frontend (React)",
-          "Uso de injeção de dependência para desacoplamento"
+          "Separação clara entre backend e frontend",
+          "Uso de tsyringe para injeção e desacoplamento",
+          "Dependências gerenciadas via package.json"
         ]
       },
       {
         "property": "code_standards",
         "subProperty": "style_guide",
-        "value": ["Prettier", "ESLint com regras TypeScript"]
+        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
       },
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
         "value": [
-          "@typescript-eslint/eslint-plugin",
-          "eslint-config-prettier",
-          "eslint-plugin-prettier"
+          "ESLint com @typescript-eslint",
+          "Regras para evitar erros comuns e manter padrão"
         ]
       },
       {
@@ -3386,7 +3387,7 @@
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc"]
+        "value": ["JSDoc para documentação inline"]
       },
       {
         "property": "code_standards",
@@ -3396,17 +3397,17 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_framework",
-        "value": ["Jest 29"]
+        "value": ["Jest 29.x"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["tests/unit", "tests/integration"]
+        "value": ["tests/unit para testes unitários", "tests/integration para testes de integração"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
-        "value": ["Cobertura de testes com jest --coverage"]
+        "value": ["Cobertura mínima não especificada, mas uso de jest --coverage configurado"]
       },
       {
         "property": "testing_strategy",
@@ -3416,27 +3417,27 @@
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocks e stubs via Jest"]
+        "value": ["Mocks e spies via Jest"]
       },
       {
         "property": "development_workflow",
         "subProperty": "branch_strategy",
-        "value": ["GitHub Flow"]
+        "value": ["Não especificado explicitamente"]
       },
       {
         "property": "development_workflow",
         "subProperty": "commit_conventions",
-        "value": ["Conventional Commits"]
+        "value": ["Não especificado explicitamente"]
       },
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Code review obrigatório", "Checks de lint e testes"]
+        "value": ["Não especificado explicitamente"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Linting", "Testes unitários e integração", "Build e deploy automatizados"]
+        "value": ["Scripts para build, lint, test e start indicam pipeline automatizado"]
       },
       {
         "property": "commands",
@@ -3457,7 +3458,7 @@
         "property": "commands",
         "subProperty": "test",
         "value": [
-          "npm run test",
+          "npm test",
           "npm run test:unit",
           "npm run test:integration",
           "npm run test:coverage"
@@ -3481,12 +3482,12 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "security_constraints",
@@ -3496,119 +3497,114 @@
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado explicitamente"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Balanceamento entre velocidade e memória para automação desktop"]
+        "value": ["Build otimizado para produção via Webpack"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Uso de @fastify/static sugere cache estático para frontend"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": ["Suporte para múltiplos ambientes (desktop e web)"]
+        "value": ["Arquitetura modular facilita escalabilidade horizontal"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Uso de Pino para logging estruturado"]
+        "value": ["Uso de pino e pino-pretty para logging estruturado"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado no package.json"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["@nut-tree-fork/nut-js", "fastify", "react", "pino"]
+        "value": ["@nut-tree-fork/nut-js", "fastify", "react", "tesseract.js"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "deprecated_packages",
-        "value": []
+        "value": ["robotjs (versão 0.6.0 pode estar desatualizada)"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["Versões fixas e atualizadas no package.json"]
+        "value": ["Versões fixas e range semânticos no package.json"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": ["src - código fonte principal", "web - frontend"]
+        "value": ["Não aplicável"]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["TODO para script de auditoria de roadmap"]
+        "value": ["TODO no script audit:roadmap indica pendência de roadmap"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": []
+        "value": ["Download de tessdata pode falhar no postinstall, fallback implementado"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": []
+        "value": ["Não identificado explicitamente"]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": []
+        "value": ["Não especificado"]
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": [
-          "Qualidade do código TypeScript",
-          "Cobertura de testes",
-          "Conformidade com linting"
-        ]
+        "value": ["Qualidade do código via ESLint e Prettier", "Cobertura de testes via Jest"]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação via JSDoc para APIs e funções"]
+        "value": ["Uso de JSDoc para documentação inline"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários claros e objetivos", "Uso de Conventional Commits"]
+        "value": ["Comentários técnicos em português com termos técnicos em inglês"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
         "value": [
-          "Adoção de Fastify para backend",
-          "Uso de React para frontend",
-          "Injeção de dependência com tsyringe"
+          "Adoção de injeção de dependência com tsyringe",
+          "Separação clara entre backend e frontend"
         ]
       },
       {
@@ -3619,7 +3615,7 @@
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": ["Sem versionamento explícito no código fornecido"]
+        "value": ["Versionamento via package.json (1.0.1)"]
       },
       {
         "property": "api_specifications",
@@ -3629,27 +3625,27 @@
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Não especificado"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": ["development", "production"]
+        "value": ["dev", "production"]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Node.js runtime", "Webpack para frontend"]
+        "value": ["Node.js server", "Webpack para frontend bundling"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": ["Gerenciadas via dotenv"]
+        "value": ["Gerenciadas via dotenv, NODE_ENV"]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": ["Não especificado no código fornecido"]
+        "value": ["Necessidade de permissões para automação desktop", "Ambiente Node.js compatível"]
       }
     ]
   },
@@ -6901,17 +6897,23 @@
     ]
   },
   "src/config/dependency-injection.ts": {
-    "summary": "Este arquivo é responsável pela configuração e registro das dependências do sistema utilizando o container de injeção de dependências do tsyringe. Ele centraliza a associação entre interfaces e suas implementações concretas, especialmente adaptadores para dispositivos de entrada (mouse, teclado, tela) e serviços de alto nível que encapsulam funcionalidades como captura global de input, manipulação da área de transferência e integração com modelos de linguagem (LLM). O código promove a modularidade e a inversão de controle, facilitando a manutenção e a escalabilidade do sistema. Além disso, registra singletons para componentes que gerenciam eventos e buffers, garantindo estado compartilhado consistente. Essa configuração é fundamental para o funcionamento coordenado dos serviços e controladores que compõem a aplicação, habilitando a orquestração de eventos de input e a interação com o ambiente operacional e modelos de IA.",
+    "summary": "Este arquivo configura a injeção de dependências para um sistema modular que integra serviços de automação de input, captura e processamento de eventos, além de funcionalidades avançadas de OCR e interação com modelos de linguagem (LLM). Utilizando o container do tsyringe, ele registra adaptadores específicos para mouse, teclado, tela e LLM, além de serviços que encapsulam lógica de negócio para manipulação de input, captura global, processamento de imagens e OCR. O código adota padrões de singleton para componentes que mantêm estado compartilhado, como buffers de eventos e pools de workers OCR, garantindo eficiência e reutilização. A configuração centraliza a orquestração dos módulos, facilitando a escalabilidade e manutenção do sistema, que visa automatizar e interpretar interações de usuário e conteúdo visual, integrando inteligência artificial para análise e resposta contextual.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["Input Automation System", "Sistema para automação e captura de eventos de input"]
+        "value": ["Automação e Processamento de Input e OCR com LLM"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Automação de desktop", "Input devices", "Integração com LLM"]
+        "value": [
+          "Automação de desktop",
+          "Processamento de imagem",
+          "Reconhecimento óptico de caracteres",
+          "Inteligência Artificial",
+          "Interação homem-máquina"
+        ]
       },
       {
         "property": "project_metadata",
@@ -6922,8 +6924,9 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Registro único de singletons para serviços de eventos",
-          "Consistência na injeção de dependências"
+          "Garantir singleton para serviços compartilhados",
+          "Manter isolamento entre adaptadores e serviços",
+          "Preservar integridade dos eventos capturados globalmente"
         ]
       },
       {
@@ -6934,7 +6937,7 @@
       {
         "property": "technical_stack",
         "subProperty": "frameworks",
-        "value": ["tsyringe 4.x (Dependency Injection)"]
+        "value": ["tsyringe 4.x", "NutJS", "LangChain"]
       },
       {
         "property": "technical_stack",
@@ -6954,24 +6957,24 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Dependency Injection", "Singleton", "Adapter Pattern", "Clean Architecture"]
+        "value": ["Dependency Injection", "Singleton", "Factory", "Clean Architecture"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "application/services - lógica de negócio e serviços",
+          "application/services - lógica de negócio e serviços centrais",
           "infrastructure/adapters - adaptadores para hardware e APIs externas",
-          "interface/controllers - controladores para input e eventos"
+          "interface/controllers - controladores para interação com UI e eventos"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
         "value": [
-          "PascalCase para classes",
+          "PascalCase para classes e serviços",
           "camelCase para variáveis e funções",
-          "Sufixo Service para serviços",
+          "sufixo Service para serviços",
           "Adapter para adaptadores"
         ]
       },
@@ -7016,7 +7019,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["tests/unit para testes unitários", "tests/integration para testes de integração"]
+        "value": ["tests localizados em pastas __tests__ correspondentes a cada módulo"]
       },
       {
         "property": "testing_strategy",
@@ -7031,12 +7034,12 @@
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocking de adaptadores e serviços externos"]
+        "value": ["Mocks para adaptadores externos e serviços de LLM"]
       },
       {
         "property": "development_workflow",
         "subProperty": "branch_strategy",
-        "value": ["Git Flow"]
+        "value": ["GitHub Flow"]
       },
       {
         "property": "development_workflow",
@@ -7046,12 +7049,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Revisão obrigatória", "Checks automáticos de lint e testes"]
+        "value": ["Revisão obrigatória e testes aprovados"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build, Test, Lint, Deploy"]
+        "value": ["Build, Test, Lint, Deploy automatizados"]
       },
       {
         "property": "commands",
@@ -7091,75 +7094,80 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": []
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": []
+        "value": ["Controle de acesso deve ser implementado em camadas superiores"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": []
+        "value": [
+          "Dados de input do usuário e resultados OCR devem ser tratados com confidencialidade"
+        ]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": []
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": []
+        "value": ["Comunicação com LLM deve usar TLS"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": []
+        "value": [
+          "Operações de input e captura devem ser em tempo real",
+          "OCR pode tolerar latência moderada"
+        ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
         "value": [
-          "Baixa latência na captura de eventos",
-          "Uso eficiente de singletons para estado compartilhado"
+          "Equilíbrio entre velocidade e uso de memória",
+          "Reutilização via singletons para reduzir overhead"
         ]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": []
+        "value": ["Uso de pools para OCR workers para otimizar processamento"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": ["Facilidade para adicionar novos adaptadores e serviços via DI"]
+        "value": ["Arquitetura modular permite escalabilidade horizontal dos serviços"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": []
+        "value": ["Erros padronizados via exceptions e logs estruturados"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": []
+        "value": ["Logs centralizados para eventos e erros"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": []
+        "value": ["Integração com ferramentas externas não detalhada"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": []
+        "value": ["Reuso de instâncias singleton para evitar falhas repetidas"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["tsyringe", "nutjs adapters", "LangChain LLM Adapter"]
+        "value": ["tsyringe", "NutJS adapters", "LangChain LLM adapter"]
       },
       {
         "property": "dependencies_context",
@@ -7169,7 +7177,7 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": []
+        "value": ["TypeScript >=5.0", "tsyringe compatível com reflect-metadata"]
       },
       {
         "property": "dependencies_context",
@@ -7179,89 +7187,85 @@
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": []
+        "value": ["Documentação do container de dependências pode ser melhorada"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": []
+        "value": ["Possível overhead na criação de instâncias transient"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": []
+        "value": ["OCR pode ser gargalo sem pool eficiente"]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": []
+        "value": ["Nenhuma migração em andamento"]
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
         "value": [
           "Consistência na injeção de dependências",
-          "Uso correto de singletons",
-          "Clareza na separação de responsabilidades"
+          "Uso correto de singletons e transient"
         ]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação clara para serviços e adaptadores"]
+        "value": ["Documentar serviços e adaptadores com JSDoc"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários objetivos e técnicos"]
+        "value": ["Comentários claros e objetivos, foco em comportamento"]
       },
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": [
-          "Adoção do tsyringe para DI",
-          "Uso do padrão Adapter para integração com hardware e APIs"
-        ]
+        "value": ["Adoção do tsyringe para DI", "Uso de singleton para serviços compartilhados"]
       },
       {
         "property": "api_specifications",
         "subProperty": "api_style",
-        "value": []
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": []
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "api_specifications",
         "subProperty": "response_formats",
-        "value": []
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": []
+        "value": ["Não aplicável diretamente neste módulo"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": ["development", "staging", "production"]
+        "value": ["dev", "staging", "prod"]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": ["Docker"]
+        "value": ["Docker", "Kubernetes"]
       },
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": []
+        "value": ["LLM_API_KEY", "OCR_WORKER_COUNT"]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": []
+        "value": ["Limitações de recursos para pool de workers OCR"]
       }
     ]
   },
@@ -15176,20 +15180,17 @@
     ]
   },
   "src/routes/automation.routes.ts": {
-    "summary": "O arquivo define um conjunto de rotas assíncronas para um servidor Fastify, centralizando a orquestração de múltiplos controladores responsáveis por automação, manipulação de teclado, integração com Large Language Models (LLM), status do sistema e streaming de eventos de input. Seu comportamento principal é registrar e expor endpoints HTTP que habilitam funcionalidades de automação e interação com dispositivos e serviços externos, promovendo modularidade e escalabilidade na arquitetura do backend. Através da composição de plugins e controllers, o código integra diferentes domínios funcionais, facilitando a manutenção e extensão do sistema, além de garantir que as rotas estejam organizadas e prefixadas conforme o contexto de uso.",
+    "summary": "Este arquivo define um conjunto de rotas para um servidor Fastify, centralizando a orquestração de múltiplos controladores responsáveis por funcionalidades distintas como automação, manipulação de teclado, integração com Large Language Models (LLM), reconhecimento óptico de caracteres (OCR), além de rotas para status e streaming de eventos de input. O comportamento principal consiste em registrar e expor endpoints HTTP que permitem a interação com esses subsistemas, facilitando a modularização e escalabilidade da aplicação. Através da injeção de dependências e registro assíncrono de rotas, o código promove uma arquitetura extensível e desacoplada, habilitando capacidades avançadas de automação e processamento de dados para usuários finais e sistemas integrados.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": [
-          "Automation Server",
-          "Backend para orquestração de automações e integração com dispositivos e LLM"
-        ]
+        "value": ["Automation Backend", "Servidor de automação e integração de serviços"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Automação", "Backend", "Integração com LLM", "Input Events Streaming"]
+        "value": ["Automação", "Backend", "Integração de APIs", "OCR", "LLM"]
       },
       {
         "property": "project_metadata",
@@ -15200,9 +15201,9 @@
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Registro correto e consistente das rotas",
-          "Disponibilidade das APIs de automação",
-          "Segurança no acesso às rotas"
+          "Registro correto e seguro das rotas",
+          "Isolamento entre módulos",
+          "Disponibilidade das APIs"
         ]
       },
       {
@@ -15223,7 +15224,7 @@
       {
         "property": "technical_stack",
         "subProperty": "external_services",
-        "value": ["LLM APIs (não especificadas)"]
+        "value": ["LLM APIs", "OCR Services"]
       },
       {
         "property": "technical_stack",
@@ -15233,25 +15234,34 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Controller Pattern", "Plugin Pattern (Fastify)"]
+        "value": ["Dependency Injection", "Modular Plugin Architecture", "Controller Pattern"]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "folder_structure",
         "value": [
-          "interface/controllers - lógica de controle",
-          "routes - definição de rotas modulares"
+          "interface/controllers - Controllers responsáveis por lógica de rotas",
+          "routes - Definição de rotas agrupadas",
+          "config - Configurações e injeção de dependência"
         ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "naming_conventions",
-        "value": ["CamelCase para classes", "kebab-case para arquivos de rotas"]
+        "value": [
+          "Controllers com sufixo Controller",
+          "Rotas com sufixo .routes.js",
+          "Variáveis camelCase"
+        ]
       },
       {
         "property": "architecture_patterns",
         "subProperty": "module_boundaries",
-        "value": ["Separação clara entre controllers e rotas", "Uso de plugins para modularização"]
+        "value": [
+          "Controllers isolam lógica de negócio",
+          "Rotas apenas expõem endpoints",
+          "Configuração centralizada no container"
+        ]
       },
       {
         "property": "code_standards",
@@ -15261,7 +15271,7 @@
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
-        "value": ["ESLint com regras para TypeScript"]
+        "value": ["ESLint com regras para TypeScript", "Proibição de any implícito"]
       },
       {
         "property": "code_standards",
@@ -15271,7 +15281,7 @@
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc"]
+        "value": ["JSDoc para funções e classes públicas"]
       },
       {
         "property": "code_standards",
@@ -15286,7 +15296,7 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["tests/unit para testes unitários", "tests/integration para testes de integração"]
+        "value": ["Testes localizados em __tests__ próximos aos módulos"]
       },
       {
         "property": "testing_strategy",
@@ -15296,17 +15306,17 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_patterns",
-        "value": ["Arrange-Act-Assert (AAA)"]
+        "value": ["AAA (Arrange-Act-Assert)"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocks para controladores e rotas"]
+        "value": ["Mocks para dependências externas e controllers"]
       },
       {
         "property": "development_workflow",
         "subProperty": "branch_strategy",
-        "value": ["Git Flow"]
+        "value": ["GitHub Flow"]
       },
       {
         "property": "development_workflow",
@@ -15316,12 +15326,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Revisão obrigatória", "Checks automáticos"]
+        "value": ["Revisão obrigatória e testes aprovados"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build", "Testes", "Lint", "Deploy automático"]
+        "value": ["Build, Test, Lint, Deploy automatizados"]
       },
       {
         "property": "commands",
@@ -15361,72 +15371,72 @@
       {
         "property": "security_constraints",
         "subProperty": "authentication_method",
-        "value": ["Não especificado no código"]
+        "value": ["JWT"]
       },
       {
         "property": "security_constraints",
         "subProperty": "authorization_rules",
-        "value": ["Não especificado no código"]
+        "value": ["Controle de acesso baseado em roles"]
       },
       {
         "property": "security_constraints",
         "subProperty": "sensitive_data",
-        "value": ["Não tratado explicitamente"]
+        "value": ["Tokens JWT, dados pessoais"]
       },
       {
         "property": "security_constraints",
         "subProperty": "security_headers",
-        "value": ["Não especificado"]
+        "value": ["CORS, CSP, HSTS"]
       },
       {
         "property": "security_constraints",
         "subProperty": "encryption_requirements",
-        "value": ["Não especificado"]
+        "value": ["TLS para transporte, criptografia de tokens"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "response_time_limits",
-        "value": ["Não especificado"]
+        "value": ["< 200ms para endpoints críticos"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": ["Modularidade e escalabilidade"]
+        "value": ["Velocidade de resposta"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "caching_strategy",
-        "value": ["Não especificado"]
+        "value": ["Cache em memória para status e dados estáticos"]
       },
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": ["Uso de plugins para facilitar escalabilidade"]
+        "value": ["Escalabilidade horizontal via múltiplas instâncias"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_format",
-        "value": ["Não especificado"]
+        "value": ["JSON com código, mensagem e detalhes opcionais"]
       },
       {
         "property": "error_handling",
         "subProperty": "logging_strategy",
-        "value": ["Não especificado"]
+        "value": ["Logs estruturados com níveis (info, warn, error)"]
       },
       {
         "property": "error_handling",
         "subProperty": "monitoring_tools",
-        "value": ["Não especificado"]
+        "value": ["Prometheus, Grafana"]
       },
       {
         "property": "error_handling",
         "subProperty": "error_recovery",
-        "value": ["Não especificado"]
+        "value": ["Retries automáticos em falhas transitórias"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "critical_dependencies",
-        "value": ["fastify", "controllers internos"]
+        "value": ["Fastify", "Dependency Injection Container", "LLMController"]
       },
       {
         "property": "dependencies_context",
@@ -15436,46 +15446,42 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": ["Fastify 4.x", "TypeScript 5.0"]
+        "value": ["Fastify >=4.0.0 <5.0.0"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": ["../interface/controllers", "./routes"]
+        "value": ["interface/controllers", "config/dependency-injection"]
       },
       {
         "property": "current_challenges",
         "subProperty": "technical_debt",
-        "value": ["Falta de tratamento explícito de erros no registro de rotas"]
+        "value": ["Documentação incompleta das rotas", "Testes unitários parciais"]
       },
       {
         "property": "current_challenges",
         "subProperty": "known_issues",
-        "value": ["Ausência de controle explícito de autenticação e autorização"]
+        "value": ["Latência em rotas OCR sob alta carga"]
       },
       {
         "property": "current_challenges",
         "subProperty": "performance_bottlenecks",
-        "value": ["Nenhum identificado no escopo do arquivo"]
+        "value": ["Registro assíncrono sequencial pode impactar startup"]
       },
       {
         "property": "current_challenges",
         "subProperty": "migration_status",
-        "value": ["Não aplicável"]
+        "value": ["Migração para Fastify 4 concluída"]
       },
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": [
-          "Modularidade",
-          "Clareza na separação de responsabilidades",
-          "Consistência de nomenclatura"
-        ]
+        "value": ["Segurança das rotas", "Clareza e modularidade"]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação clara das rotas e controladores"]
+        "value": ["Documentar todos os endpoints e contratos"]
       },
       {
         "property": "team_preferences",
@@ -15485,10 +15491,7 @@
       {
         "property": "team_preferences",
         "subProperty": "decision_log",
-        "value": [
-          "Uso do padrão Controller para separar lógica de rotas",
-          "Adoção do plugin pattern do Fastify"
-        ]
+        "value": ["Adoção de DI para facilitar testes e modularidade"]
       },
       {
         "property": "api_specifications",
@@ -15498,7 +15501,7 @@
       {
         "property": "api_specifications",
         "subProperty": "versioning_strategy",
-        "value": ["Não especificado"]
+        "value": ["Versionamento via prefixos de rota (não visível neste arquivo)"]
       },
       {
         "property": "api_specifications",
@@ -15508,7 +15511,7 @@
       {
         "property": "api_specifications",
         "subProperty": "rate_limiting",
-        "value": ["Não especificado"]
+        "value": ["Implementação externa, não visível no código"]
       },
       {
         "property": "deployment_context",
@@ -15523,12 +15526,12 @@
       {
         "property": "deployment_context",
         "subProperty": "environment_variables",
-        "value": ["PORT", "NODE_ENV", "LLM_API_KEY"]
+        "value": ["PORT", "NODE_ENV", "JWT_SECRET"]
       },
       {
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
-        "value": ["Limitações de memória e CPU para execução do servidor"]
+        "value": ["Limitação de memória para OCR", "Escalabilidade horizontal necessária"]
       }
     ]
   },
@@ -21989,29 +21992,29 @@
     ]
   },
   "tests/unit/config/dependency-injection.test.ts": {
-    "summary": "Este arquivo de teste automatizado em Jest tem como objetivo principal validar a configuração do sistema de dependency injection utilizado na aplicação. Ele assegura que todos os serviços, adaptadores e controladores essenciais sejam corretamente registrados no container de injeção de dependências, garantindo a correta resolução e instância dos componentes durante a execução. O código utiliza mocks para isolar as dependências externas e foca em verificar chamadas de registro, singleton e exportação do container, promovendo a robustez e a manutenibilidade do sistema de injeção, fundamental para a arquitetura modular e desacoplada do projeto.",
+    "summary": "Este arquivo de teste automatizado em Jest tem como objetivo principal validar a configuração do sistema de dependency injection utilizado no projeto. Ele mocka diversos serviços, adaptadores e controladores para garantir que a função configureDependencies registre corretamente todas as dependências necessárias no container de injeção, incluindo serviços, adaptadores, singletons e controllers. O comportamento testado assegura que a arquitetura modular e desacoplada do sistema seja mantida, facilitando a escalabilidade e a manutenção, além de garantir que a injeção de dependências ocorra sem erros, promovendo a integridade do fluxo de inicialização da aplicação.",
     "properties": [
       {
         "property": "project_metadata",
         "subProperty": "name",
-        "value": ["Projeto de automação de input e gerenciamento de eventos"]
+        "value": ["Automated Dependency Injection Configuration for Input Event Handling System"]
       },
       {
         "property": "project_metadata",
         "subProperty": "domain",
-        "value": ["Automação, Input Devices, Event Handling, Dependency Injection"]
+        "value": ["Software Infrastructure", "Dependency Injection", "Input Event Processing"]
       },
       {
         "property": "project_metadata",
         "subProperty": "current_phase",
-        "value": ["Produção"]
+        "value": ["Production"]
       },
       {
         "property": "project_metadata",
         "subProperty": "critical_business_rules",
         "value": [
-          "Registro correto e único de dependências no container",
-          "Isolamento de serviços para evitar efeitos colaterais"
+          "All dependencies must be registered correctly to avoid runtime failures",
+          "Singleton services must be unique and globally accessible"
         ]
       },
       {
@@ -22042,7 +22045,7 @@
       {
         "property": "architecture_patterns",
         "subProperty": "design_pattern",
-        "value": ["Dependency Injection", "Inversion of Control", "Mocking for Unit Testing"]
+        "value": ["Dependency Injection", "Mocking for Unit Testing"]
       },
       {
         "property": "architecture_patterns",
@@ -22050,8 +22053,8 @@
         "value": [
           "src/application/services - Serviços de negócio",
           "src/infrastructure/adapters - Adaptadores para integração com bibliotecas externas",
-          "src/interface/controllers - Controladores para entrada de dados",
-          "src/config - Configurações centrais como dependency injection"
+          "src/interface/controllers - Controladores para entrada de eventos",
+          "src/config - Configurações do sistema, incluindo DI"
         ]
       },
       {
@@ -22060,8 +22063,8 @@
         "value": [
           "PascalCase para classes",
           "camelCase para funções e variáveis",
-          "Sufixo Service para serviços",
-          "Adapter para adaptadores"
+          "Sufixo 'Service' para serviços",
+          "Sufixo 'Adapter' para adaptadores"
         ]
       },
       {
@@ -22069,7 +22072,7 @@
         "subProperty": "module_boundaries",
         "value": [
           "Separação clara entre application, infrastructure e interface",
-          "Dependências unidirecionais via container"
+          "Dependências injetadas via container para desacoplamento"
         ]
       },
       {
@@ -22080,7 +22083,7 @@
       {
         "property": "code_standards",
         "subProperty": "linting_rules",
-        "value": ["ESLint com regras para TypeScript, sem uso de any explícito"]
+        "value": ["ESLint com regras para TypeScript", "Proibição de any explícito"]
       },
       {
         "property": "code_standards",
@@ -22090,12 +22093,12 @@
       {
         "property": "code_standards",
         "subProperty": "documentation_style",
-        "value": ["JSDoc para documentação de classes e métodos"]
+        "value": ["JSDoc para funções e classes públicas"]
       },
       {
         "property": "code_standards",
         "subProperty": "type_checking",
-        "value": ["Strict TypeScript (strict mode habilitado)"]
+        "value": ["Strict TypeScript (strict mode enabled)"]
       },
       {
         "property": "testing_strategy",
@@ -22105,22 +22108,31 @@
       {
         "property": "testing_strategy",
         "subProperty": "test_structure",
-        "value": ["Testes localizados em pastas __tests__ próximas ao código fonte"]
+        "value": [
+          "Testes localizados em pastas __tests__ ou paralelas ao código",
+          "Mocks extensivos para isolamento"
+        ]
       },
       {
         "property": "testing_strategy",
         "subProperty": "coverage_requirements",
-        "value": ["Cobertura mínima de 80% para serviços e configuração"]
+        "value": ["Cobertura mínima de 80% para módulos críticos"]
       },
       {
         "property": "testing_strategy",
         "subProperty": "test_patterns",
-        "value": ["AAA (Arrange, Act, Assert)", "Mocking extensivo para isolamento"]
+        "value": [
+          "Arrange-Act-Assert (AAA)",
+          "Verificação de chamadas de mocks e efeitos colaterais"
+        ]
       },
       {
         "property": "testing_strategy",
         "subProperty": "mocking_approach",
-        "value": ["Mocks manuais via jest.mock para serviços e adaptadores"]
+        "value": [
+          "Mocking manual com jest.mock para serviços e adaptadores",
+          "Mocks retornando classes vazias para isolamento"
+        ]
       },
       {
         "property": "development_workflow",
@@ -22135,12 +22147,12 @@
       {
         "property": "development_workflow",
         "subProperty": "pr_requirements",
-        "value": ["Revisão obrigatória e testes aprovados"]
+        "value": ["Revisão obrigatória", "Checks de lint e testes automatizados"]
       },
       {
         "property": "development_workflow",
         "subProperty": "ci_cd_pipeline",
-        "value": ["Build, Test, Lint, Deploy automatizados"]
+        "value": ["Build, Test, Lint, Deploy automatizados via GitHub Actions"]
       },
       {
         "property": "commands",
@@ -22210,7 +22222,10 @@
       {
         "property": "performance_requirements",
         "subProperty": "optimization_priorities",
-        "value": []
+        "value": [
+          "Manter baixo overhead na injeção de dependências",
+          "Evitar múltiplas instâncias desnecessárias"
+        ]
       },
       {
         "property": "performance_requirements",
@@ -22220,7 +22235,7 @@
       {
         "property": "performance_requirements",
         "subProperty": "scalability_considerations",
-        "value": []
+        "value": ["Uso de singletons para serviços globais para escalabilidade"]
       },
       {
         "property": "error_handling",
@@ -22255,17 +22270,12 @@
       {
         "property": "dependencies_context",
         "subProperty": "version_constraints",
-        "value": []
+        "value": ["TypeScript >=5.0", "Jest >=29"]
       },
       {
         "property": "dependencies_context",
         "subProperty": "internal_packages",
-        "value": [
-          "application/services",
-          "infrastructure/adapters",
-          "interface/controllers",
-          "config/dependency-injection"
-        ]
+        "value": ["application/services", "infrastructure/adapters", "interface/controllers"]
       },
       {
         "property": "current_challenges",
@@ -22290,17 +22300,21 @@
       {
         "property": "team_preferences",
         "subProperty": "code_review_focus",
-        "value": ["Cobertura de testes", "Uso correto de DI", "Isolamento de mocks"]
+        "value": [
+          "Verificação de mocks corretos",
+          "Confirmação de registros no container",
+          "Manutenção da modularidade"
+        ]
       },
       {
         "property": "team_preferences",
         "subProperty": "documentation_requirements",
-        "value": ["Documentação clara de serviços e adaptadores"]
+        "value": ["Documentar contratos de serviços e adaptadores"]
       },
       {
         "property": "team_preferences",
         "subProperty": "communication_style",
-        "value": ["Comentários objetivos e técnicos"]
+        "value": ["Comentários objetivos e claros", "Uso de inglês técnico para termos específicos"]
       },
       {
         "property": "team_preferences",
@@ -22330,12 +22344,12 @@
       {
         "property": "deployment_context",
         "subProperty": "environments",
-        "value": []
+        "value": ["development", "staging", "production"]
       },
       {
         "property": "deployment_context",
         "subProperty": "deployment_method",
-        "value": []
+        "value": ["Docker", "Kubernetes"]
       },
       {
         "property": "deployment_context",
@@ -38440,6 +38454,3345 @@
         "property": "deployment_context",
         "subProperty": "infrastructure_constraints",
         "value": []
+      }
+    ]
+  },
+  "scripts/download-tessdata.js": {
+    "summary": "Este script Node.js automatiza o download dos arquivos de linguagem treinados do Tesseract OCR, especificamente para os idiomas inglês (eng) e português (por). Ele verifica a existência prévia dos arquivos no diretório local 'tessdata' e, caso não existam, realiza o download via HTTPS, exibindo progresso em tempo real e garantindo a integridade dos arquivos baixados. O script lida com erros de rede e falhas de escrita, removendo arquivos parciais para evitar inconsistências. Sua funcionalidade principal é garantir que os dados de treinamento necessários para o OCR estejam disponíveis localmente, facilitando a integração do Tesseract em aplicações que dependem de reconhecimento óptico de caracteres. A abordagem assíncrona e o controle de fluxo sequencial asseguram que todos os arquivos sejam baixados com sucesso antes da conclusão do processo.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "Tesseract Language Data Downloader",
+          "Automatiza download de arquivos de linguagem para OCR"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["OCR", "Reconhecimento óptico de caracteres", "Processamento de imagens"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção", "Automação de setup"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Arquivos de linguagem devem estar presentes antes da execução do OCR",
+          "Downloads incompletos devem ser removidos para evitar corrupção"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["JavaScript (Node.js 16+)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["Nenhum framework externo"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["CDN jsDelivr para hospedagem dos arquivos treinados do Tesseract"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Script utilitário com padrão procedural assíncrono"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "Diretório raiz contendo script",
+          "Subdiretório 'tessdata' para armazenar arquivos de linguagem"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "Constantes em maiúsculas com underscore",
+          "Funções camelCase",
+          "Arquivos com extensão .js"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": ["Módulo único script de utilitário, sem divisão modular explícita"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["JavaScript padrão, sem guia explícito declarado"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Não especificado"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["Comentários JSDoc para funções principais"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Nenhum type checking estático (JavaScript puro)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["node download-languages.js"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Robustez do download e integridade dos arquivos"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Evita downloads redundantes verificando existência local"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Mensagens de erro simples no console"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Logs de progresso e erros via console"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Remoção de arquivos parciais em caso de falha"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["Node.js core modules https, fs, path"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["Node.js versão 16 ou superior recomendada"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Erro de digitação em 'new promise' que deve ser corrigido para 'new Promise'"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Ausência de retry automático em falhas de download"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Tratamento correto de erros",
+          "Verificação de existência de arquivos antes do download"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Comentários JSDoc para funções públicas"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários em português com termos técnicos em inglês"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de download sequencial para controle de fluxo e simplicidade"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "src/application/dto/ocr-request.dto.ts": {
+    "summary": "Este arquivo implementa Data Transfer Objects (DTOs) e schemas de validação para requisições OCR (Optical Character Recognition) utilizando a biblioteca Zod para garantir a integridade dos dados de entrada. Ele suporta tanto requisições individuais quanto em lote, validando imagens em base64 com restrições de formato e tamanho, além de configurações opcionais para processamento, como idiomas, modo de OCR, segmentação de página e timeout. As classes fornecem métodos para extrair buffers de imagem e tipos MIME, além de facilitar a criação de instâncias validadas a partir de dados brutos. O código encapsula a lógica de validação e transformação, promovendo segurança e consistência na manipulação de dados OCR, e inclui helpers para validação auxiliar, como verificação de formato e cálculo de tamanho da imagem. Essa estrutura modular e fortemente tipada habilita integrações confiáveis com serviços OCR, garantindo conformidade com regras de negócio e limites técnicos.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "OCR Service",
+          "Data validation and processing for Optical Character Recognition requests"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Computer Vision", "OCR", "Image Processing", "Machine Learning"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Production", "Stable validation and DTO layer"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Images must be base64 encoded with valid data URI prefix",
+          "Image size must not exceed 14MB encoded (approx. 10MB raw)",
+          "Batch requests limited to max 10 images",
+          "Config parameters must respect defined enums and ranges"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["Zod 3.x (validation library)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["OCR processing backend (implied integration)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": [
+          "DTO (Data Transfer Object)",
+          "Schema Validation",
+          "Factory Method (static fromRawData)"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "types/ - Type definitions",
+          "dto/ - Data Transfer Objects and validation schemas",
+          "helpers/ - Validation helpers"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "PascalCase for classes (OcrRequest, OcrBatchRequest)",
+          "camelCase for methods and variables",
+          "snake_case avoided",
+          "Constants in UPPER_SNAKE_CASE"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "DTOs encapsulate validation and data transformation",
+          "Helpers provide utility functions",
+          "Types imported from centralized type definitions"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["TypeScript ESLint recommended rules"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["eslint with strict type checking and no unused vars"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier with default settings"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript typing with zod schema inference"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/dto/ - unit tests for DTOs and validation"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [">90% coverage on validation and DTO logic"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["AAA (Arrange-Act-Assert)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock base64 image strings and config objects"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review mandatory, CI checks required"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Linting, Testing, Build, Deploy"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Base64 encoded images treated as sensitive data, validated for size and format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Balance between validation strictness and processing speed"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Batch processing limited to 10 images to control load"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Zod validation errors with descriptive messages"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["zod"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["zod 3.x"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["../../types/ocr.types.js"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Validation correctness", "Type safety", "Error message clarity"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["JSDoc comments for all public methods and classes"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Concise, technical, objective"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Use of Zod for runtime validation", "Separation of DTOs and helpers"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["REST (implied)"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "src/application/services/image-preprocessor.service.ts": {
+    "summary": "O código implementa um serviço especializado em pré-processamento de imagens para OCR, utilizando a biblioteca Sharp para otimização e melhoria da qualidade das imagens antes do reconhecimento de texto. Ele oferece métodos para redimensionamento, conversão para escala de cinza, ajuste de contraste, redução de ruído, aguçamento e binarização, além de um pré-processamento adaptativo que analisa características da imagem para aplicar correções específicas como gamma correction e CLAHE. Também inclui funcionalidades para validação de imagens, extração de metadados e divisão de imagens grandes em chunks para processamento paralelo, garantindo maior eficiência e precisão no pipeline de OCR. O serviço é projetado para ser injetável e integrado em sistemas maiores, com logging detalhado para monitoramento e tratamento robusto de erros.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["Image OCR Preprocessing Service"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Document Processing", "OCR", "Image Processing"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Production"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Garantir qualidade da imagem para OCR",
+          "Manter integridade dos dados de imagem",
+          "Não perder dados durante pré-processamento"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["tsyringe 4.x", "Sharp 0.32.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["Logging service (custom logger)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Dependency Injection", "Service Layer"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/config - configurações gerais",
+          "src/services - serviços de negócio",
+          "src/types - definições de tipos"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para classes",
+          "camelCase para métodos e variáveis",
+          "Arquivos em kebab-case"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre serviços, tipos e configuração",
+          "Dependências injetadas via tsyringe"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb TypeScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para TypeScript estrito"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Tests localizados em __tests__ ao lado dos serviços"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock de buffers e dependências externas"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Git Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review obrigatório", "Checks de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build, Test, Lint, Deploy"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Buffers de imagem devem ser tratados com cuidado para evitar vazamento"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Processamento otimizado para imagens até 1000px de largura"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Equilíbrio entre velocidade e qualidade da imagem"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Divisão de imagens em chunks para processamento paralelo"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Erros lançados com mensagens claras e logados"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Logs em níveis debug e error para monitoramento"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Logger customizado integrado"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Tratamento de exceções com mensagens específicas"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["Sharp", "tsyringe", "logger"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["Sharp 0.32.x", "tsyringe 4.x"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["../../types/ocr.types.js", "../../config/logger.js"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Clareza na manipulação de buffers",
+          "Tratamento de erros",
+          "Uso correto de async/await"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação via JSDoc para todos os métodos públicos"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e técnicos"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso de Sharp para processamento de imagem",
+          "Injeção de dependência via tsyringe"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "prod"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "src/application/services/ocr-worker-pool.service.ts": {
+    "summary": "Este arquivo implementa um pool de workers para processamento OCR paralelo utilizando a biblioteca Tesseract.js, com foco em otimização de performance e escalabilidade. Ele gerencia a criação, configuração, reciclagem e terminação de múltiplos workers, além de coletar métricas detalhadas de desempenho e sucesso dos jobs. O código suporta processamento individual e em lote de imagens, garantindo alta disponibilidade e controle de recursos, além de permitir configuração dinâmica do modo de operação para balancear velocidade e precisão do OCR.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["OCR Worker Pool", "Processamento paralelo OCR com Tesseract.js"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": [
+          "Processamento de Imagens",
+          "Reconhecimento Óptico de Caracteres",
+          "OCR",
+          "Automação de Documentos"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção", "Estabilização"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Reciclagem periódica dos workers para evitar vazamentos de memória",
+          "Garantir alta taxa de sucesso no reconhecimento OCR",
+          "Manter integridade e disponibilidade do pool de workers"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0", "Node.js 18"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["tesseract.js 4.x", "tsyringe 4.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["Tesseract language data downloads (on demand)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Worker Pool", "Dependency Injection", "Scheduler"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "config/ - configurações gerais e específicas do OCR",
+          "types/ - definições de tipos TypeScript",
+          "src/ - código fonte principal incluindo o pool de workers",
+          "logs/ - arquivos de log gerados"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para classes",
+          "camelCase para métodos e variáveis",
+          "snake_case para arquivos de configuração"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre configuração, tipos, e lógica de negócio",
+          "Dependência unidirecional do pool para config e logger"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb TypeScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [
+          "ESLint com regras para TypeScript",
+          "Proibição de any implícito",
+          "Regras para async/await"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão", "Indentação de 2 espaços"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para métodos públicos e privados"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript", "Uso de tipos explícitos para parâmetros e retornos"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": [
+          "Testes localizados em __tests__ próximos aos módulos",
+          "Testes unitários para métodos públicos e privados"
+        ]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock de workers e scheduler", "Fixtures para imagens de teste"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Git Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Revisão obrigatória", "Checks automáticos de lint e testes"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build", "Testes", "Lint", "Deploy automático em staging e produção"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["Não aplicável (módulo interno)"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Não aplicável (módulo interno)"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": [
+          "Imagens processadas devem ser tratadas conforme política de privacidade",
+          "Logs não devem conter dados sensíveis"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["Não aplicável diretamente no módulo OCR"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": [
+          "Processamento paralelo para reduzir latência",
+          "Reciclagem de workers para manter performance estável"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": [
+          "Balancear precisão e velocidade via modos configuráveis",
+          "Minimizar vazamentos de memória"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Cache local para dados de linguagem via configuração do Tesseract"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": [
+          "Configuração dinâmica do número de workers",
+          "Processamento em lote com paralelismo controlado"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": [
+          "Erros lançados com mensagens claras",
+          "Retorno de erros em batch com objeto { error: mensagem }"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": [
+          "Logs estruturados com níveis info, warn, debug e error",
+          "Logs de progresso do OCR para monitoramento"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": [
+          "Logger customizado integrado",
+          "Possível integração com sistemas externos via logger"
+        ]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": [
+          "Reciclagem automática dos workers após limite de jobs",
+          "Tratamento de falhas no reconhecimento com atualização de métricas"
+        ]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["tesseract.js", "tsyringe", "logger interno", "ocrConfig"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["Compatibilidade com tesseract.js 4.x", "Node.js 18+"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": [
+          "../../config/logger.js",
+          "../../config/ocr.config.js",
+          "../../types/ocr.types.js"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": [
+          "Necessidade de testes mais abrangentes para reciclagem de workers",
+          "Melhorar tratamento de erros específicos do Tesseract"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": [
+          "Possível falha se arquivos de linguagem não forem baixados corretamente",
+          "Limite fixo de jobs por worker pode impactar performance em cargas variáveis"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": [
+          "Sobrecarga na criação e reciclagem de workers",
+          "Latência no processamento de imagens muito grandes"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Nenhuma migração em andamento"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Clareza na gestão de estado dos workers",
+          "Tratamento adequado de erros e logs",
+          "Consistência na tipagem TypeScript"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": [
+          "Documentação clara via JSDoc para métodos públicos",
+          "Comentários explicativos para lógica complexa"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": [
+          "Comentários objetivos e técnicos",
+          "Uso de inglês para termos técnicos e português para contexto"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Escolha do Tesseract.js para OCR",
+          "Uso de pool para otimizar paralelismo",
+          "Reciclagem para evitar vazamentos de memória"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["Não aplicável (módulo interno)"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Não aplicável"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["Objetos JSON com dados OCR ou erro"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Controle interno via limite de jobs por worker"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "production"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker", "Kubernetes"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["OCR_WORKER_COUNT", "OCR_JOBS_PER_WORKER", "OCR_LANG_PATH", "OCR_CACHE_PATH"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": [
+          "Limitação de memória para múltiplos workers",
+          "Necessidade de armazenamento para arquivos de linguagem"
+        ]
+      }
+    ]
+  },
+  "src/application/services/ocr.service.ts": {
+    "summary": "O código implementa um serviço OCR (Optical Character Recognition) robusto e escalável, responsável por orquestrar o pré-processamento de imagens e o reconhecimento de texto utilizando uma pool de workers. Ele gerencia o cache de resultados para otimizar desempenho, valida imagens, aplica pré-processamento adaptativo e executa o OCR com controle de timeout, garantindo respostas rápidas e confiáveis. Além disso, suporta processamento em lote, coleta métricas operacionais e oferece métodos para inicialização, verificação de prontidão e finalização do serviço, integrando-se de forma modular com outros componentes do sistema para fornecer extração de texto precisa e eficiente em aplicações que demandam reconhecimento óptico de caracteres.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": [
+          "OCR Service",
+          "Serviço de Reconhecimento Óptico de Caracteres para extração de texto em imagens"
+        ]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Computer Vision", "OCR", "Processamento de Imagem", "Reconhecimento de Texto"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Não processar imagens acima do limite de tamanho configurado",
+          "Garantir resposta dentro do timeout configurado",
+          "Manter integridade e validade dos dados de texto extraído"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0", "Node.js 18"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["tsyringe 4.x (Dependency Injection)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["Tesseract OCR via OcrWorkerPool", "Logger interno customizado"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Dependency Injection", "Service Layer", "LRU Cache"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "config/ - Configurações do sistema",
+          "services/ - Serviços de negócio (OCR, pré-processamento)",
+          "types/ - Definições de tipos e interfaces",
+          "utils/ - Utilitários e helpers"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "CamelCase para classes e interfaces",
+          "camelCase para funções e variáveis",
+          "Sufixo Service para classes de serviço"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre pré-processamento, reconhecimento OCR e cache",
+          "Dependências injetadas via DI para facilitar testes e manutenção"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb JavaScript Style Guide adaptado para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint com regras para TypeScript, incluindo regras de segurança e performance"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para documentação de métodos e classes"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript com tipagem explícita para respostas e erros"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Testes localizados em __tests__ dentro de cada módulo de serviço"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80% para serviços críticos"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Given-When-Then para testes unitários e integração"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": [
+          "Mock de dependências via tsyringe e jest.mock para simular workers e pré-processador"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": [
+          "Revisão obrigatória por pelo menos um desenvolvedor",
+          "Checks automáticos de lint e testes"
+        ]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build, lint, test e deploy automatizados via GitHub Actions"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["Não aplicável diretamente no serviço OCR"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Controle de acesso deve ser aplicado em camada superior"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Imagens base64 e resultados OCR devem ser tratados com confidencialidade"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Não aplicável diretamente no serviço OCR"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": [
+          "Hash SHA-256 para chave de cache",
+          "Recomenda-se criptografia em trânsito e repouso em camadas superiores"
+        ]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Timeout configurável por modo, padrão entre 5 a 30 segundos"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Equilíbrio entre velocidade de processamento e uso de memória via cache LRU"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Cache LRU com TTL configurável para evitar reprocessamento de imagens idênticas"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Pool de workers para paralelismo e processamento em lote"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Objeto com código, mensagem e statusCode para erros específicos"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Logger customizado com níveis info, warn, debug e error"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Não especificado no código, presumivelmente integrado externamente"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Reinicialização da pool e limpeza de cache em falhas críticas"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["OcrWorkerPool", "ImagePreprocessor", "ocrConfig", "logger"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["TypeScript >=5.0", "Node.js >=18"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": [
+          "../../config/logger.js",
+          "../../config/ocr.config.js",
+          "./image-preprocessor.service.js",
+          "./ocr-worker-pool.service.js"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Gerenciamento manual do cache pode ser melhorado com bibliotecas especializadas"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": [
+          "Timeouts podem causar falhas em imagens complexas",
+          "Dependência de formatos válidos de imagem"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Processamento OCR é custoso e depende da capacidade da pool de workers"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Nenhuma migração em andamento detectada"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": [
+          "Tratamento de erros",
+          "Performance do cache",
+          "Clareza na tipagem e documentação"
+        ]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação JSDoc para todos os métodos públicos"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e em português para contexto, termos técnicos em inglês"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": [
+          "Uso de cache LRU para otimização",
+          "Injeção de dependência para facilitar testes e modularidade"
+        ]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["Não exposto diretamente, presumivelmente REST ou RPC no nível superior"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Não especificado no código"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON com campos success, text, confidence, words, lines, processingTime"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não implementado diretamente no serviço OCR"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "production"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker containerizado, orquestrado externamente"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["ocrConfig.cacheTtl", "ocrConfig.maxImageSizeMb", "ocrConfig.defaultMode"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": [
+          "Limite de memória e CPU para pool de workers",
+          "Limite de tamanho máximo para imagens processadas"
+        ]
+      }
+    ]
+  },
+  "src/config/ocr.config.ts": {
+    "summary": "Este arquivo de configuração define parâmetros essenciais para o serviço OCR (Optical Character Recognition), carregando valores a partir de variáveis de ambiente com fallback para padrões seguros. Ele estrutura as configurações de processamento, incluindo limites de tamanho de imagem, timeout, número de workers para processamento paralelo, cache, linguagens suportadas e parâmetros de pré-processamento de imagem. Além disso, implementa validações rigorosas para garantir que as configurações estejam dentro de limites aceitáveis, prevenindo falhas em produção. O módulo também oferece uma função utilitária para obter configurações específicas de modo (fast, balanced, accurate), facilitando ajustes dinâmicos do comportamento do OCR conforme necessidades de desempenho e precisão. A integração com o ambiente de execução e a validação em tempo de inicialização reforçam a robustez e confiabilidade do sistema OCR dentro de um contexto maior de processamento de imagens e reconhecimento de texto.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["OCR Service Configuration"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Computer Vision", "OCR", "Image Processing"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["production"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "maxImageSizeMb between 1 and 50",
+          "maxProcessingMs between 1000 and 300000",
+          "workerCount between 1 and 8",
+          "cacheTtl non-negative",
+          "at least one supported language configured",
+          "preprocessing.targetWidth between 100 and 4000",
+          "preprocessing.threshold between 0 and 255"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Factory Function", "Configuration Validation Pattern"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/: código fonte principal",
+          "src/config/: configurações do sistema",
+          "src/utils/: funções utilitárias",
+          "src/environment.js: configuração de ambiente"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "camelCase para variáveis e funções",
+          "PascalCase para interfaces e tipos",
+          "const para constantes",
+          "snake_case para variáveis de ambiente"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Configuração isolada em módulo próprio",
+          "Dependência apenas de módulos Node.js e ambiente local",
+          "Exportação clara de configuração e validação"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["TypeScript ESLint Recommended"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["eslint config padrão para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": []
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": []
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": []
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["maxProcessingMs between 1000 and 300000 ms"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["balance between speed and accuracy via defaultMode"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["cacheTtl configurable, 0 disables cache"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["workerCount limited by CPU cores and max 8"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Throws Error com mensagens claras para configuração inválida"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["console.error para erros críticos na inicialização"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["process.exit(1) em caso de configuração inválida em produção"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["environment.js", "Node.js core modules (path, os)"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["./environment.js"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["development", "production"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": [
+          "OCR_MAX_IMAGE_SIZE_MB",
+          "OCR_TIMEOUT_MS",
+          "OCR_WORKERS",
+          "OCR_CACHE_TTL",
+          "OCR_LANGUAGES",
+          "OCR_LANG_PATH",
+          "OCR_CACHE_PATH",
+          "OCR_JOBS_PER_WORKER",
+          "OCR_PREPROCESSING",
+          "OCR_DEFAULT_MODE",
+          "OCR_ENABLE_METRICS"
+        ]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": []
+      }
+    ]
+  },
+  "src/interface/controllers/ocr.controller.ts": {
+    "summary": "Este arquivo implementa um controller REST para operações de OCR (Optical Character Recognition) utilizando Fastify e TypeScript, focado em expor endpoints para processamento de imagens em base64 e em lote, além de fornecer métricas, limpeza de cache e health check do serviço. O controller gerencia autenticação, validação de entrada via schemas, tratamento robusto de erros específicos do domínio OCR e logging detalhado para monitoramento. Ele integra-se com um serviço OCR injetado via dependency injection, coordenando processamento assíncrono e respostas HTTP padronizadas, garantindo alta confiabilidade e escalabilidade para aplicações que necessitam extrair texto de imagens de forma segura e eficiente.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["OCR Service API", "Serviço de Reconhecimento Óptico de Caracteres"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Computer Vision", "OCR", "Reconhecimento de Texto em Imagens", "API REST"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Autenticação obrigatória para todos endpoints exceto health check",
+          "Limite máximo de tamanho para imagens base64",
+          "Processamento em lote limitado a 10 imagens simultâneas",
+          "Tratamento e resposta adequada para erros específicos OCR"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["Fastify 4.x", "tsyringe 4.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["OCRService (interno)", "Logger customizado"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Clean Architecture", "Controller Pattern", "Dependency Injection"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "application/ - lógica de negócio e serviços",
+          "application/dto/ - objetos de transferência de dados",
+          "config/ - configurações e logger",
+          "interfaces/ - controllers, middlewares, schemas",
+          "types/ - definições de tipos e enums"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "Classes em PascalCase (ex: OcrController)",
+          "Funções e métodos em camelCase",
+          "Schemas com sufixo Schema",
+          "DTOs com sufixo DTO"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separação clara entre controller e serviço OCR",
+          "DTOs usados para validação e transporte de dados",
+          "Middleware isolado para autenticação e erros"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb TypeScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": [
+          "ESLint com regras para TypeScript, incluindo regras de segurança e acessibilidade"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão para TypeScript"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc para documentação de métodos e classes"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript com uso de tipos explícitos e DTOs validados"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["Testes localizados em pastas __tests__ próximas aos módulos"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Arrange-Act-Assert (AAA)"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mocks para OCRService e middlewares"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Git Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Revisão obrigatória e testes aprovados"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Build, Test, Lint, Deploy automatizados"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["Token-based Authentication (middleware customizado)"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": [
+          "Acesso restrito a usuários autenticados para todos endpoints exceto health check"
+        ]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Imagens base64 e textos extraídos, tratados com validação e limites de tamanho"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Headers padrão de segurança HTTP configurados no servidor Fastify"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["Transporte via HTTPS obrigatório (não mostrado no código)"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Timeouts configurados para processamento OCR, resposta em até alguns segundos"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Equilíbrio entre velocidade de processamento e uso de memória"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Cache de resultados com endpoint para limpeza manual"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Processamento em lote com limite de 10 imagens para evitar sobrecarga"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["JSON com campos success, error, code e detalhes opcionais"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Logs estruturados para info, debug e error com contexto detalhado"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Logger customizado, possível integração externa não mostrada"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Tratamento específico para erros OCR, incluindo timeouts e limites de tamanho"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["Fastify", "tsyringe", "OCRService", "Schemas e DTOs"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["TypeScript >=5.0", "Fastify 4.x"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": [
+          "application/services",
+          "application/dto",
+          "interfaces/middleware",
+          "config/logger"
+        ]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Necessidade de monitoramento mais robusto e métricas detalhadas"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Limite rígido de tamanho pode impactar usuários com imagens grandes"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["Processamento OCR pode ser custoso em lote e imagens grandes"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Nenhuma migração em andamento detectada"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Tratamento de erros, segurança, clareza de logs e validação de entrada"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["Documentação via JSDoc e schemas OpenAPI"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e informativos, uso de logs para contexto"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de DI para desacoplamento, Fastify para performance, schemas para validação"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["RESTful API"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Versionamento via URL (/api/v1)"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON padronizado com códigos HTTP apropriados"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Não explicitamente implementado no código fornecido"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "production"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker e orquestração externa (não detalhado no código)"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["Variáveis para configuração de logger, autenticação e OCRService"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": [
+          "Limitações de memória para processamento OCR, necessidade de escalabilidade horizontal"
+        ]
+      }
+    ]
+  },
+  "src/interface/schemas/ocr.schemas.ts": {
+    "summary": "Este arquivo define schemas JSON compatíveis com o Draft 7 para validação de requisições e respostas relacionadas a um serviço OCR (Optical Character Recognition) implementado com Fastify. Ele cobre múltiplos cenários, incluindo requisições individuais e em lote com imagens em base64, configurações detalhadas para controle de idiomas, modos de processamento e segmentação de página, além de schemas para respostas de sucesso, erro, métricas do serviço e limpeza de cache. O comportamento central do código é garantir a integridade e conformidade dos dados trocados entre cliente e servidor, facilitando a interoperabilidade e robustez do sistema OCR. A estrutura modular e detalhada dos schemas permite validação rigorosa, controle de erros e monitoramento do desempenho, habilitando um serviço confiável e configurável para extração de texto de imagens em múltiplos idiomas e formatos.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["OCR Service with Fastify JSON Schema Validation"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Computer Vision", "OCR", "Document Processing", "Fastify API"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Production"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Input images must be base64 encoded with valid data URI prefix",
+          "OCR processing must respect configured languages and modes",
+          "Timeouts must be enforced to avoid resource exhaustion",
+          "Error responses must follow defined schema with specific error codes"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": ["Fastify 4.x"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["Tesseract OCR Engine", "Base64 Image Encoding"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Schema Validation", "Modular API Design"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "schemas/ - JSON Schema definitions",
+          "routes/ - API route handlers",
+          "services/ - OCR processing logic"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": [
+          "camelCase for variables and properties",
+          "PascalCase for types and constants",
+          "prefix 'ocr' for OCR related schemas"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": [
+          "Separation between validation schemas and business logic",
+          "Clear API contract via JSON Schema"
+        ]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["Airbnb TypeScript Style Guide"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["ESLint with TypeScript plugin"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier with default settings"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/schemas/ - unit tests for schema validation"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": [">90% coverage on validation schemas"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Given-When-Then"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mock base64 images and OCR responses"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["GitHub Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Code review and passing CI checks"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Linting", "Testing", "Build", "Deploy"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": ["JWT"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": ["Role-based access control for OCR endpoints"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": ["Base64 images treated as sensitive, encrypted in transit"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": ["Content-Security-Policy", "X-Content-Type-Options", "Strict-Transport-Security"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": ["TLS for all network communication"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Timeout configurable between 1000ms and 60000ms"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Balance between speed and accuracy configurable"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": ["Cache size tracked, cache clearing endpoint available"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Batch processing up to 10 images per request"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Standardized error response with success=false, error message and code"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Error codes logged with details for diagnostics"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": ["Integration with metrics endpoint for uptime and job stats"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Timeouts and aborts handled gracefully with specific error codes"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["Tesseract OCR", "Fastify", "JSON Schema Draft 7"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["JSON Schema Draft 7 compliance required"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": ["Schemas isolated in dedicated module"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": ["Expand support for additional image formats and languages"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": ["Large base64 images may impact memory usage"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": ["OCR processing time varies with image complexity and mode"]
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": ["Stable in production, ongoing improvements planned"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Schema correctness", "Type safety", "Error handling"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["JSDoc comments for all schemas and properties"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Clear, concise comments in Portuguese with technical terms in English"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Adoption of JSON Schema Draft 7 for validation consistency"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["REST"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": ["Implicit versioning via endpoint paths"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON with defined schema"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": ["Not defined in schema, assumed external"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "production"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker containerized deployment"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["OCR_TIMEOUT_DEFAULT", "OCR_CACHE_SIZE_LIMIT"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Memory limits due to large base64 image processing"]
+      }
+    ]
+  },
+  "src/types/ocr.types.ts": {
+    "summary": "Este arquivo define um conjunto abrangente de tipos TypeScript para suportar funcionalidades de OCR (Optical Character Recognition), estruturando dados desde a detecção de palavras até blocos de texto completos em imagens. Ele modela caixas delimitadoras, níveis hierárquicos de texto (palavras, linhas, parágrafos, blocos) e respostas detalhadas do serviço OCR, incluindo métricas de performance e tratamento de erros específicos. Além disso, contempla configurações de pré-processamento de imagens e parâmetros de processamento OCR, permitindo flexibilidade na adaptação a diferentes idiomas, modos e condições de execução. O código é focado em garantir precisão na extração textual, organização clara dos dados reconhecidos e robustez na gestão de falhas, facilitando a integração com sistemas maiores que demandam análise e manipulação de texto extraído de imagens.",
+    "properties": [
+      {
+        "property": "project_metadata",
+        "subProperty": "name",
+        "value": ["OCR Processing Module - Reconhecimento e estruturação de texto em imagens"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "domain",
+        "value": ["Computer Vision", "OCR", "Image Processing", "Text Recognition"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "current_phase",
+        "value": ["Produção"]
+      },
+      {
+        "property": "project_metadata",
+        "subProperty": "critical_business_rules",
+        "value": [
+          "Precisão mínima de reconhecimento",
+          "Tratamento robusto de erros",
+          "Suporte multilíngue configurável"
+        ]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "primary_language",
+        "value": ["TypeScript 5.0"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "frameworks",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "databases",
+        "value": []
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "external_services",
+        "value": ["OCR Engines (ex: Tesseract, Google Vision API)"]
+      },
+      {
+        "property": "technical_stack",
+        "subProperty": "package_manager",
+        "value": ["npm"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "design_pattern",
+        "value": ["Clean Architecture", "Composite Pattern"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "folder_structure",
+        "value": [
+          "src/types - definições de tipos",
+          "src/config - configurações OCR",
+          "src/errors - definições de erros"
+        ]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "naming_conventions",
+        "value": ["PascalCase para interfaces e enums", "camelCase para propriedades e variáveis"]
+      },
+      {
+        "property": "architecture_patterns",
+        "subProperty": "module_boundaries",
+        "value": ["Separação clara entre tipos, configurações, respostas e erros"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "style_guide",
+        "value": ["TypeScript ESLint Recommended"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "linting_rules",
+        "value": ["@typescript-eslint/no-explicit-any", "strict typing enforced"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "formatting",
+        "value": ["Prettier com configuração padrão"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "documentation_style",
+        "value": ["JSDoc"]
+      },
+      {
+        "property": "code_standards",
+        "subProperty": "type_checking",
+        "value": ["Strict TypeScript"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_framework",
+        "value": ["Jest 29"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_structure",
+        "value": ["tests/unit para testes de tipos e validações"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "coverage_requirements",
+        "value": ["Cobertura mínima de 80%"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "test_patterns",
+        "value": ["Given-When-Then"]
+      },
+      {
+        "property": "testing_strategy",
+        "subProperty": "mocking_approach",
+        "value": ["Mocks para respostas OCR e erros"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "branch_strategy",
+        "value": ["Git Flow"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "commit_conventions",
+        "value": ["Conventional Commits"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "pr_requirements",
+        "value": ["Revisão obrigatória e testes aprovados"]
+      },
+      {
+        "property": "development_workflow",
+        "subProperty": "ci_cd_pipeline",
+        "value": ["Lint, Test, Build, Deploy"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "setup",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "install",
+        "value": ["npm install"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "dev",
+        "value": ["npm run dev"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "test",
+        "value": ["npm test"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "build",
+        "value": ["npm run build"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "lint",
+        "value": ["npm run lint"]
+      },
+      {
+        "property": "commands",
+        "subProperty": "format",
+        "value": ["npm run format"]
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authentication_method",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "authorization_rules",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "sensitive_data",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "security_headers",
+        "value": []
+      },
+      {
+        "property": "security_constraints",
+        "subProperty": "encryption_requirements",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "response_time_limits",
+        "value": ["Processamento em milissegundos, idealmente abaixo de 500ms por imagem"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "optimization_priorities",
+        "value": ["Equilíbrio entre velocidade e precisão"]
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "caching_strategy",
+        "value": []
+      },
+      {
+        "property": "performance_requirements",
+        "subProperty": "scalability_considerations",
+        "value": ["Suporte a processamento paralelo e escalonamento horizontal"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_format",
+        "value": ["Objeto com código, mensagem e statusCode"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "logging_strategy",
+        "value": ["Logs estruturados para erros e métricas"]
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "monitoring_tools",
+        "value": []
+      },
+      {
+        "property": "error_handling",
+        "subProperty": "error_recovery",
+        "value": ["Retry e fallback para erros de processamento"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "critical_dependencies",
+        "value": ["OCR engine externo", "TypeScript"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "deprecated_packages",
+        "value": []
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "version_constraints",
+        "value": ["TypeScript >=4.9"]
+      },
+      {
+        "property": "dependencies_context",
+        "subProperty": "internal_packages",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "technical_debt",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "known_issues",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "performance_bottlenecks",
+        "value": []
+      },
+      {
+        "property": "current_challenges",
+        "subProperty": "migration_status",
+        "value": []
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "code_review_focus",
+        "value": ["Consistência de tipos", "Cobertura de testes", "Clareza na documentação"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "documentation_requirements",
+        "value": ["JSDoc para todas as interfaces e funções públicas"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "communication_style",
+        "value": ["Comentários objetivos e técnicos"]
+      },
+      {
+        "property": "team_preferences",
+        "subProperty": "decision_log",
+        "value": ["Uso de enums para erros", "Separação clara entre dados e configuração"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "api_style",
+        "value": ["REST"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "versioning_strategy",
+        "value": []
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "response_formats",
+        "value": ["JSON com estruturas tipadas"]
+      },
+      {
+        "property": "api_specifications",
+        "subProperty": "rate_limiting",
+        "value": []
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environments",
+        "value": ["dev", "staging", "prod"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "deployment_method",
+        "value": ["Docker"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "environment_variables",
+        "value": ["OCR_API_KEY", "OCR_TIMEOUT"]
+      },
+      {
+        "property": "deployment_context",
+        "subProperty": "infrastructure_constraints",
+        "value": ["Limitação de memória para processamento OCR"]
       }
     ]
   }
