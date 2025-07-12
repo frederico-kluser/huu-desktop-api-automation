@@ -2,12 +2,13 @@
  * Página principal de automação
  * Integra captura de tela e construtor de ações
  */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Play, Save, FileEarmarkCode } from 'react-bootstrap-icons';
 import { PrintScreenButton, ActionBuilder } from '../components';
 import { AutomationAction } from '../types/automation-builder.types';
 import { AutomationSaveLoad } from '../components/AutomationSaveLoad';
+import { apiService } from '../services/apiService';
 
 /**
  * Página de automação com captura de tela e builder de ações
@@ -15,6 +16,30 @@ import { AutomationSaveLoad } from '../components/AutomationSaveLoad';
 const AutomationPage: React.FC = () => {
   const [actions, setActions] = useState<AutomationAction[]>([]);
   const [isExecuting, setIsExecuting] = useState(false);
+  const [apiConnected, setApiConnected] = useState<boolean | null>(null);
+
+  /**
+   * Testa conexão com a API quando a página carrega
+   */
+  useEffect(() => {
+    const testApiConnection = async () => {
+      console.log('🔄 Testando conexão inicial com a API...'); // eslint-disable-line no-console
+      try {
+        const connected = await apiService.testConnection();
+        setApiConnected(connected);
+        if (connected) {
+          console.log('✅ API conectada e pronta para uso'); // eslint-disable-line no-console
+        } else {
+          console.warn('⚠️ API não está respondendo'); // eslint-disable-line no-console
+        }
+      } catch (error) {
+        console.error('❌ Erro ao testar conexão:', error); // eslint-disable-line no-console
+        setApiConnected(false);
+      }
+    };
+
+    testApiConnection();
+  }, []);
 
   /**
    * Callback quando as ações mudam
@@ -30,24 +55,57 @@ const AutomationPage: React.FC = () => {
     if (actions.length === 0 || isExecuting) return;
 
     setIsExecuting(true);
+    console.log('🎬 Iniciando execução de sequência...', { actionsCount: actions.length }); // eslint-disable-line no-console
 
     try {
-      // TODO: Implementar execução das ações via API
-      console.log('Executando ações:', actions); // eslint-disable-line no-console
+      // Testa conexão com a API primeiro
+      console.log('🔍 Testando conexão com a API...'); // eslint-disable-line no-console
+      const isConnected = await apiService.testConnection();
 
-      // Simulação temporária
-      for (const action of actions) {
-        console.log(`Executando ação ${action.id}:`, action); // eslint-disable-line no-console
-        // Aqui você faria as chamadas para a API correspondente
-        await new Promise((resolve) => setTimeout(resolve, 500));
+      if (!isConnected) {
+        throw new Error(
+          'Não foi possível conectar com a API. Verifique se o servidor está rodando em http://localhost:3000',
+        );
       }
 
-      alert('Ações executadas com sucesso!');
+      console.log('✅ Conexão estabelecida, executando ações...'); // eslint-disable-line no-console
+
+      // Executa as ações via API
+      const result = await apiService.executeActions(actions, {
+        stopOnError: true,
+        delayBetweenActions: 500,
+      });
+
+      console.log('📊 Resultado da execução:', result); // eslint-disable-line no-console
+
+      if (result.success) {
+        const successCount = result.results.filter((r) => r.success).length;
+        const totalCount = result.results.length;
+
+        console.log(
+          `✅ Execução concluída: ${successCount}/${totalCount} ações executadas com sucesso`,
+        ); // eslint-disable-line no-console
+        alert(`Sequência executada com sucesso!\n${successCount}/${totalCount} ações concluídas.`);
+      } else {
+        const failedActions = result.results.filter((r) => !r.success);
+        console.error('❌ Algumas ações falharam:', failedActions); // eslint-disable-line no-console
+
+        const errorMessages = failedActions
+          .map((f) => `• ${f.device} (${f.actionId}): ${f.error}`)
+          .join('\n');
+        alert(`Algumas ações falharam:\n${errorMessages}`);
+      }
     } catch (error) {
-      console.error('Erro ao executar ações:', error); // eslint-disable-line no-console
-      alert('Erro ao executar ações. Verifique o console.');
+      console.error('💥 Erro durante a execução:', error); // eslint-disable-line no-console
+
+      if (error instanceof Error) {
+        alert(`Erro na execução: ${error.message}`);
+      } else {
+        alert('Erro desconhecido durante a execução. Verifique o console para mais detalhes.');
+      }
     } finally {
       setIsExecuting(false);
+      console.log('🏁 Execução finalizada'); // eslint-disable-line no-console
     }
   };
 
@@ -88,10 +146,32 @@ const AutomationPage: React.FC = () => {
     <Container fluid className="py-4">
       <Row>
         <Col>
-          <h1 className="mb-4">
-            <i className="fas fa-robot me-2"></i>
-            Automação de Interface
-          </h1>
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h1 className="mb-0">
+              <i className="fas fa-robot me-2"></i>
+              Automação de Interface
+            </h1>
+            <div className="d-flex align-items-center">
+              {apiConnected === null && (
+                <span className="badge bg-secondary">
+                  <i className="fas fa-spinner fa-spin me-1"></i>
+                  Testando API...
+                </span>
+              )}
+              {apiConnected === true && (
+                <span className="badge bg-success">
+                  <i className="fas fa-check-circle me-1"></i>
+                  API Conectada
+                </span>
+              )}
+              {apiConnected === false && (
+                <span className="badge bg-danger">
+                  <i className="fas fa-exclamation-triangle me-1"></i>
+                  API Desconectada
+                </span>
+              )}
+            </div>
+          </div>
         </Col>
       </Row>
 
@@ -139,7 +219,16 @@ const AutomationPage: React.FC = () => {
                     Exportar JSON
                   </Button>
 
-                  <Button variant="primary" onClick={handleExecuteActions} disabled={isExecuting}>
+                  <Button
+                    variant="primary"
+                    onClick={handleExecuteActions}
+                    disabled={isExecuting || apiConnected === false}
+                    title={
+                      apiConnected === false
+                        ? 'API desconectada - verifique se o servidor está rodando'
+                        : ''
+                    }
+                  >
                     {isExecuting ? (
                       <>
                         <span className="spinner-border spinner-border-sm me-2" />
@@ -148,7 +237,7 @@ const AutomationPage: React.FC = () => {
                     ) : (
                       <>
                         <Play className="me-2" />
-                        Executar Sequência
+                        {apiConnected === false ? 'API Desconectada' : 'Executar Sequência'}
                       </>
                     )}
                   </Button>
