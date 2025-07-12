@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Alert, Spinner, Image } from 'react-bootstrap';
 import { ScreenCaptureResponse, ApiResponse } from '../types/api.types';
 
@@ -9,6 +9,7 @@ const PrintScreenButton: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   /**
    * Realiza a captura de tela através da API
@@ -60,34 +61,80 @@ const PrintScreenButton: React.FC = () => {
     });
   };
 
+  /**
+   * Manipula a seleção de arquivo de imagem
+   */
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Verifica se é uma imagem
+    if (!file.type.startsWith('image/')) {
+      setError('Por favor, selecione apenas arquivos de imagem.');
+      return;
+    }
+
+    setError(null);
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const result = e.target?.result;
+      if (typeof result === 'string') {
+        setCapturedImage(result);
+      }
+    };
+
+    reader.onerror = () => {
+      setError('Erro ao ler o arquivo de imagem.');
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  /**
+   * Abre o seletor de arquivo
+   */
+  const handleSelectImageClick = (): void => {
+    fileInputRef.current?.click();
+  };
+
   return (
     <div className="print-screen-container">
-      <Button
-        variant="success"
-        size="lg"
-        onClick={handlePrintScreenClick}
-        disabled={isLoading}
-        className="mb-3"
-      >
-        {isLoading ? (
-          <>
-            <Spinner
-              as="span"
-              animation="border"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-              className="me-2"
-            />
-            Capturando...
-          </>
-        ) : (
-          <>
-            <i className="fas fa-camera me-2"></i>
-            Print Screen
-          </>
-        )}
-      </Button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileSelect}
+        style={{ display: 'none' }}
+      />
+
+      <div className="d-flex gap-2 mb-3">
+        <Button variant="success" size="lg" onClick={handlePrintScreenClick} disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                className="me-2"
+              />
+              Capturando...
+            </>
+          ) : (
+            <>
+              <i className="fas fa-camera me-2"></i>
+              Print Screen
+            </>
+          )}
+        </Button>
+
+        <Button variant="primary" size="lg" onClick={handleSelectImageClick} disabled={isLoading}>
+          <i className="fas fa-folder-open me-2"></i>
+          Selecionar Imagem
+        </Button>
+      </div>
 
       {error && (
         <Alert variant="danger" dismissible onClose={() => setError(null)}>
@@ -100,7 +147,7 @@ const PrintScreenButton: React.FC = () => {
         <div className="captured-image-container mt-3">
           <h5 className="mb-3">
             <i className="fas fa-image me-2"></i>
-            Captura de Tela
+            Imagem Capturada/Selecionada
           </h5>
           <Image
             src={capturedImage}
@@ -110,6 +157,19 @@ const PrintScreenButton: React.FC = () => {
             className="shadow"
             style={{ maxHeight: '400px', objectFit: 'contain' }}
           />
+          <div className="mt-3">
+            <small className="text-muted d-block">
+              <strong>Base64 Data URL:</strong>
+            </small>
+            <textarea
+              readOnly
+              value={capturedImage}
+              className="form-control mt-2"
+              rows={3}
+              style={{ fontSize: '0.875rem', fontFamily: 'monospace' }}
+              onClick={(e) => e.currentTarget.select()}
+            />
+          </div>
         </div>
       )}
     </div>

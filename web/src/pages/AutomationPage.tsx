@@ -101,7 +101,7 @@ const AutomationPage: React.FC = () => {
             <Card.Header>
               <h5 className="mb-0">
                 <i className="fas fa-desktop me-2"></i>
-                Captura de Tela
+                Captura / Seleção de Imagem
               </h5>
             </Card.Header>
             <Card.Body>
