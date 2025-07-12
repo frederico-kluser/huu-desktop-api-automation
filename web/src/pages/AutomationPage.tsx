@@ -117,7 +117,11 @@ const AutomationPage: React.FC = () => {
           <AutomationSaveLoad currentSteps={actions} onLoadSteps={setActions} />
 
           <div className="mt-3">
-            <ActionBuilder onChange={handleActionsChange} maxActions={50} />
+            <ActionBuilder
+              onChange={handleActionsChange}
+              initialActions={actions}
+              maxActions={50}
+            />
           </div>
 
           {/* Botões de ação */}

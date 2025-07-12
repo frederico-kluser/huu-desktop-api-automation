@@ -52,6 +52,11 @@ const ActionBuilder: React.FC<ActionBuilderProps> = ({
 }) => {
   const [actions, dispatch] = useReducer(actionsReducer, initialActions);
 
+  // Sincroniza com initialActions quando mudarem
+  useEffect(() => {
+    dispatch({ type: 'SET', payload: initialActions });
+  }, [initialActions]);
+
   // Notifica mudanças para o componente pai
   useEffect(() => {
     onChange?.(actions);

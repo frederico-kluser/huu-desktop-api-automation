@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Form, Button, Row, Col, ButtonGroup } from 'react-bootstrap';
+import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import {
   Save,
   Download,
-  Upload,
   Trash,
   Database,
   FileEarmarkArrowDown,
@@ -13,7 +12,7 @@ import { automationStorage, SavedAutomation } from '../services/automationStorag
 
 interface AutomationSaveLoadProps {
   currentSteps: any[];
-  onLoadSteps: (steps: any[]) => void;
+  onLoadSteps: (_steps: any[]) => void;
 }
 
 export function AutomationSaveLoad({ currentSteps, onLoadSteps }: AutomationSaveLoadProps) {
@@ -147,6 +146,8 @@ export function AutomationSaveLoad({ currentSteps, onLoadSteps }: AutomationSave
       setNewName(automation.name);
     } else {
       setNewName('');
+      // Limpa as ações quando "Nova automação..." é selecionado
+      onLoadSteps([]);
     }
   };
 
