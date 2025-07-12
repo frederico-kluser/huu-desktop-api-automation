@@ -7,6 +7,7 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { Play, Save, FileEarmarkCode } from 'react-bootstrap-icons';
 import { PrintScreenButton, ActionBuilder } from '../components';
 import { AutomationAction } from '../types/automation-builder.types';
+import { AutomationSaveLoad } from '../components/AutomationSaveLoad';
 
 /**
  * Página de automação com captura de tela e builder de ações
@@ -112,7 +113,12 @@ const AutomationPage: React.FC = () => {
 
         {/* Coluna do construtor de ações */}
         <Col lg={8}>
-          <ActionBuilder onChange={handleActionsChange} maxActions={50} />
+          {/* Componente de Save/Load */}
+          <AutomationSaveLoad currentSteps={actions} onLoadSteps={setActions} />
+
+          <div className="mt-3">
+            <ActionBuilder onChange={handleActionsChange} maxActions={50} />
+          </div>
 
           {/* Botões de ação */}
           {actions.length > 0 && (
