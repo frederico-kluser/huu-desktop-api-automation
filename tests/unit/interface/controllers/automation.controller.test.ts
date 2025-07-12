@@ -1,5 +1,7 @@
 // Mock de dependências externas
 jest.mock('tsyringe', () => ({
+  injectable: () => (target: any) => target,
+  inject: () => () => {},
   container: {
     resolve: jest.fn((token) => {
       if (token === 'MouseService') {
@@ -17,6 +19,11 @@ jest.mock('tsyringe', () => ({
             .fn()
             .mockResolvedValue([{ x: 10, y: 20, width: 30, height: 40, confidence: 0.95 }]),
           capture: jest.fn().mockResolvedValue('base64imagedata'),
+        };
+      }
+      if (token === 'ExecutorService' || token.name === 'ExecutorService') {
+        return {
+          executeActions: jest.fn().mockResolvedValue([]),
         };
       }
       return {};
@@ -95,7 +102,7 @@ describe('AutomationController', () => {
       controller.registerRoutes(mockFastifyInstance);
 
       // Verificar que todas as rotas foram registradas
-      expect(mockFastifyInstance.post).toHaveBeenCalledTimes(6);
+      expect(mockFastifyInstance.post).toHaveBeenCalledTimes(7);
       expect(mockFastifyInstance.get).toHaveBeenCalledTimes(3);
 
       // Verificar rotas específicas

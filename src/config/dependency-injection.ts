@@ -19,6 +19,7 @@ import { ImagePreprocessor } from '../application/services/image-preprocessor.se
 import { OcrWorkerPool } from '../application/services/ocr-worker-pool.service.js';
 import { OcrService } from '../application/services/ocr.service.js';
 import { OcrController } from '../interface/controllers/ocr.controller.js';
+import { ExecutorService } from '../application/services/executor.service.js';
 
 export function configureDependencies(): void {
   container.register('MouseAdapter', {
@@ -94,6 +95,11 @@ export function configureDependencies(): void {
   // OcrController
   container.register(OcrController, {
     useClass: OcrController,
+  });
+
+  // ExecutorService - Service for executing automation actions
+  container.register(ExecutorService, {
+    useClass: ExecutorService,
   });
 }
 

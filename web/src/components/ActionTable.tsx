@@ -7,12 +7,18 @@ import { Table, Button, Badge } from 'react-bootstrap';
 import { Trash } from 'react-bootstrap-icons';
 import {
   AutomationAction,
+  ActionDevice,
   MouseActionType,
   KeyboardActionType,
+  ClipboardActionType,
+  ScreenActionType,
+  LlmActionType,
+  OcrActionType,
   MouseButton,
   ScrollDirection,
   TypingMode,
-} from '../types/automation-builder.types';
+  ACTION_DEVICE_LABELS,
+} from '../types/automation-builder.types.js';
 
 interface ActionTableProps {
   actions: AutomationAction[];
@@ -22,10 +28,113 @@ interface ActionTableProps {
 }
 
 /**
+ * Retorna a cor do badge baseado no dispositivo
+ */
+const getDeviceBadgeColor = (device: ActionDevice): string => {
+  switch (device) {
+    case ActionDevice.WAIT:
+      return 'secondary';
+    case ActionDevice.CLIPBOARD:
+      return 'info';
+    case ActionDevice.SCREEN:
+      return 'warning';
+    case ActionDevice.LLM:
+      return 'danger';
+    case ActionDevice.OCR:
+      return 'dark';
+    case ActionDevice.MOUSE:
+      return 'primary';
+    case ActionDevice.KEYBOARD:
+      return 'success';
+    default:
+      return 'secondary';
+  }
+};
+
+/**
+ * Formata descrição da ação de wait
+ */
+const formatWaitAction = (action: AutomationAction): string => {
+  if (action.device !== ActionDevice.WAIT) return '';
+  const ms = action.payload.data.ms;
+  return `Aguardar ${ms}ms (${(ms / 1000).toFixed(1)}s)`;
+};
+
+/**
+ * Formata descrição da ação de clipboard
+ */
+const formatClipboardAction = (action: AutomationAction): string => {
+  if (action.device !== ActionDevice.CLIPBOARD) return '';
+
+  switch (action.payload.type) {
+    case ClipboardActionType.COPY:
+      return 'Copiar conteúdo selecionado';
+    case ClipboardActionType.PASTE:
+      return 'Colar conteúdo da área de transferência';
+    case ClipboardActionType.CLEAR:
+      return 'Limpar área de transferência';
+    default:
+      return 'Ação desconhecida';
+  }
+};
+
+/**
+ * Formata descrição da ação de screen
+ */
+const formatScreenAction = (action: AutomationAction): string => {
+  if (action.device !== ActionDevice.SCREEN) return '';
+
+  const { type, data } = action.payload;
+
+  switch (type) {
+    case ScreenActionType.CAPTURE: {
+      if (data.region) {
+        return `Capturar região (${data.region.x}, ${data.region.y}) - ${data.region.width}x${data.region.height}`;
+      }
+      return 'Capturar tela inteira';
+    }
+    case ScreenActionType.FIND: {
+      const conf = data.confidence ? ` (confiança: ${(data.confidence * 100).toFixed(0)}%)` : '';
+      return `Procurar imagem${conf}`;
+    }
+    case ScreenActionType.WAIT_FOR: {
+      const timeout = data.timeout ? ` por até ${(data.timeout / 1000).toFixed(1)}s` : '';
+      return `Aguardar imagem aparecer${timeout}`;
+    }
+    default:
+      return 'Ação desconhecida';
+  }
+};
+
+/**
+ * Formata descrição da ação de LLM
+ */
+const formatLlmAction = (action: AutomationAction): string => {
+  if (action.device !== ActionDevice.LLM) return '';
+
+  const { data } = action.payload;
+  const prompt = data.prompt.length > 50 ? data.prompt.substring(0, 50) + '...' : data.prompt;
+  const model = data.model ? ` (${data.model})` : '';
+  return `Gerar resposta: "${prompt}"${model}`;
+};
+
+/**
+ * Formata descrição da ação de OCR
+ */
+const formatOcrAction = (action: AutomationAction): string => {
+  if (action.device !== ActionDevice.OCR) return '';
+
+  const { data } = action.payload;
+  const langs = data.languages ? ` [${data.languages.join(', ')}]` : '';
+  const mode = data.mode ? ` (${data.mode})` : '';
+  return `Extrair texto da imagem${langs}${mode}`;
+};
+
+/**
  * Formata descrição legível da ação do mouse
  */
 const formatMouseAction = (action: AutomationAction): string => {
-  if (action.device !== 'mouse') return '';
+  if (action.device !== ActionDevice.MOUSE) return '';
 
   const { payload } = action;
   const { type, data } = payload;
@@ -60,7 +169,7 @@ const formatMouseAction = (action: AutomationAction): string => {
  * Formata descrição legível da ação do teclado
  */
 const formatKeyboardAction = (action: AutomationAction): string => {
-  if (action.device !== 'keyboard') return '';
+  if (action.device !== ActionDevice.KEYBOARD) return '';
 
   const { payload } = action;
   const { type, data } = payload;
@@ -117,16 +226,67 @@ const formatTypingMode = (mode: TypingMode): string => {
 };
 
 /**
+ * Formata descrição da ação baseado no dispositivo
+ */
+const formatActionDescription = (action: AutomationAction): string => {
+  switch (action.device) {
+    case ActionDevice.WAIT:
+      return formatWaitAction(action);
+    case ActionDevice.CLIPBOARD:
+      return formatClipboardAction(action);
+    case ActionDevice.SCREEN:
+      return formatScreenAction(action);
+    case ActionDevice.LLM:
+      return formatLlmAction(action);
+    case ActionDevice.OCR:
+      return formatOcrAction(action);
+    case ActionDevice.MOUSE:
+      return formatMouseAction(action);
+    case ActionDevice.KEYBOARD:
+      return formatKeyboardAction(action);
+    default:
+      return 'Ação desconhecida';
+  }
+};
+
+/**
  * Formata detalhes adicionais da ação
  */
 const formatActionDetails = (action: AutomationAction): string[] => {
   const details: string[] = [];
 
-  if (action.device === 'mouse') {
+  // Detalhes do mouse
+  if (action.device === ActionDevice.MOUSE) {
     const { data } = action.payload;
-
     if ('duration' in data && data.duration && data.duration !== 1000) {
       details.push(`Duração: ${data.duration}ms`);
+    }
+  }
+
+  // Detalhes do LLM
+  if (action.device === ActionDevice.LLM) {
+    const { data } = action.payload;
+    if (data.temperature !== undefined && data.temperature !== 0.7) {
+      details.push(`Temp: ${data.temperature}`);
+    }
+    if (data.maxTokens !== undefined && data.maxTokens !== 1000) {
+      details.push(`Tokens: ${data.maxTokens}`);
+    }
+  }
+
+  // Detalhes do OCR
+  if (action.device === ActionDevice.OCR) {
+    const { data } = action.payload;
+    if (data.confidence && data.confidence > 0) {
+      details.push(`Min. conf: ${data.confidence}%`);
+    }
+  }
+
+  // Detalhes do Screen
+  if (action.device === ActionDevice.SCREEN) {
+    const { data } = action.payload;
+    if ('region' in data && data.region) {
+      details.push(`Região definida`);
     }
   }
 
@@ -155,14 +315,18 @@ const ActionTable: React.FC<ActionTableProps> = ({
         </Button>
       </div>
 
-      <Table striped bordered hover responsive>
+      <Table striped bordered hover responsive size="sm">
         <thead>
           <tr>
-            <th style={{ width: '40px' }}>#</th>
-            <th style={{ width: '100px' }}>Dispositivo</th>
+            <th style={{ width: '50px' }} className="text-center">
+              #
+            </th>
+            <th style={{ width: '180px' }}>Dispositivo</th>
             <th>Ação</th>
-            <th style={{ width: '150px' }}>Detalhes</th>
-            <th style={{ width: '80px' }}>Ações</th>
+            <th style={{ width: '200px' }}>Detalhes</th>
+            <th style={{ width: '80px' }} className="text-center">
+              Remover
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -170,33 +334,37 @@ const ActionTable: React.FC<ActionTableProps> = ({
             const details = formatActionDetails(action);
 
             return (
-              <tr key={action.id}>
-                <td className="text-center">{index + 1}</td>
-                <td>
-                  <Badge bg={action.device === 'mouse' ? 'primary' : 'success'}>
-                    {action.device === 'mouse' ? 'Mouse' : 'Teclado'}
+              <tr key={action.id} className="align-middle">
+                <td className="text-center align-middle">
+                  <span className="fw-bold">{index + 1}</span>
+                </td>
+                <td className="align-middle">
+                  <Badge
+                    bg={getDeviceBadgeColor(action.device)}
+                    className="d-inline-block"
+                    style={{ minWidth: '140px' }}
+                  >
+                    {ACTION_DEVICE_LABELS[action.device]}
                   </Badge>
                 </td>
-                <td>
-                  {action.device === 'mouse'
-                    ? formatMouseAction(action)
-                    : formatKeyboardAction(action)}
-                </td>
-                <td>
+                <td className="align-middle">{formatActionDescription(action)}</td>
+                <td className="align-middle">
                   {details.length > 0 ? (
-                    <small className="text-muted">{details.join(', ')}</small>
+                    <small className="text-muted d-block">{details.join(' • ')}</small>
                   ) : (
-                    <span className="text-muted">-</span>
+                    <span className="text-muted">—</span>
                   )}
                 </td>
-                <td className="text-center">
+                <td className="text-center align-middle">
                   <Button
                     variant="outline-danger"
                     size="sm"
                     onClick={() => onRemove(action.id)}
                     title="Remover ação"
+                    className="d-flex align-items-center justify-content-center"
+                    style={{ minWidth: '32px', minHeight: '32px' }}
                   >
-                    <Trash />
+                    <Trash size={16} />
                   </Button>
                 </td>
               </tr>

@@ -5,9 +5,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Form, Button, Row, Col, Card, Alert } from 'react-bootstrap';
 import {
-  DeviceType,
+  ActionDevice,
   MouseActionType,
   KeyboardActionType,
+  ClipboardActionType,
+  ScreenActionType,
+  LlmActionType,
+  OcrActionType,
   MouseButton,
   ScrollDirection,
   TypingMode,
@@ -15,12 +19,21 @@ import {
   AutomationAction,
   MousePayload,
   KeyboardPayload,
+  ClipboardPayload,
+  ScreenPayload,
+  LlmPayload,
+  OcrPayload,
+  WaitPayloadWrapper,
   KEYBOARD_CONSTRAINTS,
   MOUSE_CONSTRAINTS,
-  // getAllSupportedKeys,
+  WAIT_CONSTRAINTS,
+  SCREEN_CONSTRAINTS,
+  LLM_CONSTRAINTS,
+  OCR_CONSTRAINTS,
+  ACTION_DEVICE_LABELS,
   getAllModifierKeys,
   getAllLetterKeys,
-} from '../types/automation-builder.types';
+} from '../types/automation-builder.types.js';
 
 interface ActionFormProps {
   onAdd: (_action: Omit<AutomationAction, 'id' | 'timestamp'>) => void;
@@ -28,9 +41,13 @@ interface ActionFormProps {
 }
 
 const initialFormState: ActionFormState = {
-  device: 'mouse',
+  device: ActionDevice.WAIT,
   mouseAction: MouseActionType.MOVE,
   keyboardAction: KeyboardActionType.TYPE,
+  clipboardAction: ClipboardActionType.COPY,
+  screenAction: ScreenActionType.CAPTURE,
+  llmAction: LlmActionType.COMPLETION,
+  ocrAction: OcrActionType.EXTRACT_TEXT,
   smooth: true,
   button: MouseButton.LEFT,
   doubleClick: false,
@@ -40,6 +57,12 @@ const initialFormState: ActionFormState = {
   mode: TypingMode.INSTANT,
   delay: '0',
   keys: [],
+  waitMs: String(WAIT_CONSTRAINTS.DEFAULT_MS),
+  confidence: String(SCREEN_CONSTRAINTS.DEFAULT_CONFIDENCE),
+  timeout: String(SCREEN_CONSTRAINTS.DEFAULT_TIMEOUT),
+  temperature: String(LLM_CONSTRAINTS.DEFAULT_TEMPERATURE),
+  maxTokens: String(LLM_CONSTRAINTS.DEFAULT_MAX_TOKENS),
+  ocrConfidence: String(OCR_CONSTRAINTS.DEFAULT_CONFIDENCE),
 };
 
 /**
@@ -55,8 +78,13 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
     setFormState((prev) => ({
       ...initialFormState,
       device: prev.device,
-      mouseAction: prev.device === 'mouse' ? MouseActionType.MOVE : undefined,
-      keyboardAction: prev.device === 'keyboard' ? KeyboardActionType.TYPE : undefined,
+      mouseAction: prev.device === ActionDevice.MOUSE ? MouseActionType.MOVE : undefined,
+      keyboardAction: prev.device === ActionDevice.KEYBOARD ? KeyboardActionType.TYPE : undefined,
+      clipboardAction:
+        prev.device === ActionDevice.CLIPBOARD ? ClipboardActionType.COPY : undefined,
+      screenAction: prev.device === ActionDevice.SCREEN ? ScreenActionType.CAPTURE : undefined,
+      llmAction: prev.device === ActionDevice.LLM ? LlmActionType.COMPLETION : undefined,
+      ocrAction: prev.device === ActionDevice.OCR ? OcrActionType.EXTRACT_TEXT : undefined,
     }));
     setError(null);
   }, [formState.device]);
@@ -68,6 +96,162 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
     setError(null);
   }, []);
+
+  /**
+   * Valida e constrói payload de wait
+   */
+  const buildWaitPayload = (): WaitPayloadWrapper | null => {
+    const { waitMs } = formState;
+
+    if (!waitMs) {
+      setError('Tempo de espera é obrigatório');
+      return null;
+    }
+
+    const ms = parseInt(waitMs);
+    if (isNaN(ms) || ms < WAIT_CONSTRAINTS.MIN_MS || ms > WAIT_CONSTRAINTS.MAX_MS) {
+      setError(
+        `Tempo deve estar entre ${WAIT_CONSTRAINTS.MIN_MS}ms e ${WAIT_CONSTRAINTS.MAX_MS}ms`,
+      );
+      return null;
+    }
+
+    return { data: { ms } };
+  };
+
+  /**
+   * Valida e constrói payload do clipboard
+   */
+  const buildClipboardPayload = (): ClipboardPayload | null => {
+    const { clipboardAction } = formState;
+
+    switch (clipboardAction) {
+      case ClipboardActionType.COPY:
+        return { type: ClipboardActionType.COPY, data: {} };
+      case ClipboardActionType.PASTE:
+        return { type: ClipboardActionType.PASTE, data: {} };
+      case ClipboardActionType.CLEAR:
+        return { type: ClipboardActionType.CLEAR, data: {} };
+      default:
+        setError('Ação de clipboard inválida');
+        return null;
+    }
+  };
+
+  /**
+   * Valida e constrói payload de screen
+   */
+  const buildScreenPayload = (): ScreenPayload | null => {
+    const {
+      screenAction,
+      template,
+      confidence,
+      timeout,
+      regionX,
+      regionY,
+      regionWidth,
+      regionHeight,
+    } = formState;
+
+    const region =
+      regionX && regionY && regionWidth && regionHeight
+        ? {
+            x: parseInt(regionX),
+            y: parseInt(regionY),
+            width: parseInt(regionWidth),
+            height: parseInt(regionHeight),
+          }
+        : undefined;
+
+    switch (screenAction) {
+      case ScreenActionType.CAPTURE:
+        return { type: ScreenActionType.CAPTURE, data: { region } };
+
+      case ScreenActionType.FIND:
+        if (!template) {
+          setError('Template é obrigatório');
+          return null;
+        }
+        return {
+          type: ScreenActionType.FIND,
+          data: {
+            template,
+            confidence: confidence ? parseFloat(confidence) : SCREEN_CONSTRAINTS.DEFAULT_CONFIDENCE,
+            region,
+          },
+        };
+
+      case ScreenActionType.WAIT_FOR:
+        if (!template) {
+          setError('Template é obrigatório');
+          return null;
+        }
+        return {
+          type: ScreenActionType.WAIT_FOR,
+          data: {
+            template,
+            timeout: timeout ? parseInt(timeout) : SCREEN_CONSTRAINTS.DEFAULT_TIMEOUT,
+            confidence: confidence ? parseFloat(confidence) : SCREEN_CONSTRAINTS.DEFAULT_CONFIDENCE,
+            region,
+          },
+        };
+
+      default:
+        setError('Ação de tela inválida');
+        return null;
+    }
+  };
+
+  /**
+   * Valida e constrói payload de LLM
+   */
+  const buildLlmPayload = (): LlmPayload | null => {
+    const { prompt, model, temperature, maxTokens, systemPrompt, outputFormat } = formState;
+
+    if (!prompt || prompt.trim().length === 0) {
+      setError('Prompt é obrigatório');
+      return null;
+    }
+
+    if (prompt.length > LLM_CONSTRAINTS.MAX_PROMPT_LENGTH) {
+      setError(`Prompt muito longo (máximo ${LLM_CONSTRAINTS.MAX_PROMPT_LENGTH} caracteres)`);
+      return null;
+    }
+
+    return {
+      type: LlmActionType.COMPLETION,
+      data: {
+        prompt,
+        model: model || undefined,
+        temperature: temperature ? parseFloat(temperature) : LLM_CONSTRAINTS.DEFAULT_TEMPERATURE,
+        maxTokens: maxTokens ? parseInt(maxTokens) : LLM_CONSTRAINTS.DEFAULT_MAX_TOKENS,
+        systemPrompt: systemPrompt || undefined,
+        outputFormat: outputFormat || undefined,
+      },
+    };
+  };
+
+  /**
+   * Valida e constrói payload de OCR
+   */
+  const buildOcrPayload = (): OcrPayload | null => {
+    const { ocrImage, ocrLanguages, ocrMode, ocrConfidence } = formState;
+
+    if (!ocrImage) {
+      setError('Imagem é obrigatória');
+      return null;
+    }
+
+    return {
+      type: OcrActionType.EXTRACT_TEXT,
+      data: {
+        image: ocrImage,
+        languages: ocrLanguages && ocrLanguages.length > 0 ? ocrLanguages : undefined,
+        mode: ocrMode || undefined,
+        confidence: ocrConfidence ? parseFloat(ocrConfidence) : OCR_CONSTRAINTS.DEFAULT_CONFIDENCE,
+      },
+    };
+  };
 
   /**
    * Valida e constrói payload do mouse
@@ -243,12 +427,41 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
     setError(null);
 
     try {
-      let payload: MousePayload | KeyboardPayload | null = null;
+      let payload:
+        | MousePayload
+        | KeyboardPayload
+        | ClipboardPayload
+        | ScreenPayload
+        | LlmPayload
+        | OcrPayload
+        | WaitPayloadWrapper
+        | null = null;
 
-      if (formState.device === 'mouse') {
-        payload = buildMousePayload();
-      } else {
-        payload = buildKeyboardPayload();
+      switch (formState.device) {
+        case ActionDevice.WAIT:
+          payload = buildWaitPayload();
+          break;
+        case ActionDevice.CLIPBOARD:
+          payload = buildClipboardPayload();
+          break;
+        case ActionDevice.SCREEN:
+          payload = buildScreenPayload();
+          break;
+        case ActionDevice.LLM:
+          payload = buildLlmPayload();
+          break;
+        case ActionDevice.OCR:
+          payload = buildOcrPayload();
+          break;
+        case ActionDevice.MOUSE:
+          payload = buildMousePayload();
+          break;
+        case ActionDevice.KEYBOARD:
+          payload = buildKeyboardPayload();
+          break;
+        default:
+          setError('Dispositivo inválido');
+          return;
       }
 
       if (!payload) {
@@ -266,8 +479,6 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
       setFormState({
         ...initialFormState,
         device: formState.device,
-        mouseAction: formState.device === 'mouse' ? formState.mouseAction : undefined,
-        keyboardAction: formState.device === 'keyboard' ? formState.keyboardAction : undefined,
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao adicionar ação');
@@ -275,6 +486,227 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
       setIsAdding(false);
     }
   };
+
+  /**
+   * Renderiza campos de wait
+   */
+  const renderWaitFields = () => (
+    <Col md={3}>
+      <Form.Group>
+        <Form.Label>Tempo de Espera (ms)</Form.Label>
+        <Form.Control
+          type="number"
+          min={WAIT_CONSTRAINTS.MIN_MS}
+          max={WAIT_CONSTRAINTS.MAX_MS}
+          value={formState.waitMs || ''}
+          onChange={(e) => updateField('waitMs', e.target.value)}
+          placeholder={String(WAIT_CONSTRAINTS.DEFAULT_MS)}
+          disabled={isAdding}
+          required
+        />
+        <Form.Text className="text-muted">Máximo: {WAIT_CONSTRAINTS.MAX_MS / 1000}s</Form.Text>
+      </Form.Group>
+    </Col>
+  );
+
+  /**
+   * Renderiza campos de clipboard
+   */
+  const renderClipboardFields = () => (
+    <Col md={3}>
+      <Form.Group>
+        <Form.Label>Ação</Form.Label>
+        <Form.Select
+          value={formState.clipboardAction}
+          onChange={(e) => updateField('clipboardAction', e.target.value as ClipboardActionType)}
+          disabled={isAdding}
+        >
+          <option value={ClipboardActionType.COPY}>Copiar</option>
+          <option value={ClipboardActionType.PASTE}>Colar</option>
+          <option value={ClipboardActionType.CLEAR}>Limpar</option>
+        </Form.Select>
+      </Form.Group>
+    </Col>
+  );
+
+  /**
+   * Renderiza campos de screen
+   */
+  const renderScreenFields = () => {
+    const { screenAction } = formState;
+
+    return (
+      <>
+        <Col md={3}>
+          <Form.Group>
+            <Form.Label>Ação</Form.Label>
+            <Form.Select
+              value={screenAction}
+              onChange={(e) => updateField('screenAction', e.target.value as ScreenActionType)}
+              disabled={isAdding}
+            >
+              <option value={ScreenActionType.CAPTURE}>Capturar Tela</option>
+              <option value={ScreenActionType.FIND}>Procurar Imagem</option>
+              <option value={ScreenActionType.WAIT_FOR}>Aguardar Imagem</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+
+        {(screenAction === ScreenActionType.FIND || screenAction === ScreenActionType.WAIT_FOR) && (
+          <>
+            <Col md={3}>
+              <Form.Group>
+                <Form.Label>Template (base64)</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={formState.template || ''}
+                  onChange={(e) => updateField('template', e.target.value)}
+                  placeholder="data:image/png;base64,..."
+                  disabled={isAdding}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={2}>
+              <Form.Group>
+                <Form.Label>Confiança</Form.Label>
+                <Form.Control
+                  type="number"
+                  min={SCREEN_CONSTRAINTS.MIN_CONFIDENCE}
+                  max={SCREEN_CONSTRAINTS.MAX_CONFIDENCE}
+                  step="0.1"
+                  value={formState.confidence || ''}
+                  onChange={(e) => updateField('confidence', e.target.value)}
+                  placeholder={String(SCREEN_CONSTRAINTS.DEFAULT_CONFIDENCE)}
+                  disabled={isAdding}
+                />
+              </Form.Group>
+            </Col>
+          </>
+        )}
+
+        {screenAction === ScreenActionType.WAIT_FOR && (
+          <Col md={2}>
+            <Form.Group>
+              <Form.Label>Timeout (ms)</Form.Label>
+              <Form.Control
+                type="number"
+                min={SCREEN_CONSTRAINTS.MIN_TIMEOUT}
+                max={SCREEN_CONSTRAINTS.MAX_TIMEOUT}
+                value={formState.timeout || ''}
+                onChange={(e) => updateField('timeout', e.target.value)}
+                placeholder={String(SCREEN_CONSTRAINTS.DEFAULT_TIMEOUT)}
+                disabled={isAdding}
+              />
+            </Form.Group>
+          </Col>
+        )}
+      </>
+    );
+  };
+
+  /**
+   * Renderiza campos de LLM
+   */
+  const renderLlmFields = () => (
+    <>
+      <Col md={4}>
+        <Form.Group>
+          <Form.Label>Prompt</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={2}
+            value={formState.prompt || ''}
+            onChange={(e) => updateField('prompt', e.target.value)}
+            placeholder="Digite o prompt..."
+            maxLength={LLM_CONSTRAINTS.MAX_PROMPT_LENGTH}
+            disabled={isAdding}
+            required
+          />
+          <Form.Text className="text-muted">
+            {formState.prompt?.length || 0}/{LLM_CONSTRAINTS.MAX_PROMPT_LENGTH}
+          </Form.Text>
+        </Form.Group>
+      </Col>
+      <Col md={2}>
+        <Form.Group>
+          <Form.Label>Modelo</Form.Label>
+          <Form.Control
+            type="text"
+            value={formState.model || ''}
+            onChange={(e) => updateField('model', e.target.value)}
+            placeholder="gpt-4"
+            disabled={isAdding}
+          />
+        </Form.Group>
+      </Col>
+      <Col md={2}>
+        <Form.Group>
+          <Form.Label>Temperatura</Form.Label>
+          <Form.Control
+            type="number"
+            min={LLM_CONSTRAINTS.MIN_TEMPERATURE}
+            max={LLM_CONSTRAINTS.MAX_TEMPERATURE}
+            step="0.1"
+            value={formState.temperature || ''}
+            onChange={(e) => updateField('temperature', e.target.value)}
+            placeholder={String(LLM_CONSTRAINTS.DEFAULT_TEMPERATURE)}
+            disabled={isAdding}
+          />
+        </Form.Group>
+      </Col>
+    </>
+  );
+
+  /**
+   * Renderiza campos de OCR
+   */
+  const renderOcrFields = () => (
+    <>
+      <Col md={4}>
+        <Form.Group>
+          <Form.Label>Imagem (base64)</Form.Label>
+          <Form.Control
+            type="text"
+            value={formState.ocrImage || ''}
+            onChange={(e) => updateField('ocrImage', e.target.value)}
+            placeholder="data:image/png;base64,..."
+            disabled={isAdding}
+            required
+          />
+        </Form.Group>
+      </Col>
+      <Col md={2}>
+        <Form.Group>
+          <Form.Label>Idiomas</Form.Label>
+          <Form.Control
+            type="text"
+            value={formState.ocrLanguages?.join(',') || ''}
+            onChange={(e) =>
+              updateField(
+                'ocrLanguages',
+                e.target.value.split(',').filter((l) => l.trim()),
+              )
+            }
+            placeholder="por,eng"
+            disabled={isAdding}
+          />
+        </Form.Group>
+      </Col>
+      <Col md={2}>
+        <Form.Group>
+          <Form.Label>Modo</Form.Label>
+          <Form.Control
+            type="text"
+            value={formState.ocrMode || ''}
+            onChange={(e) => updateField('ocrMode', e.target.value)}
+            placeholder="fast"
+            disabled={isAdding}
+          />
+        </Form.Group>
+      </Col>
+    </>
+  );
 
   /**
    * Renderiza campos do mouse
@@ -377,7 +809,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
               </Form.Group>
             </Col>
             <Col md={2}>
-              <Form.Group className="mt-4">
+              <Form.Group className="d-flex align-items-center mt-4">
                 <Form.Check
                   type="checkbox"
                   label="Duplo clique"
@@ -485,7 +917,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
 
         {/* Campos comuns do mouse */}
         <Col md={2}>
-          <Form.Group className="mt-4">
+          <Form.Group className="d-flex align-items-center mt-4">
             <Form.Check
               type="checkbox"
               label="Movimento suave"
@@ -518,7 +950,6 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
    */
   const renderKeyboardFields = () => {
     const { keyboardAction } = formState;
-    // const supportedKeys = getAllSupportedKeys();
     const modifierKeys = getAllModifierKeys();
     const letterKeys = getAllLetterKeys();
 
@@ -694,6 +1125,30 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
     );
   };
 
+  /**
+   * Renderiza campos dinâmicos baseados no dispositivo
+   */
+  const renderDeviceFields = () => {
+    switch (formState.device) {
+      case ActionDevice.WAIT:
+        return renderWaitFields();
+      case ActionDevice.CLIPBOARD:
+        return renderClipboardFields();
+      case ActionDevice.SCREEN:
+        return renderScreenFields();
+      case ActionDevice.LLM:
+        return renderLlmFields();
+      case ActionDevice.OCR:
+        return renderOcrFields();
+      case ActionDevice.MOUSE:
+        return renderMouseFields();
+      case ActionDevice.KEYBOARD:
+        return renderKeyboardFields();
+      default:
+        return null;
+    }
+  };
+
   return (
     <Card>
       <Card.Header>
@@ -714,17 +1169,21 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                 <Form.Label>Dispositivo</Form.Label>
                 <Form.Select
                   value={formState.device}
-                  onChange={(e) => updateField('device', e.target.value as DeviceType)}
+                  onChange={(e) => updateField('device', e.target.value as ActionDevice)}
                   disabled={isAdding}
+                  data-testid="action-device"
                 >
-                  <option value="mouse">Mouse</option>
-                  <option value="keyboard">Teclado</option>
+                  {Object.values(ActionDevice).map((device) => (
+                    <option key={device} value={device}>
+                      {ACTION_DEVICE_LABELS[device]}
+                    </option>
+                  ))}
                 </Form.Select>
               </Form.Group>
             </Col>
 
             {/* Campos dinâmicos baseados no dispositivo */}
-            {formState.device === 'mouse' ? renderMouseFields() : renderKeyboardFields()}
+            {renderDeviceFields()}
 
             {/* Botão de adicionar */}
             <Col md="auto">

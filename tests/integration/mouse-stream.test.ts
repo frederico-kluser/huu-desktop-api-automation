@@ -6,6 +6,10 @@ import Fastify, { FastifyInstance } from 'fastify';
 import { container } from 'tsyringe';
 import { AutomationController } from '../../src/interface/controllers/automation.controller.js';
 import { MouseService, type IMouseAdapter } from '../../src/application/services/mouse.service.js';
+import { KeyboardService } from '../../src/application/services/keyboard.service.js';
+import { ClipboardService } from '../../src/application/services/clipboard.service.js';
+import { OcrService } from '../../src/application/services/ocr.service.js';
+import { ExecutorService } from '../../src/application/services/executor.service.js';
 import { environment } from '../../src/config/environment.js';
 import EventSource from 'eventsource';
 
@@ -40,6 +44,37 @@ describe('Mouse Position Stream Endpoint', () => {
     container.register('MouseAdapter', { useValue: mockMouseAdapter });
     container.register('MouseService', { useClass: MouseService });
     container.register('ScreenService', { useValue: mockScreenService });
+
+    // Registrar mocks para ExecutorService dependencies
+    container.register('IKeyboardAdapter', {
+      useValue: {
+        type: jest.fn(),
+        pressKey: jest.fn(),
+        releaseKey: jest.fn(),
+        keyPress: jest.fn(),
+      },
+    });
+    container.registerInstance(KeyboardService, {
+      type: jest.fn(),
+      pressKey: jest.fn(),
+      releaseKey: jest.fn(),
+      keyPress: jest.fn(),
+    } as any);
+    container.registerInstance(ClipboardService, {
+      copy: jest.fn(),
+      paste: jest.fn(),
+    } as any);
+    container.register('LLMService', {
+      useValue: {
+        processRequest: jest.fn(),
+      },
+    });
+    container.registerInstance(OcrService, {
+      extractText: jest.fn(),
+    } as any);
+    container.registerInstance(ExecutorService, {
+      executeActions: jest.fn(),
+    } as any);
 
     // Criar instância do Fastify
     app = Fastify({ logger: false });

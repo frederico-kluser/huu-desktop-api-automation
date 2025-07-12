@@ -32,6 +32,37 @@ describe('AutomationController - Screen Print', () => {
     container.registerInstance('ScreenService', mockScreenService);
     container.registerInstance('MouseService', {} as any);
 
+    // Registra mocks para ExecutorService dependencies
+    container.registerInstance('IKeyboardAdapter', {
+      type: jest.fn(),
+      pressKey: jest.fn(),
+      releaseKey: jest.fn(),
+      keyPress: jest.fn(),
+    } as any);
+    container.registerInstance('KeyboardService', {
+      type: jest.fn(),
+      pressKey: jest.fn(),
+      releaseKey: jest.fn(),
+      keyPress: jest.fn(),
+    } as any);
+    container.registerInstance('ClipboardService', {
+      copy: jest.fn(),
+      paste: jest.fn(),
+    } as any);
+    container.registerInstance('LLMService', {
+      processRequest: jest.fn(),
+    } as any);
+    container.registerInstance('OcrService', {
+      extractText: jest.fn(),
+    } as any);
+    container.registerInstance('ExecutorService', {
+      executeActions: jest.fn(),
+    } as any);
+    container.registerInstance('ScreenAdapter', {
+      capture: jest.fn(),
+      find: jest.fn(),
+    } as any);
+
     // Instancia controller
     controller = new AutomationController();
 

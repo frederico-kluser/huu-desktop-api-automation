@@ -1,6 +1,8 @@
 /**
- * Tipos para o componente ActionBuilder
- * Define estruturas de dados para construção de sequências de automação
+ * Tipos compartilhados para o sistema de automação
+ * Este arquivo é uma cópia dos tipos do frontend para evitar problemas com rootDir do TypeScript
+ *
+ * NOTA: Este arquivo deve ser mantido em sincronia com web/src/types/automation-builder.types.ts
  */
 
 // Tipos base - incluindo novos dispositivos

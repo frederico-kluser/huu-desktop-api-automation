@@ -59,6 +59,27 @@ jest.mock('../../../src/application/factory/output-parser.factory', () => ({
     }),
   },
 }));
+jest.mock('../../../src/application/services/global-input-capture.service', () => ({
+  GlobalInputCaptureService: class MockGlobalInputCaptureService {},
+}));
+jest.mock('../../../src/application/services/application-startup.service', () => ({
+  ApplicationStartupService: class MockApplicationStartupService {},
+}));
+jest.mock('../../../src/application/services/image-preprocessor.service', () => ({
+  ImagePreprocessor: class MockImagePreprocessor {},
+}));
+jest.mock('../../../src/application/services/ocr-worker-pool.service', () => ({
+  OcrWorkerPool: class MockOcrWorkerPool {},
+}));
+jest.mock('../../../src/application/services/ocr.service', () => ({
+  OcrService: class MockOcrService {},
+}));
+jest.mock('../../../src/interface/controllers/ocr.controller', () => ({
+  OcrController: class MockOcrController {},
+}));
+jest.mock('../../../src/application/services/executor.service', () => ({
+  ExecutorService: class MockExecutorService {},
+}));
 
 describe('dependency-injection', () => {
   beforeEach(() => {
@@ -107,7 +128,7 @@ describe('dependency-injection', () => {
     });
 
     // Total de chamadas register (incluindo OCR services)
-    expect(mockContainer.register).toHaveBeenCalledTimes(13);
+    expect(mockContainer.register).toHaveBeenCalledTimes(14);
   });
 
   test('exports container', () => {

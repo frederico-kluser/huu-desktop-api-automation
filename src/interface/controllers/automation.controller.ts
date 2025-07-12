@@ -2,6 +2,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { container } from 'tsyringe';
 import { MouseService } from '../../application/services/mouse.service.js';
 import { ScreenService } from '../../application/services/screen.service.js';
+import { ExecutorService } from '../../application/services/executor.service.js';
 import { authenticationMiddleware } from '../middleware/auth.middleware.js';
 import {
   mouseMoveJsonSchema,
@@ -19,17 +20,20 @@ import type {
   ScreenFindRequest,
   ScreenCaptureRequest,
 } from '../../application/dto/automation-request.dto.js';
+import type { AutomationAction } from '../../types/automation-builder.types.js';
 import { MouseDefaults } from '../../config/mouse.config.js';
 import pino from 'pino';
 
 export class AutomationController {
   private mouseService: MouseService;
   private screenService: ScreenService;
+  private executorService: ExecutorService;
   private readonly logger = pino({ name: 'AutomationController' });
 
   constructor() {
     this.mouseService = container.resolve<MouseService>('MouseService');
     this.screenService = container.resolve<ScreenService>('ScreenService');
+    this.executorService = container.resolve<ExecutorService>(ExecutorService);
   }
 
   registerRoutes(server: FastifyInstance): void {
@@ -236,6 +240,69 @@ export class AutomationController {
       },
       this.screenPrint.bind(this),
     );
+
+    server.post(
+      '/automation/execute',
+      {
+        preHandler: [authenticationMiddleware],
+        schema: {
+          headers: {
+            type: 'object',
+            properties: {
+              'x-api-key': { type: 'string' },
+            },
+          },
+          body: {
+            type: 'object',
+            properties: {
+              actions: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    id: { type: 'string' },
+                    device: { type: 'string' },
+                    timestamp: { type: 'number' },
+                    payload: { type: 'object' },
+                  },
+                  required: ['id', 'device', 'payload'],
+                },
+              },
+              options: {
+                type: 'object',
+                properties: {
+                  stopOnError: { type: 'boolean' },
+                  delayBetweenActions: { type: 'number' },
+                },
+              },
+            },
+            required: ['actions'],
+          },
+          response: {
+            200: {
+              type: 'object',
+              properties: {
+                success: { type: 'boolean' },
+                results: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      success: { type: 'boolean' },
+                      actionId: { type: 'string' },
+                      device: { type: 'string' },
+                      error: { type: 'string' },
+                      data: { type: 'object' },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      async (request, reply) => this.executeActions(request as any, reply),
+    );
   }
 
   private async mouseMove(
@@ -396,5 +463,58 @@ export class AutomationController {
       this.logger.error({ error }, 'Stream connection error');
       clearInterval(intervalId);
     });
+  }
+
+  /**
+   * Executa uma sequência de ações de automação
+   * @param request - Requisição Fastify com array de ações
+   * @param reply - Resposta Fastify
+   */
+  private async executeActions(
+    request: FastifyRequest<{
+      Body: {
+        actions: AutomationAction[];
+        options?: {
+          stopOnError?: boolean;
+          delayBetweenActions?: number;
+        };
+      };
+    }>,
+    reply: FastifyReply,
+  ): Promise<void> {
+    try {
+      const { actions, options = {} } = request.body;
+
+      this.logger.info(
+        { actionsCount: actions.length, options },
+        'Received automation execution request',
+      );
+
+      // Validar se há ações
+      if (!actions || actions.length === 0) {
+        await reply.code(400).send({
+          success: false,
+          error: 'No actions provided',
+        });
+        return;
+      }
+
+      // Executar ações
+      const results = await this.executorService.executeActions(actions, options);
+
+      // Determinar sucesso geral
+      const overallSuccess = results.every((r) => r.success);
+
+      await reply.send({
+        success: overallSuccess,
+        results,
+      });
+    } catch (error) {
+      this.logger.error({ error }, 'Failed to execute automation actions');
+      await reply.code(500).send({
+        success: false,
+        error: error instanceof Error ? error.message : 'EXECUTION_FAILED',
+      });
+    }
   }
 }
