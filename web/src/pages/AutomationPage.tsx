@@ -8,6 +8,7 @@ import { Play, Save, FileEarmarkCode } from 'react-bootstrap-icons';
 import { PrintScreenButton, ActionBuilder } from '../components';
 import { AutomationAction } from '../types/automation-builder.types';
 import { AutomationSaveLoad } from '../components/AutomationSaveLoad';
+import FloatingPlayButton from '../components/FloatingPlayButton';
 import { apiService } from '../services/apiService';
 
 /**
@@ -272,6 +273,9 @@ const AutomationPage: React.FC = () => {
           </Card>
         </Col>
       </Row>
+
+      {/* Botão flutuante de execução */}
+      <FloatingPlayButton actions={actions} apiConnected={apiConnected} />
     </Container>
   );
 };

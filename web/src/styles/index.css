@@ -20,3 +20,6 @@ body {
 
 /* Importar estilos de drag-and-drop */
 @import './drag-and-drop.css';
+
+/* Importar estilos do botão flutuante */
+@import './floating-button.css';

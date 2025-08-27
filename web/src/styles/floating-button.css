@@ -1,0 +1,139 @@
+/**
+ * Estilos para o botão flutuante de execução
+ */
+
+/* Animação de pulse para chamar atenção */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+  }
+}
+
+/* Animação de slide da esquerda */
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Classes de animação */
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.3s ease-out;
+}
+
+/* Botão flutuante melhorias */
+.floating-play-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-play-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.floating-play-button:active {
+  transform: scale(0.95) !important;
+}
+
+/* Estado de execução */
+.floating-play-button.executing {
+  animation: pulse 1.5s infinite;
+}
+
+/* Container flutuante */
+.floating-container {
+  pointer-events: none;
+}
+
+.floating-container > * {
+  pointer-events: auto;
+}
+
+/* Badge animado durante execução */
+.execution-badge {
+  background: linear-gradient(90deg, #0d6efd 0%, #0a58ca 50%, #0d6efd 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Feedback visual de sucesso */
+.success-feedback {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Feedback visual de erro */
+.error-feedback {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Feedback visual de warning */
+.warning-feedback {
+  background-color: #fff3cd;
+  border-color: #ffeaa7;
+  color: #856404;
+}
+
+/* Sombra elevada para o botão */
+.elevated-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Transição suave de cores */
+.color-transition {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Estilo para o contador de ações */
+.action-counter {
+  backdrop-filter: blur(10px);
+  background-color: rgba(33, 37, 41, 0.9);
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+  .floating-container {
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+  
+  .floating-play-button {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  .floating-play-button svg {
+    width: 20px;
+    height: 20px;
+  }
+}
