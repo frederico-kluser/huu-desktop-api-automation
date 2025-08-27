@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "dev:web": "webpack serve --mode development --config web/webpack.config.js",
-    "start:dev": "nodemon",
+    "start:dev": "node scripts/kill-ports.js && nodemon",
     "dev:all": "concurrently -n \"backend,frontend\" -c \"green,blue\" \"npm run dev\" \"npm run dev:web\"",
     "dev:full": "concurrently \"webpack serve --mode development --config web/webpack.config.js\" \"tsx watch src/index.ts\"",
     "build": "tsc -p tsconfig.json",
