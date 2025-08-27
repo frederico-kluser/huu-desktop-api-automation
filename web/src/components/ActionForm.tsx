@@ -52,37 +52,37 @@ const DEVICE_CONFIG = {
     emoji: '⌨️',
     label: 'Teclado',
     description: 'Digitar, teclas, atalhos',
-    color: 'success'
+    color: 'primary'
   },
   [ActionDevice.WAIT]: {
     emoji: '⏱️',
     label: 'Aguardar',
     description: 'Pausar execução',
-    color: 'warning'
+    color: 'primary'
   },
   [ActionDevice.SCREEN]: {
     emoji: '📸',
     label: 'Tela',
     description: 'Capturar, buscar imagem',
-    color: 'info'
+    color: 'primary'
   },
   [ActionDevice.CLIPBOARD]: {
     emoji: '📋',
     label: 'Área de Transferência',
     description: 'Copiar, colar, limpar',
-    color: 'secondary'
+    color: 'primary'
   },
   [ActionDevice.LLM]: {
     emoji: '🤖',
     label: 'IA',
     description: 'GPT, análise de texto',
-    color: 'danger'
+    color: 'primary'
   },
   [ActionDevice.OCR]: {
     emoji: '📝',
     label: 'OCR',
     description: 'Extrair texto de imagem',
-    color: 'dark'
+    color: 'primary'
   },
 };
 
@@ -541,11 +541,9 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
         payload,
       } as Omit<AutomationAction, 'id' | 'timestamp'>);
 
-      // Reseta o formulário e mantém o dispositivo selecionado
-      setFormState({
-        ...initialFormState,
-        device: selectedDevice,
-      });
+      // Reseta o formulário e volta para a seleção de dispositivos
+      setFormState(initialFormState);
+      setSelectedDevice(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao adicionar ação');
     } finally {
