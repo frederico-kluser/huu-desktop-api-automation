@@ -32,7 +32,6 @@ interface ExecutionOptions {
 class ApiService {
   private api: AxiosInstance;
   private readonly baseURL = 'http://localhost:3000/api/v1';
-  private readonly apiKey = process.env.REACT_APP_API_KEY || 'B77qfdp27w@'; // Chave da API configurada no .env
 
   constructor() {
     this.api = axios.create({
@@ -40,7 +39,6 @@ class ApiService {
       timeout: 30000, // 30 segundos para execução
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': this.apiKey,
       },
     });
 

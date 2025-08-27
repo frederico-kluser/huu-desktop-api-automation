@@ -1,7 +1,8 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { container } from 'tsyringe';
 import { LLMService } from '../../application/services/llm.service.js';
-import { authenticationMiddleware } from '../middleware/auth.middleware.js';
+// Autenticação removida - import não mais necessário
+// import { authenticationMiddleware } from '../middleware/auth.middleware.js';
 import { llmRequestJsonSchema } from '../schemas/llm.schemas.js';
 import { llmRequestSchema } from '../../application/dto/llm-request.dto.js';
 import { outputFormatConfig } from '../../config/output-format.config.js';
@@ -19,15 +20,8 @@ export class LLMController {
     server.post(
       '/llm',
       {
-        preHandler: [authenticationMiddleware],
+        // Autenticação removida
         schema: {
-          headers: {
-            type: 'object',
-            properties: {
-              'x-api-key': { type: 'string' },
-            },
-            required: ['x-api-key'],
-          },
           body: llmRequestJsonSchema,
           response: {
             200: {

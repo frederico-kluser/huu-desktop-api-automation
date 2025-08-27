@@ -3,7 +3,8 @@ import { container } from 'tsyringe';
 import { MouseService } from '../../application/services/mouse.service.js';
 import { ScreenService } from '../../application/services/screen.service.js';
 import { ExecutorService } from '../../application/services/executor.service.js';
-import { authenticationMiddleware } from '../middleware/auth.middleware.js';
+// Autenticação removida - import não mais necessário
+// import { authenticationMiddleware } from '../middleware/auth.middleware.js';
 import {
   mouseMoveJsonSchema,
   mouseClickJsonSchema,
@@ -136,15 +137,7 @@ export class AutomationController {
     server.get(
       '/mouse/position/stream',
       {
-        preHandler: [authenticationMiddleware],
-        schema: {
-          headers: {
-            type: 'object',
-            properties: {
-              'x-api-key': { type: 'string' },
-            },
-          },
-        },
+        // Autenticação removida
       },
       this.mousePositionStream.bind(this),
     );
@@ -212,14 +205,8 @@ export class AutomationController {
     server.get(
       '/screen/print',
       {
-        preHandler: [authenticationMiddleware],
+        // Autenticação removida
         schema: {
-          headers: {
-            type: 'object',
-            properties: {
-              'x-api-key': { type: 'string' },
-            },
-          },
           response: {
             200: {
               type: 'object',
@@ -244,14 +231,7 @@ export class AutomationController {
     server.post(
       '/automation/execute',
       {
-        preHandler: [authenticationMiddleware],
         schema: {
-          headers: {
-            type: 'object',
-            properties: {
-              'x-api-key': { type: 'string' },
-            },
-          },
           body: {
             type: 'object',
             properties: {

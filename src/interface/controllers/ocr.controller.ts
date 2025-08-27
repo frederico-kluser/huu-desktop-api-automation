@@ -8,7 +8,8 @@ import { injectable, inject } from 'tsyringe';
 import { OcrService } from '../../application/services/ocr.service.js';
 import { OcrRequest, OcrBatchRequest } from '../../application/dto/ocr-request.dto.js';
 import { logger } from '../../config/logger.js';
-import { authenticationMiddleware } from '../middleware/auth.middleware.js';
+// Autenticação removida - import não mais necessário
+// import { authenticationMiddleware } from '../middleware/auth.middleware.js';
 import {
   ocrBase64RequestSchema,
   ocrBatchRequestSchema,
@@ -38,7 +39,7 @@ export class OcrController {
     app.post(
       '/ocr/base64',
       {
-        preHandler: authenticationMiddleware,
+        // Autenticação removida
         schema: {
           body: ocrBase64RequestSchema,
           response: {
@@ -62,7 +63,7 @@ export class OcrController {
     app.post(
       '/ocr/batch',
       {
-        preHandler: authenticationMiddleware,
+        // Autenticação removida
         schema: {
           body: ocrBatchRequestSchema,
           summary: 'Processar múltiplas imagens',
@@ -77,7 +78,7 @@ export class OcrController {
     app.get(
       '/ocr/metrics',
       {
-        preHandler: authenticationMiddleware,
+        // Autenticação removida
         schema: {
           response: {
             200: ocrMetricsResponseSchema,
@@ -94,7 +95,7 @@ export class OcrController {
     app.post(
       '/ocr/cache/clear',
       {
-        preHandler: authenticationMiddleware,
+        // Autenticação removida
         schema: {
           body: ocrClearCacheRequestSchema,
           summary: 'Limpar cache OCR',
