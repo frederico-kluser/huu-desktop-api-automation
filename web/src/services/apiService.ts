@@ -31,6 +31,7 @@ interface ExecutionOptions {
 
 class ApiService {
   private api: AxiosInstance;
+  private apiSilent: AxiosInstance; // Instância sem logs para requisições frequentes
   private readonly baseURL: string;
 
   constructor() {
@@ -49,6 +50,15 @@ class ApiService {
     this.api = axios.create({
       baseURL: this.baseURL,
       timeout: 30000, // 30 segundos para execução
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    // Cria instância silenciosa para requisições frequentes
+    this.apiSilent = axios.create({
+      baseURL: this.baseURL,
+      timeout: 5000, // Timeout menor para requisições frequentes
       headers: {
         'Content-Type': 'application/json',
       },
@@ -172,6 +182,23 @@ class ApiService {
     const endpoint = `/clipboard/${action}`;
     const response = await this.api.post(endpoint, payload);
     return response.data;
+  }
+
+  /**
+   * Obtém a posição atual do mouse
+   */
+  async getMousePosition(): Promise<{ x: number; y: number } | null> {
+    try {
+      // Usa a instância silenciosa para não poluir o console
+      const response = await this.apiSilent.get('/mouse/position');
+      if (response.data.success && response.data.data) {
+        return response.data.data;
+      }
+      return null;
+    } catch (error) {
+      // Silenciosamente retorna null em caso de erro para não poluir o console
+      return null;
+    }
   }
 }
 

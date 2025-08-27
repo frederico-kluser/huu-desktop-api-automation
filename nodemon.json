@@ -1,0 +1,9 @@
+{
+  "watch": ["src", "web"],
+  "ext": "ts,tsx,js,jsx,json,html,css",
+  "ignore": ["dist/*", "coverage/*", "node_modules/*", "tests/*", "web/dist/*"],
+  "exec": "concurrently -n \"🚀API,🎨WEB\" -c \"green,blue\" \"tsx src/index.ts\" \"webpack serve --mode development --config web/webpack.config.js\"",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
