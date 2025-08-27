@@ -54,10 +54,12 @@ module.exports = {
     compress: true,
     port: 3001,
     hot: true,
+    historyApiFallback: true, // Importante para SPA
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
+        logLevel: 'debug', // Para debug
       },
     },
   },

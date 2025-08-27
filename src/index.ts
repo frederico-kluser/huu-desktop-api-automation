@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import Fastify from 'fastify';
 import fastifyStatic from '@fastify/static';
+import fastifyCors from '@fastify/cors';
 import type { FastifyRequest, FastifyReply } from 'fastify';
 import { automationRoutes } from './routes/automation.routes.js';
 import { errorHandler } from './interface/middleware/error-handler.middleware.js';
@@ -31,6 +32,13 @@ const createServer = async () => {
             }
           : undefined,
     },
+  });
+
+  // Configurar CORS para permitir requisições do frontend (caso seja necessário para desenvolvimento)
+  await server.register(fastifyCors, {
+    origin: true, // Aceita qualquer origem em desenvolvimento
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   });
 
   // Registrar rotas da API primeiro

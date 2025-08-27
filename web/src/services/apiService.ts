@@ -31,9 +31,21 @@ interface ExecutionOptions {
 
 class ApiService {
   private api: AxiosInstance;
-  private readonly baseURL = 'http://localhost:3000/api/v1';
+  private readonly baseURL: string;
 
   constructor() {
+    // Em desenvolvimento com webpack dev server, usa path relativo para o proxy funcionar
+    // Em produção ou quando acessado diretamente, usa URL completa
+    this.baseURL = window.location.port === '3001' 
+      ? '/api/v1'  // Desenvolvimento com webpack dev server (proxy funciona)
+      : 'http://localhost:3000/api/v1'; // Produção ou acesso direto
+    
+    console.log('🔧 API Service initialized:', {
+      currentPort: window.location.port,
+      baseURL: this.baseURL,
+      fullURL: window.location.href
+    });
+    
     this.api = axios.create({
       baseURL: this.baseURL,
       timeout: 30000, // 30 segundos para execução

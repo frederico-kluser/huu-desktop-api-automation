@@ -6,8 +6,10 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "dev:web": "webpack serve --mode development --config web/webpack.config.cjs",
-    "dev:full": "concurrently \"webpack --watch --mode development --config web/webpack.config.js\" \"tsx watch src/index.ts\"",
+    "dev:web": "webpack serve --mode development --config web/webpack.config.js",
+    "start:dev": "concurrently -n \"🚀API,🎨WEB\" -c \"green,blue\" \"npm run dev\" \"npm run dev:web\"",
+    "dev:all": "concurrently -n \"backend,frontend\" -c \"green,blue\" \"npm run dev\" \"npm run dev:web\"",
+    "dev:full": "concurrently \"webpack serve --mode development --config web/webpack.config.js\" \"tsx watch src/index.ts\"",
     "build": "tsc -p tsconfig.json",
     "build:web": "webpack --mode production --config web/webpack.config.js",
     "build:prod": "tsc -p tsconfig.prod.json",
@@ -30,6 +32,7 @@
     "postinstall": "node scripts/download-tessdata.js || echo 'Tessdata download failed, will download on first use'"
   },
   "dependencies": {
+    "@fastify/cors": "^8.5.0",
     "@fastify/static": "^6.12.0",
     "@langchain/core": "^0.3.62",
     "@langchain/deepseek": "^0.0.2",

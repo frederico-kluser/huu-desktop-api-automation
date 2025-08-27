@@ -222,10 +222,11 @@ const FloatingPlayButton: React.FC<FloatingPlayButtonProps> = ({
         {/* Mensagem de feedback */}
         {executionMessage && !isExecuting && (
           <div
-            className="bg-white border rounded shadow-sm px-3 py-2 animate-slide-left"
+            className="bg-white text-dark border rounded shadow-sm px-3 py-2 animate-slide-left"
             style={{
               maxWidth: '250px',
               fontSize: '0.875rem',
+              color: '#212529',
             }}
           >
             {executionMessage}
