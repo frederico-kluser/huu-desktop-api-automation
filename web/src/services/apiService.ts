@@ -120,7 +120,8 @@ class ApiService {
       console.log('🔗 Testando conexão com a API...');
       const response = await this.api.get('/status');
       console.log('✅ Conexão com API estabelecida:', response.data);
-      return response.data.success === true;
+      // O endpoint /status retorna {ok: true} quando está funcionando
+      return response.data.ok === true || response.data.success === true;
     } catch (error) {
       console.error('❌ Falha na conexão com a API:', error);
       return false;
