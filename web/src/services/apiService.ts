@@ -32,7 +32,7 @@ interface ExecutionOptions {
 class ApiService {
   private api: AxiosInstance;
   private readonly baseURL = 'http://localhost:3000/api/v1';
-  private readonly apiKey = process.env.REACT_APP_API_KEY || 'dev-api-key'; // Configurar conforme necessário
+  private readonly apiKey = process.env.REACT_APP_API_KEY || 'B77qfdp27w@'; // Chave da API configurada no .env
 
   constructor() {
     this.api = axios.create({
