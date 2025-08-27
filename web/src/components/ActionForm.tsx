@@ -40,8 +40,54 @@ interface ActionFormProps {
   disabled?: boolean;
 }
 
+// Mapeamento de dispositivos para emojis e descrições
+const DEVICE_CONFIG = {
+  [ActionDevice.MOUSE]: {
+    emoji: '🖱️',
+    label: 'Mouse',
+    description: 'Mover, clicar, arrastar',
+    color: 'primary'
+  },
+  [ActionDevice.KEYBOARD]: {
+    emoji: '⌨️',
+    label: 'Teclado',
+    description: 'Digitar, teclas, atalhos',
+    color: 'success'
+  },
+  [ActionDevice.WAIT]: {
+    emoji: '⏱️',
+    label: 'Aguardar',
+    description: 'Pausar execução',
+    color: 'warning'
+  },
+  [ActionDevice.SCREEN]: {
+    emoji: '📸',
+    label: 'Tela',
+    description: 'Capturar, buscar imagem',
+    color: 'info'
+  },
+  [ActionDevice.CLIPBOARD]: {
+    emoji: '📋',
+    label: 'Área de Transferência',
+    description: 'Copiar, colar, limpar',
+    color: 'secondary'
+  },
+  [ActionDevice.LLM]: {
+    emoji: '🤖',
+    label: 'IA',
+    description: 'GPT, análise de texto',
+    color: 'danger'
+  },
+  [ActionDevice.OCR]: {
+    emoji: '📝',
+    label: 'OCR',
+    description: 'Extrair texto de imagem',
+    color: 'dark'
+  },
+};
+
 const initialFormState: ActionFormState = {
-  device: ActionDevice.WAIT,
+  device: null as any, // Inicializa sem dispositivo selecionado
   mouseAction: MouseActionType.MOVE,
   keyboardAction: KeyboardActionType.TYPE,
   clipboardAction: ClipboardActionType.COPY,
@@ -72,22 +118,42 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
   const [formState, setFormState] = useState<ActionFormState>(initialFormState);
   const [error, setError] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [selectedDevice, setSelectedDevice] = useState<ActionDevice | null>(null);
 
   // Limpa o estado do formulário quando o tipo de dispositivo muda
   useEffect(() => {
-    setFormState((prev) => ({
-      ...initialFormState,
-      device: prev.device,
-      mouseAction: prev.device === ActionDevice.MOUSE ? MouseActionType.MOVE : undefined,
-      keyboardAction: prev.device === ActionDevice.KEYBOARD ? KeyboardActionType.TYPE : undefined,
-      clipboardAction:
-        prev.device === ActionDevice.CLIPBOARD ? ClipboardActionType.COPY : undefined,
-      screenAction: prev.device === ActionDevice.SCREEN ? ScreenActionType.CAPTURE : undefined,
-      llmAction: prev.device === ActionDevice.LLM ? LlmActionType.COMPLETION : undefined,
-      ocrAction: prev.device === ActionDevice.OCR ? OcrActionType.EXTRACT_TEXT : undefined,
-    }));
+    if (selectedDevice) {
+      setFormState((prev) => ({
+        ...initialFormState,
+        device: selectedDevice,
+        mouseAction: selectedDevice === ActionDevice.MOUSE ? MouseActionType.MOVE : undefined,
+        keyboardAction: selectedDevice === ActionDevice.KEYBOARD ? KeyboardActionType.TYPE : undefined,
+        clipboardAction:
+          selectedDevice === ActionDevice.CLIPBOARD ? ClipboardActionType.COPY : undefined,
+        screenAction: selectedDevice === ActionDevice.SCREEN ? ScreenActionType.CAPTURE : undefined,
+        llmAction: selectedDevice === ActionDevice.LLM ? LlmActionType.COMPLETION : undefined,
+        ocrAction: selectedDevice === ActionDevice.OCR ? OcrActionType.EXTRACT_TEXT : undefined,
+      }));
+      setError(null);
+    }
+  }, [selectedDevice]);
+
+  /**
+   * Seleciona um dispositivo
+   */
+  const handleDeviceSelect = (device: ActionDevice) => {
+    setSelectedDevice(device);
+    updateField('device', device);
+  };
+
+  /**
+   * Reseta a seleção de dispositivo
+   */
+  const handleResetDevice = () => {
+    setSelectedDevice(null);
+    setFormState(initialFormState);
     setError(null);
-  }, [formState.device]);
+  };
 
   /**
    * Atualiza campo do formulário
@@ -421,7 +487,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isAdding || disabled) return;
+    if (isAdding || disabled || !selectedDevice) return;
 
     setIsAdding(true);
     setError(null);
@@ -475,10 +541,10 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
         payload,
       } as Omit<AutomationAction, 'id' | 'timestamp'>);
 
-      // Reseta o formulário mantendo o tipo de dispositivo
+      // Reseta o formulário e mantém o dispositivo selecionado
       setFormState({
         ...initialFormState,
-        device: formState.device,
+        device: selectedDevice,
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao adicionar ação');
@@ -1152,7 +1218,14 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
   return (
     <Card>
       <Card.Header>
-        <h6 className="mb-0">Adicionar Nova Ação</h6>
+        <div className="d-flex justify-content-between align-items-center">
+          <h6 className="mb-0">Adicionar Nova Ação</h6>
+          {selectedDevice && (
+            <Button variant="outline-secondary" size="sm" onClick={handleResetDevice}>
+              Trocar Dispositivo
+            </Button>
+          )}
+        </div>
       </Card.Header>
       <Card.Body>
         {error && (
@@ -1161,43 +1234,56 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
           </Alert>
         )}
 
-        <Form onSubmit={handleSubmit}>
-          <Row className="align-items-end">
-            {/* Seletor de dispositivo */}
-            <Col md={2}>
-              <Form.Group>
-                <Form.Label>Dispositivo</Form.Label>
-                <Form.Select
-                  value={formState.device}
-                  onChange={(e) => updateField('device', e.target.value as ActionDevice)}
-                  disabled={isAdding}
-                  data-testid="action-device"
+        {/* Seleção de Dispositivo com Botões */}
+        {!selectedDevice ? (
+          <div>
+            <h6 className="mb-3">Escolha o tipo de dispositivo:</h6>
+            <Row className="g-3">
+              {Object.entries(DEVICE_CONFIG).map(([device, config]) => (
+                <Col key={device} xs={6} md={4} lg={3}>
+                  <Button
+                    variant={`outline-${config.color}`}
+                    className="w-100 h-100 py-3 d-flex flex-column align-items-center"
+                    onClick={() => handleDeviceSelect(device as ActionDevice)}
+                    disabled={isAdding || disabled}
+                    style={{ minHeight: '120px' }}
+                  >
+                    <div className="fs-1 mb-2">{config.emoji}</div>
+                    <div className="fw-bold">{config.label}</div>
+                    <small className="text-muted mt-1">{config.description}</small>
+                  </Button>
+                </Col>
+              ))}
+            </Row>
+          </div>
+        ) : (
+          /* Formulário de Configuração da Ação */
+          <Form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <div className="d-flex align-items-center gap-2 mb-3">
+                <span className="fs-3">{DEVICE_CONFIG[selectedDevice].emoji}</span>
+                <h6 className="mb-0">Configurar {DEVICE_CONFIG[selectedDevice].label}</h6>
+              </div>
+            </div>
+            
+            <Row className="align-items-end">
+              {/* Campos dinâmicos baseados no dispositivo */}
+              {renderDeviceFields()}
+
+              {/* Botão de adicionar */}
+              <Col md="auto">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  disabled={isAdding || disabled}
+                  className="mb-3"
                 >
-                  {Object.values(ActionDevice).map((device) => (
-                    <option key={device} value={device}>
-                      {ACTION_DEVICE_LABELS[device]}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            </Col>
-
-            {/* Campos dinâmicos baseados no dispositivo */}
-            {renderDeviceFields()}
-
-            {/* Botão de adicionar */}
-            <Col md="auto">
-              <Button
-                type="submit"
-                variant="primary"
-                disabled={isAdding || disabled}
-                className="mb-3"
-              >
-                {isAdding ? 'Adicionando...' : 'Adicionar Ação'}
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+                  {isAdding ? 'Adicionando...' : 'Adicionar Ação'}
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        )}
       </Card.Body>
     </Card>
   );
