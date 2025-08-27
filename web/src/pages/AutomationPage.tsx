@@ -43,6 +43,31 @@ const AutomationPage: React.FC = () => {
   }, []);
 
   /**
+   * Rastreia a posição do mouse e atualiza o título
+   */
+  useEffect(() => {
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    const intervalId = setInterval(() => {
+      document.title = `X: ${mouseX} | Y: ${mouseY}`;
+    }, 10);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearInterval(intervalId);
+      document.title = 'Automation';
+    };
+  }, []);
+
+  /**
    * Callback quando as ações mudam
    */
   const handleActionsChange = useCallback((newActions: AutomationAction[]) => {
