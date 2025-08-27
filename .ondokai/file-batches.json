@@ -1,0 +1,141 @@
+{
+  "generated": "2025-08-27T01:20:19.824Z",
+  "totalFiles": 86,
+  "totalBatches": 9,
+  "batchSize": 10,
+  "projectName": "ondokai-create",
+  "promptTemplate": "Prompt direto para edição",
+  "batches": [
+    {
+      "id": 1,
+      "files": [
+        ".env",
+        ".env.example",
+        ".eslintignore",
+        ".eslintrc.cjs",
+        ".gitignore",
+        ".husky/_/.gitignore",
+        ".husky/_/applypatch-msg",
+        ".husky/_/commit-msg",
+        ".husky/_/h",
+        ".husky/_/husky.sh"
+      ]
+    },
+    {
+      "id": 2,
+      "files": [
+        ".husky/_/post-applypatch",
+        ".husky/_/post-checkout",
+        ".husky/_/post-commit",
+        ".husky/_/post-merge",
+        ".husky/_/post-rewrite",
+        ".husky/_/pre-applypatch",
+        ".husky/_/pre-auto-gc",
+        ".husky/_/pre-commit",
+        ".husky/_/pre-merge-commit",
+        ".husky/_/pre-push"
+      ]
+    },
+    {
+      "id": 3,
+      "files": [
+        ".husky/_/pre-rebase",
+        ".husky/_/prepare-commit-msg",
+        ".husky/pre-commit",
+        ".prettierignore",
+        ".prettierrc",
+        "API_DOCUMENTATION.md",
+        "DEEPSEEK_MODELS_RESEARCH.md",
+        "DEEPSEEK_RESOLUTION.md",
+        "NutJS-Desktop-Automation-API.postman_collection.json",
+        "README.md"
+      ]
+    },
+    {
+      "id": 4,
+      "files": [
+        "debug-uiohook.js",
+        "diagnose-uiohook.cjs",
+        "ecosystem.config.js",
+        "error.txt",
+        "jest.config.js",
+        "know-how.txt",
+        "lastPrompt.md",
+        "package-lock.json",
+        "package.json",
+        "scripts/download-tessdata.js"
+      ]
+    },
+    {
+      "id": 5,
+      "files": [
+        "server.log",
+        "src/config/dependency-injection.ts",
+        "src/config/environment.ts",
+        "src/config/input-events.config.ts",
+        "src/config/keyboard.config.ts",
+        "src/config/langchain.config.ts",
+        "src/config/logger.ts",
+        "src/config/mouse.config.ts",
+        "src/config/ocr.config.ts",
+        "src/config/output-format.config.ts"
+      ]
+    },
+    {
+      "id": 6,
+      "files": [
+        "src/index.ts",
+        "src/routes/automation.routes.ts",
+        "src/routes/input-events.routes.ts",
+        "src/routes/status.routes.ts",
+        "src/test-endpoint.ts",
+        "src/types/automation-builder.types.ts",
+        "src/types/extended-input-event.types.ts",
+        "src/types/input-event.types.ts",
+        "src/types/ocr.types.ts",
+        "src/types/output-shape.ts"
+      ]
+    },
+    {
+      "id": 7,
+      "files": [
+        "tessdata/README.md",
+        "test-deepseek-coder.js",
+        "test-deepseek.js",
+        "test-input-events.html",
+        "test-prompts.json",
+        "test-screen-capture.js",
+        "test-uiohook-direct.cjs",
+        "test.js",
+        "tsconfig.json",
+        "tsconfig.prod.json"
+      ]
+    },
+    {
+      "id": 8,
+      "files": [
+        "web/.env",
+        "web/.env.example",
+        "web/.env.safe",
+        "web/.eslintignore",
+        "web/.eslintrc.js",
+        "web/ACTION_BUILDER_README.md",
+        "web/README.md",
+        "web/install-action-builder-deps.sh",
+        "web/package-lock.json",
+        "web/package.json"
+      ]
+    },
+    {
+      "id": 9,
+      "files": [
+        "web/public/index.html",
+        "web/src/App.tsx",
+        "web/src/index.tsx",
+        "web/tsconfig.json",
+        "web/webpack.config.cjs",
+        "web/webpack.config.js"
+      ]
+    }
+  ]
+}
