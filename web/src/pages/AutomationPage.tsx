@@ -43,25 +43,26 @@ const AutomationPage: React.FC = () => {
   }, []);
 
   /**
-   * Rastreia a posição do mouse e atualiza o título
+   * Rastreia a posição do mouse via backend e atualiza o título
    */
   useEffect(() => {
-    let mouseX = 0;
-    let mouseY = 0;
+    let intervalId: NodeJS.Timeout;
     
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    // Função para buscar posição do mouse do backend
+    const updateMousePosition = async () => {
+      const position = await apiService.getMousePosition();
+      if (position) {
+        document.title = `X: ${position.x} | Y: ${position.y}`;
+      }
     };
     
-    window.addEventListener('mousemove', handleMouseMove);
+    // Atualiza a cada 500ms
+    intervalId = setInterval(updateMousePosition, 500);
     
-    const intervalId = setInterval(() => {
-      document.title = `X: ${mouseX} | Y: ${mouseY}`;
-    }, 10);
+    // Faz a primeira atualização imediatamente
+    updateMousePosition();
     
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       clearInterval(intervalId);
       document.title = 'Automation';
     };
