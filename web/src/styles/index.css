@@ -17,3 +17,6 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* Importar estilos de drag-and-drop */
+@import './drag-and-drop.css';

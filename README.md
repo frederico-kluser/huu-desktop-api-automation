@@ -364,7 +364,7 @@ src/
 
 ### 3. Interface Web
 - ❌ Editor visual de coordenadas sobre screenshot
-- ❌ Drag-and-drop para reordenar ações
+- ✅ Drag-and-drop para reordenar ações
 - ❌ Validação em tempo real dos formulários
 - ❌ Dark mode
 - ❌ Histórico de execuções

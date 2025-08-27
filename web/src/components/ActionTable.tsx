@@ -1,10 +1,18 @@
 /**
  * Tabela para exibir e gerenciar ações de automação
- * Renderiza lista de ações com opções para remover
+ * Renderiza lista de ações com opções para remover e reordenar via drag-and-drop
  */
 import React from 'react';
 import { Table, Button, Badge } from 'react-bootstrap';
-import { Trash } from 'react-bootstrap-icons';
+import { Trash, GripVertical } from 'react-bootstrap-icons';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+  DraggableProvided,
+  DroppableProvided,
+} from 'react-beautiful-dnd';
 import {
   AutomationAction,
   ActionDevice,
@@ -24,6 +32,7 @@ interface ActionTableProps {
   actions: AutomationAction[];
   onRemove: (_id: string) => void;
   onClear: () => void;
+  onReorder?: (actions: AutomationAction[]) => void;
   className?: string;
 }
 
@@ -294,84 +303,149 @@ const formatActionDetails = (action: AutomationAction): string[] => {
 };
 
 /**
- * Componente de tabela de ações
+ * Componente de tabela de ações com suporte a drag-and-drop
  */
 const ActionTable: React.FC<ActionTableProps> = ({
   actions,
   onRemove,
   onClear,
+  onReorder,
   className = '',
 }) => {
   if (actions.length === 0) {
     return null;
   }
 
+  /**
+   * Manipula o fim do drag-and-drop
+   */
+  const handleOnDragEnd = (result: DropResult) => {
+    if (!result.destination || !onReorder) {
+      return;
+    }
+
+    const items = Array.from(actions);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    onReorder(items);
+  };
+
   return (
     <div className={className}>
       <div className="d-flex justify-content-between align-items-center mb-2">
         <h6 className="mb-0">Ações Configuradas ({actions.length})</h6>
-        <Button variant="outline-danger" size="sm" onClick={onClear}>
-          Limpar Todas
-        </Button>
+        <div className="d-flex gap-2">
+          {actions.length > 1 && (
+            <small className="text-muted align-self-center">
+              <GripVertical size={14} className="me-1" />
+              Arraste para reordenar
+            </small>
+          )}
+          <Button variant="outline-danger" size="sm" onClick={onClear}>
+            Limpar Todas
+          </Button>
+        </div>
       </div>
 
-      <Table striped bordered hover responsive size="sm">
-        <thead>
-          <tr>
-            <th style={{ width: '50px' }} className="text-center">
-              #
-            </th>
-            <th style={{ width: '180px' }}>Dispositivo</th>
-            <th>Ação</th>
-            <th style={{ width: '200px' }}>Detalhes</th>
-            <th style={{ width: '80px' }} className="text-center">
-              Remover
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {actions.map((action, index) => {
-            const details = formatActionDetails(action);
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Table striped bordered hover responsive size="sm">
+          <thead>
+            <tr>
+              <th style={{ width: '40px' }} className="text-center">
+                {/* Coluna para drag handle */}
+              </th>
+              <th style={{ width: '50px' }} className="text-center">
+                #
+              </th>
+              <th style={{ width: '180px' }}>Dispositivo</th>
+              <th>Ação</th>
+              <th style={{ width: '200px' }}>Detalhes</th>
+              <th style={{ width: '80px' }} className="text-center">
+                Remover
+              </th>
+            </tr>
+          </thead>
+          <Droppable droppableId="actions-list">
+            {(provided: DroppableProvided) => (
+              <tbody {...provided.droppableProps} ref={provided.innerRef}>
+                {actions.map((action, index) => {
+                  const details = formatActionDetails(action);
 
-            return (
-              <tr key={action.id} className="align-middle">
-                <td className="text-center align-middle">
-                  <span className="fw-bold">{index + 1}</span>
-                </td>
-                <td className="align-middle">
-                  <Badge
-                    bg={getDeviceBadgeColor(action.device)}
-                    className="d-inline-block"
-                    style={{ minWidth: '140px' }}
-                  >
-                    {ACTION_DEVICE_LABELS[action.device]}
-                  </Badge>
-                </td>
-                <td className="align-middle">{formatActionDescription(action)}</td>
-                <td className="align-middle">
-                  {details.length > 0 ? (
-                    <small className="text-muted d-block">{details.join(' • ')}</small>
-                  ) : (
-                    <span className="text-muted">—</span>
-                  )}
-                </td>
-                <td className="text-center align-middle">
-                  <Button
-                    variant="outline-danger"
-                    size="sm"
-                    onClick={() => onRemove(action.id)}
-                    title="Remover ação"
-                    className="d-flex align-items-center justify-content-center"
-                    style={{ minWidth: '32px', minHeight: '32px' }}
-                  >
-                    <Trash size={16} />
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+                  return (
+                    <Draggable key={action.id} draggableId={action.id} index={index}>
+                      {(provided: DraggableProvided, snapshot) => (
+                        <tr
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className="align-middle"
+                          style={{
+                            ...provided.draggableProps.style,
+                            backgroundColor: snapshot.isDragging ? '#f8f9fa' : undefined,
+                            boxShadow: snapshot.isDragging
+                              ? '0 5px 10px rgba(0,0,0,0.15)'
+                              : undefined,
+                          }}
+                        >
+                          <td
+                            {...provided.dragHandleProps}
+                            className="text-center align-middle"
+                            style={{
+                              cursor: 'move',
+                              userSelect: 'none',
+                            }}
+                          >
+                            <GripVertical
+                              size={16}
+                              style={{
+                                color: '#6c757d',
+                                opacity: 0.6,
+                              }}
+                            />
+                          </td>
+                          <td className="text-center align-middle">
+                            <span className="fw-bold">{index + 1}</span>
+                          </td>
+                          <td className="align-middle">
+                            <Badge
+                              bg={getDeviceBadgeColor(action.device)}
+                              className="d-inline-block"
+                              style={{ minWidth: '140px' }}
+                            >
+                              {ACTION_DEVICE_LABELS[action.device]}
+                            </Badge>
+                          </td>
+                          <td className="align-middle">{formatActionDescription(action)}</td>
+                          <td className="align-middle">
+                            {details.length > 0 ? (
+                              <small className="text-muted d-block">{details.join(' • ')}</small>
+                            ) : (
+                              <span className="text-muted">—</span>
+                            )}
+                          </td>
+                          <td className="text-center align-middle">
+                            <Button
+                              variant="outline-danger"
+                              size="sm"
+                              onClick={() => onRemove(action.id)}
+                              title="Remover ação"
+                              className="d-flex align-items-center justify-content-center"
+                              style={{ minWidth: '32px', minHeight: '32px' }}
+                            >
+                              <Trash size={16} />
+                            </Button>
+                          </td>
+                        </tr>
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </Table>
+      </DragDropContext>
     </div>
   );
 };

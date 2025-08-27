@@ -89,6 +89,13 @@ const ActionBuilder: React.FC<ActionBuilderProps> = ({
     dispatch({ type: 'CLEAR' });
   }, []);
 
+  /**
+   * Reordena as ações após drag-and-drop
+   */
+  const handleReorderActions = useCallback((reorderedActions: AutomationAction[]) => {
+    dispatch({ type: 'SET', payload: reorderedActions });
+  }, []);
+
   const isMaxActionsReached = actions.length >= maxActions;
 
   return (
@@ -104,6 +111,7 @@ const ActionBuilder: React.FC<ActionBuilderProps> = ({
               actions={actions}
               onRemove={handleRemoveAction}
               onClear={handleClearAll}
+              onReorder={handleReorderActions}
               className="mb-4"
             />
           )}
