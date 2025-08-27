@@ -40,8 +40,54 @@ interface ActionFormProps {
   disabled?: boolean;
 }
 
+// Mapeamento de dispositivos para emojis e descrições
+const DEVICE_CONFIG = {
+  [ActionDevice.MOUSE]: {
+    emoji: '🖱️',
+    label: 'Mouse',
+    description: 'Mover, clicar, arrastar',
+    color: 'primary'
+  },
+  [ActionDevice.KEYBOARD]: {
+    emoji: '⌨️',
+    label: 'Teclado',
+    description: 'Digitar, teclas, atalhos',
+    color: 'primary'
+  },
+  [ActionDevice.WAIT]: {
+    emoji: '⏱️',
+    label: 'Aguardar',
+    description: 'Pausar execução',
+    color: 'primary'
+  },
+  [ActionDevice.SCREEN]: {
+    emoji: '📸',
+    label: 'Tela',
+    description: 'Capturar, buscar imagem',
+    color: 'primary'
+  },
+  [ActionDevice.CLIPBOARD]: {
+    emoji: '📋',
+    label: 'Área de Transferência',
+    description: 'Copiar, colar, limpar',
+    color: 'primary'
+  },
+  [ActionDevice.LLM]: {
+    emoji: '🤖',
+    label: 'IA',
+    description: 'GPT, análise de texto',
+    color: 'primary'
+  },
+  [ActionDevice.OCR]: {
+    emoji: '📝',
+    label: 'OCR',
+    description: 'Extrair texto de imagem',
+    color: 'primary'
+  },
+};
+
 const initialFormState: ActionFormState = {
-  device: ActionDevice.WAIT,
+  device: null as any, // Inicializa sem dispositivo selecionado
   mouseAction: MouseActionType.MOVE,
   keyboardAction: KeyboardActionType.TYPE,
   clipboardAction: ClipboardActionType.COPY,
@@ -72,22 +118,42 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
   const [formState, setFormState] = useState<ActionFormState>(initialFormState);
   const [error, setError] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [selectedDevice, setSelectedDevice] = useState<ActionDevice | null>(null);
 
   // Limpa o estado do formulário quando o tipo de dispositivo muda
   useEffect(() => {
-    setFormState((prev) => ({
-      ...initialFormState,
-      device: prev.device,
-      mouseAction: prev.device === ActionDevice.MOUSE ? MouseActionType.MOVE : undefined,
-      keyboardAction: prev.device === ActionDevice.KEYBOARD ? KeyboardActionType.TYPE : undefined,
-      clipboardAction:
-        prev.device === ActionDevice.CLIPBOARD ? ClipboardActionType.COPY : undefined,
-      screenAction: prev.device === ActionDevice.SCREEN ? ScreenActionType.CAPTURE : undefined,
-      llmAction: prev.device === ActionDevice.LLM ? LlmActionType.COMPLETION : undefined,
-      ocrAction: prev.device === ActionDevice.OCR ? OcrActionType.EXTRACT_TEXT : undefined,
-    }));
+    if (selectedDevice) {
+      setFormState((prev) => ({
+        ...initialFormState,
+        device: selectedDevice,
+        mouseAction: selectedDevice === ActionDevice.MOUSE ? MouseActionType.MOVE : undefined,
+        keyboardAction: selectedDevice === ActionDevice.KEYBOARD ? KeyboardActionType.TYPE : undefined,
+        clipboardAction:
+          selectedDevice === ActionDevice.CLIPBOARD ? ClipboardActionType.COPY : undefined,
+        screenAction: selectedDevice === ActionDevice.SCREEN ? ScreenActionType.CAPTURE : undefined,
+        llmAction: selectedDevice === ActionDevice.LLM ? LlmActionType.COMPLETION : undefined,
+        ocrAction: selectedDevice === ActionDevice.OCR ? OcrActionType.EXTRACT_TEXT : undefined,
+      }));
+      setError(null);
+    }
+  }, [selectedDevice]);
+
+  /**
+   * Seleciona um dispositivo
+   */
+  const handleDeviceSelect = (device: ActionDevice) => {
+    setSelectedDevice(device);
+    updateField('device', device);
+  };
+
+  /**
+   * Reseta a seleção de dispositivo
+   */
+  const handleResetDevice = () => {
+    setSelectedDevice(null);
+    setFormState(initialFormState);
     setError(null);
-  }, [formState.device]);
+  };
 
   /**
    * Atualiza campo do formulário
@@ -421,7 +487,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isAdding || disabled) return;
+    if (isAdding || disabled || !selectedDevice) return;
 
     setIsAdding(true);
     setError(null);
@@ -475,11 +541,9 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
         payload,
       } as Omit<AutomationAction, 'id' | 'timestamp'>);
 
-      // Reseta o formulário mantendo o tipo de dispositivo
-      setFormState({
-        ...initialFormState,
-        device: formState.device,
-      });
+      // Reseta o formulário e volta para a seleção de dispositivos
+      setFormState(initialFormState);
+      setSelectedDevice(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao adicionar ação');
     } finally {
@@ -491,42 +555,46 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
    * Renderiza campos de wait
    */
   const renderWaitFields = () => (
-    <Col md={3}>
-      <Form.Group>
-        <Form.Label>Tempo de Espera (ms)</Form.Label>
-        <Form.Control
-          type="number"
-          min={WAIT_CONSTRAINTS.MIN_MS}
-          max={WAIT_CONSTRAINTS.MAX_MS}
-          value={formState.waitMs || ''}
-          onChange={(e) => updateField('waitMs', e.target.value)}
-          placeholder={String(WAIT_CONSTRAINTS.DEFAULT_MS)}
-          disabled={isAdding}
-          required
-        />
-        <Form.Text className="text-muted">Máximo: {WAIT_CONSTRAINTS.MAX_MS / 1000}s</Form.Text>
-      </Form.Group>
-    </Col>
+    <>
+      <Col xs={12} md={6} lg={4}>
+        <Form.Group className="mb-3">
+          <Form.Label>Tempo de Espera (ms)</Form.Label>
+          <Form.Control
+            type="number"
+            min={WAIT_CONSTRAINTS.MIN_MS}
+            max={WAIT_CONSTRAINTS.MAX_MS}
+            value={formState.waitMs || ''}
+            onChange={(e) => updateField('waitMs', e.target.value)}
+            placeholder={String(WAIT_CONSTRAINTS.DEFAULT_MS)}
+            disabled={isAdding}
+            required
+          />
+          <Form.Text className="text-muted">Máximo: {WAIT_CONSTRAINTS.MAX_MS / 1000}s</Form.Text>
+        </Form.Group>
+      </Col>
+    </>
   );
 
   /**
    * Renderiza campos de clipboard
    */
   const renderClipboardFields = () => (
-    <Col md={3}>
-      <Form.Group>
-        <Form.Label>Ação</Form.Label>
-        <Form.Select
-          value={formState.clipboardAction}
-          onChange={(e) => updateField('clipboardAction', e.target.value as ClipboardActionType)}
-          disabled={isAdding}
-        >
-          <option value={ClipboardActionType.COPY}>Copiar</option>
-          <option value={ClipboardActionType.PASTE}>Colar</option>
-          <option value={ClipboardActionType.CLEAR}>Limpar</option>
-        </Form.Select>
-      </Form.Group>
-    </Col>
+    <>
+      <Col xs={12} md={6} lg={4}>
+        <Form.Group className="mb-3">
+          <Form.Label>Ação</Form.Label>
+          <Form.Select
+            value={formState.clipboardAction}
+            onChange={(e) => updateField('clipboardAction', e.target.value as ClipboardActionType)}
+            disabled={isAdding}
+          >
+            <option value={ClipboardActionType.COPY}>Copiar</option>
+            <option value={ClipboardActionType.PASTE}>Colar</option>
+            <option value={ClipboardActionType.CLEAR}>Limpar</option>
+          </Form.Select>
+        </Form.Group>
+      </Col>
+    </>
   );
 
   /**
@@ -537,8 +605,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
 
     return (
       <>
-        <Col md={3}>
-          <Form.Group>
+        <Col xs={12} md={6} lg={4}>
+          <Form.Group className="mb-3">
             <Form.Label>Ação</Form.Label>
             <Form.Select
               value={screenAction}
@@ -554,8 +622,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
 
         {(screenAction === ScreenActionType.FIND || screenAction === ScreenActionType.WAIT_FOR) && (
           <>
-            <Col md={3}>
-              <Form.Group>
+            <Col xs={12} md={6} lg={4}>
+              <Form.Group className="mb-3">
                 <Form.Label>Template (base64)</Form.Label>
                 <Form.Control
                   type="text"
@@ -567,8 +635,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                 />
               </Form.Group>
             </Col>
-            <Col md={2}>
-              <Form.Group>
+            <Col xs={12} md={6} lg={4}>
+              <Form.Group className="mb-3">
                 <Form.Label>Confiança</Form.Label>
                 <Form.Control
                   type="number"
@@ -586,8 +654,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
         )}
 
         {screenAction === ScreenActionType.WAIT_FOR && (
-          <Col md={2}>
-            <Form.Group>
+          <Col xs={12} md={6} lg={4}>
+            <Form.Group className="mb-3">
               <Form.Label>Timeout (ms)</Form.Label>
               <Form.Control
                 type="number"
@@ -610,12 +678,12 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
    */
   const renderLlmFields = () => (
     <>
-      <Col md={4}>
-        <Form.Group>
+      <Col xs={12} lg={6}>
+        <Form.Group className="mb-3">
           <Form.Label>Prompt</Form.Label>
           <Form.Control
             as="textarea"
-            rows={2}
+            rows={3}
             value={formState.prompt || ''}
             onChange={(e) => updateField('prompt', e.target.value)}
             placeholder="Digite o prompt..."
@@ -628,8 +696,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
           </Form.Text>
         </Form.Group>
       </Col>
-      <Col md={2}>
-        <Form.Group>
+      <Col xs={12} md={6} lg={3}>
+        <Form.Group className="mb-3">
           <Form.Label>Modelo</Form.Label>
           <Form.Control
             type="text"
@@ -640,8 +708,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
           />
         </Form.Group>
       </Col>
-      <Col md={2}>
-        <Form.Group>
+      <Col xs={12} md={6} lg={3}>
+        <Form.Group className="mb-3">
           <Form.Label>Temperatura</Form.Label>
           <Form.Control
             type="number"
@@ -663,8 +731,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
    */
   const renderOcrFields = () => (
     <>
-      <Col md={4}>
-        <Form.Group>
+      <Col xs={12} md={6} lg={4}>
+        <Form.Group className="mb-3">
           <Form.Label>Imagem (base64)</Form.Label>
           <Form.Control
             type="text"
@@ -676,8 +744,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
           />
         </Form.Group>
       </Col>
-      <Col md={2}>
-        <Form.Group>
+      <Col xs={12} md={6} lg={4}>
+        <Form.Group className="mb-3">
           <Form.Label>Idiomas</Form.Label>
           <Form.Control
             type="text"
@@ -693,8 +761,8 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
           />
         </Form.Group>
       </Col>
-      <Col md={2}>
-        <Form.Group>
+      <Col xs={12} md={6} lg={4}>
+        <Form.Group className="mb-3">
           <Form.Label>Modo</Form.Label>
           <Form.Control
             type="text"
@@ -716,230 +784,239 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
 
     return (
       <>
-        <Col md={3}>
-          <Form.Group>
-            <Form.Label>Ação do Mouse</Form.Label>
-            <Form.Select
-              value={mouseAction}
-              onChange={(e) => updateField('mouseAction', e.target.value as MouseActionType)}
-              disabled={isAdding}
-            >
-              <option value={MouseActionType.MOVE}>Mover</option>
-              <option value={MouseActionType.CLICK}>Clicar</option>
-              <option value={MouseActionType.DRAG}>Arrastar</option>
-              <option value={MouseActionType.SCROLL}>Rolar</option>
-            </Form.Select>
-          </Form.Group>
-        </Col>
-
-        {/* Campos específicos por ação */}
-        {mouseAction === MouseActionType.MOVE && (
-          <>
-            <Col md={2}>
+        <Col xs={12}>
+          <Row className="g-3">
+            {/* Seletor de ação */}
+            <Col xs={12} md={6} lg={4}>
               <Form.Group>
-                <Form.Label>X</Form.Label>
-                <Form.Control
-                  type="number"
-                  min="0"
-                  value={formState.x || ''}
-                  onChange={(e) => updateField('x', e.target.value)}
-                  placeholder="0"
-                  disabled={isAdding}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={2}>
-              <Form.Group>
-                <Form.Label>Y</Form.Label>
-                <Form.Control
-                  type="number"
-                  min="0"
-                  value={formState.y || ''}
-                  onChange={(e) => updateField('y', e.target.value)}
-                  placeholder="0"
-                  disabled={isAdding}
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </>
-        )}
-
-        {mouseAction === MouseActionType.CLICK && (
-          <>
-            <Col md={1}>
-              <Form.Group>
-                <Form.Label>X</Form.Label>
-                <Form.Control
-                  type="number"
-                  min="0"
-                  value={formState.x || ''}
-                  onChange={(e) => updateField('x', e.target.value)}
-                  placeholder="Auto"
-                  disabled={isAdding}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={1}>
-              <Form.Group>
-                <Form.Label>Y</Form.Label>
-                <Form.Control
-                  type="number"
-                  min="0"
-                  value={formState.y || ''}
-                  onChange={(e) => updateField('y', e.target.value)}
-                  placeholder="Auto"
-                  disabled={isAdding}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={2}>
-              <Form.Group>
-                <Form.Label>Botão</Form.Label>
+                <Form.Label>Ação do Mouse</Form.Label>
                 <Form.Select
-                  value={formState.button}
-                  onChange={(e) => updateField('button', e.target.value as MouseButton)}
+                  value={mouseAction}
+                  onChange={(e) => updateField('mouseAction', e.target.value as MouseActionType)}
                   disabled={isAdding}
                 >
-                  <option value={MouseButton.LEFT}>Esquerdo</option>
-                  <option value={MouseButton.RIGHT}>Direito</option>
-                  <option value={MouseButton.MIDDLE}>Meio</option>
+                  <option value={MouseActionType.MOVE}>Mover</option>
+                  <option value={MouseActionType.CLICK}>Clicar</option>
+                  <option value={MouseActionType.DRAG}>Arrastar</option>
+                  <option value={MouseActionType.SCROLL}>Rolar</option>
                 </Form.Select>
               </Form.Group>
             </Col>
-            <Col md={2}>
-              <Form.Group className="d-flex align-items-center mt-4">
+
+            {/* Campos específicos por ação */}
+            {mouseAction === MouseActionType.MOVE && (
+              <>
+                <Col xs={6} md={3} lg={2}>
+                  <Form.Group>
+                    <Form.Label>X</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      value={formState.x || ''}
+                      onChange={(e) => updateField('x', e.target.value)}
+                      placeholder="0"
+                      disabled={isAdding}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={6} md={3} lg={2}>
+                  <Form.Group>
+                    <Form.Label>Y</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      value={formState.y || ''}
+                      onChange={(e) => updateField('y', e.target.value)}
+                      placeholder="0"
+                      disabled={isAdding}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+
+            {mouseAction === MouseActionType.CLICK && (
+              <>
+                <Col xs={6} md={3} lg={2}>
+                  <Form.Group>
+                    <Form.Label>X (opcional)</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      value={formState.x || ''}
+                      onChange={(e) => updateField('x', e.target.value)}
+                      placeholder="Auto"
+                      disabled={isAdding}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={6} md={3} lg={2}>
+                  <Form.Group>
+                    <Form.Label>Y (opcional)</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      value={formState.y || ''}
+                      onChange={(e) => updateField('y', e.target.value)}
+                      placeholder="Auto"
+                      disabled={isAdding}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={12} md={6} lg={3}>
+                  <Form.Group>
+                    <Form.Label>Botão</Form.Label>
+                    <Form.Select
+                      value={formState.button}
+                      onChange={(e) => updateField('button', e.target.value as MouseButton)}
+                      disabled={isAdding}
+                    >
+                      <option value={MouseButton.LEFT}>Esquerdo</option>
+                      <option value={MouseButton.RIGHT}>Direito</option>
+                      <option value={MouseButton.MIDDLE}>Meio</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col xs={12} md={6} lg={3}>
+                  <Form.Group>
+                    <Form.Label>&nbsp;</Form.Label>
+                    <Form.Check
+                      type="checkbox"
+                      label="Duplo clique"
+                      checked={formState.doubleClick}
+                      onChange={(e) => updateField('doubleClick', e.target.checked)}
+                      disabled={isAdding}
+                      className="mt-2"
+                    />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+
+            {mouseAction === MouseActionType.DRAG && (
+              <>
+                <Col xs={6} md={3} lg={2}>
+                  <Form.Group>
+                    <Form.Label>De X</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      value={formState.fromX || ''}
+                      onChange={(e) => updateField('fromX', e.target.value)}
+                      placeholder="0"
+                      disabled={isAdding}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={6} md={3} lg={2}>
+                  <Form.Group>
+                    <Form.Label>De Y</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      value={formState.fromY || ''}
+                      onChange={(e) => updateField('fromY', e.target.value)}
+                      placeholder="0"
+                      disabled={isAdding}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={6} md={3} lg={2}>
+                  <Form.Group>
+                    <Form.Label>Para X</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      value={formState.toX || ''}
+                      onChange={(e) => updateField('toX', e.target.value)}
+                      placeholder="0"
+                      disabled={isAdding}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={6} md={3} lg={2}>
+                  <Form.Group>
+                    <Form.Label>Para Y</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min="0"
+                      value={formState.toY || ''}
+                      onChange={(e) => updateField('toY', e.target.value)}
+                      placeholder="0"
+                      disabled={isAdding}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+
+            {mouseAction === MouseActionType.SCROLL && (
+              <>
+                <Col xs={12} md={6} lg={3}>
+                  <Form.Group>
+                    <Form.Label>Direção</Form.Label>
+                    <Form.Select
+                      value={formState.direction}
+                      onChange={(e) => updateField('direction', e.target.value as ScrollDirection)}
+                      disabled={isAdding}
+                    >
+                      <option value={ScrollDirection.DOWN}>Baixo</option>
+                      <option value={ScrollDirection.UP}>Cima</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col xs={12} md={6} lg={3}>
+                  <Form.Group>
+                    <Form.Label>Quantidade</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min={MOUSE_CONSTRAINTS.MIN_SCROLL_AMOUNT}
+                      max={MOUSE_CONSTRAINTS.MAX_SCROLL_AMOUNT}
+                      value={formState.amount || ''}
+                      onChange={(e) => updateField('amount', e.target.value)}
+                      placeholder={String(MOUSE_CONSTRAINTS.DEFAULT_SCROLL_AMOUNT)}
+                      disabled={isAdding}
+                    />
+                  </Form.Group>
+                </Col>
+              </>
+            )}
+
+            {/* Campos comuns do mouse */}
+            <Col xs={12} md={6} lg={3}>
+              <Form.Group>
+                <Form.Label>&nbsp;</Form.Label>
                 <Form.Check
                   type="checkbox"
-                  label="Duplo clique"
-                  checked={formState.doubleClick}
-                  onChange={(e) => updateField('doubleClick', e.target.checked)}
+                  label="Movimento suave"
+                  checked={formState.smooth}
+                  onChange={(e) => updateField('smooth', e.target.checked)}
                   disabled={isAdding}
+                  className="mt-2"
                 />
               </Form.Group>
             </Col>
-          </>
-        )}
-
-        {mouseAction === MouseActionType.DRAG && (
-          <>
-            <Col md={1}>
+            <Col xs={12} md={6} lg={3}>
               <Form.Group>
-                <Form.Label>De X</Form.Label>
+                <Form.Label>Duração (ms)</Form.Label>
                 <Form.Control
                   type="number"
-                  min="0"
-                  value={formState.fromX || ''}
-                  onChange={(e) => updateField('fromX', e.target.value)}
-                  placeholder="0"
-                  disabled={isAdding}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={1}>
-              <Form.Group>
-                <Form.Label>De Y</Form.Label>
-                <Form.Control
-                  type="number"
-                  min="0"
-                  value={formState.fromY || ''}
-                  onChange={(e) => updateField('fromY', e.target.value)}
-                  placeholder="0"
-                  disabled={isAdding}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={1}>
-              <Form.Group>
-                <Form.Label>Para X</Form.Label>
-                <Form.Control
-                  type="number"
-                  min="0"
-                  value={formState.toX || ''}
-                  onChange={(e) => updateField('toX', e.target.value)}
-                  placeholder="0"
-                  disabled={isAdding}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={1}>
-              <Form.Group>
-                <Form.Label>Para Y</Form.Label>
-                <Form.Control
-                  type="number"
-                  min="0"
-                  value={formState.toY || ''}
-                  onChange={(e) => updateField('toY', e.target.value)}
-                  placeholder="0"
-                  disabled={isAdding}
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </>
-        )}
-
-        {mouseAction === MouseActionType.SCROLL && (
-          <>
-            <Col md={2}>
-              <Form.Group>
-                <Form.Label>Direção</Form.Label>
-                <Form.Select
-                  value={formState.direction}
-                  onChange={(e) => updateField('direction', e.target.value as ScrollDirection)}
-                  disabled={isAdding}
-                >
-                  <option value={ScrollDirection.DOWN}>Baixo</option>
-                  <option value={ScrollDirection.UP}>Cima</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-            <Col md={2}>
-              <Form.Group>
-                <Form.Label>Quantidade</Form.Label>
-                <Form.Control
-                  type="number"
-                  min={MOUSE_CONSTRAINTS.MIN_SCROLL_AMOUNT}
-                  max={MOUSE_CONSTRAINTS.MAX_SCROLL_AMOUNT}
-                  value={formState.amount || ''}
-                  onChange={(e) => updateField('amount', e.target.value)}
-                  placeholder={String(MOUSE_CONSTRAINTS.DEFAULT_SCROLL_AMOUNT)}
+                  min={MOUSE_CONSTRAINTS.MIN_DURATION}
+                  max={MOUSE_CONSTRAINTS.MAX_DURATION}
+                  value={formState.duration || ''}
+                  onChange={(e) => updateField('duration', e.target.value)}
+                  placeholder={String(MOUSE_CONSTRAINTS.DEFAULT_DURATION)}
                   disabled={isAdding}
                 />
               </Form.Group>
             </Col>
-          </>
-        )}
-
-        {/* Campos comuns do mouse */}
-        <Col md={2}>
-          <Form.Group className="d-flex align-items-center mt-4">
-            <Form.Check
-              type="checkbox"
-              label="Movimento suave"
-              checked={formState.smooth}
-              onChange={(e) => updateField('smooth', e.target.checked)}
-              disabled={isAdding}
-            />
-          </Form.Group>
-        </Col>
-        <Col md={2}>
-          <Form.Group>
-            <Form.Label>Duração (ms)</Form.Label>
-            <Form.Control
-              type="number"
-              min={MOUSE_CONSTRAINTS.MIN_DURATION}
-              max={MOUSE_CONSTRAINTS.MAX_DURATION}
-              value={formState.duration || ''}
-              onChange={(e) => updateField('duration', e.target.value)}
-              placeholder={String(MOUSE_CONSTRAINTS.DEFAULT_DURATION)}
-              disabled={isAdding}
-            />
-          </Form.Group>
+          </Row>
         </Col>
       </>
     );
@@ -1152,7 +1229,14 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
   return (
     <Card>
       <Card.Header>
-        <h6 className="mb-0">Adicionar Nova Ação</h6>
+        <div className="d-flex justify-content-between align-items-center">
+          <h6 className="mb-0">Adicionar Nova Ação</h6>
+          {selectedDevice && (
+            <Button variant="outline-secondary" size="sm" onClick={handleResetDevice}>
+              Trocar Dispositivo
+            </Button>
+          )}
+        </div>
       </Card.Header>
       <Card.Body>
         {error && (
@@ -1161,43 +1245,58 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
           </Alert>
         )}
 
-        <Form onSubmit={handleSubmit}>
-          <Row className="align-items-end">
-            {/* Seletor de dispositivo */}
-            <Col md={2}>
-              <Form.Group>
-                <Form.Label>Dispositivo</Form.Label>
-                <Form.Select
-                  value={formState.device}
-                  onChange={(e) => updateField('device', e.target.value as ActionDevice)}
-                  disabled={isAdding}
-                  data-testid="action-device"
+        {/* Seleção de Dispositivo com Botões */}
+        {!selectedDevice ? (
+          <div>
+            <h6 className="mb-3">Escolha o tipo de dispositivo:</h6>
+            <Row className="g-3">
+              {Object.entries(DEVICE_CONFIG).map(([device, config]) => (
+                <Col key={device} xs={6} md={4} lg={3}>
+                  <Button
+                    variant={`outline-${config.color}`}
+                    className="w-100 h-100 py-3 d-flex flex-column align-items-center"
+                    onClick={() => handleDeviceSelect(device as ActionDevice)}
+                    disabled={isAdding || disabled}
+                    style={{ minHeight: '120px' }}
+                  >
+                    <div className="fs-1 mb-2">{config.emoji}</div>
+                    <div className="fw-bold">{config.label}</div>
+                    <small className="text-muted mt-1">{config.description}</small>
+                  </Button>
+                </Col>
+              ))}
+            </Row>
+          </div>
+        ) : (
+          /* Formulário de Configuração da Ação */
+          <div>
+            <div className="mb-4">
+              <div className="d-flex align-items-center gap-2">
+                <span className="fs-3">{DEVICE_CONFIG[selectedDevice].emoji}</span>
+                <h6 className="mb-0">Configurar {DEVICE_CONFIG[selectedDevice].label}</h6>
+              </div>
+            </div>
+            
+            <Form onSubmit={handleSubmit}>
+              <Row className="g-3 mb-3">
+                {/* Campos dinâmicos baseados no dispositivo */}
+                {renderDeviceFields()}
+              </Row>
+
+              {/* Botão de adicionar separado */}
+              <div className="d-flex justify-content-end mt-3">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  disabled={isAdding || disabled}
+                  size="lg"
                 >
-                  {Object.values(ActionDevice).map((device) => (
-                    <option key={device} value={device}>
-                      {ACTION_DEVICE_LABELS[device]}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            </Col>
-
-            {/* Campos dinâmicos baseados no dispositivo */}
-            {renderDeviceFields()}
-
-            {/* Botão de adicionar */}
-            <Col md="auto">
-              <Button
-                type="submit"
-                variant="primary"
-                disabled={isAdding || disabled}
-                className="mb-3"
-              >
-                {isAdding ? 'Adicionando...' : 'Adicionar Ação'}
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+                  {isAdding ? 'Adicionando...' : 'Adicionar Ação'}
+                </Button>
+              </div>
+            </Form>
+          </div>
+        )}
       </Card.Body>
     </Card>
   );
