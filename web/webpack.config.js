@@ -54,6 +54,7 @@ module.exports = {
     compress: true,
     port: 3001,
     hot: true,
+    open: true, // Abre automaticamente no navegador
     historyApiFallback: true, // Importante para SPA
     proxy: {
       '/api': {

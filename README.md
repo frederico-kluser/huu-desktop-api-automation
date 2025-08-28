@@ -77,8 +77,8 @@ npm install
 cp .env.example .env
 # Edite .env com suas chaves de API (OpenAI, DeepSeek)
 
-# Inicie em modo desenvolvimento
-npm run start:dev
+# Inicie a aplicação completa (backend + frontend)
+npm start
 ```
 
 ### URLs de Acesso
@@ -327,21 +327,19 @@ curl -X POST http://localhost:3000/api/v1/llm \
 
 ```bash
 # Desenvolvimento
-npm run dev          # API com hot reload (nodemon)
-npm run dev:web      # Frontend com webpack-dev-server
-npm run dev:all      # API + Frontend simultaneamente
-npm run start:dev    # Limpa portas e inicia tudo
+npm start            # Inicia backend + frontend (abre no navegador)
+npm run start:back   # Inicia apenas o backend (API)
+npm run start:front  # Inicia apenas o frontend (abre no navegador)
 
 # Build
 npm run build        # Compila TypeScript da API
 npm run build:web    # Build do frontend
 npm run build:prod   # Build otimizado para produção
+npm run build:all    # Build completo (API + Frontend)
 
 # Produção
-npm start            # Build completo e inicia
-npm run start:prod   # Inicia servidor de produção
-npm run pm2:start    # Inicia com PM2
-npm run pm2:stop     # Para processo PM2
+npm run production   # Build completo e inicia em modo produção
+npm run start:prod   # Inicia servidor de produção (após build)
 
 # Qualidade
 npm run lint         # ESLint
