@@ -6,28 +6,14 @@ import React from 'react';
 import { Table, Button, Badge } from 'react-bootstrap';
 import { Trash, GripVertical } from 'react-bootstrap-icons';
 import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-  DragEndEvent,
-  DragStartEvent,
-  DragOverlay,
-  defaultDropAnimationSideEffects,
-  UniqueIdentifier,
-} from '@dnd-kit/core';
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-  useSortable,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { restrictToVerticalAxis, restrictToWindowEdges } from '@dnd-kit/modifiers';
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+  DraggableProvided,
+  DraggableStateSnapshot,
+  DroppableProvided,
+} from '@hello-pangea/dnd';
 import {
   AutomationAction,
   ActionDevice,
@@ -318,159 +304,6 @@ const formatActionDetails = (action: AutomationAction): string[] => {
 };
 
 /**
- * Componente de linha da tabela com suporte a drag
- */
-interface SortableRowProps {
-  action: AutomationAction;
-  index: number;
-  onRemove: (id: string) => void;
-  isDragging?: boolean;
-}
-
-const SortableRow: React.FC<SortableRowProps> = ({ action, index, onRemove, isDragging = false }) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging: isCurrentlyDragging,
-  } = useSortable({ 
-    id: action.id,
-    transition: {
-      duration: 150,
-      easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
-    },
-  });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    position: 'relative' as const,
-    zIndex: isCurrentlyDragging ? 1000 : undefined,
-  };
-
-  const details = formatActionDetails(action);
-
-  return (
-    <tr
-      ref={setNodeRef}
-      style={style}
-      className={`align-middle sortable-row ${isCurrentlyDragging ? 'sortable-row--dragging' : ''}`}
-    >
-      <td className="text-center align-middle">
-        <div
-          {...attributes}
-          {...listeners}
-          className="drag-handle"
-          aria-label="Arrastar para reordenar"
-          aria-pressed={isCurrentlyDragging}
-          role="button"
-          tabIndex={0}
-        >
-          <GripVertical size={16} />
-        </div>
-      </td>
-      <td className="text-center align-middle">
-        <span className="fw-bold">{index + 1}</span>
-      </td>
-      <td className="align-middle">
-        <Badge
-          bg={getDeviceBadgeColor(action.device)}
-          className="d-inline-block"
-          style={{ minWidth: '140px' }}
-        >
-          {ACTION_DEVICE_LABELS[action.device]}
-        </Badge>
-      </td>
-      <td className="align-middle">{formatActionDescription(action)}</td>
-      <td className="align-middle">
-        {details.length > 0 ? (
-          <small className="text-muted d-block">{details.join(' • ')}</small>
-        ) : (
-          <span className="text-muted">—</span>
-        )}
-      </td>
-      <td className="text-center align-middle">
-        <Button
-          variant="outline-danger"
-          size="sm"
-          onClick={() => onRemove(action.id)}
-          title="Remover ação"
-          className="d-flex align-items-center justify-content-center"
-          style={{ minWidth: '32px', minHeight: '32px' }}
-        >
-          <Trash size={16} />
-        </Button>
-      </td>
-    </tr>
-  );
-};
-
-/**
- * Componente de overlay para o item sendo arrastado
- */
-const DragOverlayItem: React.FC<{ action: AutomationAction; index: number }> = ({ action, index }) => {
-  const details = formatActionDetails(action);
-  return (
-    <div className="drag-overlay">
-      <Table 
-        striped 
-        bordered 
-        hover 
-        responsive 
-        size="sm" 
-        style={{ 
-          width: 'auto', 
-          margin: 0,
-        }}
-      >
-      <tbody>
-        <tr className="align-middle">
-          <td className="text-center align-middle" style={{ width: '40px' }}>
-            <div className="drag-handle" style={{ cursor: 'grabbing' }}>
-              <GripVertical size={16} />
-            </div>
-          </td>
-          <td className="text-center align-middle" style={{ width: '50px' }}>
-            <span className="fw-bold">{index + 1}</span>
-          </td>
-          <td className="align-middle" style={{ width: '180px' }}>
-            <Badge
-              bg={getDeviceBadgeColor(action.device)}
-              className="d-inline-block"
-              style={{ minWidth: '140px' }}
-            >
-              {ACTION_DEVICE_LABELS[action.device]}
-            </Badge>
-          </td>
-          <td className="align-middle">{formatActionDescription(action)}</td>
-          <td className="align-middle" style={{ width: '200px' }}>
-            {details.length > 0 ? (
-              <small className="text-muted d-block">{details.join(' • ')}</small>
-            ) : (
-              <span className="text-muted">—</span>
-            )}
-          </td>
-          <td className="text-center align-middle" style={{ width: '80px' }}>
-            <Button
-              variant="outline-danger"
-              size="sm"
-              disabled
-              className="d-flex align-items-center justify-content-center"
-              style={{ minWidth: '32px', minHeight: '32px' }}
-            >
-              <Trash size={16} />
-            </Button>
-          </td>
-        </tr>
-      </tbody>
-    </Table>
-    </div>
-  );
-};
-
-/**
  * Componente de tabela de ações com suporte a drag-and-drop
  */
 const ActionTable: React.FC<ActionTableProps> = ({
@@ -480,61 +313,21 @@ const ActionTable: React.FC<ActionTableProps> = ({
   onReorder,
   className = '',
 }) => {
-  const [activeId, setActiveId] = React.useState<UniqueIdentifier | null>(null);
-  
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8,
-      },
-    }),
-    useSensor(TouchSensor, {
-      activationConstraint: {
-        delay: 200,
-        tolerance: 5,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
   if (actions.length === 0) {
     return null;
   }
 
-  const handleDragStart = React.useCallback((event: DragStartEvent) => {
-    const { active } = event;
-    setActiveId(active.id);
-    document.body.classList.add('dragging');
-  }, []);
-
-  const handleDragEnd = React.useCallback((event: DragEndEvent) => {
-    const { active, over } = event;
-    
-    if (active.id !== over?.id && over && onReorder) {
-      const oldIndex = actions.findIndex((item) => item.id === active.id);
-      const newIndex = actions.findIndex((item) => item.id === over.id);
-      
-      if (oldIndex !== -1 && newIndex !== -1) {
-        const newItems = arrayMove(actions, oldIndex, newIndex);
-        onReorder(newItems);
-      }
+  const handleDragEnd = (result: DropResult) => {
+    if (!result.destination || !onReorder) {
+      return;
     }
-    
-    setActiveId(null);
-    document.body.classList.remove('dragging');
-  }, [actions, onReorder]);
 
-  const handleDragCancel = React.useCallback(() => {
-    setActiveId(null);
-    document.body.classList.remove('dragging');
-  }, []);
+    const items = Array.from(actions);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-  const activeAction = React.useMemo(
-    () => (activeId ? actions.find(a => a.id === activeId) : null),
-    [activeId, actions]
-  );
-  const activeIndex = activeAction ? actions.indexOf(activeAction) : -1;
+    onReorder(items);
+  };
 
   return (
     <div className={className}>
@@ -553,22 +346,15 @@ const ActionTable: React.FC<ActionTableProps> = ({
         </div>
       </div>
 
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-        onDragCancel={handleDragCancel}
-        modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
-      >
+      <DragDropContext onDragEnd={handleDragEnd}>
         <Table 
-        striped 
-        bordered 
-        hover 
-        responsive 
-        size="sm" 
-        className={`action-table ${activeId ? 'action-table--dragging' : ''}`}
-      >
+          striped 
+          bordered 
+          hover 
+          responsive 
+          size="sm" 
+          className="action-table"
+        >
           <thead>
             <tr>
               <th style={{ width: '40px' }} className="text-center">
@@ -585,34 +371,85 @@ const ActionTable: React.FC<ActionTableProps> = ({
               </th>
             </tr>
           </thead>
-          <tbody>
-            <SortableContext
-              items={actions.map(a => a.id)}
-              strategy={verticalListSortingStrategy}
-            >
-              {actions.map((action, index) => (
-                <SortableRow
-                  key={action.id}
-                  action={action}
-                  index={index}
-                  onRemove={onRemove}
-                  isDragging={action.id === activeId}
-                />
-              ))}
-            </SortableContext>
-          </tbody>
+          <Droppable droppableId="actions">
+            {(provided: DroppableProvided) => (
+              <tbody
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {actions.map((action, index) => (
+                  <Draggable 
+                    key={action.id} 
+                    draggableId={action.id} 
+                    index={index}
+                  >
+                    {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => {
+                      const details = formatActionDetails(action);
+                      
+                      return (
+                        <tr
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className={`align-middle ${snapshot.isDragging ? 'dragging-row' : ''}`}
+                          style={{
+                            ...provided.draggableProps.style,
+                            backgroundColor: snapshot.isDragging ? '#f8f9fa' : undefined,
+                          }}
+                        >
+                          <td className="text-center align-middle">
+                            <div
+                              {...provided.dragHandleProps}
+                              className="drag-handle"
+                              aria-label="Arrastar para reordenar"
+                              role="button"
+                              tabIndex={0}
+                            >
+                              <GripVertical size={16} />
+                            </div>
+                          </td>
+                          <td className="text-center align-middle">
+                            <span className="fw-bold">{index + 1}</span>
+                          </td>
+                          <td className="align-middle">
+                            <Badge
+                              bg={getDeviceBadgeColor(action.device)}
+                              className="d-inline-block"
+                              style={{ minWidth: '140px' }}
+                            >
+                              {ACTION_DEVICE_LABELS[action.device]}
+                            </Badge>
+                          </td>
+                          <td className="align-middle">{formatActionDescription(action)}</td>
+                          <td className="align-middle">
+                            {details.length > 0 ? (
+                              <small className="text-muted d-block">{details.join(' • ')}</small>
+                            ) : (
+                              <span className="text-muted">—</span>
+                            )}
+                          </td>
+                          <td className="text-center align-middle">
+                            <Button
+                              variant="outline-danger"
+                              size="sm"
+                              onClick={() => onRemove(action.id)}
+                              title="Remover ação"
+                              className="d-flex align-items-center justify-content-center"
+                              style={{ minWidth: '32px', minHeight: '32px' }}
+                            >
+                              <Trash size={16} />
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    }}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
         </Table>
-        <DragOverlay
-          dropAnimation={{
-            duration: 200,
-            easing: 'cubic-bezier(0.18, 0.67, 0.6, 1.22)',
-          }}
-        >
-          {activeAction ? (
-            <DragOverlayItem action={activeAction} index={activeIndex + 1} />
-          ) : null}
-        </DragOverlay>
-      </DndContext>
+      </DragDropContext>
     </div>
   );
 };

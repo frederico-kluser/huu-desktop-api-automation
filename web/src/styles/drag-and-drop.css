@@ -1,34 +1,15 @@
 /**
- * Estilos otimizados para @dnd-kit
+ * Estilos otimizados para @hello-pangea/dnd
  */
 
-/* Container principal durante drag */
-.dnd-container {
-  position: relative;
+/* Linha sendo arrastada */
+.dragging-row {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  opacity: 0.9;
+  background-color: white !important;
 }
 
-/* Linhas sortáveis */
-.sortable-row {
-  transition: transform 200ms cubic-bezier(0.25, 1, 0.5, 1);
-  position: relative;
-  background-color: white;
-}
-
-.sortable-row:hover {
-  background-color: #f8f9fa;
-}
-
-/* Estado quando está sendo arrastado */
-.sortable-row--dragging {
-  opacity: 0.4;
-  background-color: #f8f9fa;
-}
-
-.sortable-row--over {
-  background-color: #e3f2fd;
-}
-
-/* Handle de arraste otimizado */
+/* Handle de arraste */
 .drag-handle {
   display: inline-flex;
   padding: 4px 8px;
@@ -59,93 +40,27 @@
   border-radius: 4px;
 }
 
-/* Overlay do item sendo arrastado */
-.drag-overlay {
-  cursor: grabbing;
-  opacity: 0.95;
-  transform: rotate(2deg) scale(1.02);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  background-color: white;
-  border-radius: 4px;
-}
-
-.drag-overlay table {
-  margin: 0;
-  box-shadow: none;
-}
-
-/* Indicador de posição de drop */
-.drop-indicator {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    #007bff 20%, 
-    #007bff 80%, 
-    transparent 100%);
-  z-index: 1000;
-  pointer-events: none;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-/* Animações suaves */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes dropSuccess {
-  0% {
-    background-color: #d4edda;
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.02);
-  }
-  100% {
-    background-color: transparent;
-    transform: scale(1);
-  }
-}
-
-.sortable-row--dropped {
-  animation: dropSuccess 0.4s ease;
-}
-
-/* Transição de reordenação */
-.sortable-row--moving {
-  transition: transform 200ms cubic-bezier(0.18, 0.67, 0.6, 1.22);
-}
-
-/* Estados visuais da tabela */
+/* Tabela de ações */
 .action-table {
   position: relative;
   transition: box-shadow 0.2s ease;
 }
 
-.action-table--dragging {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.action-table tbody {
+  position: relative;
 }
 
 .action-table tbody tr {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: white;
+}
+
+.action-table tbody tr:hover {
+  background-color: #f8f9fa;
 }
 
 /* Feedback visual para teclado */
-.sortable-row:focus-within {
+.action-table tbody tr:focus-within {
   outline: 2px solid #007bff;
   outline-offset: -2px;
   z-index: 10;
@@ -167,9 +82,16 @@ body.dragging {
   border-radius: 4px;
 }
 
-/* Performance: usar transform ao invés de position */
-.sortable-ghost {
-  opacity: 0;
+/* Animações suaves */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Placeholder para telas móveis */
@@ -179,22 +101,22 @@ body.dragging {
     font-size: 1.1em;
   }
   
-  .drag-overlay {
-    transform: rotate(0deg) scale(1);
+  .dragging-row {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   }
 }
 
 /* Suporte para modo escuro (se implementado) */
 @media (prefers-color-scheme: dark) {
-  .sortable-row {
+  .action-table tbody tr {
     background-color: #1a1a1a;
   }
   
-  .sortable-row:hover {
+  .action-table tbody tr:hover {
     background-color: #2a2a2a;
   }
   
-  .drag-overlay {
-    background-color: #2a2a2a;
+  .dragging-row {
+    background-color: #2a2a2a !important;
   }
 }
