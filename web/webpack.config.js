@@ -7,11 +7,12 @@ module.exports = {
   mode: process.env.NODE_ENV || 'development',
   entry: path.resolve(__dirname, './src/index.tsx'),
   context: __dirname,
+  target: 'electron-renderer',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js',
     clean: true,
-    publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+    publicPath: './',
   },
   module: {
     rules: [
@@ -48,21 +49,8 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
   ],
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'public'),
-    },
-    compress: true,
-    port: 3001,
-    hot: true,
-    open: true, // Abre automaticamente no navegador
-    historyApiFallback: true, // Importante para SPA
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        logLevel: 'debug', // Para debug
-      },
-    },
+  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
+  performance: {
+    hints: false,
   },
 };

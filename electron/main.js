@@ -47,26 +47,57 @@ function createWindow() {
     backgroundColor: '#ffffff',
   });
 
-  // Load the app
-  if (isDev) {
-    // In development, load from webpack dev server
-    mainWindow.loadURL('http://localhost:3001');
+  // Always load from built HTML file
+  const indexPath = path.join(__dirname, '..', 'web', 'dist', 'index.html');
 
-    // Open DevTools automatically in development
-    mainWindow.webContents.openDevTools();
-  } else {
-    // In production, load the built files
-    mainWindow.loadFile(path.join(__dirname, '..', 'web', 'dist', 'index.html'));
-  }
+  // Wait for backend to be ready before loading
+  const waitForBackend = async () => {
+    let retries = 30; // 30 seconds timeout
+    console.log('Waiting for backend to be ready...');
+
+    while (retries > 0) {
+      try {
+        const response = await fetch('http://localhost:3000/health');
+        if (response.ok) {
+          console.log('✅ Backend is ready!');
+
+          // Check if HTML file exists
+          if (!fs.existsSync(indexPath)) {
+            console.error('Frontend not built. Building now...');
+            // You may want to trigger a build here or show an error
+            dialog.showErrorBox('Erro', 'Interface não encontrada. Execute: npm run build:web');
+            app.quit();
+            return;
+          }
+
+          mainWindow.loadFile(indexPath);
+
+          // Open DevTools in development
+          if (isDev) {
+            mainWindow.webContents.openDevTools();
+          }
+          return;
+        }
+      } catch (e) {
+        // Backend not ready yet
+        console.log(`Waiting for backend... (${retries} retries left)`);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      retries--;
+    }
+
+    console.error('Backend failed to start');
+    dialog.showErrorBox('Erro', 'Falha ao iniciar o servidor backend');
+    app.quit();
+  };
+
+  // Start loading after backend starts
+  setTimeout(waitForBackend, 3000);
 
   // Show window when ready
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
-
-    // Focus window on creation
-    if (isDev) {
-      mainWindow.focus();
-    }
+    mainWindow.focus();
   });
 
   // Handle window closed
@@ -153,7 +184,7 @@ function setupMenu() {
         },
         { type: 'separator' },
         {
-          label: isDev ? 'Sair (Dev Mode)' : 'Sair',
+          label: 'Sair',
           accelerator: process.platform === 'darwin' ? 'Cmd+Q' : 'Ctrl+Q',
           click: () => {
             isQuitting = true;
@@ -181,7 +212,7 @@ function setupMenu() {
         { label: 'Alternar Tela Cheia', accelerator: 'F11', role: 'togglefullscreen' },
         { type: 'separator' },
         {
-          label: 'Alternar Ferramentas do Desenvolvedor',
+          label: 'Ferramentas do Desenvolvedor',
           accelerator: 'F12',
           click: () => {
             mainWindow.webContents.toggleDevTools();
@@ -380,47 +411,114 @@ function showTrayBalloon(title, content) {
   }
 }
 
-// Start backend server
+// Start backend server integrated with Electron
 function startBackend() {
-  if (isDev) {
-    // In development, backend runs separately
-    console.log('Development mode: Backend should be started separately');
-    return;
+  console.log('🚀 Starting integrated backend server...');
+
+  // Kill any existing process on port 3000
+  if (process.platform === 'win32') {
+    spawn('cmd', ['/c', 'netstat -ano | findstr :3000 | findstr LISTENING'], { shell: true }).on(
+      'exit',
+      () => console.log('Port 3000 checked'),
+    );
+  } else {
+    spawn('lsof', ['-ti:3000'], { shell: true }).on('exit', () => console.log('Port 3000 checked'));
   }
 
-  // In production, start the backend as a child process
-  const backendPath = path.join(__dirname, '..', 'dist', 'index.js');
+  // Determine backend path based on environment
+  const backendCommand = isDev ? 'tsx' : 'node';
+  const backendPath = isDev
+    ? path.join(__dirname, '..', 'src', 'index.ts')
+    : path.join(__dirname, '..', 'dist', 'index.js');
 
-  if (!fs.existsSync(backendPath)) {
-    console.error('Backend not found. Please build the project first.');
-    dialog.showErrorBox('Erro', 'Backend não encontrado. Por favor, compile o projeto primeiro.');
-    app.quit();
-    return;
+  // Check if backend exists in production
+  if (!isDev && !fs.existsSync(backendPath)) {
+    console.error('Backend not found. Building...');
+    // Try to build backend
+    const buildProcess = spawn('npm', ['run', 'build:prod'], {
+      cwd: path.join(__dirname, '..'),
+      shell: true,
+      stdio: 'inherit',
+    });
+
+    buildProcess.on('close', (code) => {
+      if (code === 0) {
+        startBackendProcess();
+      } else {
+        dialog.showErrorBox('Erro', 'Falha ao compilar o backend');
+        app.quit();
+      }
+    });
+  } else {
+    startBackendProcess();
   }
 
-  backendProcess = spawn('node', [backendPath], {
-    env: { ...process.env, ELECTRON_RUN_AS_NODE: '1' },
-    stdio: 'pipe',
-  });
+  function startBackendProcess() {
+    // Use tsx for TypeScript in development, node for production
+    const command = isDev
+      ? path.join(__dirname, '..', 'node_modules', '.bin', backendCommand)
+      : backendCommand;
 
-  backendProcess.stdout.on('data', (data) => {
-    console.log(`Backend: ${data}`);
-  });
+    console.log(`Starting backend with: ${command} ${backendPath}`);
 
-  backendProcess.stderr.on('data', (data) => {
-    console.error(`Backend Error: ${data}`);
-  });
+    backendProcess = spawn(command, [backendPath], {
+      env: {
+        ...process.env,
+        ELECTRON_RUN_AS_NODE: '1',
+        NODE_ENV: isDev ? 'development' : 'production',
+        PORT: '3000',
+        HOST: '127.0.0.1',
+      },
+      cwd: path.join(__dirname, '..'),
+      stdio: ['pipe', 'pipe', 'pipe'],
+      shell: true,
+    });
 
-  backendProcess.on('close', (code) => {
-    console.log(`Backend process exited with code ${code}`);
-    backendProcess = null;
-  });
+    backendProcess.stdout.on('data', (data) => {
+      console.log(`[Backend] ${data.toString().trim()}`);
+    });
+
+    backendProcess.stderr.on('data', (data) => {
+      console.error(`[Backend Error] ${data.toString().trim()}`);
+    });
+
+    backendProcess.on('error', (error) => {
+      console.error('Failed to start backend:', error);
+      dialog.showErrorBox('Erro', `Falha ao iniciar backend: ${error.message}`);
+    });
+
+    backendProcess.on('close', (code) => {
+      console.log(`Backend process exited with code ${code}`);
+      backendProcess = null;
+
+      // If app is not quitting, restart backend
+      if (!isQuitting && code !== 0) {
+        console.log('Backend crashed, restarting in 5 seconds...');
+        setTimeout(() => {
+          if (!isQuitting) {
+            startBackend();
+          }
+        }, 5000);
+      }
+    });
+  }
 }
 
 // Stop backend server
 function stopBackend() {
   if (backendProcess) {
+    console.log('Stopping backend server...');
+
+    // Try graceful shutdown first
     backendProcess.kill('SIGTERM');
+
+    // Force kill after 5 seconds if still running
+    setTimeout(() => {
+      if (backendProcess) {
+        backendProcess.kill('SIGKILL');
+      }
+    }, 5000);
+
     backendProcess = null;
   }
 }
@@ -539,19 +637,26 @@ function setupIPC() {
 
 // App event handlers
 app.whenReady().then(() => {
-  createWindow();
-  createTray();
-  setupIPC();
+  // Start backend first
   startBackend();
 
-  // Setup auto-updater
-  if (!isDev) {
-    autoUpdater.checkForUpdatesAndNotify();
-  }
+  // Then create window after a delay
+  setTimeout(() => {
+    createWindow();
+    createTray();
+    setupIPC();
+
+    // Setup auto-updater
+    if (!isDev) {
+      autoUpdater.checkForUpdatesAndNotify();
+    }
+  }, 1000);
 });
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    isQuitting = true;
+    stopBackend();
     app.quit();
   }
 });
@@ -573,7 +678,7 @@ app.on('will-quit', (event) => {
   if (backendProcess) {
     event.preventDefault();
     stopBackend();
-    setTimeout(() => app.quit(), 1000);
+    setTimeout(() => app.quit(), 2000);
   }
 });
 
