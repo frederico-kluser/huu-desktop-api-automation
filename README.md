@@ -1,4 +1,4 @@
-# NutJS Desktop Automation System
+# HUU Desktop API Automation
 
 <div align="center">
 
@@ -8,10 +8,10 @@
 ![Fastify](https://img.shields.io/badge/Fastify-4.24.0-black.svg)
 ![NutJS](https://img.shields.io/badge/NutJS-4.2.0-orange.svg)
 ![Tests](https://img.shields.io/badge/Tests-55_files-success.svg)
-![Coverage](https://img.shields.io/badge/Coverage-80%25+-success.svg)
-![Status](https://img.shields.io/badge/Status-Production_Ready-success.svg)
+![Coverage](https://img.shields.io/badge/Coverage-Target_80%25-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Development-orange.svg)
 
-**Sistema completo de automação desktop com API REST de alta performance e interface web moderna**
+**Sistema avançado de automação desktop com API REST, interface web e integração com IA**
 
 [Instalação](#-instalação-rápida) • 
 [Funcionalidades](#-funcionalidades) • 
@@ -38,21 +38,23 @@
 
 ## 🎯 Visão Geral
 
-O **NutJS Desktop Automation System** é uma solução empresarial completa para automação desktop que combina:
+O **HUU Desktop API Automation** é um sistema completo de automação desktop que permite controlar mouse, teclado, capturar tela e executar sequências complexas de ações através de uma API REST e interface web intuitiva.
 
-- **API REST de alta performance** construída com Fastify e NutJS
-- **Interface web moderna** em React com construtor visual de automações
-- **Arquitetura limpa** com injeção de dependência (TSyringe) e validação robusta (Zod)
-- **Suporte completo** para automação de mouse, teclado, screenshots, OCR e IA
-- **Streaming em tempo real** de eventos via Server-Sent Events (SSE)
+### Características Principais
 
-### Principais Diferenciais
+- **API REST Robusta**: 40+ endpoints com Fastify para automação completa
+- **Interface Web Visual**: Construtor drag-and-drop de sequências de automação
+- **Integração com IA**: Suporte para OpenAI (GPT-4) e DeepSeek (Chat, Reasoner, Coder)
+- **OCR Avançado**: Extração de texto com Tesseract.js e worker pool paralelo
+- **Clean Architecture**: Injeção de dependência com TSyringe, validação com Zod
+- **Streaming Real-time**: Eventos de mouse/teclado via Server-Sent Events (SSE)
 
-✅ **Produção-Ready**: 55 arquivos de teste com 80% de cobertura  
-✅ **Performance**: Fastify com worker pools para OCR  
-✅ **Modular**: Clean Architecture com separação clara de responsabilidades  
-✅ **Cross-Platform**: Windows, macOS e Linux  
-✅ **IA Integrada**: OpenAI e DeepSeek para análise inteligente  
+### Status do Desenvolvimento
+
+🚧 **Em Desenvolvimento Ativo** - Core funcional, algumas features avançadas pendentes  
+✅ **Core Implementado**: Automação básica funcionando  
+⚠️ **Segurança**: Autenticação desabilitada para desenvolvimento  
+📋 **Testes**: 55 arquivos de teste implementados  
 
 ## 🚀 Instalação Rápida
 
@@ -67,7 +69,7 @@ O **NutJS Desktop Automation System** é uma solução empresarial completa para
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/huu-desktop-api-automation.git
+git clone https://github.com/[seu-usuario]/huu-desktop-api-automation.git
 cd huu-desktop-api-automation
 
 # Instale as dependências
@@ -108,10 +110,10 @@ npm start
 - Suporte para múltiplos layouts
 
 ### 📸 Captura e Análise de Tela
-- Screenshots (tela completa ou região)
-- Busca de templates com confiança ajustável
-- Aguardar elementos aparecerem
-- Processamento de imagem com Sharp
+- Screenshots (tela completa ou região) ✅
+- ~~Busca de templates com confiança ajustável~~ ⚠️ *Em desenvolvimento*
+- ~~Aguardar elementos aparecerem~~ ⚠️ *Em desenvolvimento*
+- Processamento de imagem com Sharp ✅
 
 ### 📝 OCR (Optical Character Recognition)
 - Extração de texto de imagens
@@ -120,10 +122,12 @@ npm start
 - Múltiplos formatos de saída (texto, JSON, tabela)
 
 ### 🤖 Integração com IA
-- OpenAI (GPT-4, GPT-3.5)
-- DeepSeek
-- Análise de conteúdo
-- Geração de texto contextual
+- OpenAI (GPT-4, GPT-3.5) ✅
+- DeepSeek (Chat, Reasoner, Coder) ✅
+- Análise de conteúdo ✅
+- Geração de texto contextual ✅
+- ~~Claude API~~ 📋 *Planejado*
+- ~~Google Gemini~~ 📋 *Planejado*
 
 ### 📋 Clipboard
 - Copiar/Colar programático
@@ -131,16 +135,18 @@ npm start
 - Limpeza automática
 
 ### 🎯 Sistema de Sequências
-- Executor de múltiplas ações
-- Delays configuráveis
-- Tratamento de erros
-- Parada condicional
+- Executor de múltiplas ações ✅
+- Delays configuráveis ✅
+- Tratamento de erros ✅
+- Parada condicional ✅
+- ~~Cancelamento em tempo real~~ ⚠️ *Frontend implementado, backend pendente*
 
 ### 🌊 Streaming em Tempo Real
-- Eventos de mouse/teclado via SSE
-- Posição do cursor ao vivo
-- Buffer com estatísticas
-- Múltiplos listeners simultâneos
+- Eventos de mouse/teclado via SSE ✅
+- Posição do cursor ao vivo ✅
+- Buffer com estatísticas ✅
+- Múltiplos listeners simultâneos ✅
+- ~~WebSocket bidirecional~~ 📋 *Planejado*
 
 ## 🏗️ Arquitetura
 
@@ -228,19 +234,21 @@ src/
 
 ## 🎨 Interface Web
 
-### Funcionalidades Principais
+### Funcionalidades Implementadas
 
 #### Dashboard (`/`)
-- Status da API em tempo real
-- Links rápidos para documentação
-- Informações do sistema
+- Status da API em tempo real ✅
+- Links rápidos para documentação ✅
+- Informações do sistema ✅
 
 #### Automação (`/automation`)
-- **Construtor Visual**: Crie sequências arrastando e soltando
-- **Captura de Tela**: Screenshot ou upload de imagem
-- **Editor de Ações**: Configure cada ação detalhadamente
-- **Gerenciamento**: Salvar, carregar e exportar automações
-- **Execução**: Rode sequências com feedback em tempo real
+- **Construtor Visual**: Drag-and-drop com @dnd-kit ✅
+- **Captura de Tela**: Screenshot via PrintScreenButton ✅
+- **Editor de Ações**: Formulário dinâmico por tipo de ação ✅
+- **Gerenciamento**: localStorage com múltiplos slots ✅
+- **Execução**: FloatingPlayButton com feedback visual ✅
+- **Import/Export**: JSON ✅
+- **Rastreamento Mouse**: Posição em tempo real no título ✅
 
 ### Recursos Avançados
 - Drag & drop para reordenar ações
@@ -383,7 +391,7 @@ npm run test:unit
 # Testes de integração
 npm run test:integration
 
-# Cobertura (meta: 80%)
+# Cobertura
 npm run test:coverage
 
 # Modo watch
@@ -391,10 +399,10 @@ npm run test:watch
 ```
 
 ### Estatísticas
-- **55** arquivos de teste
-- **80%** meta de cobertura
-- **Jest** com suporte ESM
-- Testes unitários e de integração
+- **55** arquivos de teste implementados ✅
+- **80%** meta de cobertura (em progresso)
+- **Jest** com suporte ESM ✅
+- Testes unitários e de integração ✅
 
 ## ⚙️ Configuração
 
@@ -444,15 +452,16 @@ Geralmente funciona sem configuração adicional.
 
 ## 🔒 Segurança
 
-### ⚠️ Aviso Importante
+### ⚠️ Aviso Crítico de Segurança
 
-**A autenticação está atualmente DESABILITADA no código.** Antes de usar em produção:
+**ESTE PROJETO ESTÁ EM DESENVOLVIMENTO - NÃO USE EM PRODUÇÃO**
 
-1. Reative o middleware de autenticação
-2. Configure CORS adequadamente
-3. Implemente rate limiting por usuário
-4. Configure HTTPS
-5. Use variáveis de ambiente seguras
+**Problemas de segurança conhecidos:**
+1. ❌ Autenticação completamente DESABILITADA
+2. ❌ CORS não configurado para produção
+3. ❌ HTTPS não implementado
+4. ⚠️ Rate limiting básico apenas (sem identificação de usuário)
+5. ⚠️ Variáveis de ambiente sensíveis no .env.example
 
 ### Medidas de Segurança Implementadas
 
@@ -487,35 +496,70 @@ Geralmente funciona sem configuração adicional.
 | OCR (pequeno) | <500ms | 2 ops/s |
 | Template Match | <200ms | 5 ops/s |
 
-## 🚦 Status do Projeto
+## 🚦 Status Detalhado do Projeto
 
 ### ✅ Implementado e Funcional
 
-- Sistema completo de automação desktop
-- API REST com 40+ endpoints
-- Interface web com construtor visual
-- 55 arquivos de teste
-- Clean Architecture
-- Documentação completa
+**Core da Aplicação:**
+- API REST com Fastify (40+ endpoints)
+- Interface web React com Bootstrap
+- Clean Architecture com TSyringe
+- Validação robusta com Zod
+- 55 arquivos de teste com Jest
 
-### 🔴 Pendente para Produção
+**Automação Desktop:**
+- Mouse: move, click, drag, scroll
+- Teclado: type, press, combinations
+- Screenshots: captura completa ou região
+- Clipboard: copy, paste, clear
+- Sequências: executor com delays e tratamento de erros
 
-1. **Crítico**:
-   - [ ] Reimplementar autenticação (JWT/API Key)
-   - [ ] Configurar CORS para produção
-   - [ ] Adicionar HTTPS
+**Interface Web:**
+- Construtor visual drag-and-drop (@dnd-kit)
+- Salvamento/carregamento (localStorage)
+- Import/Export JSON
+- Botão flutuante de execução
+- Rastreamento de posição do mouse
 
-2. **Alta Prioridade**:
-   - [ ] Dockerfile e docker-compose
-   - [ ] CI/CD pipeline (GitHub Actions)
-   - [ ] Swagger UI documentation
+**Integrações:**
+- OCR com Tesseract.js (worker pool)
+- OpenAI (GPT-4, GPT-3.5)
+- DeepSeek (Chat, Reasoner, Coder)
+- Streaming SSE para eventos
 
-3. **Melhorias Futuras**:
-   - [ ] WebSocket para comunicação bidirecional
-   - [ ] Suporte para múltiplos monitores
-   - [ ] Gravação e replay de macros
-   - [ ] Dark mode na interface
-   - [ ] Mais providers de IA (Claude, Gemini)
+### ⚠️ Em Desenvolvimento
+
+- Busca de template na tela (find/waitFor)
+- Cancelamento de execução no backend
+- Melhorias na interface de usuário
+- Otimizações de performance
+
+### ❌ Não Implementado
+
+**Segurança (CRÍTICO):**
+- Autenticação (JWT/API Key)
+- CORS para produção
+- HTTPS
+- Rate limiting por usuário
+
+**DevOps:**
+- Docker/Docker Compose
+- CI/CD (GitHub Actions)
+- Deploy automatizado
+
+**Documentação:**
+- Swagger/OpenAPI
+- Documentação de API interativa
+- Guias de contribuição
+
+**Features Avançadas:**
+- WebSocket bidirecional
+- Gravação/replay de macros
+- Múltiplos monitores
+- Dark mode
+- Mais providers IA (Claude, Gemini)
+- Histórico de execuções
+- Dashboard de métricas
 
 ## 🤝 Contribuindo
 
@@ -533,7 +577,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👥 Autores
 
-- **Seu Nome** - *Trabalho Inicial* - [seu-usuario](https://github.com/seu-usuario)
+- **HUU Team** - *Desenvolvimento* - [huu-desktop-api-automation](https://github.com/huu-desktop-api-automation)
 
 ## 🙏 Agradecimentos
 
@@ -546,8 +590,10 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 <div align="center">
 
-**Desenvolvido com ❤️ para automação desktop eficiente**
+**Sistema de automação desktop em desenvolvimento ativo**
 
-[⬆ Voltar ao topo](#nutjs-desktop-automation-system)
+📋 Ver [ROADMAP.md](ROADMAP.md) para status detalhado das features
+
+[⬆ Voltar ao topo](#huu-desktop-api-automation)
 
 </div>
