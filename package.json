@@ -35,7 +35,9 @@
     "audit:roadmap": "echo 'TODO: Implement roadmap audit script'",
     "prepare": "husky",
     "download-tessdata": "node scripts/download-tessdata.js",
-    "postinstall": "node scripts/download-tessdata.js || echo 'Tessdata download failed, will download on first use'"
+    "postinstall": "node scripts/download-tessdata.js || echo 'Tessdata download failed, will download on first use'",
+    "extract:backend": "node scripts/extract-backend.js",
+    "backend:standalone": "echo 'Use: npm run extract:backend [destination-path] para extrair o backend como projeto independente'"
   },
   "dependencies": {
     "@fastify/cors": "^8.5.0",
