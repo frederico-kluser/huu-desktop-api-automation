@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 20px;
+            display: block;
+        }
+        .icon-set {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0051D5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>HUU Desktop Automation Icons</h1>
+        <p>Ícones gerados para a aplicação</p>
+        
+        <div class="icon-set">
+            <div>
+                <h3>512x512 (Main)</h3>
+                <canvas id="icon512" width="512" height="512"></canvas>
+                <button onclick="downloadIcon('icon512', 'icon.png')">Download PNG</button>
+            </div>
+            
+            <div>
+                <h3>256x256</h3>
+                <canvas id="icon256" width="256" height="256"></canvas>
+                <button onclick="downloadIcon('icon256', 'icon-256.png')">Download PNG</button>
+            </div>
+            
+            <div>
+                <h3>128x128</h3>
+                <canvas id="icon128" width="128" height="128"></canvas>
+                <button onclick="downloadIcon('icon128', 'icon-128.png')">Download PNG</button>
+            </div>
+            
+            <div>
+                <h3>64x64</h3>
+                <canvas id="icon64" width="64" height="64"></canvas>
+                <button onclick="downloadIcon('icon64', 'icon-64.png')">Download PNG</button>
+            </div>
+            
+            <div>
+                <h3>32x32 (Tray)</h3>
+                <canvas id="icon32" width="32" height="32"></canvas>
+                <button onclick="downloadIcon('icon32', 'tray-icon.png')">Download PNG</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            
+            // Draw rounded rectangle background
+            ctx.fillStyle = gradient;
+            const radius = size * 0.15;
+            ctx.beginPath();
+            ctx.moveTo(radius, 0);
+            ctx.lineTo(size - radius, 0);
+            ctx.quadraticCurveTo(size, 0, size, radius);
+            ctx.lineTo(size, size - radius);
+            ctx.quadraticCurveTo(size, size, size - radius, size);
+            ctx.lineTo(radius, size);
+            ctx.quadraticCurveTo(0, size, 0, size - radius);
+            ctx.lineTo(0, radius);
+            ctx.quadraticCurveTo(0, 0, radius, 0);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Draw robot/automation icon
+            ctx.fillStyle = 'white';
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size * 0.02;
+            
+            // Robot head
+            const headSize = size * 0.25;
+            const headX = (size - headSize) / 2;
+            const headY = size * 0.25;
+            
+            ctx.fillRect(headX, headY, headSize, headSize * 0.8);
+            
+            // Robot eyes
+            const eyeSize = size * 0.04;
+            const eyeY = headY + headSize * 0.25;
+            ctx.fillStyle = gradient;
+            ctx.fillRect(headX + headSize * 0.25, eyeY, eyeSize, eyeSize);
+            ctx.fillRect(headX + headSize * 0.65, eyeY, eyeSize, eyeSize);
+            
+            // Robot body
+            ctx.fillStyle = 'white';
+            const bodyWidth = size * 0.35;
+            const bodyHeight = size * 0.25;
+            const bodyX = (size - bodyWidth) / 2;
+            const bodyY = headY + headSize * 0.9;
+            
+            ctx.fillRect(bodyX, bodyY, bodyWidth, bodyHeight);
+            
+            // Control panel on body
+            ctx.fillStyle = gradient;
+            const panelSize = size * 0.03;
+            const panelY = bodyY + bodyHeight * 0.3;
+            for (let i = 0; i < 3; i++) {
+                ctx.fillRect(bodyX + bodyWidth * 0.2 + i * (panelSize * 1.5), panelY, panelSize, panelSize);
+            }
+            
+            // Arms
+            ctx.fillStyle = 'white';
+            const armWidth = size * 0.06;
+            const armHeight = size * 0.2;
+            ctx.fillRect(bodyX - armWidth * 1.2, bodyY + bodyHeight * 0.1, armWidth, armHeight);
+            ctx.fillRect(bodyX + bodyWidth + armWidth * 0.2, bodyY + bodyHeight * 0.1, armWidth, armHeight);
+            
+            // Add "HUU" text for larger icons
+            if (size >= 128) {
+                ctx.font = `bold ${size * 0.08}px -apple-system, sans-serif`;
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('HUU', size / 2, size * 0.75);
+            }
+        }
+        
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Draw all icons
+        drawIcon('icon512', 512);
+        drawIcon('icon256', 256);
+        drawIcon('icon128', 128);
+        drawIcon('icon64', 64);
+        drawIcon('icon32', 32);
+    </script>
+</body>
+</html>

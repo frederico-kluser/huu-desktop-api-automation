@@ -8,9 +8,10 @@ module.exports = {
   entry: path.resolve(__dirname, './src/index.tsx'),
   context: __dirname,
   output: {
-    path: path.resolve(__dirname, '../dist/web'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js',
     clean: true,
+    publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   },
   module: {
     rules: [

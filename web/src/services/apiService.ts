@@ -1,8 +1,10 @@
 /**
  * Serviço para comunicação com a API de automação
+ * Integrado com Electron quando disponível
  */
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { AutomationAction } from '../types/automation-builder.types';
+import electronService from './electronService';
 
 interface ApiResponse<T = any> {
   success: boolean;
@@ -35,18 +37,24 @@ class ApiService {
   private readonly baseURL: string;
 
   constructor() {
-    // Em desenvolvimento com webpack dev server, usa path relativo para o proxy funcionar
-    // Em produção ou quando acessado diretamente, usa URL completa
-    this.baseURL = window.location.port === '3001' 
-      ? '/api/v1'  // Desenvolvimento com webpack dev server (proxy funciona)
-      : 'http://localhost:3000/api/v1'; // Produção ou acesso direto
-    
+    // Detecta se está rodando no Electron e usa a URL apropriada
+    if (electronService.isInElectron()) {
+      this.baseURL = `${electronService.getApiBaseURL()}/api/v1`;
+    } else {
+      // Em desenvolvimento com webpack dev server, usa path relativo para o proxy funcionar
+      // Em produção ou quando acessado diretamente, usa URL completa
+      this.baseURL =
+        window.location.port === '3001'
+          ? '/api/v1' // Desenvolvimento com webpack dev server (proxy funciona)
+          : 'http://localhost:3000/api/v1'; // Produção ou acesso direto
+    }
+
     console.log('🔧 API Service initialized:', {
       currentPort: window.location.port,
       baseURL: this.baseURL,
-      fullURL: window.location.href
+      fullURL: window.location.href,
     });
-    
+
     this.api = axios.create({
       baseURL: this.baseURL,
       timeout: 30000, // 30 segundos para execução
