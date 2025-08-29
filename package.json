@@ -7,7 +7,10 @@
   "license": "MIT",
   "scripts": {
     "start": "electron .",
+    "start:backend": "tsx src/index.ts",
+    "start:backend:prod": "node dist/index.js",
     "dev": "npm run build:web && cross-env NODE_ENV=development electron .",
+    "dev:backend": "tsx watch src/index.ts",
     "build": "tsc -p tsconfig.json",
     "build:web": "webpack --mode production --config web/webpack.config.js",
     "build:backend": "tsc -p tsconfig.prod.json",
