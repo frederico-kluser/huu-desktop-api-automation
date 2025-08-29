@@ -39,7 +39,9 @@ class ApiService {
   constructor() {
     // Detecta se está rodando no Electron e usa a URL apropriada
     if (electronService.isInElectron()) {
-      this.baseURL = `${electronService.getApiBaseURL()}/api/v1`;
+      // No Electron, sempre usa URL absoluta
+      this.baseURL = 'http://localhost:3000/api/v1';
+      console.log('🔌 API Service usando URL do Electron:', this.baseURL);
     } else {
       // Em desenvolvimento com webpack dev server, usa path relativo para o proxy funcionar
       // Em produção ou quando acessado diretamente, usa URL completa
