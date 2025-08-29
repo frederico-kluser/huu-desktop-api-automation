@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NutJS Desktop Automation API</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:* https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' http://localhost:* ws://localhost:*;">
+    <title>HUU Desktop Automation</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -14,7 +15,18 @@
     />
   </head>
   <body class="bg-dark text-light">
-    <div id="root"></div>
+    <div id="root">
+      <!-- React will render here -->
+      <div class="container mt-5 text-center">
+        <h1>Carregando...</h1>
+        <p>Se esta mensagem não desaparecer, há um problema com o React.</p>
+      </div>
+    </div>
+    <script>
+      // Debug: Test if JavaScript is running
+      console.log('HTML loaded, JavaScript is running!');
+      console.log('Root element exists:', document.getElementById('root') !== null);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

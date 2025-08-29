@@ -21,10 +21,12 @@ let isQuitting = false;
 // Configure auto-updater
 const { autoUpdater } = require('electron-updater');
 
+// Disable auto-download
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = true;
+
 // Enable DevTools in development
-if (isDev) {
-  require('electron-debug')({ showDevTools: false });
-}
+// Note: electron-debug module removed due to compatibility issues
 
 // Function to create the main application window
 function createWindow() {
@@ -50,6 +52,14 @@ function createWindow() {
   // Always load from built HTML file
   const indexPath = path.join(__dirname, '..', 'web', 'dist', 'index.html');
 
+  // Check if HTML file exists first
+  if (!fs.existsSync(indexPath)) {
+    console.error('Frontend not built. Please run: npm run build:web');
+    dialog.showErrorBox('Erro', 'Interface não encontrada. Execute: npm run build:web');
+    app.quit();
+    return;
+  }
+
   // Wait for backend to be ready before loading
   const waitForBackend = async () => {
     let retries = 30; // 30 seconds timeout
@@ -60,22 +70,25 @@ function createWindow() {
         const response = await fetch('http://localhost:3000/health');
         if (response.ok) {
           console.log('✅ Backend is ready!');
-
-          // Check if HTML file exists
-          if (!fs.existsSync(indexPath)) {
-            console.error('Frontend not built. Building now...');
-            // You may want to trigger a build here or show an error
-            dialog.showErrorBox('Erro', 'Interface não encontrada. Execute: npm run build:web');
-            app.quit();
-            return;
-          }
-
+          
+          // Load the HTML file
+          console.log('Loading HTML from:', indexPath);
           mainWindow.loadFile(indexPath);
 
           // Open DevTools in development
           if (isDev) {
             mainWindow.webContents.openDevTools();
           }
+          
+          // Log any load errors
+          mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+            console.error('Failed to load:', errorCode, errorDescription);
+          });
+          
+          mainWindow.webContents.on('did-finish-load', () => {
+            console.log('✅ Page loaded successfully');
+          });
+          
           return;
         }
       } catch (e) {
@@ -86,13 +99,16 @@ function createWindow() {
       retries--;
     }
 
-    console.error('Backend failed to start');
-    dialog.showErrorBox('Erro', 'Falha ao iniciar o servidor backend');
-    app.quit();
+    console.error('Backend failed to start - loading interface anyway');
+    // Try to load the interface even if backend fails
+    mainWindow.loadFile(indexPath);
+    if (isDev) {
+      mainWindow.webContents.openDevTools();
+    }
   };
 
-  // Start loading after backend starts
-  setTimeout(waitForBackend, 3000);
+  // Start loading after a short delay
+  setTimeout(waitForBackend, 2000);
 
   // Show window when ready
   mainWindow.once('ready-to-show', () => {
@@ -413,16 +429,24 @@ function showTrayBalloon(title, content) {
 
 // Start backend server integrated with Electron
 function startBackend() {
+  // Prevent multiple backend starts
+  if (backendProcess) {
+    console.log('Backend already running, skipping start');
+    return;
+  }
+
   console.log('🚀 Starting integrated backend server...');
 
-  // Kill any existing process on port 3000
-  if (process.platform === 'win32') {
-    spawn('cmd', ['/c', 'netstat -ano | findstr :3000 | findstr LISTENING'], { shell: true }).on(
-      'exit',
-      () => console.log('Port 3000 checked'),
-    );
-  } else {
-    spawn('lsof', ['-ti:3000'], { shell: true }).on('exit', () => console.log('Port 3000 checked'));
+  // Kill any existing process on port 3000 first (synchronously)
+  try {
+    if (process.platform === 'win32') {
+      require('child_process').execSync('taskkill /F /IM node.exe /FI "WINDOWTITLE eq *3000*"', { stdio: 'ignore' });
+    } else {
+      require('child_process').execSync('lsof -ti:3000 | xargs kill -9 2>/dev/null || true', { stdio: 'ignore' });
+    }
+    console.log('Port 3000 cleared');
+  } catch (e) {
+    console.log('No process found on port 3000');
   }
 
   // Determine backend path based on environment
@@ -474,13 +498,36 @@ function startBackend() {
       shell: true,
     });
 
-    backendProcess.stdout.on('data', (data) => {
-      console.log(`[Backend] ${data.toString().trim()}`);
-    });
+    // Handle stdout with error checking
+    if (backendProcess.stdout) {
+      backendProcess.stdout.on('data', (data) => {
+        try {
+          const message = data.toString().trim();
+          // Filter out noisy logs
+          if (!message.includes('EventDispatcher.dispatch') && 
+              !message.includes('Despachando evento') &&
+              message.length > 0) {
+            console.log(`[Backend] ${message}`);
+          }
+        } catch (e) {
+          // Ignore logging errors to prevent EPIPE
+        }
+      });
+    }
 
-    backendProcess.stderr.on('data', (data) => {
-      console.error(`[Backend Error] ${data.toString().trim()}`);
-    });
+    // Handle stderr with error checking
+    if (backendProcess.stderr) {
+      backendProcess.stderr.on('data', (data) => {
+        try {
+          const message = data.toString().trim();
+          if (message.length > 0) {
+            console.error(`[Backend Error] ${message}`);
+          }
+        } catch (e) {
+          // Ignore logging errors to prevent EPIPE
+        }
+      });
+    }
 
     backendProcess.on('error', (error) => {
       console.error('Failed to start backend:', error);
@@ -491,14 +538,17 @@ function startBackend() {
       console.log(`Backend process exited with code ${code}`);
       backendProcess = null;
 
-      // If app is not quitting, restart backend
-      if (!isQuitting && code !== 0) {
+      // If app is not quitting, restart backend only if it crashed unexpectedly
+      if (!isQuitting && code !== 0 && code !== null) {
         console.log('Backend crashed, restarting in 5 seconds...');
+        backendProcess = null; // Clear the process reference
         setTimeout(() => {
           if (!isQuitting) {
             startBackend();
           }
         }, 5000);
+      } else {
+        backendProcess = null; // Clear the process reference
       }
     });
   }
@@ -635,6 +685,19 @@ function setupIPC() {
   });
 }
 
+// Handle uncaught exceptions to prevent crashes
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  // Don't exit on EPIPE errors
+  if (error.code !== 'EPIPE') {
+    dialog.showErrorBox('Erro Crítico', error.message);
+  }
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 // App event handlers
 app.whenReady().then(() => {
   // Start backend first
@@ -648,7 +711,37 @@ app.whenReady().then(() => {
 
     // Setup auto-updater
     if (!isDev) {
-      autoUpdater.checkForUpdatesAndNotify();
+      // Check for updates but don't auto-download
+      autoUpdater.checkForUpdates().catch((err) => {
+        console.log('Auto-updater error:', err);
+      });
+
+      // Handle update events
+      autoUpdater.on('update-available', (info) => {
+        dialog.showMessageBox(mainWindow, {
+          type: 'info',
+          title: 'Atualização Disponível',
+          message: `Versão ${info.version} está disponível. Deseja baixar?`,
+          buttons: ['Sim', 'Não'],
+        }).then((result) => {
+          if (result.response === 0) {
+            autoUpdater.downloadUpdate();
+          }
+        });
+      });
+
+      autoUpdater.on('update-downloaded', () => {
+        dialog.showMessageBox(mainWindow, {
+          type: 'info',
+          title: 'Atualização Pronta',
+          message: 'A atualização será instalada ao reiniciar o aplicativo.',
+          buttons: ['Reiniciar Agora', 'Mais Tarde'],
+        }).then((result) => {
+          if (result.response === 0) {
+            autoUpdater.quitAndInstall();
+          }
+        });
+      });
     }
   }, 1000);
 });

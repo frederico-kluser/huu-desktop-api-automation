@@ -9,10 +9,6 @@ import { configureDependencies, container } from './config/dependency-injection.
 import { ApplicationStartupService } from './application/services/application-startup.service.js';
 import { environment } from './config/environment.js';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 configureDependencies();
 
@@ -56,7 +52,7 @@ const createServer = async () => {
 
   // Registrar servir arquivos estáticos da web com configuração para não conflitar com API
   await server.register(fastifyStatic, {
-    root: path.join(__dirname, '..', 'dist', 'web'),
+    root: path.join(process.cwd(), 'web', 'dist'),
     prefix: '/',
     wildcard: false, // Desabilita wildcard para evitar conflitos com rotas da API
   });
