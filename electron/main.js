@@ -43,9 +43,10 @@ function createWindow() {
       webSecurity: !isDev,
     },
     icon: path.join(__dirname, '..', 'assets', 'icon.png'),
-    titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
+    titleBarStyle: 'default', // Use default title bar for all platforms
     show: false,
     frame: true,
+    movable: true, // Ensure window is movable
     backgroundColor: '#ffffff',
   });
 
