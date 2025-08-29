@@ -96,13 +96,14 @@ describe('OcrController', () => {
       expect(logger.info).toHaveBeenCalledWith('Rotas OCR registradas com sucesso');
     });
 
-    test('deve configurar middlewares e schemas corretamente', () => {
+    test('deve configurar schemas corretamente', () => {
       ocrController.registerRoutes(mockFastifyInstance);
 
       const base64Route = mockFastifyInstance.post.mock.calls[0];
       const routeConfig = base64Route[1];
 
-      expect(routeConfig.preHandler).toBeDefined();
+      // Autenticação removida - não há mais preHandler
+      expect(routeConfig.preHandler).toBeUndefined();
       expect(routeConfig.schema).toBeDefined();
       expect(routeConfig.schema.body).toBeDefined();
       expect(routeConfig.schema.response).toBeDefined();

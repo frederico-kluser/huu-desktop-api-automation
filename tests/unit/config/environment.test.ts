@@ -22,7 +22,8 @@ describe('environment', () => {
     delete process.env.LOG_LEVEL;
     delete process.env.MOUSE_SPEED;
     delete process.env.SCREEN_CONFIDENCE;
-    delete process.env.API_KEY;
+    delete process.env.OPENAI_API_KEY;
+    delete process.env.DEEPSEEK_API_KEY;
 
     const { environment, isDevelopment, isProduction } = require('../../../src/config/environment');
 
@@ -32,7 +33,8 @@ describe('environment', () => {
     expect(environment.logLevel).toBe('info');
     expect(environment.mouseSpeed).toBe(500);
     expect(environment.screenConfidence).toBe(0.8);
-    expect(environment.apiKey).toBe('default-api-key');
+    expect(environment.openaiApiKey).toBe('');
+    expect(environment.deepseekApiKey).toBe('');
     expect(isDevelopment).toBe(true);
     expect(isProduction).toBe(false);
   });
@@ -44,7 +46,8 @@ describe('environment', () => {
     process.env.LOG_LEVEL = 'debug';
     process.env.MOUSE_SPEED = '1000';
     process.env.SCREEN_CONFIDENCE = '0.95';
-    process.env.API_KEY = 'custom-key';
+    process.env.OPENAI_API_KEY = 'test-openai-key';
+    process.env.DEEPSEEK_API_KEY = 'test-deepseek-key';
 
     const { environment, isDevelopment, isProduction } = require('../../../src/config/environment');
 
@@ -54,7 +57,8 @@ describe('environment', () => {
     expect(environment.logLevel).toBe('debug');
     expect(environment.mouseSpeed).toBe(1000);
     expect(environment.screenConfidence).toBe(0.95);
-    expect(environment.apiKey).toBe('custom-key');
+    expect(environment.openaiApiKey).toBe('test-openai-key');
+    expect(environment.deepseekApiKey).toBe('test-deepseek-key');
     expect(isDevelopment).toBe(false);
     expect(isProduction).toBe(true);
   });

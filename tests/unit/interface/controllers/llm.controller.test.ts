@@ -99,9 +99,7 @@ describe('LLMController', () => {
       expect(mockServer.post).toHaveBeenCalledWith(
         '/llm',
         expect.objectContaining({
-          preHandler: expect.any(Array),
           schema: expect.objectContaining({
-            headers: expect.any(Object),
             body: expect.any(Object),
             response: expect.any(Object),
           }),
@@ -113,7 +111,8 @@ describe('LLMController', () => {
       const callArgs = mockServer.post.mock.calls[0];
       const schema = callArgs[1].schema;
 
-      expect(schema.headers.required).toContain('x-api-key');
+      // Autenticação removida - não há mais headers
+      expect(schema.headers).toBeUndefined();
       expect(schema.response[200]).toBeDefined();
       expect(schema.response[400]).toBeDefined();
       expect(schema.response[401]).toBeDefined();
