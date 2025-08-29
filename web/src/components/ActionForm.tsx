@@ -46,43 +46,43 @@ const DEVICE_CONFIG = {
     emoji: '🖱️',
     label: 'Mouse',
     description: 'Mover, clicar, arrastar',
-    color: 'primary'
+    color: 'primary',
   },
   [ActionDevice.KEYBOARD]: {
     emoji: '⌨️',
     label: 'Teclado',
     description: 'Digitar, teclas, atalhos',
-    color: 'primary'
+    color: 'primary',
   },
   [ActionDevice.WAIT]: {
     emoji: '⏱️',
     label: 'Aguardar',
     description: 'Pausar execução',
-    color: 'primary'
+    color: 'primary',
   },
   [ActionDevice.SCREEN]: {
     emoji: '📸',
     label: 'Tela',
     description: 'Capturar, buscar imagem',
-    color: 'primary'
+    color: 'primary',
   },
   [ActionDevice.CLIPBOARD]: {
     emoji: '📋',
     label: 'Área de Transferência',
     description: 'Copiar, colar, limpar',
-    color: 'primary'
+    color: 'primary',
   },
   [ActionDevice.LLM]: {
     emoji: '🤖',
     label: 'IA',
     description: 'GPT, análise de texto',
-    color: 'primary'
+    color: 'primary',
   },
   [ActionDevice.OCR]: {
     emoji: '📝',
     label: 'OCR',
     description: 'Extrair texto de imagem',
-    color: 'primary'
+    color: 'primary',
   },
 };
 
@@ -94,6 +94,12 @@ const initialFormState: ActionFormState = {
   screenAction: ScreenActionType.CAPTURE,
   llmAction: LlmActionType.COMPLETION,
   ocrAction: OcrActionType.EXTRACT_TEXT,
+  x: '0', // Valor inicial para coordenada X
+  y: '0', // Valor inicial para coordenada Y
+  fromX: '0', // Valor inicial para origem X
+  fromY: '0', // Valor inicial para origem Y
+  toX: '0', // Valor inicial para destino X
+  toY: '0', // Valor inicial para destino Y
   smooth: true,
   button: MouseButton.LEFT,
   doubleClick: false,
@@ -127,12 +133,20 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
         ...initialFormState,
         device: selectedDevice,
         mouseAction: selectedDevice === ActionDevice.MOUSE ? MouseActionType.MOVE : undefined,
-        keyboardAction: selectedDevice === ActionDevice.KEYBOARD ? KeyboardActionType.TYPE : undefined,
+        keyboardAction:
+          selectedDevice === ActionDevice.KEYBOARD ? KeyboardActionType.TYPE : undefined,
         clipboardAction:
           selectedDevice === ActionDevice.CLIPBOARD ? ClipboardActionType.COPY : undefined,
         screenAction: selectedDevice === ActionDevice.SCREEN ? ScreenActionType.CAPTURE : undefined,
         llmAction: selectedDevice === ActionDevice.LLM ? LlmActionType.COMPLETION : undefined,
         ocrAction: selectedDevice === ActionDevice.OCR ? OcrActionType.EXTRACT_TEXT : undefined,
+        // Mantém valores iniciais de coordenadas para mouse
+        x: selectedDevice === ActionDevice.MOUSE ? '0' : undefined,
+        y: selectedDevice === ActionDevice.MOUSE ? '0' : undefined,
+        fromX: selectedDevice === ActionDevice.MOUSE ? '0' : undefined,
+        fromY: selectedDevice === ActionDevice.MOUSE ? '0' : undefined,
+        toX: selectedDevice === ActionDevice.MOUSE ? '0' : undefined,
+        toY: selectedDevice === ActionDevice.MOUSE ? '0' : undefined,
       }));
       setError(null);
     }
@@ -812,7 +826,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                     <Form.Control
                       type="number"
                       min="0"
-                      value={formState.x || ''}
+                      value={formState.x || '0'}
                       onChange={(e) => updateField('x', e.target.value)}
                       placeholder="0"
                       disabled={isAdding}
@@ -826,7 +840,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                     <Form.Control
                       type="number"
                       min="0"
-                      value={formState.y || ''}
+                      value={formState.y || '0'}
                       onChange={(e) => updateField('y', e.target.value)}
                       placeholder="0"
                       disabled={isAdding}
@@ -903,7 +917,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                     <Form.Control
                       type="number"
                       min="0"
-                      value={formState.fromX || ''}
+                      value={formState.fromX || '0'}
                       onChange={(e) => updateField('fromX', e.target.value)}
                       placeholder="0"
                       disabled={isAdding}
@@ -917,7 +931,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                     <Form.Control
                       type="number"
                       min="0"
-                      value={formState.fromY || ''}
+                      value={formState.fromY || '0'}
                       onChange={(e) => updateField('fromY', e.target.value)}
                       placeholder="0"
                       disabled={isAdding}
@@ -931,7 +945,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                     <Form.Control
                       type="number"
                       min="0"
-                      value={formState.toX || ''}
+                      value={formState.toX || '0'}
                       onChange={(e) => updateField('toX', e.target.value)}
                       placeholder="0"
                       disabled={isAdding}
@@ -945,7 +959,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                     <Form.Control
                       type="number"
                       min="0"
-                      value={formState.toY || ''}
+                      value={formState.toY || '0'}
                       onChange={(e) => updateField('toY', e.target.value)}
                       placeholder="0"
                       disabled={isAdding}
@@ -1276,7 +1290,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
                 <h6 className="mb-0">Configurar {DEVICE_CONFIG[selectedDevice].label}</h6>
               </div>
             </div>
-            
+
             <Form onSubmit={handleSubmit}>
               <Row className="g-3 mb-3">
                 {/* Campos dinâmicos baseados no dispositivo */}
@@ -1285,12 +1299,7 @@ const ActionForm: React.FC<ActionFormProps> = ({ onAdd, disabled = false }) => {
 
               {/* Botão de adicionar separado */}
               <div className="d-flex justify-content-end mt-3">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  disabled={isAdding || disabled}
-                  size="lg"
-                >
+                <Button type="submit" variant="primary" disabled={isAdding || disabled} size="lg">
                   {isAdding ? 'Adicionando...' : 'Adicionar Ação'}
                 </Button>
               </div>
